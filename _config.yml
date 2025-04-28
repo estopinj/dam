@@ -1,8 +1,9 @@
-title: Just the Docs Template
-description: A starter template for a Jeykll site using the Just the Docs theme!
+title: Detection & Attribution  Modelling Franmework 
+description: A guide to help selecting D&A methods suited to your project
+author: Joaquim Estopinan (CNRS), Wilfried Thuiller (CNRS), Risto Heikkinen (SYKE)
 theme: just-the-docs
 
-url: https://just-the-docs.github.io
+url: https://estopinj.github.io/dam/
 
 aux_links:
-  Template Repository: https://github.com/just-the-docs/just-the-docs-template
+  DAM on GitHub: https://github.com/estopinj/dam
