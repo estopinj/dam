@@ -1,6 +1,9 @@
 ---
 title: Home
 layout: home
+nav_order: 1
+description: "The DAM framework provides a criteria-based engine to allow users describing their case-study properties and identify a set of suited attribution methods."
+permalink: /
 ---
 
 # **Detection & Attribution Modelling framework**
@@ -26,3 +29,5 @@ This is a developpement of the OBSGESSION Horizon Europe project.
 [Just the Docs]: https://just-the-docs.github.io/just-the-docs/
 [GitHub Pages]: https://docs.github.com/en/pages
 [Jekyll]: https://jekyllrb.com
+[Bundler]: https://bundler.io/
+[Markdown]: https://daringfireball.net/projects/markdown/

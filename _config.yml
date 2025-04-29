@@ -3,8 +3,60 @@ subtitle: Detection & Attribution Modelling Framework
 description: A guide to help selecting D&A methods suited to your project
 author: Joaquim Estopinan (CNRS), Wilfried Thuiller (CNRS), Risto Heikkinen (SYKE)
 theme: just-the-docs
-
 url: https://estopinj.github.io/dam/
+baseurl: ""
+permalink: pretty
 
 aux_links:
   DAM on GitHub: https://github.com/estopinj/dam
+aux_links_new_tab: true
+
+defaults:
+  - scope:
+      path: "contents" # an empty string here means all files in the project
+      type: "pages"
+    values:
+      layout: "default"
+
+
+# collections_dir: contents
+# collections:
+#   tests:
+#     output: true
+# just_the_docs:
+#   collections:
+#     tests:
+#       name: Is it the capital & static collection name?
+      
+
+# Enable or disable the search button that appears in the bottom right corner of every page
+# Supports true or false (default)
+search.button: true
+
+
+# For copy button on code
+enable_copy_code_button: true
+
+mermaid:
+  # Version of mermaid library
+  # Pick an available version from https://cdn.jsdelivr.net/npm/mermaid/
+  version: "9.1.3"
+
+# Enable or disable the side/mobile menu globally
+# Nav menu can also be selectively enabled or disabled using page variables or the minimal layout
+nav_enabled: true
+
+# Heading anchor links appear on hover over h1-h6 tags in page content
+# allowing users to deep link to a particular heading on a page.
+heading_anchors: true
+
+# Back to top link
+back_to_top: true
+back_to_top_text: "Back to top"
+
+# # External navigation links
+# nav_external_links:
+#   - title: Just the Docs on GitHub
+#     url: https://github.com/just-the-docs/just-the-docs
+#     hide_icon: false # set to true to hide the external link icon - defaults to false
+#     opens_in_new_tab: true # set to true to open this link in a new tab - defaults to false
