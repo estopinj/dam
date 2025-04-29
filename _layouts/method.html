@@ -1,0 +1,19 @@
+---
+layout: default
+---
+
+<div class="method-header">
+  <h1>{{ page.title }}</h1>
+    <h2>Method assessment</h2>
+  <p class="method-meta">
+    {% if page.assessor %}
+      <span class="method-assessor">Assessor: {{ page.assessor }}</span>
+    {% endif %}
+    {% if page.date %}
+      <span class="method-date"> | {{ page.date | date: "%B %d, %Y" }}</span>
+    {% endif %}
+  </p>
+  [Populated from the spreadsheet]
+</div>
+
+{{ content }}

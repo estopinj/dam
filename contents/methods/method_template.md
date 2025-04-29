@@ -1,18 +1,13 @@
 ---
+layout: method
 title: Method template
 parent: Methods
 nav_order: 1
+date: 2025-04-29
+assessor: Mr. Smith
 ---
 
-[Link to another page]({{site.baseurl}}/).
 
-
-# Method name
-
-
-## Method assessment
-
-[Automatically populated from the spreadsheet]
 
 
 ### Header 3
