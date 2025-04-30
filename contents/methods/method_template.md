@@ -15,7 +15,7 @@ author: Mrs. Young
 {:toc}
 
 
-## Method Description & Principle 
+## Description & principle 
 A clear, technical yet accessible explanation of the method, its core principle(s).
 
 
@@ -74,5 +74,5 @@ Template code cells or GitHub Gist links.
 
 
 <!-- For referencement in toc before automatic table -->
-## Method assessment
+## Assessment table
 

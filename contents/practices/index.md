@@ -1,0 +1,10 @@
+---
+title: Good practices
+nav_order: 3
+permalink: /practices
+---
+
+# Good practices
+
+This panel provides general resources that aim to help conceptualising and applying detection & attribution methods.
+{: .fs-6 .fw-300 }
