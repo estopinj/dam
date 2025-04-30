@@ -55,6 +55,14 @@ GitHubPages::Dependencies.gems.each do |gem, version|
 end
 ```
 
+
+### Large image
+
+<!-- ![](../../assets/images/large-image.jpg)
+
+"[Wroclaw University Library digitizing rare archival texts](https://www.flickr.com/photos/97810305@N08/9401451269)" by [j_cadmus](https://www.flickr.com/photos/97810305@N08) is marked with [CC BY 2.0](https://creativecommons.org/licenses/by/2.0/?ref=openverse). -->
+
+
 #### Header 4 `with code not transformed`
 
 *   This is an unordered list following a header.

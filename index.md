@@ -8,21 +8,47 @@ permalink: /
 
 # **Detection & Attribution Modelling framework**
 
+
 ## Welcome
-This website provides access to the Detection & Attribution Modelling (DAM) framework, a guide to help you choosing D&A methods suited to your project.
-
-**[Insert Description, common to README]**
-
-This is a developpement of the OBSGESSION Horizon Europe project.
+This website provides access to the Detection & Attribution Modelling (DAM) framework, a guide suggesting you methods suited to your project.
+{: .fs-6 .fw-300 }
 
 
+- Different [criteria](/criteria) below invite users to precisely qualify _objective_, _data at hands_ and affordable _assumptions_ between others to **narrow down** and **suggest detection & attribution methods** suited to their study.
+- [Methods](/methods) are further describe with dedicated pages to allow users jump start their project from the relevant ressources.
+
+{: .important-title }
+_This is a developpement of the OBSGESSION Horizon Europe project._
+
+{: .highlight-title}
+> Status
+> {: .d-inline-block }
+> DEV (V0)
+> {: .label .label-green }
+> 
+> This website is under active development.
 
 
-# Evaluating your needs
+# Evaluating your project's needs
+
+- This is in this section that users evaluate their project against the different [criteria](/criteria) of the framework.
+
+```js
+Under development.
+```
+
+![](/assets/images/DAM_criteria.png){: width="40%" }
 
 
-# Suggested methods
+## Results
 
+- Illustrative scheme highlighting some mehtods
+![](/assets/images/DAM_Scheme_greenHighlight.png){: width="75%" }
+
+
+
+
+- Mermaid scheme example
 
 ```mermaid
 graph TD;
@@ -33,6 +59,8 @@ graph TD;
     B-->D;
     C-->D;
 ```
+[Mermaid](https://mermaid.js.org/){:target="_blank"} will eventually be used to allow representing an interactive method scheme updated by the user's evaluation of the criteria.
+
 
 
 [Just the Docs]: https://just-the-docs.github.io/just-the-docs/

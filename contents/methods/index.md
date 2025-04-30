@@ -6,5 +6,6 @@ permalink: /methods
 
 # Methods
 
-To make it as easy as possible to write documentation in plain Markdown, most UI components are styled using default Markdown elements with few additional CSS classes needed.
+ - This panel provides information on every method listed in the framework.
+ - The methods are described along a common documentation structure: *Description & principle*, *Reference articles*, *Implementation packages* and finally the *Assessment table* reflecting how the method is filtered against [criteria](/criteria) evaluation.
 {: .fs-6 .fw-300 }

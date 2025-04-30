@@ -12,10 +12,10 @@ description: "DAM framework site's about."
 
 
 ## Objective
-The Detection Attribution Modeling Framework (DAM) serves the goal to orient users looking to disentangle the drivers of observed biodiversity change.
-It **situates methods**, both *widespread* methods used in ecological studies and approaches inherited from *causal inference* or econometrics, against an ordered set of criteria.
+- The Detection Attribution Modeling Framework (DAM) serves the goal to orient users looking methods for detecting and disentangling the drivers of observed biodiversity change.
+It **situates methods**, both *widespread* methods used in ecological studies and approaches inherited from *causal inference* or econometrics, against an ordered set of [criteria](/criteria).
 
-The different [criteria](/criteria) invite users to precisely qualify what they are looking for and what they have at hands to narrow down and suggest detection and/or attribution [methods](/methods) and tools suited to their study.
+- The different [criteria](/criteria) invite users to precisely qualify what they are looking for and what they have at hands to narrow down and suggest detection and/or attribution [methods](/methods) and tools suited to their study.
 
 
 
@@ -64,7 +64,7 @@ The DAM framework is implemented in this collaborative website and is organized 
 
 1. [Criteria panel ](/criteria)
 
-    The panel provides information on every criterion used to subset detection & attribution methods when using the framework. Pages follow a common documentation structure: *Definition*, *Explanation*, *Tools/rationale for helping assessment* and *Example*.
+    This panel provides information on every criterion used to subset detection & attribution methods when using the framework. Pages follow a common documentation structure: *Definition*, *Explanation*, *Tools/rationale for helping assessment* and *Example*.
 
 
 1. [Method panel](/methods)
