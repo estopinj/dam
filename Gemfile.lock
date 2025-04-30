@@ -49,6 +49,7 @@ GEM
       octokit (>= 4, < 7, != 4.4.0)
     jekyll-include-cache (0.2.1)
       jekyll (>= 3.7, < 5.0)
+    jekyll-mermaid (1.0.0)
     jekyll-sass-converter (3.0.0)
       sass-embedded (~> 1.54)
     jekyll-seo-tag (2.8.0)
@@ -112,6 +113,7 @@ DEPENDENCIES
   jekyll (~> 4.4.1)
   jekyll-github-metadata (>= 2.15)
   jekyll-include-cache
+  jekyll-mermaid
   jekyll-sitemap
   just-the-docs (= 0.10.1)
 

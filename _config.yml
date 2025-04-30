@@ -17,7 +17,7 @@ defaults:
 #      type: "pages"
     values:
       layout: "default"
-      assessor: Joaquim Estopinan
+      # assessor: Joaquim Estopinan
 
 
 # collections_dir: contents
@@ -39,9 +39,8 @@ search.button: true
 enable_copy_code_button: true
 
 mermaid:
-  # Version of mermaid library
   # Pick an available version from https://cdn.jsdelivr.net/npm/mermaid/
-  version: "9.1.6"
+  version: "11.6.0"
 
 # Enable or disable the side/mobile menu globally
 # Nav menu can also be selectively enabled or disabled using page variables or the minimal layout
@@ -95,6 +94,7 @@ plugins:
   - jekyll-github-metadata
   - jekyll-include-cache
   - jekyll-sitemap
+  #- jekyll-mermaid
 
 kramdown:
   syntax_highlighter_opts:

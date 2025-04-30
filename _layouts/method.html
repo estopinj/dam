@@ -4,16 +4,62 @@ layout: default
 
 <div class="method-header">
   <h1>{{ page.title }}</h1>
-    <h2>Method assessment</h2>
   <p class="method-meta">
-    {% if page.assessor %}
-      <span class="method-assessor">Assessor: {{ page.assessor }}</span>
+    {% if page.author %}
+      <span class="method-author"> {{ page.author }}</span>
     {% endif %}
     {% if page.date %}
       <span class="method-date"> | {{ page.date | date: "%B %d, %Y" }}</span>
     {% endif %}
   </p>
-  [Populated from the spreadsheet]
 </div>
 
+
+
 {{ content }}
+
+
+
+<div class="method-assessment">
+  <!-- <h2>Method assessment</h2> -->
+  <p class="method-meta">
+    {% if page.assessor %}
+      <span class="method-assessor">Assessor: {{ page.assessor }}</span>
+    {% endif %}
+  </p>
+</div>
+
+
+<div class="markdown-content">
+  {% capture markdown %}
+  | **Category**          | **Criteria**                  | **Assessment**                  |
+  |-----------------------|-------------------------------|---------------------------------|
+  | **Outcome**           | Objective                     | _automatically filled_          |
+  |                       | Estimand                      |
+  |                       | Validity                      |
+  | **Data compatibility**| Type                          |
+  |                       | Required TS length            |
+  |                       | Handles few samples           |
+  |                       | Handles huge datasets (n)     |
+  |                       | Handles missing data          |
+  |                       | RS-data proven                |
+  | **Assumptions**       | Functional form               |
+  |                       | No unobserved confounders     |
+  |                       | No interference               |
+  |                       | Well-defined treatments       |
+  |                       | Common support (positivity)   |
+  |                       | Causal Markov Condition       |
+  |                       | Faithfulness                  |
+  |                       | IDD                           |
+  |                       | Model specific assumption     |
+  | **Model properties**  | Requires explicit processes   |
+  |                       | Exposure type                 |
+  |                       | Number of variables           |
+  |                       | Handles lag effects           |
+  |                       | Propagates uncertainty        | 
+  |                       | Parametric nature             |
+  | **Packages**          | Language                      |
+  |                       | Usage                         |
+  {% endcapture %}
+  {{ markdown | markdownify }}
+</div>
