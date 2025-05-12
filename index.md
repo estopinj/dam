@@ -37,13 +37,13 @@ _This is a developpement of the OBSGESSION Horizon Europe project._
 Under development.
 ```
 
-![](/assets/images/DAM_criteria.png){: width="40%" }
+![]({{ site.baseurl }}/assets/images/DAM_criteria.png){: width="40%" }
 
 
 ## Results
 
 - Illustrative scheme highlighting some mehtods
-![](/assets/images/DAM_Scheme_greenHighlight.png){: width="75%" }
+![]({{ site.baseurl }}/assets/images/DAM_Scheme_greenHighlight.png){: width="75%" }
 
 
 
