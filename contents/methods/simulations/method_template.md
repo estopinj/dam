@@ -1,7 +1,7 @@
 ---
 layout: method
 title: Method name
-parent: Methods
+parent: Counterfactual & future simulations
 nav_order: 1
 date: 2025-04-29
 author: Mrs. Young
