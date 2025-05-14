@@ -25,7 +25,7 @@ The DAM framework is implemented in this collaborative website and is organized 
 
 1. [Landing page](/):
     - Briefly description of the framework
-    - Invite users to fill in criteria in default order
+    - Invite users to fill in [criteria](/criteria) in default order
         - Criteria default to `Unevaluated`, including all options and therefore not filtering the set of suggested methods
 
         {: .highlight}
