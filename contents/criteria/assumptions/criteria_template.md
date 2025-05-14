@@ -6,4 +6,18 @@ nav_order: 1
 
 # Criteria name
 
-This is an example criterion page.
+|  **Option**        | **Description**            |
+|:------------------:|----------------------------|
+|||
+
+## Definition
+
+
+## Explanation
+
+
+## Tools/rationale for helping assessment
+
+
+## Example
+
