@@ -1,6 +1,6 @@
 ---
 title: Criteria example
-parent: Criteria
+parent: Data compatibility
 nav_order: 1
 ---
 
