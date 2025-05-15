@@ -2,6 +2,7 @@
 title: Handles missing data
 parent: Data compatibility
 nav_order: 5
+permalink: /missingdata
 ---
 
 # Handles missing data

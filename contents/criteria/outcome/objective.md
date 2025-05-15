@@ -2,6 +2,7 @@
 title: Objective
 parent: Outcome
 nav_order: 1
+permalink: /objective
 ---
 
 # Objective

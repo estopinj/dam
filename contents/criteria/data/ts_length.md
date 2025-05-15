@@ -2,6 +2,7 @@
 title: Required TS length
 parent: Data compatibility
 nav_order: 2
+permalink: /tslength
 ---
 
 # Required time-series length

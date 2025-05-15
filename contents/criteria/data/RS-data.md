@@ -2,6 +2,7 @@
 title: RS-data proven
 parent: Data compatibility
 nav_order: 6
+permalink: /rsdata
 ---
 
 # Remote sensing data proven

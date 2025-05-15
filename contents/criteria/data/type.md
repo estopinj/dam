@@ -4,13 +4,13 @@ parent: Data compatibility
 nav_order: 1
 ---
 
-# Criteria name
+# Data type
 
 |  **Option**        | **Description**            |
 |:------------------:|----------------------------|
-| Spatial only (cross-sectional) | Uses a single time point - or a collapsed period - across spatial units. |
-| Time-series (one sample) | Analyzes repeated measurements over time for a single unit. |
-| Panel data (many samples) | Combines cross‑sectional and time‑series variation across multiple units. |
+| `Spatial only (cross-sectional)` | Uses a single time point - or a collapsed period - across spatial units. |
+| `Time-series (one sample)` | Analyzes repeated measurements over time for a single unit. |
+| `Panel data (many samples)` | Combines cross‑sectional and time‑series variation across multiple units. |
 
 
 ## Definition
@@ -26,4 +26,4 @@ Matching the method to your data’s form is crucial: some approaches require on
 - Prototype eventually the chosen method from the suggested set on a small subset of your data to confirm compatibility. 
 
 ## Example
-A researcher has 10 years’ annual species richness from 30 protected areas - that’s `panel data` - so they exclude methods dealing only with a single‐site time-series. 
+A researcher has 10 years’ annual species richness from 30 protected areas - that’s `panel data` - so they exclude methods dealing only with a single‐site time-series or a single time point. 

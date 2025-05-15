@@ -2,6 +2,7 @@
 title: Validity
 parent: Outcome
 nav_order: 3
+permalink: /validity
 ---
 
 # Validity

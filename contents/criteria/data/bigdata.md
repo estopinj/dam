@@ -1,7 +1,8 @@
 ---
-title:     Handles huge datasets
+title: Handles huge datasets
 parent: Data compatibility
 nav_order: 4
+permalink: /bigdata
 ---
 
 #     Handles huge datasets (*n*)

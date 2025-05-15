@@ -1,10 +1,11 @@
 ---
-title: Criteria example
-parent: Packages
+title: criteria name
+parent: parentfolder
 nav_order: 1
+permalink: /permalink
 ---
 
-# Packages
+# Criteria name
 
 |  **Option**        | **Description**            |
 |:------------------:|----------------------------|

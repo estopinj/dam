@@ -2,6 +2,7 @@
 title: Handles few samples
 parent: Data compatibility
 nav_order: 3
+permalink: /fewsamples
 ---
 
 # Handles few samples
