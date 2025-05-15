@@ -23,6 +23,8 @@ The DAM framework is implemented in this collaborative website and is organized 
         <!-- ![Illustrative scheme highlighting some methods](/assets/images/DAM_Scheme_greenHighlight.png) -->
         <img src="https://estopinj.github.io/dam/assets/images/DAM_Scheme_greenHighlight.png" width="350" />
 
+        *Illustrative scheme highlighting some methods*
+
 
 2. The sidebar provides access to different panels grouping resource pages logically.
 Its exploration in regards with the landing page is key for good use of the framework.
@@ -42,6 +44,8 @@ Its exploration in regards with the landing page is key for good use of the fram
 
         <!-- ![criteria list](/assets/images/DAM_criteria.png) -->
          <img src="https://estopinj.github.io/dam/assets/images/DAM_criteria.png" width="220" />
+         
+         *Criteria list*
 
     1. [Methods] panel
 
