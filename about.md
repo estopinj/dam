@@ -13,9 +13,9 @@ description: "DAM framework site's about."
 
 ## Objective
 - The Detection Attribution Modeling Framework (DAM) serves the goal to orient users looking methods for detecting and disentangling the drivers of observed biodiversity change.
-It **situates methods**, both *widespread* methods used in ecological studies and approaches inherited from *causal inference* or econometrics, against an ordered set of [criteria](/criteria).
+It **situates methods**, both *widespread* methods used in ecological studies and approaches inherited from *causal inference* or econometrics, against an ordered set of [criteria]({{ site.baseurl }}/criteria).
 
-- The different [criteria](/criteria) invite users to precisely qualify what they are looking for and what they have at hands to narrow down and suggest detection and/or attribution [methods](/methods) and tools suited to their study.
+- The different [criteria]({{ site.baseurl }}/criteria) invite users to precisely qualify what they are looking for and what they have at hands to narrow down and suggest detection and/or attribution [methods]({{ site.baseurl }}/methods) and tools suited to their study.
 
 
 
@@ -23,9 +23,9 @@ It **situates methods**, both *widespread* methods used in ecological studies an
 
 The DAM framework is implemented in this collaborative website and is organized around a dynamical method scheme on the landing page:
 
-1. [Landing page](/):
+1. [Landing page]({{ site.baseurl }}/):
     - Briefly description of the framework
-    - Invite users to fill in [criteria](/criteria) in default order
+    - Invite users to fill in [criteria]({{ site.baseurl }}/criteria) in default order
         - Criteria default to `Unevaluated`, including all options and therefore not filtering the set of suggested methods
 
         {: .highlight}
@@ -34,7 +34,7 @@ The DAM framework is implemented in this collaborative website and is organized 
         {: .note-title }
         > **?** signs
         > 
-        > Along each criterion, a **?** sign redirects to the description page in the [criteria](/criteria) panel.
+        > Along each criterion, a **?** sign redirects to the description page in the [criteria]({{ site.baseurl }}/criteria) panel.
 
    
     - Method scheme
@@ -53,7 +53,7 @@ The DAM framework is implemented in this collaborative website and is organized 
 > Its exploration in regards with the landing page is key for good use of the framework.
 
 {:style="counter-reset:none"}
-1. [Good practices panel](/practices)
+1. [Good practices panel]({{ site.baseurl }}/practices)
     
     This panel provides general resources that aim to help conceptualising and applying attribution methods. Here are page examples that fit this category:
     - Getting started 
@@ -62,17 +62,17 @@ The DAM framework is implemented in this collaborative website and is organized 
     - Compare multiple methods etc.
 
 
-1. [Criteria panel ](/criteria)
+1. [Criteria panel ]({{ site.baseurl }}/criteria)
 
     This panel provides information on every criterion used to subset detection & attribution methods when using the framework. Pages follow a common documentation structure: *Definition*, *Explanation*, *Tools/rationale for helping assessment* and *Example*.
 
 
-1. [Method panel](/methods)
+1. [Method panel]({{ site.baseurl }}/methods)
 
     This panel provides information on every method listed in the framework. The methods are described along a common documentation structure: *Description & principle*, *Reference articles*, *Implementation packages* and the *Assessment table* reflecting how the method is filtered against criteria evaluation.
 
 
-1. [DAM Gallery](/gallery)
+1. [DAM Gallery]({{ site.baseurl }}/gallery)
 
     This final panel illustrates how the DAM can be used with examples, from the question + data at hands, to the criteria assessment and the method application. Examples include:
     - STOC + synthetic controls 

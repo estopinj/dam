@@ -12,4 +12,4 @@ permalink: /methods
 
 {: .note }
 > The methods are described along a common documentation format: ***Description & principle***, ***Reference articles***, ***Implementation packages*** and finally the ***Assessment table***.
-> The latter illustrates how the method is evaluated against the [criteria](/criteria).
+> The latter illustrates how the method is evaluated against the [criteria]({{ site.baseurl }}/criteria).
