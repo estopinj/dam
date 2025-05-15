@@ -14,8 +14,8 @@ This website provides access to the Detection & Attribution Modelling (DAM) fram
 {: .fs-6 .fw-300 }
 
 
-- Different [criteria](/criteria) below invite users to precisely qualify _objective_, _data at hands_ and affordable _assumptions_ between others to **narrow down** and **suggest detection & attribution methods** suited to their study.
-- [Methods](/methods) are further describe with dedicated pages to allow users jump start their project from the relevant ressources.
+- Different [criteria]({{ site.baseurl }}/criteria) below invite users to precisely qualify _objective_, _data at hands_ and affordable _assumptions_ between others to **narrow down** and **suggest detection & attribution methods** suited to their study.
+- [Methods]({{ site.baseurl }}/methods) are further describe with dedicated pages to allow users jump start their project from the relevant ressources.
 
 {: .important-title }
 _This is a developpement of the OBSGESSION Horizon Europe project._
@@ -31,7 +31,7 @@ _This is a developpement of the OBSGESSION Horizon Europe project._
 
 # Evaluating your project's needs
 
-- This is in this section that users evaluate their project against the different [criteria](/criteria) of the framework.
+- This is in this section that users evaluate their project against the different [criteria]({{ site.baseurl }}/criteria) of the framework.
 
 ```js
 Under development.

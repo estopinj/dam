@@ -30,6 +30,7 @@ The deployment GitHub Actions workflow is heavily based on GitHub's mixed-party 
 ----
 
 
+[Bundler]: https://bundler.io/
 [Jekyll]: https://jekyllrb.com
 [Just the Docs]: https://just-the-docs.github.io/just-the-docs/
 [GitHub Pages]: https://docs.github.com/en/pages
