@@ -42,7 +42,7 @@ Under development.
 
 ## Results
 
-- Illustrative scheme highlighting some mehtods
+- Illustrative scheme highlighting some methods
 ![]({{ site.baseurl }}/assets/images/DAM_Scheme_greenHighlight.png){: width="75%" }
 
 
