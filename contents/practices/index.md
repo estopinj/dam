@@ -1,6 +1,6 @@
 ---
 title: Good practices
-nav_order: 3
+nav_order: 5
 permalink: /practices
 ---
 

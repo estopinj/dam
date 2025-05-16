@@ -37,7 +37,7 @@ _This is a developpement of the OBSGESSION Horizon Europe project._
 Under development.
 ```
 
-![]({{ site.baseurl }}/assets/images/DAM_criteria.png){: width="40%" }
+![]({{ site.baseurl }}/assets/images/DAM_criteria.png){: width="35%" }
 
 
 ## Results
