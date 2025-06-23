@@ -94,7 +94,14 @@ plugins:
   - jekyll-github-metadata
   - jekyll-include-cache
   - jekyll-sitemap
-  #- jekyll-mermaid
+  - jekyll-scholar
+
+
+scholar:
+  style: apa
+  bibliography: my_references.bib
+  locale: en
+
 
 kramdown:
   syntax_highlighter_opts:
@@ -110,7 +117,6 @@ compress_html:
   profile: false
   # ignore:
   #   envs: all
-
 
 
 footer_content: 'Copyright &copy; 2024-2028 Obsgession. Distributed by an <a href="https://github.com/estopinj/dam/tree/main/LICENSE">MIT license.</a>'

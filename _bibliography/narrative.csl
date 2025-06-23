@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<style xmlns="http://purl.org/net/xbiblio/csl" version="1.0" class="in-text">
+  <info>
+    <title>Minimal Author-Year Style with Et Al</title>
+    <updated>2024-01-25T00:00:00+00:00</updated>
+  </info>
+
+  <citation>
+    <layout>
+      <group delimiter=" ">
+        <names variable="author">
+          <name form="short" and="symbol" delimiter=", " initialize-with="" name-as-sort-order="all" et-al-min="4" et-al-use-first="1">
+            <name-part name="family"/>
+          </name>
+          <et-al term="et-al"/>
+        </names>
+        <date variable="issued" prefix="(" suffix=")">
+          <date-part name="year"/>
+        </date>
+      </group>
+    </layout>
+  </citation>
+
+  <bibliography/>
+
+</style>

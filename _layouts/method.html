@@ -63,3 +63,10 @@ layout: default
   {% endcapture %}
   {{ markdown | markdownify }}
 </div>
+
+
+<!-- Add References section here -->
+<div class="references-section">
+  <h2>References</h2>
+  {% bibliography --cited_in_order %}
+</div>
