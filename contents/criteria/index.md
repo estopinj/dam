@@ -6,7 +6,7 @@ permalink: /criteria
 
 # Criteria
 
-- This panel provides information on every criterion used to subset detection & attribution [methods]({{ site.baseurl }}/methods) when using the framework.
+- This panel provides information on every criterion used to subset detection & attribution [methods]({{ site.baseurl }}/methods) when using the navigator.
 - Criteria are grouped in five descriptive categories: *Outcome*, *Data Compatibility*, *Assumptions*, *Model Properties*, and *Packages*.
 {: .fs-6 .fw-300 }
 
@@ -28,9 +28,9 @@ Every criterion has the four base options to ease the assessment process: `Uneva
 
 |  **Option**        | **Usage**                  | **Description**                  |
 |:------------------:|:--------------------------:|---------------------------------|
-| `Unevaluated`      | Default when starting the criteria assessment | When selected, the criterion applies no filtering on the suggested method set. Users should consider every criterion of the framework, and, only when deemed necessary, select one of the next two options `Don't know` or `Inapplicable`. |
+| `Unevaluated`      | Default when starting the criteria assessment | When selected, the criterion applies no filtering on the suggested method set. Users should consider every criterion of the navigator, and, only when deemed necessary, select one of the next two options `Don't know` or `Inapplicable`. |
 | `Don't know`       | User don't know which option to pick | When the user judges not being able to rightly assess the method against a criterion (lack of documentation, understanding, unsure), this option avoids subsetting methods by the corresponding criterion. |
-| `Inapplicable`     | Criterion cannot be applied because of incompatible paradigms | Because the framework ambitions to be large and to include methods from different fields relying on heterogeneous assumptions, a criterion can be irrelevant to a case study. Methods indeed rely on implicit / explicit modelling paradigms that are not all focused on the same aspects and are not fully compatible with each other. |
+| `Inapplicable`     | Criterion cannot be applied because of incompatible paradigms | Because the navigator ambitions to be large and to include methods from different fields relying on heterogeneous assumptions, a criterion can be irrelevant to a case study. Methods indeed rely on implicit / explicit modelling paradigms that are not all focused on the same aspects and are not fully compatible with each other. |
 | `Indifferent`      | All options are satisfying | Users can estimate that all options of a criterion are satisfying. The corresponding criterion has therefore been evaluated but should not filter the suggested method set. |
 
 {: .warning}

@@ -2,15 +2,15 @@
 title: Home
 layout: home
 nav_order: 1
-description: "The DAM framework provides a criteria-based engine to allow users describing their case-study properties and identify a set of suited attribution methods."
+description: "The DAM Navigator provides a criteria-based engine to allow users describing their case-study properties and identify a set of suited attribution methods."
 permalink: /
 ---
 
-# **Detection & Attribution Modelling framework**
+# **Detection & Attribution Modelling navigator**
 
 
 ## Welcome
-This website provides access to the Detection & Attribution Modelling (DAM) framework, a guide suggesting you methods suited to your project.
+This website provides access to the Detection & Attribution Modelling (DAM) navigator, a guide suggesting you methods suited to your project.
 {: .fs-6 .fw-300 }
 
 
@@ -31,7 +31,7 @@ _This is a developpement of the OBSGESSION Horizon Europe project._
 
 # Evaluating your project's needs
 
-- This is in this section that users evaluate their project against the different [criteria]({{ site.baseurl }}/criteria) of the framework.
+- This is in this section that users evaluate their project against the different [criteria]({{ site.baseurl }}/criteria) of the navigator.
 
 ```js
 Under development.

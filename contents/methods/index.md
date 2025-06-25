@@ -6,7 +6,7 @@ permalink: /methods
 
 # Methods
 
- - This panel provides information on every method documented in the framework.
+ - This panel provides information on every method documented in the navigator.
  - They are grouped in broad (non-exclusive) categories of their main field of development & application.
 {: .fs-6 .fw-300 }
 

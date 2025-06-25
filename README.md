@@ -1,8 +1,8 @@
-# Detection & Attribution Modelling Framework
+# Detection & Attribution Modelling Navigator
 
 
 ## Objective
-- The Detection Attribution Modeling Framework ([DAM]) serves the goal to orient users looking methods for detecting and disentangling the drivers of observed biodiversity change.
+- The Detection Attribution Modeling ([DAM]) Navigator serves the goal to orient users looking methods for detecting and disentangling the drivers of observed biodiversity change.
 It **situates methods**, both *widespread* methods used in ecological studies and approaches inherited from *causal inference* or econometrics, against an ordered set of [criteria].
 
 - The different [criteria] invite users to precisely qualify what they are looking for and what they have at hands to narrow down and suggest detection and/or attribution [methods] and tools suited to their study.
@@ -11,10 +11,10 @@ It **situates methods**, both *widespread* methods used in ecological studies an
 
 ## Website structure
 
-The DAM framework is implemented in this collaborative website and is organized around a dynamical method scheme on the landing page:
+The DAM Navigator is implemented in this collaborative website and is organized around a dynamical method scheme on the landing page:
 
 1. [Landing page]:
-    - Briefly description of the framework
+    - Brief description of the navigator
     - Invite users to fill in [criteria] in default order
         - Criteria default to `Unevaluated`, including all options and therefore not filtering the set of suggested methods
    
@@ -27,7 +27,7 @@ The DAM framework is implemented in this collaborative website and is organized 
 
 
 2. The sidebar provides access to different panels grouping resource pages logically.
-Its exploration in regards with the landing page is key for good use of the framework.
+Its exploration in regards with the landing page is key for good use of the navigator.
 
     1. [Good practices] panel
         
@@ -40,7 +40,7 @@ Its exploration in regards with the landing page is key for good use of the fram
 
     1. [Criteria] panel
 
-        This panel provides information on every criterion used to subset detection & attribution methods when using the framework. Pages follow a common documentation structure: *Definition*, *Explanation*, *Tools/rationale for helping assessment* and *Example*.
+        This panel provides information on every criterion used to subset detection & attribution methods when using the navigator. Pages follow a common documentation structure: *Definition*, *Explanation*, *Tools/rationale for helping assessment* and *Example*.
 
         <!-- ![criteria list](/assets/images/DAM_criteria.png) -->
          <img src="https://estopinj.github.io/dam/assets/images/DAM_criteria.png" width="220" />
@@ -49,7 +49,7 @@ Its exploration in regards with the landing page is key for good use of the fram
 
     1. [Methods] panel
 
-        This panel provides information on every method listed in the framework. The methods are described along a common documentation structure: *Description & principle*, *Reference articles*, *Implementation packages* and the *Assessment table* reflecting how the method is filtered against criteria evaluation.
+        This panel provides information on every method listed in the navigator. The methods are described along a common documentation structure: *Description & principle*, *Reference articles*, *Implementation packages* and the *Assessment table* reflecting how the method is filtered against criteria evaluation.
 
 
     1. [Gallery] panel

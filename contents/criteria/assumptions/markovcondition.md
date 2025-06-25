@@ -18,7 +18,7 @@ permalink: /markovcondition
 Whether the method assumes that each variable is independent of its non‐descendants given its parents in a causal graph (d‐separation). 
 
 ## Explanation
-Fundamental for graphical causal inference: it ensures that the graph’s conditional independencies mirror the data causal structure. Methods based on DAGs rely on it; others may not. It is a key assumption for some causal discovery algorithms (e.g. constraint-based) but can seem irrelevant for many other methods parts of the framework (`Inapplicable` can apply).
+Fundamental for graphical causal inference: it ensures that the graph’s conditional independencies mirror the data causal structure. Methods based on DAGs rely on it; others may not. It is a key assumption for some causal discovery algorithms (e.g. constraint-based) but can seem irrelevant for many other methods parts of the navigator (`Inapplicable` can apply).
 
 ## Tools/rationale for helping assessment
 1. Use domain expertise to enumerate all direct parent variables of each node in your causal graph. 

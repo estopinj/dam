@@ -1,7 +1,7 @@
-title: DAM framework
-subtitle: Detection & Attribution Modelling Framework
-description: A guide to help selecting D&A methods suited to your project
-author: Joaquim Estopinan (CNRS), Wilfried Thuiller (CNRS), Risto Heikkinen (SYKE)
+title: DAM Navigator
+subtitle: Guiding your path through Detection and Attribution Modelling
+description: The DAM Navigator is an interactive decision-support tool designed to help researchers explore, compare, and select appropriate detection and attribution modelling methods based on their data, assumptions, and goals.
+author: Joaquim Estopinan (CNRS), Sara Si-Moussi (CNRS), Jussi Mäkinen (SYKE), Miriam Beck (CESAB), Risto Heikkinen (SYKE), Wilfried Thuiller (CNRS)
 theme: just-the-docs
 url: https://estopinj.github.io/dam/
 baseurl: ""
