@@ -4,6 +4,6 @@ parent: Good practices
 nav_order: 1
 ---
 
-# Example page: Causal graphs
+# Example page
 
 This is an example good practice page.
