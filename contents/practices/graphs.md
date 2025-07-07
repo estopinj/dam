@@ -122,7 +122,18 @@ style C fill:#fe85be,stroke:#333;
 
     
 ## Variable selection
-But beneficial to others
+Graphs are a key tool for causal effectidentification strategies.
+While it is their main function, it is not the only one.
+They can also assist the choice of variable selection in a predictive task.
+<!-- Out-of-sample prediction -->
+<!-- Hartig et al.  -->
+{% cite pichler2023 --style _bibliography/narrative %} illustrate in their recent study an expected but key result: relying only on causal drivers significantly improves out-of-distribution prediction, at a marginal cost for in-distribution predictions.
+Adapting modern DL techniques to this result is a key element of success for better generalization.
+
+<!-- different types of targeted adjustment sets -->
+
+
+
 
 
 
