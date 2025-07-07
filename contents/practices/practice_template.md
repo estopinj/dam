@@ -1,7 +1,8 @@
 ---
+layout: baserefs
 title: Page example
 parent: Good practices
-nav_order: 1
+nav_order: 99
 ---
 
 # Example page
