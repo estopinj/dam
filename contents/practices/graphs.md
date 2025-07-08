@@ -122,7 +122,7 @@ style C fill:#fe85be,stroke:#333;
 
     
 ## Variable selection
-Graphs are a key tool for causal effectidentification strategies.
+Graphs are a key tool for causal effect identification strategies.
 While it is their main function, it is not the only one.
 They can also assist the choice of variable selection in a predictive task.
 <!-- Out-of-sample prediction -->
@@ -131,8 +131,7 @@ They can also assist the choice of variable selection in a predictive task.
 Adapting modern DL techniques to this result is a key element of success for better generalization.
 
 <!-- different types of targeted adjustment sets -->
-
-
+The minimal adjustment sets obtained after applying the backdoor criterion 
 
 
 
