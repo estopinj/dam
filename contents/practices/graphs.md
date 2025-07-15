@@ -127,17 +127,31 @@ While it is their main function, it is not the only one.
 They can also assist the choice of variable selection in a predictive task.
 <!-- Out-of-sample prediction -->
 <!-- Hartig et al.  -->
-{% cite pichler2023 --style _bibliography/narrative %} illustrate in their recent study an expected but key result: relying only on causal drivers significantly improves out-of-distribution prediction, at a marginal cost for in-distribution predictions.
+{% cite pichler2023 --style _bibliography/narrative %} illustrate in their recent study an expected but key result: relying only on causal drivers -instead of all collected data- significantly improves out-of-distribution prediction, at a marginal cost for in-distribution predictions.
 Adapting modern DL techniques to this result is a key element of success for better generalization.
 
 <!-- different types of targeted adjustment sets -->
-The minimal adjustment sets obtained after applying the backdoor criterion 
+The adjustment sets obtained after applying the backdoor criterion on DAGs are minimal: they only include the variables that *need* to be accounted for in order to reach unbiased effect estimates.
+However, they are not the only neither necessarily the best option depedending on the aim: on top of adjustement, efficiency, precision or robustness can be pririorities too. Different strategies are positioned in {% cite witte2019 --style _bibliography/narrative %}, with for instance the *outcome approach* leading to an increased precision for many estimation models, but might miss confounders weakly associated with the outcome but strongly with the treatment.
+Variable selection in high dimensional settings targetting improved effect estimation instead of prediction modelling is an active research area {% cite tang2023 %}.
 
 
 
 
 ## Expliciting assumptions
-%% Better communication, justification, increased confidence in results & reproducibility
+<!-- %% Better communication, justification, increased confidence in results & reproducibility -->
+Another key advantage of representing assumptions on the studied system with causal graphs is simply rendering them explict.
+It often reads as down-to-earth at first sight, but it actually matures in a incredibly useful exercise to improving communication and results justification.
+
+In  research articles, inputs are often fed to models based on an accepted rationale justified by past ecological research (typically bioclimatic variables), or on a justification specific to the problem at hand (e.g. human footprint considered as the inverse of habitat connectivity).
+However, links between those inputted variables -at least for prediction-oriented tasks- are seldom considered, possibly impacting variable contribution measures and conclusions.
+By forcing to consider the interdependences between variables and possible consequences, causal graphs are a tool improving modelling rigor and transparency.
+Overall, they increase reproducibility and confidence in results.
+
+{: .note }
+> DAGs should be read not only by the represented nodes and arrows, but also by the *absence* of arrows between nodes that are equally important assumptions.
+
+
 
 %% Enables discussion and challenges of assumptions, iterative science
 
