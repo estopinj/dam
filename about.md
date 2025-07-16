@@ -82,4 +82,4 @@ The DAM Navigator is implemented in this collaborative website and is organized 
 
 ## Contact
 
-XXXX
+- Joaquim Estopinan: joaquim.estopinan@univ-grenoble-alpes.fr
