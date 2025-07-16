@@ -171,13 +171,14 @@ Such a practice has the potential to greatly benefit iterative science {% cite b
 
 DAGs are neither the only option for representing causal relationships nor the most flexible.
 In fact, many other options exist, some of which are specifically designed to extend DAGs or relax constraints.
+See {% cite vowels2022 --style _bibliography/narrative %} section 2 for a survey.
 
 Firstly, when a large number of unobserved confounders hinder the readability of a DAG, switching to an Acyclic Directed Mixed Graph (ADMG) can help researchers recover a clear scheme that supports identification strategies {% cite richardson2003 %}.
 In ADMGs , a unidirected edge implies a direct *or* indirect link, and a bidirected edge represent a link including an unboserved confounder -or latente variable- hidden in the middle.
 Causal search algorithms commonly converge on Markov equivalence classes rather than a unique DAG, i.e. a set of distinct graphs that satisfy the same conditional independence relationships found in the data. These sets are typically represented using Completed Partially Directed Acyclic Graphs (CPDAGs), in which an edge is directed only if it is present in all graphs and is otherwise left undirected.
 
 When dealing with time-series under the stationarity hypothesis, DAGs can be unfolded with various time steps for each variable, using window causal graphs {% cite runge2023b %}. Causal precedence (only events that occurred before or at the same time can cause a variable) enables some of the many possible links to be pruned.
-{% cite assad2022a --style _bibliography/narrative %} suggest a trade-off between the full window causal graph and a summary causal graph that aggregates all time steps. The *extended* summary causal graph represents all past time steps together, while keeping them distinct from the present state variables (see their Figure 1).
+{% cite assaad2022a --style _bibliography/narrative %} suggest a trade-off between the full window causal graph and a summary causal graph that aggregates all time steps. The *extended* summary causal graph represents all past time steps together, while keeping them distinct from the present state variables (see their Figure 1).
 
 Finally, recent developments offer causal structures that can be used to leverage specific organisational structures of information, enabling better causal identification:
 - Hierarchical graph structures {% cite weinstein2024 %} model unit-level variables with nested subunit-level variables and potential interactions in both directions.
