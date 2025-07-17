@@ -2,7 +2,7 @@
 title: Experiments
 nav_order: 2
 parent: Methods
-permalink: /exps
+permalink: /experiments
 ---
 
 # Experiments

@@ -2,7 +2,7 @@
 title: Causal ML
 nav_order: 6
 parent: Methods
-permalink: /causalML
+permalink: /causal_ML
 ---
 
 # Causal Machine Learning
