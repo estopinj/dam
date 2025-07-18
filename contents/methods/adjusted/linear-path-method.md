@@ -1,8 +1,7 @@
 ---
 layout: method
 title: "Linear path method"
-parent: "Adjusted methods"
-nav_order: 1
+parent: "Adjusted methods (Backdoor C.)"
 date: 2025-07-17
 author: Mrs. Young
 ---

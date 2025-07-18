@@ -2,7 +2,6 @@
 layout: method
 title: "Matrix completion"
 parent: "Quasi-experiments"
-nav_order: 1
 date: 2025-07-17
 author: Mrs. Young
 ---
@@ -10,7 +9,7 @@ author: Mrs. Young
 
 {% if page.category_note != '' %}
 {: .note }
-
+This method also belongs to [Adjusted methods (Backdoor C.)](/adjusted/).
 {% endif %}
 
 

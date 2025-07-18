@@ -2,7 +2,6 @@
 layout: method
 title: "Generalized Dissimilarity Models (GDMs)"
 parent: "Alternative paradigms"
-nav_order: 1
 date: 2025-07-17
 author: Mrs. Young
 ---
@@ -10,7 +9,7 @@ author: Mrs. Young
 
 {% if page.category_note != '' %}
 {: .note }
-
+This method also belongs to [Ecology-guided Modelling](/ecology-guided/).
 {% endif %}
 
 

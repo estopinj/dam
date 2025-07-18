@@ -2,7 +2,6 @@
 layout: method
 title: "Bayesian network learning"
 parent: "Causal discovery"
-nav_order: 1
 date: 2025-07-17
 author: Mrs. Young
 ---

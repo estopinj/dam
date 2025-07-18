@@ -2,7 +2,6 @@
 layout: method
 title: "Autoregressive state-space models"
 parent: "Independent detection"
-nav_order: 1
 date: 2025-07-17
 author: Mrs. Young
 ---

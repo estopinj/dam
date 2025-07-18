@@ -2,7 +2,6 @@
 layout: method
 title: "Causal diffusion models"
 parent: "Alternative paradigms"
-nav_order: 1
 date: 2025-07-17
 author: Mrs. Young
 ---

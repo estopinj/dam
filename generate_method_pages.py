@@ -2,39 +2,23 @@ import os
 import csv
 import re
 import textwrap
+import json
 
 # === CONFIGURATION ===
 INPUT_FILE = "_data/method_assessments.tsv"
+DICTS_FILE = "_data/cat_dicts.json"
 OUTPUT_ROOT = "contents/methods"
 LAYOUT = "method"
 
-# === Category → folder mapping ===
-CATEGORY_FOLDER_MAP = {
-    "Adjusted methods (Backdoor C.)": "adjusted",
-    "Alternative paradigms": "alternative",
-    "Causal ML": "causal_ML",
-    "Independent detection": "detection", 
-    "Causal discovery": "discovery",
-    "Ecology-guided Modelling": "ecology-guided",
-    "Experiments": "experiments",
-    "Quasi-experiments": "quasi-exps",
-    "Counterfactual & future simulations": "simulations",
-    "Versatile tools": "tools"
-}
 
-# === Category → folder mapping ===
-CATEGORY_TITLE_MAP = {
-    "Adjusted methods (Backdoor C.)": "Adjusted methods",
-    "Alternative paradigms": "Alternative paradigms",
-    "Causal ML": "Causal ML",
-    "Independent detection": "Independent detection", 
-    "Causal discovery": "Causal discovery",
-    "Ecology-guided Modelling": "Ecology-guided Modelling",
-    "Experiments": "Experiments",
-    "Quasi-experiments": "Quasi-experiments",
-    "Counterfactual & future simulations": "Counterfactual & future simulations",
-    "Versatile tools": "Versatile tools"
-}
+# Read from file
+with open(DICTS_FILE, "r") as f:
+    data = json.load(f)
+
+# Access individual dictionaries
+CATEGORY_FOLDER_MAP = data["CATEGORY_FOLDER_MAP"]
+SUBCAT_FOLDER_MAP = data["SUBCAT_FOLDER_MAP"]
+SUBCAT_PARENT = data["SUBCAT_PARENT"]
 
 
 with open("_data/method_assessments.tsv", newline='', encoding='utf-8') as infile, \
@@ -61,42 +45,67 @@ reader = csv.DictReader(lines, delimiter="\t")
 for row in reader:
     method = row.get("Method list", "").strip()
     category_raw = row.get("Category", "").strip()
+    subcategory_raw = row.get("Sub-category", "").strip()
     assessor = row.get("Assessor", "").strip()
 
     if not method or not category_raw:
         continue
 
     # Use first category only
-    main_category = category_raw.split(",")[0].strip()
-    folder_name = CATEGORY_FOLDER_MAP.get(main_category, "uncategorized")
+    CAT = category_raw.split(",")[0].strip()
+    CAT_folder_name = CATEGORY_FOLDER_MAP.get(CAT, "uncategorized")
+    CAT_folder = os.path.join(OUTPUT_ROOT, CAT_folder_name)
+    os.makedirs(CAT_folder, exist_ok=True)
 
-    # Parent
-    parent_name = CATEGORY_TITLE_MAP.get(main_category, "uncategorized")
+    #print("Category raw before if:", category_raw)
+    #print("Sub-category raw before if:", subcategory_raw)
+    if not subcategory_raw:
+        # print("No sub-category found, using main category as parent: CAT =", CAT)
+        # If no sub-category, use main category as parent
+        # Parent
+        PARENT = CAT
+        # Slugified file name
+        slug = slugify(method)
+        filepath = os.path.join(CAT_folder, f"{slug}.md")
 
-    # Slugified file name
-    slug = slugify(method)
-    category_folder = os.path.join(OUTPUT_ROOT, folder_name)
-    os.makedirs(category_folder, exist_ok=True)
+    # There is a sub-category
+    else:
+        # If sub-category exists, use it for parent and folder name
+        SUBCAT = subcategory_raw.split(",")[0].strip()
+        SUBCAT_folder_name = SUBCAT_FOLDER_MAP.get(SUBCAT, "uncategorized")
+        # Creates sub-category folder if it does not already exist
+        SUBCAT_folder = os.path.join(CAT_folder, SUBCAT_folder_name)
+        os.makedirs(SUBCAT_folder, exist_ok=True)
 
-    filepath = os.path.join(category_folder, f"{slug}.md")
+        # Index file for sub-category
+        if method == SUBCAT:
+            # Parent
+            PARENT = CAT
+            filepath = os.path.join(SUBCAT_folder, "index.md")
+        # Member of sub-category
+        else:
+            # Parent
+            PARENT = SUBCAT
+            filepath = os.path.join(SUBCAT_folder, f"{slugify(method)}.md")
 
-    # if os.path.exists(filepath):
-    #     print(f"Skipping existing: {filepath}")
-    #     continue
+
+    if os.path.exists(filepath):
+        print(f"Skipping existing: {filepath}")
+        continue
+
 
     front_matter = f"""---
 layout: {LAYOUT}
-title: "{method.strip()}"
-parent: "{parent_name}"
-nav_order: 1
+title: "{method}"
+parent: "{PARENT}"
 date: 2025-07-17
 author: Mrs. Young
 ---
 <!-- This file was auto-generated from {INPUT_FILE} -->
 """
     
+    # Building category note when there are multiple categories
     categories_raw = [cat.strip() for cat in category_raw.split(",")]
-    main_category = categories_raw[0]
     other_categories = categories_raw[1:]
 
     # Build hyperlinked list of other categories
@@ -120,7 +129,6 @@ author: Mrs. Young
         )
     else:
         category_note = ""
-
 
     body = textwrap.dedent(f"""\
         {{% if page.category_note != '' %}}
@@ -191,6 +199,16 @@ author: Mrs. Young
         <!-- For referencement in toc before automatic table -->
         ## Assessment table
     """)
+
+    if method == SUBCAT:
+        body = textwrap.dedent(f"""\
+        {{% if page.category_note != '' %}}
+        {{: .note }}
+        {category_note}
+        {{% endif %}}
+
+        ## Assessment table
+    """)
     
 
     with open(filepath, "w", encoding="utf-8") as out:
@@ -198,3 +216,20 @@ author: Mrs. Young
         out.write(front_matter.strip() + "\n\n" + body.strip() + "\n")
 
     print(f"Created: {filepath}")
+
+
+    # Check if index.md does not already exists
+    index_path = os.path.join(SUBCAT_folder, "index.md")
+    if not os.path.exists(index_path):
+        # Create index.md for sub-category
+
+        body = textwrap.dedent(f"""
+# {SUBCAT}
+""")
+        
+        with open(index_path, "w", encoding="utf-8") as index_file:
+            index_file.write(f"""---
+title: "{SUBCAT}"
+parent: "{CAT}"
+---
+""" + "\n\n" + body.strip() + "\n")

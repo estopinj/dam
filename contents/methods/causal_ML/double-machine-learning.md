@@ -2,7 +2,6 @@
 layout: method
 title: "Double Machine learning"
 parent: "Causal ML"
-nav_order: 1
 date: 2025-07-17
 author: Mrs. Young
 ---
