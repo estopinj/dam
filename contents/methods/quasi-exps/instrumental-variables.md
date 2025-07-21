@@ -9,7 +9,7 @@ author: Mrs. Young
 
 {% if page.category_note != '' %}
 {: .note }
-This method also belongs to [Adjusted methods (Backdoor C.)]({site.baseurl}/adjusted/), [Causal ML]({site.baseurl}/causal_ML/), and [Experiments]({site.baseurl}/experiments/).
+This method also belongs to [Adjusted methods (Backdoor C.)]({ site.url }/adjusted/), [Causal ML]({ site.url }/causal_ML/), and [Experiments]({ site.url }/experiments/).
 {% endif %}
 
 
