@@ -113,7 +113,7 @@ author: Mrs. Young
     for oc in other_categories:
         label = oc
         slug = CATEGORY_FOLDER_MAP.get(oc, slugify(oc))
-        url = f"{{site.baseurl}}/{slug}/"
+        url = f"{{ site.url }}/{slug}/"
         other_links.append(f"[{label}]({url})")
 
     # Grammar-aware formatting of the list
