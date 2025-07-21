@@ -9,7 +9,7 @@ author: Mrs. Young
 
 {% if page.category_note != '' %}
 {: .note }
-This method also belongs to [Causal ML]({{ site.baseurl }}/causal_ML/) and [Quasi-experiments]({{ site.baseurl }}/quasi-exps/).
+This method also belongs to [Causal ML]({{ site.baseurl }}/causal_ML) and [Quasi-experiments]({{ site.baseurl }}/quasi-exps).
 {% endif %}
 
 
