@@ -9,7 +9,7 @@ author: Mrs. Young
 
 {% if page.category_note != '' %}
 {: .note }
-This method also belongs to [Versatile tools]({ site.url }/tools/).
+This method also belongs to [Versatile tools]({ basesite.url }/dam/tools/).
 {% endif %}
 
 

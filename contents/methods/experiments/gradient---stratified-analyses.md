@@ -9,7 +9,7 @@ author: Mrs. Young
 
 {% if page.category_note != '' %}
 {: .note }
-This method also belongs to [Adjusted methods (Backdoor C.)]({ site.url }/adjusted/) and [Ecology-guided Modelling]({ site.url }/ecology-guided/).
+This method also belongs to [Adjusted methods (Backdoor C.)]({ basesite.url }/dam/adjusted/) and [Ecology-guided Modelling]({ basesite.url }/dam/ecology-guided/).
 {% endif %}
 
 

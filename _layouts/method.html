@@ -40,16 +40,16 @@ layout: default
   {% capture markdown %}
  | **Category**          | **Criteria**                  | **Assessment**                  |
   |-----------------------|-------------------------------|---------------------------------|
-  | **[Outcome]({{ site.baseurl }}/outcome)**           | Objective                     | {% assign items = assessment.Objective | split: "," %}{% for item in items %}`{{ item | strip }}`{% unless forloop.last %}, {% endunless %}{% endfor %} |
+  | **[Outcome]({{ site.baseurl }}/dam/outcome)**           | Objective                     | {% assign items = assessment.Objective | split: "," %}{% for item in items %}`{{ item | strip }}`{% unless forloop.last %}, {% endunless %}{% endfor %} |
   |                       | Estimand                      | {% assign items = assessment.Estimand | split: "," %}{% for item in items %}`{{ item | strip }}`{% unless forloop.last %}, {% endunless %}{% endfor %} |
   |                       | Validity                      | {% assign items = assessment.Validity | split: "," %}{% for item in items %}`{{ item | strip }}`{% unless forloop.last %}, {% endunless %}{% endfor %} |
-  | **[Data compatibility]({{ site.baseurl }}/data)**| Type                          | {% assign items = assessment.Type | split: "," %}{% for item in items %}`{{ item | strip }}`{% unless forloop.last %}, {% endunless %}{% endfor %} |
+  | **[Data compatibility]({{ site.baseurl }}/dam/data)**| Type                          | {% assign items = assessment.Type | split: "," %}{% for item in items %}`{{ item | strip }}`{% unless forloop.last %}, {% endunless %}{% endfor %} |
   |                       | Required TS length            | {% assign items = assessment["Required TS length"] | split: "," %}{% for item in items %}`{{ item | strip }}`{% unless forloop.last %}, {% endunless %}{% endfor %} |
   |                       | Handles few samples           | {% assign items = assessment["Handles few samples"] | split: "," %}{% for item in items %}`{{ item | strip }}`{% unless forloop.last %}, {% endunless %}{% endfor %} |
   |                       | Handles huge datasets (n)     | {% assign items = assessment["Handles huge datasets (n)"] | split: "," %}{% for item in items %}`{{ item | strip }}`{% unless forloop.last %}, {% endunless %}{% endfor %} |
   |                       | Handles missing data          | {% assign items = assessment["Handles missing data"] | split: "," %}{% for item in items %}`{{ item | strip }}`{% unless forloop.last %}, {% endunless %}{% endfor %} |
   |                       | RS-data proven                | {% assign items = assessment["RS-data proven"] | split: "," %}{% for item in items %}`{{ item | strip }}`{% unless forloop.last %}, {% endunless %}{% endfor %} |
-  | **[Assumptions]({{ site.baseurl }}/assumptions)**       | Functional form               | {% assign items = assessment["Fonctional form"] | split: "," %}{% for item in items %}`{{ item | strip }}`{% unless forloop.last %}, {% endunless %}{% endfor %} |
+  | **[Assumptions]({{ site.baseurl }}/dam/assumptions)**       | Functional form               | {% assign items = assessment["Fonctional form"] | split: "," %}{% for item in items %}`{{ item | strip }}`{% unless forloop.last %}, {% endunless %}{% endfor %} |
   |                       | No unobserved confounders     | {% assign items = assessment["No unobserved confounders"] | split: "," %}{% for item in items %}`{{ item | strip }}`{% unless forloop.last %}, {% endunless %}{% endfor %} |
   |                       | No interference               | {% assign items = assessment["No interference"] | split: "," %}{% for item in items %}`{{ item | strip }}`{% unless forloop.last %}, {% endunless %}{% endfor %} |
   |                       | Well-defined treatments       | {% assign items = assessment["Well-defined treatments"] | split: "," %}{% for item in items %}`{{ item | strip }}`{% unless forloop.last %}, {% endunless %}{% endfor %} |
@@ -58,13 +58,13 @@ layout: default
   |                       | Faithfulness                  | {% assign items = assessment.Faithfulness | split: "," %}{% for item in items %}`{{ item | strip }}`{% unless forloop.last %}, {% endunless %}{% endfor %} |
   |                       | IDD                           | {% assign items = assessment.IDD | split: "," %}{% for item in items %}`{{ item | strip }}`{% unless forloop.last %}, {% endunless %}{% endfor %} |
   |                       | Model specific assumption     | {% assign items = assessment["Model specific"] | split: "," %}{% for item in items %}`{{ item | strip }}`{% unless forloop.last %}, {% endunless %}{% endfor %} |
-  | **[Model properties]({{ site.baseurl }}/properties)**  | Requires explicit processes   | {% assign items = assessment["Requires explicit processes"] | split: "," %}{% for item in items %}`{{ item | strip }}`{% unless forloop.last %}, {% endunless %}{% endfor %} |
+  | **[Model properties]({{ site.baseurl }}/dam/properties)**  | Requires explicit processes   | {% assign items = assessment["Requires explicit processes"] | split: "," %}{% for item in items %}`{{ item | strip }}`{% unless forloop.last %}, {% endunless %}{% endfor %} |
   |                       | Exposure type                 | {% assign items = assessment["Exposure type"] | split: "," %}{% for item in items %}`{{ item | strip }}`{% unless forloop.last %}, {% endunless %}{% endfor %} |
   |                       | Number of variables           | {% assign items = assessment["Number of variables"] | split: "," %}{% for item in items %}`{{ item | strip }}`{% unless forloop.last %}, {% endunless %}{% endfor %} |
   |                       | Handles lag effects           | {% assign items = assessment["Handles lag effects"] | split: "," %}{% for item in items %}`{{ item | strip }}`{% unless forloop.last %}, {% endunless %}{% endfor %} |
   |                       | Propagates uncertainty        | {% assign items = assessment["Propaguates uncertainty"] | split: "," %}{% for item in items %}`{{ item | strip }}`{% unless forloop.last %}, {% endunless %}{% endfor %} | 
   |                       | Parametric nature             | {% assign items = assessment["Parametric nature"] | split: "," %}{% for item in items %}`{{ item | strip }}`{% unless forloop.last %}, {% endunless %}{% endfor %} |
-  | **[Packages]({{ site.baseurl }}/packages)**          | Language                      | {% assign items = assessment.Language | split: "," %}{% for item in items %}`{{ item | strip }}`{% unless forloop.last %}, {% endunless %}{% endfor %} |
+  | **[Packages]({{ site.baseurl }}/dam/packages)**          | Language                      | {% assign items = assessment.Language | split: "," %}{% for item in items %}`{{ item | strip }}`{% unless forloop.last %}, {% endunless %}{% endfor %} |
   |                       | Usage                         | {% assign items = assessment.Usage | split: "," %}{% for item in items %}`{{ item | strip }}`{% unless forloop.last %}, {% endunless %}{% endfor %} |
   {% endcapture %}
   {{ markdown | markdownify }}

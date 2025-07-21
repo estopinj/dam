@@ -9,7 +9,7 @@ author: Mrs. Young
 
 {% if page.category_note != '' %}
 {: .note }
-This method also belongs to [Ecology-guided Modelling]({ site.url }/ecology-guided/).
+This method also belongs to [Ecology-guided Modelling]({ basesite.url }/dam/ecology-guided/).
 {% endif %}
 
 
