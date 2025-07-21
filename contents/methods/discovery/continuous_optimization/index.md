@@ -9,7 +9,7 @@ author: Mrs. Young
 
 {% if page.category_note != '' %}
 {: .note }
-This method also belongs to [Causal ML](/causal_ML/).
+This method also belongs to [Causal ML]({site.baseurl}/causal_ML/).
 {% endif %}
 
 ## Assessment table

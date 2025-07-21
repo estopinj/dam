@@ -9,7 +9,7 @@ author: Mrs. Young
 
 {% if page.category_note != '' %}
 {: .note }
-This method also belongs to [Adjusted methods (Backdoor C.)](/adjusted/).
+This method also belongs to [Adjusted methods (Backdoor C.)]({site.baseurl}/adjusted/).
 {% endif %}
 
 

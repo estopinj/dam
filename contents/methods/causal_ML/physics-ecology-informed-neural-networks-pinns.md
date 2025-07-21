@@ -9,7 +9,7 @@ author: Mrs. Young
 
 {% if page.category_note != '' %}
 {: .note }
-This method also belongs to [Counterfactual & future simulations](/simulations/) and [Ecology-guided Modelling](/ecology-guided/).
+This method also belongs to [Counterfactual & future simulations]({site.baseurl}/simulations/) and [Ecology-guided Modelling]({site.baseurl}/ecology-guided/).
 {% endif %}
 
 

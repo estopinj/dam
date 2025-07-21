@@ -89,9 +89,9 @@ for row in reader:
             filepath = os.path.join(SUBCAT_folder, f"{slugify(method)}.md")
 
 
-    if os.path.exists(filepath):
-        print(f"Skipping existing: {filepath}")
-        continue
+    # if os.path.exists(filepath):
+    #     print(f"Skipping existing: {filepath}")
+    #     continue
 
 
     front_matter = f"""---
@@ -113,7 +113,7 @@ author: Mrs. Young
     for oc in other_categories:
         label = oc
         slug = CATEGORY_FOLDER_MAP.get(oc, slugify(oc))
-        url = f"/{slug}/"
+        url = f"{{site.baseurl}}/{slug}/"
         other_links.append(f"[{label}]({url})")
 
     # Grammar-aware formatting of the list
