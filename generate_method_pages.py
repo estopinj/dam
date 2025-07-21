@@ -89,9 +89,9 @@ for row in reader:
             filepath = os.path.join(SUBCAT_folder, f"{slugify(method)}.md")
 
 
-    # if os.path.exists(filepath):
-    #     print(f"Skipping existing: {filepath}")
-    #     continue
+    if os.path.exists(filepath):
+        print(f"Skipping existing: {filepath}")
+        continue
 
 
     front_matter = f"""---
