@@ -9,7 +9,7 @@ author: Mrs. Young
 
 {% if page.category_note != '' %}
 {: .note }
-This method also belongs to [Alternative paradigms]({ site.baseurl }/alternative/).
+This method also belongs to [Alternative paradigms]({{ site.baseurl }}/alternative/).
 {% endif %}
 
 
