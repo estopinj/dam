@@ -5,7 +5,8 @@ import textwrap
 import json
 
 # === CONFIGURATION ===
-INPUT_FILE = "_data/method_assessments.tsv"
+INPUT_FILE = "_data/Attribution methods - Method Assessment.tsv"
+OUTPUT_FILE = "_data/method_assessments_clean.tsv"
 DICTS_FILE = "_data/cat_dicts.json"
 OUTPUT_ROOT = "contents/methods"
 LAYOUT = "method"
@@ -21,8 +22,8 @@ SUBCAT_FOLDER_MAP = data["SUBCAT_FOLDER_MAP"]
 SUBCAT_PARENT = data["SUBCAT_PARENT"]
 
 
-with open("_data/method_assessments.tsv", newline='', encoding='utf-8') as infile, \
-     open("_data/method_assessments_clean.tsv", "w", newline='', encoding='utf-8') as outfile:
+with open(INPUT_FILE, newline='', encoding='utf-8') as infile, \
+     open(OUTPUT_FILE, "w", newline='', encoding='utf-8') as outfile:
     
     lines = infile.readlines()[3:]  # skip metadata
     writer = outfile.writelines(lines)
@@ -88,10 +89,11 @@ for row in reader:
             PARENT = SUBCAT
             filepath = os.path.join(SUBCAT_folder, f"{slugify(method)}.md")
 
-
+    ### Check if file already exists ###
     if os.path.exists(filepath):
-        print(f"Skipping existing: {filepath}")
+        # print(f"Skipping existing: {filepath}")
         continue
+    ####################################
 
 
     front_matter = f"""---

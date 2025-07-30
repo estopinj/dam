@@ -55,6 +55,10 @@ GitHubPages::Dependencies.gems.each do |gem, version|
 end
 ```
 
+### Small image
+
+<!-- ![](../../assets/images/small-image.jpg) -->
+
 
 ### Large image
 
