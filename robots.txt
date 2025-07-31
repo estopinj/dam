@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://estopinj.github.io/dam/sitemap.xml
