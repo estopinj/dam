@@ -3,6 +3,9 @@ title: Usage
 parent: Packages
 nav_order: 2
 permalink: /usage
+categories:
+- criteria
+- packages
 ---
 
 # Packages

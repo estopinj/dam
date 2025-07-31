@@ -1,8 +1,11 @@
 ---
-title: Required TS length
-parent: Data compatibility
+title: "Required TS length"
+parent: "Data compatibility"
 nav_order: 2
 permalink: /tslength
+categories:
+- criteria
+- data
 ---
 
 # Required time-series length

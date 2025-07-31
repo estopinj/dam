@@ -1,8 +1,11 @@
 ---
-title: Propagates uncertainty
-parent: Model properties
+title: "Propagates uncertainty"
+parent: "Model properties"
 nav_order: 5
 permalink: /uncertainty
+categories:
+- criteria
+- model_properties
 ---
 
 # Propagates uncertainty

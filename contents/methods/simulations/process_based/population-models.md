@@ -3,7 +3,11 @@ layout: method
 title: "Population models"
 parent: "Process-based methods"
 date: 2025-07-17
-author: Mrs. Young
+author: "Mrs. Young"
+categories:
+- methods
+- simulations
+- process_based
 ---
 <!-- This file was auto-generated from _data/method_assessments.tsv -->
 

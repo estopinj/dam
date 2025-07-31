@@ -3,6 +3,9 @@ title: Model-specific
 parent: Assumptions
 nav_order: 9
 permalink: /modelspecifc
+categories:
+- criteria
+- assumptions
 ---
 
 # Model-specific assumption

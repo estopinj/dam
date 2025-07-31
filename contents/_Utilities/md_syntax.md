@@ -1,7 +1,9 @@
 ---
-title: Markdown syntax
+title: "Markdown syntax"
 parent: Utilities
 nav_order: 99
+categories:
+- _Utilities
 ---
 
 <button class="btn js-toggle-dark-mode">Preview dark color scheme</button>

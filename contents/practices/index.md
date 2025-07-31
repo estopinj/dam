@@ -1,7 +1,9 @@
 ---
-title: Good practices
+title: "Good practices"
 nav_order: 5
 permalink: /practices
+categories:
+- practices
 ---
 
 # Good practices

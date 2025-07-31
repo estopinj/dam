@@ -1,8 +1,11 @@
 ---
-title: Handles missing data
-parent: Data compatibility
+title: "Handles missing data"
+parent: "Data compatibility"
 nav_order: 5
 permalink: /missingdata
+categories:
+- criteria
+- data
 ---
 
 # Handles missing data

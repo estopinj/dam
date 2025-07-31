@@ -3,6 +3,9 @@ title: Estimand
 parent: Outcome
 nav_order: 2
 permalink: /estimand
+categories:
+- criteria
+- outcome
 ---
 
 # Estimand

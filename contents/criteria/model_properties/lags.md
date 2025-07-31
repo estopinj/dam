@@ -1,8 +1,11 @@
 ---
-title: Handles lag effects
-parent: Model properties
+title: "Handles lag effects"
+parent: "Model properties"
 nav_order: 4
 permalink: /lags
+categories:
+- criteria
+- model_properties
 ---
 
 # Handles lag effects

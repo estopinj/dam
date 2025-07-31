@@ -3,6 +3,9 @@ title: Quasi-experiments
 nav_order: 5
 parent: Methods
 permalink: /quasi-exps
+categories:
+- methods
+- quasi-exps
 ---
 
 # Quasi-experiments

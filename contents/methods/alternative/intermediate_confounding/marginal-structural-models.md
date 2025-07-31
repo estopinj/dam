@@ -3,7 +3,11 @@ layout: method
 title: "Marginal structural models"
 parent: "Intermediate confounding"
 date: 2025-07-17
-author: Mrs. Young
+author: "Mrs. Young"
+categories:
+- methods
+- alternative
+- intermediate_confounding
 ---
 <!-- This file was auto-generated from _data/method_assessments.tsv -->
 

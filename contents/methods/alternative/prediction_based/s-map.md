@@ -1,9 +1,13 @@
 ---
 layout: method
-title: "S-Map"
+title: S-Map
 parent: "Prediction-based approaches"
 date: 2025-07-17
-author: Mrs. Young
+author: "Mrs. Young"
+categories:
+- methods
+- alternative
+- prediction_based
 ---
 <!-- This file was auto-generated from _data/method_assessments.tsv -->
 

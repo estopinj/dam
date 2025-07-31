@@ -3,7 +3,11 @@ layout: method
 title: "Continuous optimization"
 parent: "Causal discovery"
 date: 2025-07-17
-author: Mrs. Young
+author: "Mrs. Young"
+categories:
+- methods
+- discovery
+- continuous_optimization
 ---
 <!-- This file was auto-generated from _data/method_assessments.tsv -->
 

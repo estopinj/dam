@@ -3,6 +3,9 @@ title: Outcome
 nav_order: 1
 parent: Criteria
 permalink: /outcome
+categories:
+- criteria
+- outcome
 ---
 
 # Outcome

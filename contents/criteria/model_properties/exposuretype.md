@@ -1,8 +1,11 @@
 ---
-title: Exposure type
-parent: Model properties
+title: "Exposure type"
+parent: "Model properties"
 nav_order: 2
 permalink: /exposuretype
+categories:
+- criteria
+- model_properties
 ---
 
 # Exposure type

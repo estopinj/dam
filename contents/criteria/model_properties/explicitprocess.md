@@ -1,8 +1,11 @@
 ---
-title: Explicit process required
-parent: Model properties
+title: "Explicit process required"
+parent: "Model properties"
 nav_order: 1
 permalink: /explicitprocess
+categories:
+- criteria
+- model_properties
 ---
 
 # Explicit process required

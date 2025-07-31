@@ -1,8 +1,11 @@
 ---
-title: No unobserved confounders
+title: "No unobserved confounders"
 parent: Assumptions
 nav_order: 2
 permalink: /nounobserved
+categories:
+- criteria
+- assumptions
 ---
 
 # No unobserved confounders

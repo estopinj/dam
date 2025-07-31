@@ -1,8 +1,11 @@
 ---
-title: Causal ML
+title: "Causal ML"
 nav_order: 6
 parent: Methods
 permalink: /causal_ML
+categories:
+- methods
+- causal_ML
 ---
 
 # Causal Machine Learning

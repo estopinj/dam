@@ -1,9 +1,13 @@
 ---
 layout: method
-title: "Bootstrapping"
+title: Bootstrapping
 parent: "Uncertainty tools"
 date: 2025-07-17
-author: Mrs. Young
+author: "Mrs. Young"
+categories:
+- methods
+- tools
+- uncertainty_tools
 ---
 <!-- This file was auto-generated from _data/method_assessments.tsv -->
 

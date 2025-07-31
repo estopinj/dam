@@ -1,8 +1,11 @@
 ---
-title: Versatile tools
+title: "Versatile tools"
 nav_order: 10
 parent: Methods
 permalink: /tools
+categories:
+- methods
+- tools
 ---
 
 # Versatile tools

@@ -1,8 +1,11 @@
 ---
-title: No interference
+title: "No interference"
 parent: Assumptions
 nav_order: 3
 permalink: /nointerference
+categories:
+- criteria
+- assumptions
 ---
 
 # No interference

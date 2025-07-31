@@ -3,7 +3,11 @@ layout: method
 title: "Diversity metrics, turnover, variance, phenology, sentinels"
 parent: "Frequently monitored indices"
 date: 2025-07-17
-author: Mrs. Young
+author: "Mrs. Young"
+categories:
+- methods
+- detection
+- frequently_monitored
 ---
 <!-- This file was auto-generated from _data/method_assessments.tsv -->
 

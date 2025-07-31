@@ -3,7 +3,11 @@ layout: method
 title: "Sensitivity analyses"
 parent: "Robustness & significance tests"
 date: 2025-07-17
-author: Mrs. Young
+author: "Mrs. Young"
+categories:
+- methods
+- tools
+- robustness_significance
 ---
 <!-- This file was auto-generated from _data/method_assessments.tsv -->
 

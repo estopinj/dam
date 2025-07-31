@@ -1,6 +1,8 @@
 ---
 title: Utilities
 nav_order: 99
+categories:
+- _Utilities
 ---
 
 # Utilities

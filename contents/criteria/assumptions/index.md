@@ -3,6 +3,9 @@ title: Assumptions
 nav_order: 3
 parent: Criteria
 permalink: /assumptions
+categories:
+- criteria
+- assumptions
 ---
 
 # Assumptions

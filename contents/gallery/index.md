@@ -2,6 +2,8 @@
 title: Gallery
 nav_order: 6
 permalink: /gallery
+categories:
+- gallery
 ---
 
 # Gallery

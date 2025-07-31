@@ -1,8 +1,11 @@
 ---
-title: Data compatibility
+title: "Data compatibility"
 nav_order: 2
 parent: Criteria
 permalink: /data
+categories:
+- criteria
+- data
 ---
 
 # Data compatibility

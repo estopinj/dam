@@ -1,8 +1,11 @@
 ---
-title: Causal discovery
+title: "Causal discovery"
 nav_order: 7
 parent: Methods
 permalink: /discovery
+categories:
+- methods
+- discovery
 ---
 
 # Causal discovery

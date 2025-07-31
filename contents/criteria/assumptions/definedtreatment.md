@@ -1,8 +1,11 @@
 ---
-title: Well-defined treatment
+title: "Well-defined treatment"
 parent: Assumptions
 nav_order: 4
 permalink: /definedtreatment
+categories:
+- criteria
+- assumptions
 ---
 
 # Well-defined treatment

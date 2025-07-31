@@ -1,8 +1,11 @@
 ---
-title: Number of variables
-parent: Model properties
+title: "Number of variables"
+parent: "Model properties"
 nav_order: 3
 permalink: /variablenumber
+categories:
+- criteria
+- model_properties
 ---
 
 # Number of variables

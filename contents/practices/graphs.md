@@ -1,8 +1,10 @@
 ---
 layout: baserefs
-title: A primer on causal graphs
-parent: Good practices
+title: "A primer on causal graphs"
+parent: "Good practices"
 nav_order: 1
+categories:
+- practices
 ---
 
 ## Table of Contents

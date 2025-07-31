@@ -3,6 +3,9 @@ title: IDD
 parent: Assumptions
 nav_order: 8
 permalink: /idd
+categories:
+- criteria
+- assumptions
 ---
 
 # Independent & Identically Distributed (IDD)

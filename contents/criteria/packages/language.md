@@ -3,6 +3,9 @@ title: Language
 parent: Packages
 nav_order: 1
 permalink: /language
+categories:
+- criteria
+- packages
 ---
 
 # Programing language

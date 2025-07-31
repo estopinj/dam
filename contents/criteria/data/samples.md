@@ -1,8 +1,11 @@
 ---
-title: Handles few samples
-parent: Data compatibility
+title: "Handles few samples"
+parent: "Data compatibility"
 nav_order: 3
 permalink: /fewsamples
+categories:
+- criteria
+- data
 ---
 
 # Handles few samples

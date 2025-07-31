@@ -3,7 +3,11 @@ layout: method
 title: "Treatment assignment graph"
 parent: "Visualisation helpers"
 date: 2025-07-17
-author: Mrs. Young
+author: "Mrs. Young"
+categories:
+- methods
+- tools
+- visualisation_helpers
 ---
 <!-- This file was auto-generated from _data/method_assessments.tsv -->
 

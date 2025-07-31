@@ -1,8 +1,11 @@
 ---
-title: Ecology-guided Modelling
+title: "Ecology-guided Modelling"
 nav_order: 3
 parent: Methods
 permalink: /ecology-guided
+categories:
+- methods
+- ecology-guided
 ---
 
 # Ecology-guided Modelling

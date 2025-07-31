@@ -1,8 +1,11 @@
 ---
-title: Handles huge datasets
-parent: Data compatibility
+title: "Handles huge datasets"
+parent: "Data compatibility"
 nav_order: 4
 permalink: /bigdata
+categories:
+- criteria
+- data
 ---
 
 #     Handles huge datasets (*n*)

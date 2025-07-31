@@ -1,8 +1,10 @@
 ---
 layout: baserefs
-title: Page example
-parent: Good practices
+title: "Page example"
+parent: "Good practices"
 nav_order: 99
+categories:
+- practices
 ---
 
 # Example page

@@ -1,8 +1,11 @@
 ---
-title: Alternative paradigms
+title: "Alternative paradigms"
 nav_order: 8
 parent: Methods
 permalink: /alternative
+categories:
+- methods
+- alternative
 ---
 
 # Alternative paradigms

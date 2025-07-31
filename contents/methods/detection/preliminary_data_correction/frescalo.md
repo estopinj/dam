@@ -1,9 +1,13 @@
 ---
 layout: method
-title: "Frescalo"
+title: Frescalo
 parent: "Preliminary data correction"
 date: 2025-07-29
-author: Romain Goury
+author: "Romain Goury"
+categories:
+- methods
+- detection
+- preliminary_data_correction
 ---
 <!-- This file was auto-generated from _data/method_assessments.tsv -->
 

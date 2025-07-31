@@ -1,8 +1,11 @@
 ---
-title: Model properties
+title: "Model properties"
 nav_order: 4
 parent: Criteria
 permalink: /properties
+categories:
+- criteria
+- model_properties
 ---
 
 # Model properties

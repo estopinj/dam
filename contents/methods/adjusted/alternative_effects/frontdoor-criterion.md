@@ -3,7 +3,11 @@ layout: method
 title: "Frontdoor criterion"
 parent: "Alternative effect identification methods"
 date: 2025-07-17
-author: Mrs. Young
+author: "Mrs. Young"
+categories:
+- methods
+- adjusted
+- alternative_effects
 ---
 <!-- This file was auto-generated from _data/method_assessments.tsv -->
 

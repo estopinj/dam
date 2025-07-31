@@ -1,8 +1,11 @@
 ---
-title: Independent detection
+title: "Independent detection"
 nav_order: 9
 parent: Methods
 permalink: /detection
+categories:
+- methods
+- detection
 ---
 
 # Independent detection

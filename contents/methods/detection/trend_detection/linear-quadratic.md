@@ -3,7 +3,11 @@ layout: method
 title: "Linear, quadratic"
 parent: "Trend detection"
 date: 2025-07-17
-author: Mrs. Young
+author: "Mrs. Young"
+categories:
+- methods
+- detection
+- trend_detection
 ---
 <!-- This file was auto-generated from _data/method_assessments.tsv -->
 

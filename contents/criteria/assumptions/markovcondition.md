@@ -1,8 +1,11 @@
 ---
-title: Causal Markov condition
+title: "Causal Markov condition"
 parent: Assumptions
 nav_order: 6
 permalink: /markovcondition
+categories:
+- criteria
+- assumptions
 ---
 
 # Causal Markov condition

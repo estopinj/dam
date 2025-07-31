@@ -1,11 +1,13 @@
 ---
 layout: method
-title: Synthetic controls
+title: "Synthetic controls"
 parent: Quasi-experiments
 nav_order: 1
 date: 2025-06-23
-author: Joaquim Estopinan
-# assessor: Mr. Smith
+author: "Joaquim Estopinan"
+categories:
+- methods
+- quasi-exps
 ---
 
 {: .note }

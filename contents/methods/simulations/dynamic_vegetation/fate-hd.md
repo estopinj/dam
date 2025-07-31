@@ -1,9 +1,13 @@
 ---
 layout: method
-title: "FATE-HD"
+title: FATE-HD
 parent: "Dynamic vegetation models"
 date: 2025-07-17
-author: Mrs. Young
+author: "Mrs. Young"
+categories:
+- methods
+- simulations
+- dynamic_vegetation
 ---
 <!-- This file was auto-generated from _data/method_assessments.tsv -->
 

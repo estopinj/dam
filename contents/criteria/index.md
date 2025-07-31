@@ -2,6 +2,8 @@
 title: Criteria
 nav_order: 3
 permalink: /criteria
+categories:
+- criteria
 ---
 
 # Criteria

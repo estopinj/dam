@@ -1,9 +1,13 @@
 ---
 layout: method
 title: "S,T, X learners"
-parent: "Meta-learners"
+parent: Meta-learners
 date: 2025-07-17
-author: Mrs. Young
+author: "Mrs. Young"
+categories:
+- methods
+- causal_ML
+- meta_learners
 ---
 <!-- This file was auto-generated from _data/method_assessments.tsv -->
 

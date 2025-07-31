@@ -1,8 +1,11 @@
 ---
-title: Counterfactual & future simulations
+title: "Counterfactual & future simulations"
 nav_order: 1
 parent: Methods
 permalink: /simulations
+categories:
+- methods
+- simulations
 ---
 
 # Counterfactual & future simulations

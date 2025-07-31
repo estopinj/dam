@@ -1,8 +1,11 @@
 ---
-title: Parametric nature
-parent: Model properties
+title: "Parametric nature"
+parent: "Model properties"
 nav_order: 6
 permalink: /parametric
+categories:
+- criteria
+- model_properties
 ---
 
 # Parametric nature

@@ -1,8 +1,11 @@
 ---
-title: RS-data proven
-parent: Data compatibility
+title: "RS-data proven"
+parent: "Data compatibility"
 nav_order: 6
 permalink: /rsdata
+categories:
+- criteria
+- data
 ---
 
 # Remote sensing data proven

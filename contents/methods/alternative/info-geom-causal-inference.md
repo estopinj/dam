@@ -3,7 +3,10 @@ layout: method
 title: "Info-geom. causal inference"
 parent: "Alternative paradigms"
 date: 2025-07-17
-author: Mrs. Young
+author: "Mrs. Young"
+categories:
+- methods
+- alternative
 ---
 <!-- This file was auto-generated from _data/method_assessments.tsv -->
 

@@ -3,7 +3,11 @@ layout: method
 title: "Occupancy models"
 parent: "Preliminary data correction"
 date: 2025-07-17
-author: Mrs. Young
+author: "Mrs. Young"
+categories:
+- methods
+- detection
+- preliminary_data_correction
 ---
 <!-- This file was auto-generated from _data/method_assessments.tsv -->
 

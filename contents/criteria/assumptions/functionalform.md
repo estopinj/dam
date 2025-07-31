@@ -1,8 +1,11 @@
 ---
-title: Functional form
+title: "Functional form"
 parent: Assumptions
 nav_order: 1
 permalink: /funform
+categories:
+- criteria
+- assumptions
 ---
 
 # Functional form

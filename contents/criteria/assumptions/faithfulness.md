@@ -3,6 +3,9 @@ title: Faithfulness
 parent: Assumptions
 nav_order: 7
 permalink: /faithfulness
+categories:
+- criteria
+- assumptions
 ---
 
 # Faithfulness

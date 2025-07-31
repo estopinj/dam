@@ -1,8 +1,11 @@
 ---
-title: Common support
+title: "Common support"
 parent: Assumptions
 nav_order: 5
 permalink: /positivity
+categories:
+- criteria
+- assumptions
 ---
 
 # Common support (positivity)

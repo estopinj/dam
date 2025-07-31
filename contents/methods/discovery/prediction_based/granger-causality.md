@@ -3,7 +3,11 @@ layout: method
 title: "Granger causality"
 parent: "Prediction-based approaches"
 date: 2025-07-17
-author: Mrs. Young
+author: "Mrs. Young"
+categories:
+- methods
+- discovery
+- prediction_based
 ---
 <!-- This file was auto-generated from _data/method_assessments.tsv -->
 

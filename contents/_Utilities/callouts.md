@@ -2,6 +2,8 @@
 title: Callouts
 parent: Utilities
 nav_order: 7
+categories:
+- _Utilities
 ---
 
 # Callouts

@@ -3,6 +3,9 @@ title: Packages
 nav_order: 5
 parent: Criteria
 permalink: /packages
+categories:
+- criteria
+- packages
 ---
 
 # Packages

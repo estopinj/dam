@@ -3,7 +3,11 @@ layout: method
 title: "Score-based methods"
 parent: "Causal discovery"
 date: 2025-07-17
-author: Mrs. Young
+author: "Mrs. Young"
+categories:
+- methods
+- discovery
+- score_based
 ---
 <!-- This file was auto-generated from _data/method_assessments.tsv -->
 

@@ -5,7 +5,7 @@ author: Joaquim Estopinan (CNRS), Sara Si-Moussi (CNRS), Jussi Mäkinen (SYKE), 
 theme: just-the-docs
 url: https://estopinj.github.io/dam/
 baseurl: ""
-permalink: pretty
+permalink: /:categories/:title/
 
 aux_links:
   DAM on GitHub: https://github.com/estopinj/dam

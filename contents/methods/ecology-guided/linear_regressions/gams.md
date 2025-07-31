@@ -1,9 +1,13 @@
 ---
 layout: method
-title: "GAMs"
+title: GAMs
 parent: "Linear regressions & extensions"
 date: 2025-07-17
-author: Mrs. Young
+author: "Mrs. Young"
+categories:
+- methods
+- ecology-guided
+- linear_regressions
 ---
 <!-- This file was auto-generated from _data/method_assessments.tsv -->
 

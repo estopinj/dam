@@ -2,6 +2,8 @@
 title: Methods
 nav_order: 4
 permalink: /methods
+categories:
+- methods
 ---
 
 # Methods

@@ -3,7 +3,11 @@ layout: method
 title: "Fingerprint models"
 parent: "Climate change attribution methods"
 date: 2025-07-17
-author: Mrs. Young
+author: "Mrs. Young"
+categories:
+- methods
+- simulations
+- climate_change
 ---
 <!-- This file was auto-generated from _data/method_assessments.tsv -->
 

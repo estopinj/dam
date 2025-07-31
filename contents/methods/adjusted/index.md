@@ -3,6 +3,9 @@ title: "Adjusted methods (Backdoor C.)"
 nav_order: 4
 parent: Methods
 permalink: /adjusted
+categories:
+- methods
+- adjusted
 ---
 
 # Adjusted methods (Backdoor criterion)
