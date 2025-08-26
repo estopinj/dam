@@ -1,4 +1,4 @@
-title: DAM Navigator
+title: NaviDAM
 subtitle: Guiding your path through Detection and Attribution Modelling
 description: The DAM Navigator is an interactive decision-support tool designed to help researchers explore, compare, and select appropriate detection and attribution modelling methods based on their data, assumptions, and goals.
 author: Joaquim Estopinan (CNRS), Sara Si-Moussi (CNRS), Jussi Mäkinen (SYKE), Miriam Beck (CESAB), Risto Heikkinen (SYKE), Wilfried Thuiller (CNRS)
@@ -8,7 +8,7 @@ baseurl: ""
 permalink: /:categories/:title/
 
 aux_links:
-  DAM on GitHub: https://github.com/estopinj/dam
+  NaviDAM on GitHub: https://github.com/estopinj/dam
 aux_links_new_tab: true
 
 defaults:
