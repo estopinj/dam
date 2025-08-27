@@ -33,39 +33,36 @@ _This is a developpement of the OBSGESSION Horizon Europe project._
 
 - This is in this section that users evaluate their project against the different [criteria]({{ site.baseurl }}/criteria) of the navigator.
 
-```js
-Under development.
-```
 
-<!-- 2. Render Dropdowns for Each Criterion -->
-<!-- Add this where you want the filters/results to appear -->
+<script id="cat-dicts" type="application/json">
+  {{ site.data.cat_dicts | jsonify }}
+</script>
+
+<script id="criteria-mapping" type="application/json">
+  {{ site.data.criteria_mapping | jsonify }}
+</script>
+
+<script id="method-data" type="application/json">
+  {{ site.data.method_assessments_clean | jsonify }}
+</script>
+
 <div id="criteria-filters"></div>
+
+
+## Results 
+
+
+### List of methods
+
 <div id="filtered-methods"></div>
 
 
-![]({{ site.baseurl }}/assets/images/DAM_criteria.png){: width="35%" }
 
-
-## Results
+### NaviDAM Graph Explorer
 
 - Illustrative scheme highlighting some methods
 ![]({{ site.baseurl }}/assets/images/DAM_Scheme_greenHighlight.png){: width="75%" }
 
-
-
-
-- Mermaid scheme example
-
-```mermaid
-graph TD;
-    accTitle: the diamond pattern
-    accDescr: a graph with four nodes: A points to B and C, while B and C both point to D
-    A-->B;
-    A-->C;
-    B-->D;
-    C-->D;
-```
-[Mermaid](https://mermaid.js.org/){:target="_blank"} will eventually be used to allow representing an interactive method scheme updated by the user's evaluation of the criteria.
 
 
 
@@ -74,96 +71,3 @@ graph TD;
 [Jekyll]: https://jekyllrb.com
 [Bundler]: https://bundler.io/
 [Markdown]: https://daringfireball.net/projects/markdown/
-
-
-<!-- 1. Expose the Assessment Data as JSON -->
-<!-- Add this to index.md -->
-<script id="method-data" type="application/json">
-  {{ site.data.method_assessments_clean | jsonify }}
-</script>
-
-
-<!-- 3. Add JavaScript for Interactivity -->
-<script>
-// filepath: index.md
-// ...existing code...
-
-document.addEventListener("DOMContentLoaded", function() {
-  // 1. Load method data
-  const methodData = JSON.parse(document.getElementById('method-data').textContent);
-
-  // 2. Define the criteria you want dropdowns for (column names from your TSV)
-  const criteria = [
-    { key: "Objective", label: "Objective" },
-    { key: "Estimand", label: "Estimand" },
-    { key: "Validity", label: "Validity" },
-    { key: "Type", label: "Data Type" },
-    // Add more as needed, matching your TSV column headers
-  ];
-
-  // 3. Get unique options for each criterion
-  const optionsByCriterion = {};
-  criteria.forEach(criterion => {
-    const opts = new Set();
-    methodData.forEach(m => {
-      if (m[criterion.key]) {
-        m[criterion.key].split(",").forEach(val => opts.add(val.trim()));
-      }
-    });
-    optionsByCriterion[criterion.key] = Array.from(opts).sort();
-  });
-
-  // 4. Render dropdowns
-  const filtersDiv = document.getElementById("criteria-filters");
-  criteria.forEach(criterion => {
-    const label = document.createElement("label");
-    label.textContent = criterion.label + ": ";
-    const select = document.createElement("select");
-    select.id = "filter-" + criterion.key;
-    select.innerHTML = `<option value="">(Any)</option>` +
-      optionsByCriterion[criterion.key].map(opt => `<option value="${opt}">${opt}</option>`).join("");
-    label.appendChild(select);
-    filtersDiv.appendChild(label);
-    filtersDiv.appendChild(document.createElement("br"));
-  });
-
-  // 5. Filter and display methods
-  function filterMethods() {
-    let filtered = methodData;
-    criteria.forEach(criterion => {
-      const val = document.getElementById("filter-" + criterion.key).value;
-      if (val) {
-        filtered = filtered.filter(m =>
-          m[criterion.key] && m[criterion.key].split(",").map(x => x.trim()).includes(val)
-        );
-      }
-    });
-    displayMethods(filtered);
-  }
-
-  // 6. Display filtered methods
-  function displayMethods(methods) {
-    const div = document.getElementById("filtered-methods");
-    if (methods.length === 0) {
-      div.innerHTML = "<p>No methods match your criteria.</p>";
-      return;
-    }
-    div.innerHTML = "<ul>" + methods.map(m =>
-      `<li><a href="/methods/${m["Method list"] | slugify}/">${m["Method list"]}</a></li>`
-    ).join("") + "</ul>";
-  }
-
-  // 7. Attach event listeners
-  criteria.forEach(criterion => {
-    document.getElementById("filter-" + criterion.key).addEventListener("change", filterMethods);
-  });
-
-  // 8. Initial display
-  displayMethods(methodData);
-});
-
-// Helper for slugifying (if needed)
-function slugify(text) {
-  return text.toString().toLowerCase().replace(/\s+/g, '-').replace(/[^\w\-]+/g, '');
-}
-</script>

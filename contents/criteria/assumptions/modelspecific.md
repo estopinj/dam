@@ -2,7 +2,7 @@
 title: Model-specific
 parent: Assumptions
 nav_order: 9
-permalink: /modelspecifc
+permalink: /modelspecific
 categories:
 - criteria
 - assumptions

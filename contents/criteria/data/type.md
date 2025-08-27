@@ -2,6 +2,7 @@
 title: "Data type"
 parent: "Data compatibility"
 nav_order: 1
+permalink: /type
 categories:
 - criteria
 - data
