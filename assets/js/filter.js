@@ -19,8 +19,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // 2. Define the criteria you want dropdowns for (column names from your TSV)
 const criteria = [
+  // Objective (standalone, no category heading)
+  { key: "Objective", label: "Objective", category: "__standalone__" },
+
   // Outcome
-  { key: "Objective", label: "Objective", category: "Outcome" },
   { key: "Estimand", label: "Estimand", category: "Outcome" },
   { key: "Validity", label: "Validity", category: "Outcome" },
 
@@ -97,7 +99,7 @@ const criteria = [
 
   criteria.forEach(criterion => {
     // Insert category heading and collapsible container if this is a new category
-    if (criterion.category !== lastCategory) {
+    if (criterion.category !== lastCategory && criterion.category !== "__standalone__") {
       const catHeading = document.createElement("div");
       catHeading.style.marginTop = "1em";
       catHeading.style.marginLeft = "0.5em";
@@ -129,7 +131,7 @@ const criteria = [
 
       // Collapsible container for this category's criteria
       const catContainer = document.createElement("div");
-      catContainer.style.display = (criterion.category === "Outcome") ? "block" : "none";
+      catContainer.style.display = "none";
       catContainer.dataset.category = criterion.category;
       categoryContainers[criterion.category] = catContainer;
 
@@ -156,6 +158,16 @@ const criteria = [
     const label = document.createElement("label");
     label.style.display = "inline-block";
     label.style.whiteSpace = "nowrap";
+    if (criterion.key === "Objective") {
+      wrapper.classList.add("objective-frame");
+      label.classList.add("objective-highlight");
+      wrapper.style.marginTop = "1.5em";
+      wrapper.style.marginBottom = "1.5em";
+      wrapper.style.background = "#f5f7ff"; // subtle highlight background
+      wrapper.style.borderRadius = "6px";
+      wrapper.style.boxShadow = "0 2px 8px rgba(42,58,140,0.06)";
+      wrapper.style.padding = "1em 0.5em";
+    }
     label.appendChild(document.createTextNode(criterion.label + ": "));
 
     // Create a container for (?) and select, and indent it
@@ -180,6 +192,9 @@ const criteria = [
 
     const select = document.createElement("select");
     select.id = "filter-" + criterion.key;
+    if (criterion.key === "Objective") {
+      select.classList.add("objective-highlight");
+    }
     select.innerHTML = `<option value="">(Any)</option>` +
       optionsByCriterion[criterion.key].map(opt => `<option value="${opt}">${opt}</option>`).join("");
 
@@ -216,7 +231,12 @@ const criteria = [
 
     wrapper.appendChild(label);
     wrapper.appendChild(rightContainer);
-    categoryContainers[criterion.category].appendChild(wrapper);
+    // categoryContainers[criterion.category].appendChild(wrapper);
+    if (criterion.category === "__standalone__") {
+      filtersDiv.appendChild(wrapper);
+    } else {
+      categoryContainers[criterion.category].appendChild(wrapper);
+    }
   });
 
 
