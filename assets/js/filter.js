@@ -164,7 +164,13 @@ const criteria = [
 
     const criterionSlug = slugify(criterion.key);
     const helpLink = document.createElement("a");
-    helpLink.href = criteriaMapping[criterion.key] || `${siteBaseurl}/contents/criteria/${criterionSlug}/`;
+    const criteriaMapping = JSON.parse(document.getElementById('criteria-mapping').textContent);
+
+    // When creating the help link for a criterion:
+    const helpHref = criteriaMapping[criterion.key]
+      ? siteBaseurl + criteriaMapping[criterion.key]
+      : `${siteBaseurl}/contents/criteria/${criterionSlug}/`;
+    helpLink.href = helpHref;
     helpLink.target = "_blank";
     helpLink.rel = "noopener noreferrer";
     helpLink.title = `More info about ${criterion.label}`;
