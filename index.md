@@ -17,7 +17,7 @@ This website provides access to the Detection & Attribution Modelling (DAM) navi
 - Different [criteria]({{ site.baseurl }}/criteria) below invite users to precisely qualify _objective_, _data at hands_ and affordable _assumptions_ between others to **narrow down** and **suggest detection & attribution methods** suited to their study.
 - [Methods]({{ site.baseurl }}/methods) are further describe with dedicated pages to allow users jump start their project from the relevant ressources.
 
-{: .important-title }
+{: .note-title }
 _This is a developpement of the OBSGESSION Horizon Europe project._
 
 {: .highlight-title}
@@ -63,7 +63,13 @@ _This is a developpement of the OBSGESSION Horizon Europe project._
 
 ### NaviDAM Graph Explorer
 
-- Illustrative scheme highlighting some methods
+{: .new-title}
+> Status
+> {: .d-inline-block }
+> 
+> A <a href="https://neo4j.com/docs/getting-started/graph-database/" target="_blank" rel="noopener noreferrer"><strong>Neo4j</strong></a> graph database is being developed to explore and vizualize methods and criteria network.
+
+- Illustrative scheme highlighting some methods!
 ![]({{ site.baseurl }}/assets/images/DAM_Scheme_greenHighlight.png){: width="75%" }
 
 
@@ -74,3 +80,4 @@ _This is a developpement of the OBSGESSION Horizon Europe project._
 [Jekyll]: https://jekyllrb.com
 [Bundler]: https://bundler.io/
 [Markdown]: https://daringfireball.net/projects/markdown/
+<!-- [**Neo4j**]: https://neo4j.com/docs/getting-started/graph-database/ -->
