@@ -169,7 +169,7 @@ const criteria = [
     // When creating the help link for a criterion:
     const helpHref = criteriaMapping[criterion.key]
       ? siteBaseurl + criteriaMapping[criterion.key]
-      : `${siteBaseurl}/contents/criteria/${criterionSlug}/`;
+      : `${siteBaseurl}/contents/criteria/${criterionSlug}`;
     helpLink.href = helpHref;
     helpLink.target = "_blank";
     helpLink.rel = "noopener noreferrer";
