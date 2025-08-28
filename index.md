@@ -33,6 +33,9 @@ _This is a developpement of the OBSGESSION Horizon Europe project._
 
 - This is in this section that users evaluate their project against the different [criteria]({{ site.baseurl }}/criteria) of the navigator.
 
+<script id="site-baseurl" type="application/json">
+  "{{ site.baseurl }}"
+</script>
 
 <script id="cat-dicts" type="application/json">
   {{ site.data.cat_dicts | jsonify }}

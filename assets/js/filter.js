@@ -1,5 +1,7 @@
 console.log("Filter.js loaded!");
 
+const siteBaseurl = JSON.parse(document.getElementById('site-baseurl').textContent);
+
 document.addEventListener('DOMContentLoaded', function() {
 
   // Only run if method-data and criteria-filters exist
@@ -7,8 +9,8 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log("Required elements not found, script not running.");
     return;
   }
-// document.addEventListener("turbolinks:load", function() {
-// document.addEventListener("DOMContentLoaded", function() {
+  // document.addEventListener("turbolinks:load", function() {
+  // document.addEventListener("DOMContentLoaded", function() {
   console.log("Script started");
 
   // 1. Load method data
@@ -72,11 +74,11 @@ const criteria = [
 
   // Mapping of category names to permalinks
   const categoryLinks = {
-    "Outcome": "/outcome",
-    "Data compatibility": "/data",
-    "Assumptions": "/assumptions",
-    "Model properties": "/properties",
-    "Packages": "/packages"
+    "Outcome": `${siteBaseurl}/outcome`,
+    "Data compatibility": `${siteBaseurl}/data`,
+    "Assumptions": `${siteBaseurl}/assumptions`,
+    "Model properties": `${siteBaseurl}/properties`,
+    "Packages": `${siteBaseurl}/packages`
   };
 
   // 4. Render dropdowns
@@ -162,7 +164,7 @@ const criteria = [
 
     const criterionSlug = slugify(criterion.key);
     const helpLink = document.createElement("a");
-    helpLink.href = criteriaMapping[criterion.key] || `/contents/criteria/${criterionSlug}/`;
+    helpLink.href = criteriaMapping[criterion.key] || `${siteBaseurl}/contents/criteria/${criterionSlug}/`;
     helpLink.target = "_blank";
     helpLink.rel = "noopener noreferrer";
     helpLink.title = `More info about ${criterion.label}`;
@@ -247,7 +249,7 @@ function displayMethods(methods) {
         return;
     }
     if (validMethods.length === methodData.length) {
-        div.innerHTML = `Any <a href="/methods" target="_blank" rel="noopener noreferrer">method</a>!`;
+        div.innerHTML = `Any <a href="${siteBaseurl}/methods" target="_blank" rel="noopener noreferrer">method</a>!`;
         return;
     }
     div.innerHTML = "<ul>" + validMethods.map(m => {
@@ -262,13 +264,13 @@ function displayMethods(methods) {
     let url;
     if (methodName in SUBCAT_FOLDER_MAP) {
         // Subcategory index page
-        url = `/contents/methods/${categoryFolder}/${subcatFolder}/`;
+        url = `${siteBaseurl}/contents/methods/${categoryFolder}/${subcatFolder}/`;
     } else if (subcat) {
         // Method in subcategory
-        url = `/contents/methods/${categoryFolder}/${subcatFolder}/${methodSlug}/`;
+        url = `${siteBaseurl}/contents/methods/${categoryFolder}/${subcatFolder}/${methodSlug}/`;
     } else {
         // Method in category only
-        url = `/contents/methods/${categoryFolder}/${methodSlug}/`;
+        url = `${siteBaseurl}/contents/methods/${categoryFolder}/${methodSlug}/`;
     }
 
     return `<li><a href="${url}" target="_blank" rel="noopener noreferrer">${methodName}</a></li>`;
