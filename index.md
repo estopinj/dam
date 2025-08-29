@@ -46,6 +46,10 @@ _This is a developpement of the OBSGESSION Horizon Europe project._
   {{ site.data.method_assessments_clean | jsonify }}
 </script>
 
+<script id="objective-criteria-map" type="application/json">
+  {{ site.data.objective_criteria_map | jsonify }}
+</script>
+
 <div id="criteria-filters"></div>
 
 

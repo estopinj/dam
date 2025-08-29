@@ -1,6 +1,8 @@
 console.log("Filter.js loaded!");
 
 const siteBaseurl = JSON.parse(document.getElementById('site-baseurl').textContent);
+const objectiveCriteriaMap = JSON.parse(document.getElementById('objective-criteria-map').textContent);
+
 
 document.addEventListener('DOMContentLoaded', function() {
 
@@ -115,7 +117,7 @@ const criteria = [
 
       // Add expand/collapse indicator
       const arrow = document.createElement("span");
-      arrow.textContent = (criterion.category === "Outcome") ? " ▼" : " ▶";
+      arrow.textContent = " ▶";
       arrow.style.marginLeft = "0.5em";
       arrow.style.marginRight = "0.5em";
 
@@ -154,6 +156,7 @@ const criteria = [
     // Render the criterion as before, but append to catContainer
     const wrapper = document.createElement("div");
     wrapper.style.marginBottom = "0.5em";
+    wrapper.dataset.criterionKey = criterion.key;
 
     const label = document.createElement("label");
     label.style.display = "inline-block";
@@ -238,6 +241,104 @@ const criteria = [
       categoryContainers[criterion.category].appendChild(wrapper);
     }
   });
+
+
+  // After the rendering loop, add this Objective change handler:
+  const objectiveSelect = document.getElementById("filter-Objective");
+  objectiveSelect.addEventListener("change", function() {
+  const selectedObjective = objectiveSelect.value;
+  if (!selectedObjective) {
+    // Find the currently open category (if any)
+    let openCat = null;
+    categoryOrder.forEach(cat => {
+      if (cat === "__standalone__") return;
+      const container = categoryContainers[cat];
+      const heading = Array.from(filtersDiv.children).find(
+        el => el.querySelector && el.querySelector("span") && el.querySelector("span").textContent === cat
+      );
+      if (container && heading && heading.style.display !== "none" && container.style.display === "block") {
+        openCat = cat;
+      }
+    });
+
+    // Show all criteria and all category headings, collapse all containers
+    document.querySelectorAll('[data-criterion-key]').forEach(div => {
+      div.style.display = "";
+    });
+    categoryOrder.forEach(cat => {
+      if (cat === "__standalone__") return;
+      const container = categoryContainers[cat];
+      const heading = Array.from(filtersDiv.children).find(
+        el => el.querySelector && el.querySelector("span") && el.querySelector("span").textContent === cat
+      );
+      if (container) container.style.display = "none";
+      if (heading) heading.style.display = "";
+      // Set arrow to collapsed
+      if (heading) {
+        const arrow = heading.querySelector("span:nth-child(2)");
+        if (arrow) arrow.textContent = " ▶";
+      }
+    });
+
+    // Restore previously open category, if any
+    if (openCat) {
+      const container = categoryContainers[openCat];
+      const heading = Array.from(filtersDiv.children).find(
+        el => el.querySelector && el.querySelector("span") && el.querySelector("span").textContent === openCat
+      );
+      if (container && heading) {
+        container.style.display = "block";
+        const arrow = heading.querySelector("span:nth-child(2)");
+        if (arrow) arrow.textContent = " ▼";
+      }
+    }
+    return;
+  }
+  const relevant = objectiveCriteriaMap[selectedObjective] || [];
+  document.querySelectorAll('[data-criterion-key]').forEach(div => {
+    if (relevant.includes(div.dataset.criterionKey) || div.dataset.criterionKey === "Objective") {
+      div.style.display = "";
+    } else {
+      div.style.display = "none";
+      // Optionally clear the value:
+      const sel = div.querySelector("select");
+      if (sel) sel.value = "";
+    }
+  });
+  
+  // After updating criterion visibility:
+  categoryOrder.forEach(cat => {
+    if (cat === "__standalone__") return;
+    const container = categoryContainers[cat];
+    const heading = Array.from(filtersDiv.children).find(
+      el => el.querySelector && el.querySelector("span") && el.querySelector("span").textContent === cat
+    );
+    // Check if any visible criterion in this category
+    const hasVisible = Array.from(container.children).some(child => child.style.display !== "none");
+    if (!hasVisible) {
+      container.style.display = "none";
+      if (heading) heading.style.display = "none";
+    } else {
+      if (heading) heading.style.display = "";
+    }
+  });
+  // Find and expand the first non-empty category
+  for (const cat of categoryOrder) {
+    if (cat === "__standalone__") continue;
+    const container = categoryContainers[cat];
+    const heading = Array.from(filtersDiv.children).find(
+      el => el.querySelector && el.querySelector("span") && el.querySelector("span").textContent === cat
+    );
+    if (container && heading && heading.style.display !== "none") {
+      container.style.display = "block";
+      // Update arrow
+      const arrow = heading.querySelector("span:nth-child(2)");
+      if (arrow) arrow.textContent = " ▼";
+      break;
+    }
+  }
+  });
+
 
 
   // 5. Filter and display methods
