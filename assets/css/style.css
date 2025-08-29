@@ -50,6 +50,9 @@
   gap: 1em;
 }
 
+#criteria-filters select option:first-child {
+  font-style: italic;
+}
 
 #criteria-filters select.objective-highlight {
   font-size: 1.15em;
@@ -105,4 +108,8 @@
   padding: 1em;
   background: #fff;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+#criteria-filters select option[value="__unsure__"] {
+  font-style: italic;
 }

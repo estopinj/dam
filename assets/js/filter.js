@@ -66,8 +66,13 @@ const criteria = [
   criteria.forEach(criterion => {
     const opts = new Set();
     methodData.forEach(m => {
-      if (m[criterion.key]) {
-        m[criterion.key].split(",").forEach(val => opts.add(val.trim()));
+    if (m[criterion.key]) {
+        m[criterion.key].split(",").forEach(val => {
+          const trimmed = val.trim();
+          if (trimmed !== "Don't know" && trimmed !== "Inapplicable") {
+            opts.add(trimmed);
+          }
+        });
       }
     });
     optionsByCriterion[criterion.key] = Array.from(opts).sort();
@@ -198,8 +203,12 @@ const criteria = [
     if (criterion.key === "Objective") {
       select.classList.add("objective-highlight");
     }
-    select.innerHTML = `<option value="">(Any)</option>` +
+    let optionsHtml = `<option value="" style="font-style:italic;">Any</option>` +
       optionsByCriterion[criterion.key].map(opt => `<option value="${opt}">${opt}</option>`).join("");
+    if (criterion.key !== "Objective") {
+      optionsHtml += `<option value="__unsure__" style="font-style:italic;">Unsure</option>`;
+    }
+    select.innerHTML = optionsHtml;
 
     // When a selection is made, expand the next category
     select.addEventListener("change", function() {
@@ -346,63 +355,23 @@ const criteria = [
     let filtered = methodData;
     criteria.forEach(criterion => {
       const val = document.getElementById("filter-" + criterion.key).value;
-      if (val) {
+      if (val && val !== "__unsure__") {
         filtered = filtered.filter(m =>
-          m[criterion.key] && m[criterion.key].split(",").map(x => x.trim()).includes(val)
+          m[criterion.key] &&
+          (
+            m[criterion.key].split(",").map(x => x.trim()).includes(val) ||
+            m[criterion.key].split(",").map(x => x.trim()).includes("Don't know") ||
+            m[criterion.key].split(",").map(x => x.trim()).includes("Inapplicable")
+          )
         );
       }
+      // If val is "" (Any) or "__unsure__", do not filter (i.e., skip filtering for this criterion)
     });
     displayMethods(filtered);
   }
 
-  // 6. Display filtered methods
-// function displayMethods(methods) {
-//     const div = document.getElementById("filtered-methods");
-//     if (!div) {
-//         console.log("filtered-methods div not found!");
-//         return;
-//     }
 
-//     // Load category/subcat mappings
-//     const catDicts = JSON.parse(document.getElementById('cat-dicts').textContent);
-//     const CATEGORY_FOLDER_MAP = catDicts.CATEGORY_FOLDER_MAP;
-//     const SUBCAT_FOLDER_MAP = catDicts.SUBCAT_FOLDER_MAP;
-
-
-//     // Filter out methods with missing "Method list"
-//     const validMethods = methods.filter(m => m["Method list"]);
-//     if (validMethods.length === 0) {
-//         div.innerHTML = "<p>No methods match your criteria.</p>";
-//         return;
-//     }
-//     if (validMethods.length === methodData.length) {
-//         div.innerHTML = `Any <a href="${siteBaseurl}/methods" target="_blank" rel="noopener noreferrer">method</a>!`;
-//         return;
-//     }
-//     div.innerHTML = "<ul>" + validMethods.map(m => {
-//     // Get first category and sub-category
-//     const category = m["Category"] ? m["Category"].split(",")[0].trim() : "";
-//     const subcat = m["Sub-category"] ? m["Sub-category"].split(",")[0].trim() : "";
-//     const methodName = m["Method list"];
-//     const methodSlug = slugify(methodName);
-//     const categoryFolder = CATEGORY_FOLDER_MAP[category] || slugify(category);
-//     const subcatFolder = SUBCAT_FOLDER_MAP[subcat] || slugify(subcat);
-
-//     let url;
-//     if (methodName in SUBCAT_FOLDER_MAP) {
-//         // Subcategory index page
-//         url = `${siteBaseurl}/contents/methods/${categoryFolder}/${subcatFolder}/`;
-//     } else if (subcat) {
-//         // Method in subcategory
-//         url = `${siteBaseurl}/contents/methods/${categoryFolder}/${subcatFolder}/${methodSlug}/`;
-//     } else {
-//         // Method in category only
-//         url = `${siteBaseurl}/contents/methods/${categoryFolder}/${methodSlug}/`;
-//     }
-
-//     return `<li><a href="${url}" target="_blank" rel="noopener noreferrer">${methodName}</a></li>`;
-//   }).join("") + "</ul>";
-// }
+  
 function displayMethods(methods) {
     const div = document.getElementById("filtered-methods");
     if (!div) {

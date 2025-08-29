@@ -25,15 +25,14 @@ Criterion pages follow a common documentation format: ***Definition***, ***Expla
 
 ## Common criterion options
 
-Every criterion has the four base options to ease the assessment process: `Unevaluated`, `Don't know`, `Inapplicable`, and `Indifferent`. They are described below:
+Every criterion has the three base options to ease the assessment process: *`Any`*, `Don't know` and `Inapplicable`. They are described below:
 
 
 |  **Option**        | **Usage**                  | **Description**                  |
 |:------------------:|:--------------------------:|---------------------------------|
-| `Unevaluated`      | Default when starting the criteria assessment | When selected, the criterion applies no filtering on the suggested method set. Users should consider every criterion of the navigator, and, only when deemed necessary, select one of the next two options `Don't know` or `Inapplicable`. |
-| `Don't know`       | User don't know which option to pick | When the user judges not being able to rightly assess the method against a criterion (lack of documentation, understanding, unsure), this option avoids subsetting methods by the corresponding criterion. |
+| *`Any`*      | Default when starting the criteria assessment | When selected, the criterion applies no filtering on the suggested method set. Users should consider every criterion of the chosen objective, and let the default only when all options are satisfying. |
+| `Don't know`       | User don't know which option to pick | When the user judges not being able to rightly assess the method against a criterion (lack of documentation, understanding, unsure), this option avoids subsetting methods by the corresponding criterion like the default *`Any`*. |
 | `Inapplicable`     | Criterion cannot be applied because of incompatible paradigms | Because the navigator ambitions to be large and to include methods from different fields relying on heterogeneous assumptions, a criterion can be irrelevant to a case study. Methods indeed rely on implicit / explicit modelling paradigms that are not all focused on the same aspects and are not fully compatible with each other. |
-| `Indifferent`      | All options are satisfying | Users can estimate that all options of a criterion are satisfying. The corresponding criterion has therefore been evaluated but should not filter the suggested method set. |
 
 {: .warning}
 > `Don't know` allows to reach the end of the assessment more easily but should be picked only when necessary since it will result in a larger and less informative set of suitable methods.
