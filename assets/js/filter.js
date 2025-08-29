@@ -223,7 +223,7 @@ const criteria = [
             const arrow = nextHeading.querySelector("span:nth-child(2)");
             if (arrow) arrow.textContent = " ▼";
             // Optionally, scroll into view:
-            nextHeading.scrollIntoView({ behavior: "smooth", block: "center" });
+            // nextHeading.scrollIntoView({ behavior: "smooth", block: "center" });
           }
         }
       }
@@ -462,10 +462,26 @@ function displayMethods(methods) {
     let html = "<div class='method-categories'>";
     Object.keys(grouped).forEach(cat => {
         html += `<div class="method-category-block"><h3>${cat}</h3>`;
+        // 1. Display methods with no subcategory first
+        if (grouped[cat]["__no_subcat__"]) {
+            html += "<ul>";
+            grouped[cat]["__no_subcat__"].forEach(m => {
+                const methodName = m["Method list"];
+                const methodSlug = slugify(methodName);
+                const categoryFolder = CATEGORY_FOLDER_MAP[cat] || slugify(cat);
+                
+                // No subcategory for these methods
+                const url = `${siteBaseurl}/contents/methods/${categoryFolder}/${methodSlug}/`;
+
+                html += `<li><a href="${url}" target="_blank" rel="noopener noreferrer">${methodName}</a></li>`;
+            });
+            html += "</ul>";
+        }
+        
+        // 2. Then display all subcategories
         Object.keys(grouped[cat]).forEach(subcat => {
-            if (subcat !== "__no_subcat__") {
-                html += `<h4 style="margin-left:1em">${subcat}</h4>`;
-            }
+            if (subcat === "__no_subcat__") return;
+            html += `<h4 style="margin-left:1em">${subcat}</h4>`;
             html += "<ul>";
             grouped[cat][subcat].forEach(m => {
                 const methodName = m["Method list"];
