@@ -100,4 +100,20 @@
   flex: 1 1 320px;
   min-width: 260px;
   margin-bottom: 1em;
+  border: 1px solid #eee;
+  border-radius: 6px;
+  padding: 1em;
+  background: #fff;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+
+.method-category-block ul {
+  margin-bottom: 2em;
+}
+.method-category-block h4 {
+  margin-bottom: 0.5em;
+}
+.method-category-block > ul {
+  margin-top: 1em;
 }
