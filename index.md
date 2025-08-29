@@ -53,16 +53,13 @@ _This is a developpement of the OBSGESSION Horizon Europe project._
 <div id="criteria-filters"></div>
 
 
-## Results 
-
-
-### List of methods
+## Method list
 
 <div id="filtered-methods"></div>
 
 
 
-### NaviDAM Graph Explorer
+## NaviDAM Graph Explorer
 
 {: .new}
 > A <a href="https://neo4j.com/docs/getting-started/graph-database/" target="_blank" rel="noopener noreferrer"><strong>Neo4j</strong></a> graph database is being developed to explore, vizualize and query the network of methods and criteria.

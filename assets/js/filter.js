@@ -356,6 +356,53 @@ const criteria = [
   }
 
   // 6. Display filtered methods
+// function displayMethods(methods) {
+//     const div = document.getElementById("filtered-methods");
+//     if (!div) {
+//         console.log("filtered-methods div not found!");
+//         return;
+//     }
+
+//     // Load category/subcat mappings
+//     const catDicts = JSON.parse(document.getElementById('cat-dicts').textContent);
+//     const CATEGORY_FOLDER_MAP = catDicts.CATEGORY_FOLDER_MAP;
+//     const SUBCAT_FOLDER_MAP = catDicts.SUBCAT_FOLDER_MAP;
+
+
+//     // Filter out methods with missing "Method list"
+//     const validMethods = methods.filter(m => m["Method list"]);
+//     if (validMethods.length === 0) {
+//         div.innerHTML = "<p>No methods match your criteria.</p>";
+//         return;
+//     }
+//     if (validMethods.length === methodData.length) {
+//         div.innerHTML = `Any <a href="${siteBaseurl}/methods" target="_blank" rel="noopener noreferrer">method</a>!`;
+//         return;
+//     }
+//     div.innerHTML = "<ul>" + validMethods.map(m => {
+//     // Get first category and sub-category
+//     const category = m["Category"] ? m["Category"].split(",")[0].trim() : "";
+//     const subcat = m["Sub-category"] ? m["Sub-category"].split(",")[0].trim() : "";
+//     const methodName = m["Method list"];
+//     const methodSlug = slugify(methodName);
+//     const categoryFolder = CATEGORY_FOLDER_MAP[category] || slugify(category);
+//     const subcatFolder = SUBCAT_FOLDER_MAP[subcat] || slugify(subcat);
+
+//     let url;
+//     if (methodName in SUBCAT_FOLDER_MAP) {
+//         // Subcategory index page
+//         url = `${siteBaseurl}/contents/methods/${categoryFolder}/${subcatFolder}/`;
+//     } else if (subcat) {
+//         // Method in subcategory
+//         url = `${siteBaseurl}/contents/methods/${categoryFolder}/${subcatFolder}/${methodSlug}/`;
+//     } else {
+//         // Method in category only
+//         url = `${siteBaseurl}/contents/methods/${categoryFolder}/${methodSlug}/`;
+//     }
+
+//     return `<li><a href="${url}" target="_blank" rel="noopener noreferrer">${methodName}</a></li>`;
+//   }).join("") + "</ul>";
+// }
 function displayMethods(methods) {
     const div = document.getElementById("filtered-methods");
     if (!div) {
@@ -367,7 +414,7 @@ function displayMethods(methods) {
     const catDicts = JSON.parse(document.getElementById('cat-dicts').textContent);
     const CATEGORY_FOLDER_MAP = catDicts.CATEGORY_FOLDER_MAP;
     const SUBCAT_FOLDER_MAP = catDicts.SUBCAT_FOLDER_MAP;
-
+    const SUBCAT_PARENT = catDicts.SUBCAT_PARENT;
 
     // Filter out methods with missing "Method list"
     const validMethods = methods.filter(m => m["Method list"]);
@@ -379,31 +426,69 @@ function displayMethods(methods) {
         div.innerHTML = `Any <a href="${siteBaseurl}/methods" target="_blank" rel="noopener noreferrer">method</a>!`;
         return;
     }
-    div.innerHTML = "<ul>" + validMethods.map(m => {
-    // Get first category and sub-category
-    const category = m["Category"] ? m["Category"].split(",")[0].trim() : "";
-    const subcat = m["Sub-category"] ? m["Sub-category"].split(",")[0].trim() : "";
-    const methodName = m["Method list"];
-    const methodSlug = slugify(methodName);
-    const categoryFolder = CATEGORY_FOLDER_MAP[category] || slugify(category);
-    const subcatFolder = SUBCAT_FOLDER_MAP[subcat] || slugify(subcat);
 
-    let url;
-    if (methodName in SUBCAT_FOLDER_MAP) {
-        // Subcategory index page
-        url = `${siteBaseurl}/contents/methods/${categoryFolder}/${subcatFolder}/`;
-    } else if (subcat) {
-        // Method in subcategory
-        url = `${siteBaseurl}/contents/methods/${categoryFolder}/${subcatFolder}/${methodSlug}/`;
-    } else {
-        // Method in category only
-        url = `${siteBaseurl}/contents/methods/${categoryFolder}/${methodSlug}/`;
-    }
+    // Group methods by category and subcategory
+    const grouped = {};
+    validMethods.forEach(m => {
+        // Get label for category and subcategory
+        let category = m["Category"] ? m["Category"].split(",")[0].trim() : "";
+        let subcat = m["Sub-category"] ? m["Sub-category"].split(",")[0].trim() : "";
 
-    return `<li><a href="${url}" target="_blank" rel="noopener noreferrer">${methodName}</a></li>`;
-  }).join("") + "</ul>";
+        // Map folder to label
+        let categoryLabel = Object.keys(CATEGORY_FOLDER_MAP).find(
+            k => CATEGORY_FOLDER_MAP[k] === slugify(category)
+        ) || category;
+
+        let subcatLabel = Object.keys(SUBCAT_FOLDER_MAP).find(
+            k => SUBCAT_FOLDER_MAP[k] === slugify(subcat)
+        ) || subcat;
+
+        // If subcat exists, get its parent category label
+        if (subcatLabel && SUBCAT_PARENT[subcatLabel]) {
+            categoryLabel = SUBCAT_PARENT[subcatLabel];
+        }
+
+        if (!grouped[categoryLabel]) grouped[categoryLabel] = {};
+        if (subcatLabel) {
+            if (!grouped[categoryLabel][subcatLabel]) grouped[categoryLabel][subcatLabel] = [];
+            grouped[categoryLabel][subcatLabel].push(m);
+        } else {
+            if (!grouped[categoryLabel]["__no_subcat__"]) grouped[categoryLabel]["__no_subcat__"] = [];
+            grouped[categoryLabel]["__no_subcat__"].push(m);
+        }
+    });
+
+    // Build HTML
+    let html = "<div class='method-categories'>";
+    Object.keys(grouped).forEach(cat => {
+        html += `<div class="method-category-block"><h3>${cat}</h3>`;
+        Object.keys(grouped[cat]).forEach(subcat => {
+            if (subcat !== "__no_subcat__") {
+                html += `<h4 style="margin-left:1em">${subcat}</h4>`;
+            }
+            html += "<ul>";
+            grouped[cat][subcat].forEach(m => {
+                const methodName = m["Method list"];
+                const methodSlug = slugify(methodName);
+                const categoryFolder = CATEGORY_FOLDER_MAP[cat] || slugify(cat);
+                const subcatFolder = SUBCAT_FOLDER_MAP[subcat] || slugify(subcat);
+
+                let url;
+                if (subcat !== "__no_subcat__") {
+                    url = `${siteBaseurl}/contents/methods/${categoryFolder}/${subcatFolder}/${methodSlug}/`;
+                } else {
+                    url = `${siteBaseurl}/contents/methods/${categoryFolder}/${methodSlug}/`;
+                }
+
+                html += `<li><a href="${url}" target="_blank" rel="noopener noreferrer">${methodName}</a></li>`;
+              });
+          html += "</ul>";
+      });
+      html += "</div>";
+  });
+  html += "</div>";
+  div.innerHTML = html;
 }
-
 
   // 7. Attach event listeners
   criteria.forEach(criterion => {

@@ -57,3 +57,47 @@
   font-weight: bold;
   background: #eef1fa;
 }
+
+
+/* Make method categories blue and similar to subcat style */
+#filtered-methods h3 {
+  color: #2a3a8c;
+  font-size: 0.95em !important;
+  font-weight: 400;
+  margin-top: 1em;
+  margin-bottom: 0.5em;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+/* Methods in multiple columns */
+#filtered-methods ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.2em 2em;
+  margin-left: 2em;
+  margin-bottom: 0.5em;
+  padding-left: 0;
+  list-style: none;
+}
+
+#filtered-methods li {
+  flex: 1 1 220px;
+  min-width: 180px;
+  margin-bottom: 0.2em;
+  font-size: 0.98em;
+  line-height: 1.3;
+}
+
+.method-categories {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1em 4em !important;
+  margin-left: 0;
+}
+
+.method-category-block {
+  flex: 1 1 320px;
+  min-width: 260px;
+  margin-bottom: 1em;
+}
