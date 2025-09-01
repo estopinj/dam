@@ -113,3 +113,18 @@
 #criteria-filters select option[value="__unsure__"] {
   font-style: italic;
 }
+
+
+.logo-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.2em;
+  margin-bottom: 1em;
+  flex-wrap: nowrap;
+}
+.logo-row img {
+  display: inline-block;
+  vertical-align: middle;
+  /* Remove margin here if you use gap above */
+}

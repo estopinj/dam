@@ -6,6 +6,14 @@ description: "NaviDAM provides a criteria-based engine to allow users describing
 permalink: /
 ---
 
+<!-- Logos -->
+<div class="logo-row">
+  <img src="{{ site.baseurl }}/assets/images/logos/Obsgession_text_logo.png" alt="Obsgession" style="width:250px; margin:0 18px; vertical-align:middle;">
+  <img src="{{ site.baseurl }}/assets/images/logos/logo-FRB-Cesab-anglais_cropped.png" alt="FRB Cesab" style="width:175px; margin:0 18px; vertical-align:middle;">
+  <img src="{{ site.baseurl }}/assets/images/logos/Logo_cnrs.png" alt="CNRS" style="width:60px; margin:0 18px; vertical-align:middle;">
+  <img src="{{ site.baseurl }}/assets/images/logos/logo-leca.png" alt="LECA" style="width:150px; margin:0 18px; vertical-align:middle;">
+</div>
+--------------------------------
 
 
 
@@ -18,27 +26,27 @@ NaviDAM is an interactive decision-support tool designed to help users explore, 
 {: .fs-6 .fw-300 }
 
 
-- **Users are invited [below](#evaluate-needs) to qualify their _objective_, _data at hands_ and affordable _assumptions_ between others by assessing different <a href="{{ site.baseurl }}/criteria" target="_blank" rel="noopener noreferrer">criteria</a>**
-- **[Suited methods](#candidate-methods) are described in more detail on <a href="{{ site.baseurl }}/methods" target="_blank" rel="noopener noreferrer">documentation pages</a>, allowing users to get started on their project using relevant resources**
+- **Users are invited [below](#user-input) to qualify their _objective_, _data at hands_ and affordable _assumptions_ between others by assessing different <a href="{{ site.baseurl }}/criteria" target="_blank" rel="noopener noreferrer">criteria</a>**
+- **[Suited methods](#candidate-methods) are displayed and described in more detail on <a href="{{ site.baseurl }}/methods" target="_blank" rel="noopener noreferrer">documentation pages</a>, allowing users to get started on their project using relevant resources**
 - The <a href="{{ site.baseurl }}/practices" target="_blank" rel="noopener noreferrer">Good practices</a> and <a href="{{ site.baseurl }}/gallery" target="_blank" rel="noopener noreferrer">Gallery</a> panels respectively provide conceptual and general resources on attribution, causal inference & detection, and NaviDAM application examples [*ongoing work*]
 
-*Check the [About page]({{ site.baseurl }}/about) for further information*
+*Check the [About]({{ site.baseurl }}/about) page for further information*
 
-
-{: .note-title }
-> Credits
-> 
-> This is a joint developpement of the <a href="https://obsgession.eu/" target="_blank" rel="noopener noreferrer">OBSGESSION</a> Horizon Europe project and of the <a href="https://www.fondationbiodiversite.fr/en/the-frb-in-action/programs-and-projects/le-cesab/impacts/" target="_blank" rel="noopener noreferrer">IMPACTS</a> research group.
 
 {: .highlight-title}
 > Status
 > 
 > This website is under active development.
 
-<a id="evaluate-needs"></a>
-## Evaluating your project's needs
+
+--------------------------------
+<a id="user-input"></a>
+## [User input invite](#user-input){: .btn .btn-purple } <span style="font-size:1em;">&#8594;</span> Evaluating your project's needs
 
 Choose the [criteria]({{ site.baseurl }}/criteria) options in the dropdown lists that **best describe your project**. Criteria are adapted to each objective.
+
+
+<script type="module" src="assets/js/filter.js"></script>
 
 <script id="site-baseurl" type="application/json">
   "{{ site.baseurl }}"
@@ -63,6 +71,8 @@ Choose the [criteria]({{ site.baseurl }}/criteria) options in the dropdown lists
 <div id="criteria-filters"></div>
 
 
+--------------------------------
+
 <a id="suggested-methods"></a>
 ## *Candidate methods*
 
@@ -78,6 +88,13 @@ Choose the [criteria]({{ site.baseurl }}/criteria) options in the dropdown lists
 - Illustrative scheme highlighting some methods
 ![]({{ site.baseurl }}/assets/images/DAM_Scheme_greenHighlight.png){: width="75%" }
 
+
+------------------------------------
+
+{: .note-title }
+> Credits
+> 
+> This is a joint developpement of the <a href="https://obsgession.eu/" target="_blank" rel="noopener noreferrer">OBSGESSION</a> Horizon Europe project and of the <a href="https://www.fondationbiodiversite.fr/en/the-frb-in-action/programs-and-projects/le-cesab/impacts/" target="_blank" rel="noopener noreferrer">IMPACTS</a> research group.
 
 
 
