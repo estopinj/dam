@@ -35,7 +35,7 @@ It **situates methods**, both *widespread* methods used in ecological studies an
 
 NaviDAM is implemented in this collaborative website and is organized around a dynamical filtering tool on the landing page:
 
-1. [Landing page]({{ site.baseurl }}/):
+1. [Landing page (Home)]({{ site.baseurl }}/):
     - Brief description of the navigator
     - Invite users to fill in [criteria]({{ site.baseurl }}/criteria) to describe their case study
         - Criteria default to `Any`, including all options and therefore not filtering the set of suggested methods
@@ -63,6 +63,8 @@ NaviDAM is implemented in this collaborative website and is organized around a d
 
 
 {:style="counter-reset:none"}
+1. This *About* page providing a brief introduction to this website
+
 1. [Criteria panel]({{ site.baseurl }}/criteria)
 
     This panel provides information on every criterion used to subset detection & attribution methods when using the navigator. Pages follow a common documentation structure: *Definition*, *Explanation*, *Tools/rationale for helping assessment* and *Example*.
