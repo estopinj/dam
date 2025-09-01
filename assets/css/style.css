@@ -128,3 +128,39 @@
   vertical-align: middle;
   /* Remove margin here if you use gap above */
 }
+
+
+.reset-btn-row {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 1em;
+}
+
+
+.criteria-status-row {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 1em;
+}
+
+#criteria-status {
+  font-size: 0.98em;
+  color: #444;
+  background: #f3f3f3;
+  border-radius: 6px;
+  padding: 0.4em 1em;
+  box-shadow: 0 2px 8px rgba(42,58,140,0.06);
+  transition: background 0.3s, color 0.3s;
+  font-weight: 500;
+  display: inline-block;
+}
+
+#criteria-status.green {
+  background: #e6fbe6;
+  color: #218838;
+}
+
+#criteria-status.intermediary {
+  background: #e6fafd;
+  color: #178a8a;
+}

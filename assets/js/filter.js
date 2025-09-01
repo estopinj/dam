@@ -4,6 +4,51 @@ const siteBaseurl = JSON.parse(document.getElementById('site-baseurl').textConte
 const objectiveCriteriaMap = JSON.parse(document.getElementById('objective-criteria-map').textContent);
 import { criteria } from './criteria.js';
 
+
+function updateCriteriaStatus() {
+  let anyCount = 0;
+  let unsureCount = 0;
+  let assessedCount = 0;
+
+  // Determine which criteria are currently used
+  const objectiveSelect = document.getElementById("filter-Objective");
+  let usedCriteriaKeys;
+  if (objectiveSelect && objectiveSelect.value && objectiveCriteriaMap[objectiveSelect.value]) {
+    usedCriteriaKeys = objectiveCriteriaMap[objectiveSelect.value].concat(["Objective"]);
+  } else {
+    // If no objective selected, use all criteria
+    usedCriteriaKeys = criteria.map(c => c.key);
+  }
+
+  criteria.forEach(criterion => {
+    if (!usedCriteriaKeys.includes(criterion.key)) return; // skip unused criteria
+    const select = document.getElementById("filter-" + criterion.key);
+    if (!select) return;
+    if (select.value === "") {
+      anyCount++;
+    } else if (select.value === "__unsure__") {
+      unsureCount++;
+    } else {
+      assessedCount++;
+    }
+  });
+
+  const statusDiv = document.getElementById("criteria-status");
+  if (statusDiv) {
+    statusDiv.classList.remove("green", "intermediary");
+    statusDiv.innerHTML =
+      `<span style="margin-right:1em;">Any: <strong>${anyCount}</strong></span>` +
+      `<span style="margin-right:1em;">Unsure: <strong>${unsureCount}</strong></span>` +
+      `<span>Assessed: <strong>${assessedCount}</strong></span>`;
+    if (anyCount === 0 && unsureCount === 0) {
+      statusDiv.classList.add("green");
+    } else if (anyCount === 0 && unsureCount > 0) {
+      statusDiv.classList.add("intermediary");
+    }
+  }
+}
+
+
 document.addEventListener('DOMContentLoaded', function() {
 
   // Only run if method-data and criteria-filters exist
@@ -174,31 +219,34 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // When a selection is made, expand the next category
     select.addEventListener("change", function() {
-      // Find all criteria in this category
-      const currentCategory = criterion.category;
-      const criteriaInCategory = criteria.filter(c => c.category === currentCategory);
-      // Check if this is the last criterion in the category
-      if (criteriaInCategory[criteriaInCategory.length - 1].key === criterion.key) {
-        // Find the next category in order
-        const idx = categoryOrder.indexOf(currentCategory);
-        if (idx !== -1 && idx < categoryOrder.length - 1) {
-          const nextCat = categoryOrder[idx + 1];
-          const nextContainer = categoryContainers[nextCat];
-          // Find the heading for the next category
-          const nextHeading = Array.from(filtersDiv.children).find(
-            el => el.querySelector && el.querySelector("span") && el.querySelector("span").textContent === nextCat
-          );
-          if (nextContainer && nextHeading) {
-            nextContainer.style.display = "block";
-            // Update arrow
-            const arrow = nextHeading.querySelector("span:nth-child(2)");
-            if (arrow) arrow.textContent = " ▼";
-            // Optionally, scroll into view:
-            // nextHeading.scrollIntoView({ behavior: "smooth", block: "center" });
-          }
+    // Find all VISIBLE criteria in this category
+    const currentCategory = criterion.category;
+    // Only consider wrappers (divs) that are visible and in this category
+    const visibleCriteriaInCategory = Array.from(categoryContainers[currentCategory].children)
+      .filter(child => child.style.display !== "none");
+    // Check if this is the last visible criterion in the category
+    if (
+      visibleCriteriaInCategory.length > 0 &&
+      visibleCriteriaInCategory[visibleCriteriaInCategory.length - 1].dataset.criterionKey === criterion.key
+    ) {
+      // Find the next category in order
+      const idx = categoryOrder.indexOf(currentCategory);
+      if (idx !== -1 && idx < categoryOrder.length - 1) {
+        const nextCat = categoryOrder[idx + 1];
+        const nextContainer = categoryContainers[nextCat];
+        // Find the heading for the next category
+        const nextHeading = Array.from(filtersDiv.children).find(
+          el => el.querySelector && el.querySelector("span") && el.querySelector("span").textContent === nextCat
+        );
+        if (nextContainer && nextHeading) {
+          nextContainer.style.display = "block";
+          // Update arrow
+          const arrow = nextHeading.querySelector("span:nth-child(2)");
+          if (arrow) arrow.textContent = " ▼";
         }
       }
-    });
+    }
+  });
 
     rightContainer.appendChild(helpLink);
     rightContainer.appendChild(select);
@@ -334,119 +382,158 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
   
-function displayMethods(methods) {
-    const div = document.getElementById("filtered-methods");
-    if (!div) {
-        console.log("filtered-methods div not found!");
-        return;
-    }
+  function displayMethods(methods) {
+      const div = document.getElementById("filtered-methods");
+      if (!div) {
+          console.log("filtered-methods div not found!");
+          return;
+      }
 
-    // Load category/subcat mappings
-    const catDicts = JSON.parse(document.getElementById('cat-dicts').textContent);
-    const CATEGORY_FOLDER_MAP = catDicts.CATEGORY_FOLDER_MAP;
-    const SUBCAT_FOLDER_MAP = catDicts.SUBCAT_FOLDER_MAP;
-    const SUBCAT_PARENT = catDicts.SUBCAT_PARENT;
+      // Load category/subcat mappings
+      const catDicts = JSON.parse(document.getElementById('cat-dicts').textContent);
+      const CATEGORY_FOLDER_MAP = catDicts.CATEGORY_FOLDER_MAP;
+      const SUBCAT_FOLDER_MAP = catDicts.SUBCAT_FOLDER_MAP;
+      const SUBCAT_PARENT = catDicts.SUBCAT_PARENT;
 
-    // Filter out methods with missing "Method list"
-    const validMethods = methods.filter(m => m["Method list"]);
-    if (validMethods.length === 0) {
-        div.innerHTML = "<p>No methods match your criteria.</p>";
-        return;
-    }
-    if (validMethods.length === methodData.length) {
-        div.innerHTML = `Any <a href="${siteBaseurl}/methods" target="_blank" rel="noopener noreferrer">method</a>!`;
-        return;
-    }
+      // Filter out methods with missing "Method list"
+      const validMethods = methods.filter(m => m["Method list"]);
+      if (validMethods.length === 0) {
+          div.innerHTML = "<p>No methods match your criteria.</p>";
+          return;
+      }
+      if (validMethods.length === methodData.length) {
+          div.innerHTML = `Any <a href="${siteBaseurl}/methods" target="_blank" rel="noopener noreferrer">method</a>!`;
+          return;
+      }
 
-    // Group methods by category and subcategory
-    const grouped = {};
-    validMethods.forEach(m => {
-        // Get label for category and subcategory
-        let category = m["Category"] ? m["Category"].split(",")[0].trim() : "";
-        let subcat = m["Sub-category"] ? m["Sub-category"].split(",")[0].trim() : "";
+      // Group methods by category and subcategory
+      const grouped = {};
+      validMethods.forEach(m => {
+          // Get label for category and subcategory
+          let category = m["Category"] ? m["Category"].split(",")[0].trim() : "";
+          let subcat = m["Sub-category"] ? m["Sub-category"].split(",")[0].trim() : "";
 
-        // Map folder to label
-        let categoryLabel = Object.keys(CATEGORY_FOLDER_MAP).find(
-            k => CATEGORY_FOLDER_MAP[k] === slugify(category)
-        ) || category;
+          // Map folder to label
+          let categoryLabel = Object.keys(CATEGORY_FOLDER_MAP).find(
+              k => CATEGORY_FOLDER_MAP[k] === slugify(category)
+          ) || category;
 
-        let subcatLabel = Object.keys(SUBCAT_FOLDER_MAP).find(
-            k => SUBCAT_FOLDER_MAP[k] === slugify(subcat)
-        ) || subcat;
+          let subcatLabel = Object.keys(SUBCAT_FOLDER_MAP).find(
+              k => SUBCAT_FOLDER_MAP[k] === slugify(subcat)
+          ) || subcat;
 
-        // If subcat exists, get its parent category label
-        if (subcatLabel && SUBCAT_PARENT[subcatLabel]) {
-            categoryLabel = SUBCAT_PARENT[subcatLabel];
-        }
+          // If subcat exists, get its parent category label
+          if (subcatLabel && SUBCAT_PARENT[subcatLabel]) {
+              categoryLabel = SUBCAT_PARENT[subcatLabel];
+          }
 
-        if (!grouped[categoryLabel]) grouped[categoryLabel] = {};
-        if (subcatLabel) {
-            if (!grouped[categoryLabel][subcatLabel]) grouped[categoryLabel][subcatLabel] = [];
-            grouped[categoryLabel][subcatLabel].push(m);
-        } else {
-            if (!grouped[categoryLabel]["__no_subcat__"]) grouped[categoryLabel]["__no_subcat__"] = [];
-            grouped[categoryLabel]["__no_subcat__"].push(m);
-        }
-    });
-
-    // Build HTML
-    let html = "<div class='method-categories'>";
-    Object.keys(grouped).forEach(cat => {
-        html += `<div class="method-category-block"><h3>${cat}</h3>`;
-        // 1. Display methods with no subcategory first
-        if (grouped[cat]["__no_subcat__"]) {
-            html += "<ul>";
-            grouped[cat]["__no_subcat__"].forEach(m => {
-                const methodName = m["Method list"];
-                const methodSlug = slugify(methodName);
-                const categoryFolder = CATEGORY_FOLDER_MAP[cat] || slugify(cat);
-                
-                // No subcategory for these methods
-                const url = `${siteBaseurl}/contents/methods/${categoryFolder}/${methodSlug}/`;
-
-                html += `<li><a href="${url}" target="_blank" rel="noopener noreferrer">${methodName}</a></li>`;
-            });
-            html += "</ul>";
-        }
-        
-        // 2. Then display all subcategories
-        Object.keys(grouped[cat]).forEach(subcat => {
-            if (subcat === "__no_subcat__") return;
-            html += `<h4 style="margin-left:1em">${subcat}</h4>`;
-            html += "<ul>";
-            grouped[cat][subcat].forEach(m => {
-                const methodName = m["Method list"];
-                const methodSlug = slugify(methodName);
-                const categoryFolder = CATEGORY_FOLDER_MAP[cat] || slugify(cat);
-                const subcatFolder = SUBCAT_FOLDER_MAP[subcat] || slugify(subcat);
-
-                let url;
-                if (subcat !== "__no_subcat__") {
-                    url = `${siteBaseurl}/contents/methods/${categoryFolder}/${subcatFolder}/${methodSlug}/`;
-                } else {
-                    url = `${siteBaseurl}/contents/methods/${categoryFolder}/${methodSlug}/`;
-                }
-
-                html += `<li><a href="${url}" target="_blank" rel="noopener noreferrer">${methodName}</a></li>`;
-              });
-          html += "</ul>";
+          if (!grouped[categoryLabel]) grouped[categoryLabel] = {};
+          if (subcatLabel) {
+              if (!grouped[categoryLabel][subcatLabel]) grouped[categoryLabel][subcatLabel] = [];
+              grouped[categoryLabel][subcatLabel].push(m);
+          } else {
+              if (!grouped[categoryLabel]["__no_subcat__"]) grouped[categoryLabel]["__no_subcat__"] = [];
+              grouped[categoryLabel]["__no_subcat__"].push(m);
+          }
       });
-      html += "</div>";
-  });
-  html += "</div>";
-  div.innerHTML = html;
-}
+
+      // Build HTML
+      let html = "<div class='method-categories'>";
+      Object.keys(grouped).forEach(cat => {
+          html += `<div class="method-category-block"><h3>${cat}</h3>`;
+          // 1. Display methods with no subcategory first
+          if (grouped[cat]["__no_subcat__"]) {
+              html += "<ul>";
+              grouped[cat]["__no_subcat__"].forEach(m => {
+                  const methodName = m["Method list"];
+                  const methodSlug = slugify(methodName);
+                  const categoryFolder = CATEGORY_FOLDER_MAP[cat] || slugify(cat);
+                  
+                  // No subcategory for these methods
+                  const url = `${siteBaseurl}/contents/methods/${categoryFolder}/${methodSlug}/`;
+
+                  html += `<li><a href="${url}" target="_blank" rel="noopener noreferrer">${methodName}</a></li>`;
+              });
+              html += "</ul>";
+          }
+          
+          // 2. Then display all subcategories
+          Object.keys(grouped[cat]).forEach(subcat => {
+              if (subcat === "__no_subcat__") return;
+              html += `<h4 style="margin-left:1em">${subcat}</h4>`;
+              html += "<ul>";
+              grouped[cat][subcat].forEach(m => {
+                  const methodName = m["Method list"];
+                  const methodSlug = slugify(methodName);
+                  const categoryFolder = CATEGORY_FOLDER_MAP[cat] || slugify(cat);
+                  const subcatFolder = SUBCAT_FOLDER_MAP[subcat] || slugify(subcat);
+
+                  let url;
+                  if (subcat !== "__no_subcat__") {
+                      url = `${siteBaseurl}/contents/methods/${categoryFolder}/${subcatFolder}/${methodSlug}/`;
+                  } else {
+                      url = `${siteBaseurl}/contents/methods/${categoryFolder}/${methodSlug}/`;
+                  }
+
+                  html += `<li><a href="${url}" target="_blank" rel="noopener noreferrer">${methodName}</a></li>`;
+                });
+            html += "</ul>";
+        });
+        html += "</div>";
+    });
+    html += "</div>";
+    div.innerHTML = html;
+  }
 
   // 7. Attach event listeners
   criteria.forEach(criterion => {
-    document.getElementById("filter-" + criterion.key).addEventListener("change", filterMethods);
+  document.getElementById("filter-" + criterion.key).addEventListener("change", function() {
+      filterMethods();
+      updateCriteriaStatus();
+    });
   });
 
   // 8. Initial display
   displayMethods(methodData);
   console.log("Initial methods displayed");
-// });
+  updateCriteriaStatus();
+  // });
+
+  // Add this at the end, after your other event listeners:
+    const resetBtn = document.getElementById("reset-filters-btn");
+    if (resetBtn) {
+      resetBtn.addEventListener("click", function(e) {
+        e.preventDefault();
+        criteria.forEach(criterion => {
+          const select = document.getElementById("filter-" + criterion.key);
+          if (select) select.value = "";
+        });
+        filterMethods();
+        updateCriteriaStatus();
+
+        // Collapse all criteria categories
+        categoryOrder.forEach(cat => {
+          if (cat === "__standalone__") return;
+          const container = categoryContainers[cat];
+          const heading = Array.from(filtersDiv.children).find(
+            el => el.querySelector && el.querySelector("span") && el.querySelector("span").textContent === cat
+          );
+          if (container) container.style.display = "none";
+          if (heading) heading.style.display = "";
+          // Set arrow to collapsed
+          if (heading) {
+            const arrow = heading.querySelector("span:nth-child(2)");
+            if (arrow) arrow.textContent = " ▶";
+          }
+        });
+
+      });
+    }
+
 });
+
+
+
 
 // Helper for slugifying (if needed)
 function slugify(text) {

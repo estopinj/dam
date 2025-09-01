@@ -70,6 +70,13 @@ Choose the [criteria]({{ site.baseurl }}/criteria) options in the dropdown lists
 
 <div id="criteria-filters"></div>
 
+<div class="criteria-status-row">
+  <div id="criteria-status"></div>
+</div>
+
+<div class="reset-btn-row">
+  <a href="#" id="reset-filters-btn" class="btn">Reset all criteria</a>
+</div>
 
 --------------------------------
 
