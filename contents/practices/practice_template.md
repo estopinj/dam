@@ -7,6 +7,4 @@ categories:
 - practices
 ---
 
-# Example page
-
 This is an example good practice page.
