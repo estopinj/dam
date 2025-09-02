@@ -1,7 +1,7 @@
 ---
 layout: method
-title: "Additive noise models"
-parent: "Asymmetry-based"
+title: "Vegetation Change Tracker (VCT)"
+parent: "RS breakpoint detection"
 date: 2025-07-17
 author: Mrs. Young
 ---

@@ -37,7 +37,7 @@ SUBCAT_FOLDER_MAP = {
 "Causal interpretability": "causal_interpretability",
 "Uncertainty tools": "uncertainty_tools",
 "Trend detection": "trend_detection",
-"Breakpoint detection": "breakpoint_detection",
+"RS breakpoint detection": "RS_breakpoint_detection",
 "Frequently monitored indices": "frequently_monitored",
 "Preliminary data correction": "preliminary_data_correction",
 }
@@ -65,7 +65,7 @@ SUBCAT_PARENT = {
 "Causal interpretability": "Versatile tools",
 "Uncertainty tools": "Versatile tools",
 "Trend detection": "Independent detection",
-"Breakpoint detection": "Independent detection",
+"RS breakpoint detection": "Independent detection",
 "Frequently monitored indices": "Independent detection",
 "Preliminary data correction": "Independent detection",
 }

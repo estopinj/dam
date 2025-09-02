@@ -469,7 +469,10 @@ document.addEventListener('DOMContentLoaded', function() {
                   const subcatFolder = SUBCAT_FOLDER_MAP[subcat] || slugify(subcat);
 
                   let url;
-                  if (subcat !== "__no_subcat__") {
+                  if (methodName === subcat) {
+                      // Link to the subcategory folder (index.md)
+                      url = `${siteBaseurl}/contents/methods/${categoryFolder}/${subcatFolder}/`;
+                  } else if (subcat !== "__no_subcat__") {
                       url = `${siteBaseurl}/contents/methods/${categoryFolder}/${subcatFolder}/${methodSlug}/`;
                   } else {
                       url = `${siteBaseurl}/contents/methods/${categoryFolder}/${methodSlug}/`;

@@ -1,7 +1,7 @@
 ---
 layout: method
-title: "Additive noise models"
-parent: "Asymmetry-based"
+title: "BFast"
+parent: "RS breakpoint detection"
 date: 2025-07-17
 author: Mrs. Young
 ---
