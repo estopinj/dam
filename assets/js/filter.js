@@ -1,8 +1,8 @@
+import { criteria, criteriaOptionLabelMap, compositeOptions, ordinalCriteriaOrder } from './criteria.js';
 console.log("Filter.js loaded!");
 
 const siteBaseurl = JSON.parse(document.getElementById('site-baseurl').textContent);
 const objectiveCriteriaMap = JSON.parse(document.getElementById('objective-criteria-map').textContent);
-import { criteria } from './criteria.js';
 
 
 function updateCriteriaStatus() {
@@ -62,7 +62,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // 1. Load method data
   const methodData = JSON.parse(document.getElementById('method-data').textContent);
-  console.log("Loaded methodData:", methodData);
 
   // 2. Define the criteria you want dropdowns for (column names from your TSV)
   //  Replaced by an import
@@ -73,7 +72,7 @@ document.addEventListener('DOMContentLoaded', function() {
   criteria.forEach(criterion => {
     const opts = new Set();
     methodData.forEach(m => {
-    if (m[criterion.key]) {
+      if (m[criterion.key]) {
         m[criterion.key].split(",").forEach(val => {
           const trimmed = val.trim();
           if (trimmed !== "Don't know" && trimmed !== "Inapplicable") {
@@ -82,9 +81,14 @@ document.addEventListener('DOMContentLoaded', function() {
         });
       }
     });
+
+    // Add composite options if defined
+    if (compositeOptions[criterion.key]) {
+      Object.keys(compositeOptions[criterion.key]).forEach(opt => opts.add(opt));
+    }
+
     optionsByCriterion[criterion.key] = Array.from(opts).sort();
   });
-  console.log("Options by criterion:", optionsByCriterion);
 
   const criteriaMapping = JSON.parse(document.getElementById('criteria-mapping').textContent);
 
@@ -211,7 +215,12 @@ document.addEventListener('DOMContentLoaded', function() {
       select.classList.add("objective-highlight");
     }
     let optionsHtml = `<option value="" style="font-style:italic;">Any</option>` +
-      optionsByCriterion[criterion.key].map(opt => `<option value="${opt}">${opt}</option>`).join("");
+    optionsByCriterion[criterion.key].map(opt => {
+      const displayLabel = criteriaOptionLabelMap[criterion.key] && criteriaOptionLabelMap[criterion.key][opt]
+        ? criteriaOptionLabelMap[criterion.key][opt]
+        : opt;
+      return `<option value="${opt}">${displayLabel}</option>`;
+    }).join("");
     if (criterion.key !== "Objective") {
       optionsHtml += `<option value="__unsure__" style="font-style:italic;">Unsure</option>`;
     }
@@ -222,6 +231,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Find all VISIBLE criteria in this category
     const currentCategory = criterion.category;
     // Only consider wrappers (divs) that are visible and in this category
+    if (!categoryContainers[currentCategory]) return;
     const visibleCriteriaInCategory = Array.from(categoryContainers[currentCategory].children)
       .filter(child => child.style.display !== "none");
     // Check if this is the last visible criterion in the category
@@ -366,14 +376,55 @@ document.addEventListener('DOMContentLoaded', function() {
     criteria.forEach(criterion => {
       const val = document.getElementById("filter-" + criterion.key).value;
       if (val && val !== "__unsure__") {
-        filtered = filtered.filter(m =>
-          m[criterion.key] &&
-          (
-            m[criterion.key].split(",").map(x => x.trim()).includes(val) ||
-            m[criterion.key].split(",").map(x => x.trim()).includes("Don't know") ||
-            m[criterion.key].split(",").map(x => x.trim()).includes("Inapplicable")
-          )
-        );
+        // 1. Composite option logic
+        if (
+          compositeOptions[criterion.key] &&
+          compositeOptions[criterion.key][val]
+        ) {
+          const included = compositeOptions[criterion.key][val];
+          filtered = filtered.filter(m => {
+            if (!m[criterion.key]) return false;
+            const methodVals = m[criterion.key].split(",").map(x => x.trim());
+            // Accept if any of the method's values is in the composite set
+            return (
+              methodVals.some(opt => included.includes(opt)) ||
+              methodVals.includes("Don't know") ||
+              methodVals.includes("Inapplicable")
+            );
+          });
+          return; // skip to next criterion
+        }
+
+        // 2. Ordinal logic
+        if (
+          ordinalCriteriaOrder[criterion.key] &&
+          ordinalCriteriaOrder[criterion.key].includes(val)
+        ) {
+          const order = ordinalCriteriaOrder[criterion.key];
+          const selectedIdx = order.indexOf(val);
+          filtered = filtered.filter(m => {
+            if (!m[criterion.key]) return false;
+            const methodVals = m[criterion.key].split(",").map(x => x.trim());
+            // Accept if any of the method's values is at or above the selected level
+            return (
+              methodVals.some(opt => order.indexOf(opt) >= selectedIdx) ||
+              methodVals.includes("Don't know") ||
+              methodVals.includes("Inapplicable")
+            );
+          });
+          return; // skip to next criterion
+        }
+
+        // 3. Default logic (non-composite, non-ordinal)
+        filtered = filtered.filter(m => {
+          if (!m[criterion.key]) return false;
+          const methodVals = m[criterion.key].split(",").map(x => x.trim());
+          return (
+            methodVals.includes(val) ||
+            methodVals.includes("Don't know") ||
+            methodVals.includes("Inapplicable")
+          );
+        });
       }
       // If val is "" (Any) or "__unsure__", do not filter (i.e., skip filtering for this criterion)
     });
