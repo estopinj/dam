@@ -1,8 +1,9 @@
-import { criteria, criteriaOptionLabelMap, compositeOptions, ordinalCriteriaOrder } from './criteria.js';
+import { criteria, criteriaOptionLabelMap, compositeOptions, ordinalCriteriaOrder, hideCompositeConstituents, multipleAllowedCriteria } from './criteria.js';
 console.log("Filter.js loaded!");
 
 const siteBaseurl = JSON.parse(document.getElementById('site-baseurl').textContent);
 const objectiveCriteriaMap = JSON.parse(document.getElementById('objective-criteria-map').textContent);
+const choicesInstances = {};
 
 
 function updateCriteriaStatus() {
@@ -87,10 +88,41 @@ document.addEventListener('DOMContentLoaded', function() {
       Object.keys(compositeOptions[criterion.key]).forEach(opt => opts.add(opt));
     }
 
-    optionsByCriterion[criterion.key] = Array.from(opts).sort();
+    let optsArr = Array.from(opts);
+
+    // Remove "Any" and "Unsure" for custom sorting
+    const anyIdx = optsArr.indexOf("");
+    const unsureIdx = optsArr.indexOf("__unsure__");
+    let anyOpt = null, unsureOpt = null;
+    if (anyIdx !== -1) anyOpt = optsArr.splice(anyIdx, 1)[0];
+    if (unsureIdx !== -1) unsureOpt = optsArr.splice(optsArr.indexOf("__unsure__"), 1)[0];
+
+    // Remove individual options that are included in a composite ONLY if flagged in hideCompositeConstituents
+    if (compositeOptions[criterion.key] && hideCompositeConstituents[criterion.key]) {
+      const compositeIncluded = new Set();
+      Object.entries(compositeOptions[criterion.key]).forEach(([compOpt, arr]) => {
+        if (hideCompositeConstituents[criterion.key][compOpt]) {
+          arr.forEach(opt => compositeIncluded.add(opt));
+        }
+      });
+      optsArr = optsArr.filter(opt => !compositeIncluded.has(opt));
+    }
+
+    // Custom sort for ordinal criteria
+    if (ordinalCriteriaOrder[criterion.key]) {
+      const order = ordinalCriteriaOrder[criterion.key];
+      optsArr.sort((a, b) => order.indexOf(a) - order.indexOf(b));
+    } else {
+      optsArr.sort(); // default alphabetical for non-ordinal
+    }
+
+    // Re-add "Any" at the start and "Unsure" at the end
+    if (anyOpt !== null) optsArr.unshift(anyOpt);
+    if (unsureOpt !== null) optsArr.push(unsureOpt);
+
+    optionsByCriterion[criterion.key] = optsArr;
   });
 
-  const criteriaMapping = JSON.parse(document.getElementById('criteria-mapping').textContent);
 
   // Mapping of category names to permalinks
   const categoryLinks = {
@@ -191,7 +223,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Create a container for (?) and select, and indent it
     const rightContainer = document.createElement("span");
-    rightContainer.style.marginLeft = "7em";
+    rightContainer.className = "criteria-select-container";
 
     const criterionSlug = slugify(criterion.key);
     const helpLink = document.createElement("a");
@@ -205,12 +237,31 @@ document.addEventListener('DOMContentLoaded', function() {
     helpLink.target = "_blank";
     helpLink.rel = "noopener noreferrer";
     helpLink.title = `More info about ${criterion.label}`;
+    // helpLink.style.marginLeft = "1.5em"; // Try 1em, 1.5em, or 2em as you like
+    helpLink.style.position = "absolute";
+    helpLink.style.left = "220px"; // Adjust this value to align all (?) marks vertically
+    helpLink.style.marginLeft = "0"; // Remove any previous margin-left
     helpLink.style.marginRight = "6px";
     helpLink.style.fontSize = "0.85em";
     helpLink.innerHTML = "(?)";
 
+    label.style.position = "relative";
+    label.style.display = "inline-block";
+    label.style.whiteSpace = "nowrap";
+    label.style.minWidth = "220px"; // Same as helpLink left value
+
     const select = document.createElement("select");
     select.id = "filter-" + criterion.key;
+
+
+    // Allow multiple selection if in multipleAllowedCriteria
+    if (multipleAllowedCriteria.includes(criterion.key)) {
+      select.multiple = true;
+      select.size = Math.min(optionsByCriterion[criterion.key].length, 6); // or any preferred size
+      select.value = ""; // Select "Any" by default
+    }
+
+
     if (criterion.key === "Objective") {
       select.classList.add("objective-highlight");
     }
@@ -237,7 +288,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Check if this is the last visible criterion in the category
     if (
       visibleCriteriaInCategory.length > 0 &&
-      visibleCriteriaInCategory[visibleCriteriaInCategory.length - 1].dataset.criterionKey === criterion.key
+  visibleCriteriaInCategory[visibleCriteriaInCategory.length - 1] === rowDiv
     ) {
       // Find the next category in order
       const idx = categoryOrder.indexOf(currentCategory);
@@ -258,19 +309,93 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
 
-    rightContainer.appendChild(helpLink);
+    label.appendChild(helpLink); // <-- Append (?) directly to the label
+    // rightContainer.appendChild(helpLink);
     rightContainer.appendChild(select);
 
-    wrapper.appendChild(label);
-    wrapper.appendChild(rightContainer);
-    // categoryContainers[criterion.category].appendChild(wrapper);
+    // Choices.js initialization for multi-select
+    if (multipleAllowedCriteria.includes(criterion.key)) {
+      const choicesInstance = new Choices(select, {
+        removeItemButton: true,
+        shouldSort: false,
+        position: 'bottom',
+        placeholder: true,
+        placeholderValue: 'Select options',
+        searchEnabled: false
+      });
+      choicesInstances[criterion.key] = choicesInstance;
+      // Ensure "Any" is visually selected on load
+      choicesInstance.setChoiceByValue('');
+
+      let prevSelectedValues = Array.from(select.selectedOptions).map(opt => opt.value);
+      select.addEventListener('change', function(e) {
+        const anyOption = select.querySelector('option[value=""]');
+        const selectedValues = Array.from(select.selectedOptions).map(opt => opt.value);
+
+        // Only remove "Any" if it was previously selected and now another option is selected
+        if (
+          anyOption &&
+          prevSelectedValues.includes("") && // "Any" was previously selected
+          selectedValues.includes("") &&
+          selectedValues.length > 1
+        ) {
+          setTimeout(() => {
+            anyOption.selected = false;
+            choicesInstances[criterion.key].removeActiveItemsByValue('');
+            // Reselect all other selected values to ensure Choices.js UI is correct
+            selectedValues.filter(v => v !== "").forEach(val => {
+              choicesInstances[criterion.key].setChoiceByValue(val);
+            });
+          }, 0);
+        }
+
+        // If nothing is selected, select "Any" by default
+        if (selectedValues.length === 0 && anyOption) {
+          setTimeout(() => {
+            anyOption.selected = true;
+            choicesInstances[criterion.key].setChoiceByValue('');
+          }, 0);
+        }
+
+        // Update prevSelectedValues for next change
+        prevSelectedValues = selectedValues;
+      });
+  }
+
+    // Create a container for tags (right-aligned)
+  const tagContainer = document.createElement("span");
+  tagContainer.className = "criteria-tag-container";
+
+  // Ordinal tag
+  if (ordinalCriteriaOrder[criterion.key]) {
+    const ordinalTag = document.createElement("span");
+    ordinalTag.className = "ordinal-tag";
+    ordinalTag.title = "Options are ordered: selecting a value includes all higher options.";
+    ordinalTag.textContent = "Ordinal";
+    tagContainer.appendChild(ordinalTag);
+  }
+
+  // Multiple allowed tag
+  if (multipleAllowedCriteria.includes(criterion.key)) {
+    const multiTag = document.createElement("span");
+    multiTag.className = "multiple-tag";
+    multiTag.title = "You can select multiple options (click to select, click again to deselect).";
+    multiTag.textContent = "Multiple allowed";
+    tagContainer.appendChild(multiTag);
+  }
+
+  const rowDiv = document.createElement("div");
+  rowDiv.className = "criteria-row";
+  rowDiv.appendChild(label);
+  rowDiv.appendChild(rightContainer);
+  rowDiv.appendChild(tagContainer);
+
     if (criterion.category === "__standalone__") {
-      filtersDiv.appendChild(wrapper);
+      filtersDiv.appendChild(rowDiv);
     } else {
-      categoryContainers[criterion.category].appendChild(wrapper);
+      categoryContainers[criterion.category].appendChild(rowDiv);
     }
   });
-
 
   // After the rendering loop, add this Objective change handler:
   const objectiveSelect = document.getElementById("filter-Objective");
@@ -560,7 +685,13 @@ document.addEventListener('DOMContentLoaded', function() {
         e.preventDefault();
         criteria.forEach(criterion => {
           const select = document.getElementById("filter-" + criterion.key);
-          if (select) select.value = "";
+          if (!select) return;
+          if (multipleAllowedCriteria.includes(criterion.key) && choicesInstances[criterion.key]) {
+            choicesInstances[criterion.key].removeActiveItems();
+            choicesInstances[criterion.key].setChoiceByValue('');
+          } else {
+            select.value = "";
+          }
         });
         filterMethods();
         updateCriteriaStatus();

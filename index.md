@@ -15,6 +15,10 @@ permalink: /
 </div>
 --------------------------------
 
+<!-- Choices.js CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" />
+<!-- Choices.js JS -->
+<script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
 
 
 # **NaviDAM** - A decision tool to help you navigate *Detection* and *Attribution* Methods

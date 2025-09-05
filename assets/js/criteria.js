@@ -3,12 +3,12 @@ export const criteria = [
   { key: "Objective", label: "Objective", category: "__standalone__" },
   // Outcome
   { key: "Estimand", label: "Estimand", category: "Outcome" },
-  { key: "Validity", label: "Target validity", category: "Outcome" },
+  { key: "Validity", label: "Min. target validity", category: "Outcome" },
   // Data compatibility
   { key: "Type", label: "Type", category: "Data compatibility" },
-  { key: "Required TS length", label: "Required TS length", category: "Data compatibility" },
+  { key: "Required TS length", label: "Time-series length", category: "Data compatibility" },
   { key: "Handles few samples", label: "Handles few samples", category: "Data compatibility" },
-  { key: "Handles huge datasets (n)", label: "Handles huge datasets (n)", category: "Data compatibility" },
+  { key: "Handles huge datasets (n)", label: "Scalable to big data", category: "Data compatibility" },
   { key: "Handles missing data", label: "Handles missing data", category: "Data compatibility" },
   { key: "RS-data proven", label: "RS-data proven", category: "Data compatibility" },
   // Assumptions
@@ -41,7 +41,13 @@ export const criteria = [
 // for an ordinal criterion in its ordinalCriteriaOrder array,
 // in the correct order from lowest to highest.
 export const ordinalCriteriaOrder = {
-  // "Required TS length": ["Handles ≤ 10", "≥ 10", "≥ 100"]
+  "Validity": ["Internal", "Varying", "Moderate confidence", "External"],
+  "Required TS length": ["Handles ≤ 10", "≥ 10", "≥ 100"],
+  "Handles huge datasets (n)": ["No", "Most dont", "Most do", "Yes", "Necessary"],
+  "Handles missing data": ["No: requires prelim. correction", "Partially", "Yes"],
+  "RS-data proven": ["No", "Few applications", "Yes"],
+  "Propaguates uncertainty": ["Needs model-agnostic propagation", "Model-specific tools", "Inherent capacity"],
+  "Handles lag effects": ["No", "Possible", "Yes"],
   // Add more ordinal criteria as needed
 };
 
@@ -54,9 +60,59 @@ export const compositeOptions = {
     "Any treatment effect": ["ATE", "ATT", "LATE", "CATE"],
     // Add more composite options as needed
   },
-  // Add more criteria with composite options as needed
+  "Handles huge datasets (n)": {
+    "Necessary": ["Yes", "Most do"]
+  },
+  "No unobserved confounders": {
+    "Recommended / Desirable": ["Recommended", "Desirable"]
+  },
+  "No interference": {
+    "Recommended / Desirable": ["Recommended", "Desirable"]
+  },
+  "Well-defined treatments": {
+    "Recommended / Desirable": ["Recommended", "Desirable"]
+  },
+  "Common support (positivity)": {
+    "Recommended / Desirable": ["Recommended", "Desirable"]
+  },
+  "Causal Markov Condition": {
+    "Recommended / Desirable": ["Recommended", "Desirable"]
+  },
+  "Faithfulness": {
+    "Recommended / Desirable": ["Recommended", "Desirable"]
+  },
+  "IDD": {
+    "Recommended / Desirable": ["Recommended", "Desirable"]
+  }
 };
 
+
+export const hideCompositeConstituents = {
+  "Handles huge datasets (n)": {
+    "Necessary": true
+  },
+  "No unobserved confounders": {
+    "Recommended / Desirable": true
+  },
+  "No interference": {
+    "Recommended / Desirable": true
+  },
+  "Well-defined treatments": {
+    "Recommended / Desirable": true
+  },
+  "Common support (positivity)": {
+    "Recommended / Desirable": true
+  },
+  "Causal Markov Condition": {
+    "Recommended / Desirable": true
+  },
+  "Faithfulness": {
+    "Recommended / Desirable": true
+  },
+  "IDD": {
+    "Recommended / Desirable": true
+  }
+};
 
 
 
@@ -74,43 +130,55 @@ export const criteriaOptionLabelMap = {
     // "option_value": "Option Label",
   },
   "Required TS length": {
-    // "option_value": "Option Label",
+    "Handles ≤ 10": "≤ 10",
   },
   "Handles few samples": {
-    // "option_value": "Option Label",
+    "Yes CT design": "Yes, Control/Treatment design",
   },
   "Handles huge datasets (n)": {
-    // "option_value": "Option Label",
+    "Most dont": "Not prioritized",
+    "No": "Not needed",
   },
   "Handles missing data": {
-    // "option_value": "Option Label",
+    "No: requires prelim. correction": "No, complete data only",
+    "Partially": "Simple corrections feasible",
+    "Yes": "Yes, built-in / prelim. correction",
   },
   "RS-data proven": {
-    // "option_value": "Option Label",
+    "No": "Not needed",
+    "Few applications": "At least few RS applications exist",
+    "Yes": "Yes, many RS applications exist"
   },
   "Fonctional form": {
     // "option_value": "Option Label",
   },
   "No unobserved confounders": {
-    // "option_value": "Option Label",
+    "Relaxes assumption": "No need: method relaxes assumption",
+    "Required": "Assumption required",
   },
   "No interference": {
-    // "option_value": "Option Label",
+    "Relaxes assumption": "No need: method relaxes assumption",
+    "Required": "Assumption required",
   },
   "Well-defined treatments": {
-    // "option_value": "Option Label",
+    "Relaxes assumption": "No need: method relaxes assumption",
+    "Required": "Assumption required",
   },
   "Common support (positivity)": {
-    // "option_value": "Option Label",
+    "Relaxes assumption": "No need: method relaxes assumption",
+    "Required": "Assumption required",
   },
   "Causal Markov Condition": {
-    // "option_value": "Option Label",
+    "Relaxes assumption": "No need: method relaxes assumption",
+    "Required": "Assumption required",
   },
   "Faithfulness": {
-    // "option_value": "Option Label",
+    "Relaxes assumption": "No need: method relaxes assumption",
+    "Required": "Assumption required",
   },
   "IDD": {
-    // "option_value": "Option Label",
+    "Relaxes assumption": "No need: method relaxes assumption",
+    "Required": "Assumption required",
   },
   "Model specific": {
     // "option_value": "Option Label",
@@ -128,7 +196,7 @@ export const criteriaOptionLabelMap = {
     // "option_value": "Option Label",
   },
   "Handles lag effects": {
-    // "option_value": "Option Label",
+    "No": "Not needed",
   },
   "Parametric nature": {
     // "option_value": "Option Label",
@@ -141,3 +209,19 @@ export const criteriaOptionLabelMap = {
   }
 };
 
+
+
+export const multipleAllowedCriteria = [
+  "Estimand",
+  "Type",
+  "Handles few samples",
+  "Fonctional form",
+  "Model specific",
+  "Model specific",
+  "Exposure type",
+  "Number of variables",
+  "Parametric nature",
+  "Language",
+  "Usage"
+  // Add more as needed
+];
