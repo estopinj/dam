@@ -380,7 +380,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const multiTag = document.createElement("span");
     multiTag.className = "multiple-tag";
     multiTag.title = "You can select multiple options (click to select, click again to deselect).";
-    multiTag.textContent = "Multiple allowed";
+    multiTag.textContent = "Multiple";
     tagContainer.appendChild(multiTag);
   }
 

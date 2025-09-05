@@ -1,11 +1,11 @@
 #criteria-filters label {
   display: inline-block;
-  width: 300px;
+  width: 350px;
   color: #222;
   font-weight: 500;
   font-size: 1em;
   margin-right: 1em;
-  flex: 0 0 180px; /* Adjust width as needed */
+  flex: 0 0 250px; /* Adjust width as needed */
 }
 #criteria-filters div {
   margin-bottom: 0.5em;
@@ -209,8 +209,8 @@
   align-items: center;
   gap: 0.5em;
   min-width: 250px;
-  width: 320px;      /* Fixed width for alignment */
-  max-width: 320px;  /* Prevent overflow */
+  width: 360px;      /* Fixed width for alignment */
+  max-width: 360px;  /* Prevent overflow */
   box-sizing: border-box;
 }
 
