@@ -31,11 +31,11 @@ Every criterion has the three base options to ease the assessment process: *`Any
 |  **Option**        | **Usage**                  | **Description**                  |
 |:------------------:|:--------------------------:|---------------------------------|
 | *`Any`*      | Default when starting the criteria assessment | When selected, the criterion applies no filtering on the suggested method set. Users should consider every criterion of the chosen objective, and let the default only when all options are satisfying. |
-| `Don't know`       | User don't know which option to pick | When the user judges not being able to rightly assess the method against a criterion (lack of documentation, understanding, unsure), this option avoids subsetting methods by the corresponding criterion like the default *`Any`*. |
-| `Inapplicable`     | Criterion cannot be applied because of incompatible paradigms | Because the navigator ambitions to be large and to include methods from different fields relying on heterogeneous assumptions, a criterion can be irrelevant to a case study. Methods indeed rely on implicit / explicit modelling paradigms that are not all focused on the same aspects and are not fully compatible with each other. |
+| `Don't know` / `Unsure`      | User don't know which option to pick | When the user judges not being able to rightly assess the method against a criterion (lack of documentation, understanding, unsure), this option avoids subsetting methods by the corresponding criterion like the default *`Any`*. |
+| `Inapplicable`     | Criterion cannot be applied because of incompatible paradigms | Because the navigator ambitions to be large and to include methods from different fields relying on heterogeneous assumptions, a criterion can be irrelevant to a case study. Methods indeed rely on implicit / explicit modelling paradigms that are not all focused on the same aspects and are not fully compatible with each other. *[This option is reserved for method assessors]* |
 
 {: .warning}
-> `Don't know` allows to reach the end of the assessment more easily but should be picked only when necessary since it will result in a larger and less informative set of suitable methods.
+> `Don't know` or `Unsure` allows to reach the end of the assessment more easily but should be picked only when necessary since it will result in a larger and less informative set of suitable methods.
 > 
 > {: .note}
 > **? signs** redirecting to the criterion page should allow the user to apply criteria in most cases.
