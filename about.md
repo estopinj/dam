@@ -97,7 +97,7 @@ NaviDAM is implemented in this collaborative website and is organized around a d
 ------------------------------------
 ## Contact
 
-- Joaquim Estopinan: joaquim.estopinan@univ-grenoble-alpes.fr
+- Joaquim Estopinan: firstname.surname @ univ-grenoble-alpes.fr
 
 
 ------------------------------------
