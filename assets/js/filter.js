@@ -50,6 +50,17 @@ function updateCriteriaStatus() {
 }
 
 
+function getUsedCriteriaKeys() {
+  const objectiveSelect = document.getElementById("filter-Objective");
+  if (objectiveSelect && objectiveSelect.value && objectiveCriteriaMap[objectiveSelect.value]) {
+    return objectiveCriteriaMap[objectiveSelect.value].concat(["Objective"]);
+  } else {
+    return criteria.map(c => c.key);
+  }
+}
+
+
+
 document.addEventListener('DOMContentLoaded', function() {
 
   // Only run if method-data and criteria-filters exist
@@ -57,8 +68,6 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log("Required elements not found, script not running.");
     return;
   }
-  // document.addEventListener("turbolinks:load", function() {
-  // document.addEventListener("DOMContentLoaded", function() {
   console.log("Script started");
 
   // 1. Load method data
@@ -151,9 +160,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // Insert category heading and collapsible container if this is a new category
     if (criterion.category !== lastCategory && criterion.category !== "__standalone__") {
       const catHeading = document.createElement("div");
-      catHeading.style.marginTop = "1em";
-      catHeading.style.marginLeft = "0.5em";
-      catHeading.style.fontSize = "1.1em";
+      catHeading.style.marginTop = "1.5em";
+      catHeading.style.marginLeft = "0em";
+      catHeading.style.fontSize = "1.3em";
       catHeading.style.cursor = "pointer";
       catHeading.style.display = "flex";
       catHeading.style.alignItems = "center";
@@ -176,7 +185,7 @@ document.addEventListener('DOMContentLoaded', function() {
       catHelp.rel = "noopener noreferrer";
       catHelp.title = `More info about ${criterion.category}`;
       catHelp.style.marginLeft = "0.5em";
-      catHelp.style.fontSize = "0.85em";
+      catHelp.style.fontSize = "0.75em";
       catHelp.innerHTML = "(?)";
 
       // Collapsible container for this category's criteria
@@ -201,23 +210,11 @@ document.addEventListener('DOMContentLoaded', function() {
       lastCategory = criterion.category;
     }
 
-    // Render the criterion as before, but append to catContainer
-    const wrapper = document.createElement("div");
-    wrapper.style.marginBottom = "0.5em";
-    wrapper.dataset.criterionKey = criterion.key;
-
     const label = document.createElement("label");
     label.style.display = "inline-block";
     label.style.whiteSpace = "nowrap";
     if (criterion.key === "Objective") {
-      wrapper.classList.add("objective-frame");
       label.classList.add("objective-highlight");
-      wrapper.style.marginTop = "1.5em";
-      wrapper.style.marginBottom = "1.5em";
-      wrapper.style.background = "#f5f7ff"; // subtle highlight background
-      wrapper.style.borderRadius = "6px";
-      wrapper.style.boxShadow = "0 2px 8px rgba(42,58,140,0.06)";
-      wrapper.style.padding = "1em 0.5em";
     }
     label.appendChild(document.createTextNode(criterion.label + ": "));
 
@@ -237,18 +234,16 @@ document.addEventListener('DOMContentLoaded', function() {
     helpLink.target = "_blank";
     helpLink.rel = "noopener noreferrer";
     helpLink.title = `More info about ${criterion.label}`;
-    // helpLink.style.marginLeft = "1.5em"; // Try 1em, 1.5em, or 2em as you like
     helpLink.style.position = "absolute";
     helpLink.style.left = "220px"; // Adjust this value to align all (?) marks vertically
     helpLink.style.marginLeft = "0"; // Remove any previous margin-left
     helpLink.style.marginRight = "6px";
-    helpLink.style.fontSize = "0.85em";
+    helpLink.style.fontSize = "0.75em";
+    // helpLink.style.color = "#a89cc8";
     helpLink.innerHTML = "(?)";
 
     label.style.position = "relative";
-    label.style.display = "inline-block";
-    label.style.whiteSpace = "nowrap";
-    label.style.minWidth = "220px"; // Same as helpLink left value
+    label.style.minWidth = "220px";
 
     const select = document.createElement("select");
     select.id = "filter-" + criterion.key;
@@ -281,7 +276,7 @@ document.addEventListener('DOMContentLoaded', function() {
     select.addEventListener("change", function() {
     // Find all VISIBLE criteria in this category
     const currentCategory = criterion.category;
-    // Only consider wrappers (divs) that are visible and in this category
+    // Only consider divs that are visible and in this category
     if (!categoryContainers[currentCategory]) return;
     const visibleCriteriaInCategory = Array.from(categoryContainers[currentCategory].children)
       .filter(child => child.style.display !== "none");
@@ -309,8 +304,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
 
-    label.appendChild(helpLink); // <-- Append (?) directly to the label
-    // rightContainer.appendChild(helpLink);
+    label.appendChild(helpLink);
     rightContainer.appendChild(select);
 
     // Choices.js initialization for multi-select
@@ -389,6 +383,7 @@ document.addEventListener('DOMContentLoaded', function() {
   rowDiv.appendChild(label);
   rowDiv.appendChild(rightContainer);
   rowDiv.appendChild(tagContainer);
+  rowDiv.dataset.criterionKey = criterion.key;
 
     if (criterion.category === "__standalone__") {
       filtersDiv.appendChild(rowDiv);
@@ -448,15 +443,14 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     return;
   }
+
+  // Show only criteria relevant to the selected objective
   const relevant = objectiveCriteriaMap[selectedObjective] || [];
   document.querySelectorAll('[data-criterion-key]').forEach(div => {
     if (relevant.includes(div.dataset.criterionKey) || div.dataset.criterionKey === "Objective") {
       div.style.display = "";
     } else {
       div.style.display = "none";
-      // Optionally clear the value:
-      const sel = div.querySelector("select");
-      if (sel) sel.value = "";
     }
   });
   
@@ -491,6 +485,11 @@ document.addEventListener('DOMContentLoaded', function() {
       break;
     }
   }
+
+  // Finally, re-filter methods based on new visibility
+  filterMethods();
+  updateCriteriaStatus();
+
   });
 
 
@@ -498,7 +497,9 @@ document.addEventListener('DOMContentLoaded', function() {
   // 5. Filter and display methods
   function filterMethods() {
     let filtered = methodData;
+    const usedCriteriaKeys = getUsedCriteriaKeys();
     criteria.forEach(criterion => {
+      if (!usedCriteriaKeys.includes(criterion.key)) return; // skip unused criteria
       const val = document.getElementById("filter-" + criterion.key).value;
       if (val && val !== "__unsure__") {
         // 1. Composite option logic
