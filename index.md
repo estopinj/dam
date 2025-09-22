@@ -31,7 +31,7 @@ NaviDAM is an interactive decision-support tool designed to help users explore, 
 
 
 - **Users are invited [below](#user-input) to qualify their _objective_, _data at hands_ and affordable _assumptions_ between others by assessing different <a href="{{ site.baseurl }}/criteria" target="_blank" rel="noopener noreferrer">criteria</a>**
-- **[Suited methods](#candidate-methods) are displayed and described in more detail on <a href="{{ site.baseurl }}/methods" target="_blank" rel="noopener noreferrer">documentation pages</a>, allowing users to get started on their project using relevant resources**
+- **~~A single~~ *<u>A set of</u>* [suited methods](#candidate-methods) is provided and methods are described in more detail on <a href="{{ site.baseurl }}/methods" target="_blank" rel="noopener noreferrer">documentation pages</a>, allowing users to get started on their project using relevant resources**
 - The <a href="{{ site.baseurl }}/practices" target="_blank" rel="noopener noreferrer">Good practices</a> and <a href="{{ site.baseurl }}/gallery" target="_blank" rel="noopener noreferrer">Gallery</a> panels respectively provide conceptual and general resources on attribution, causal inference & detection, and NaviDAM application examples [*ongoing work*]
 
 *Check the [About]({{ site.baseurl }}/about) page for further information*
@@ -83,15 +83,22 @@ Choose the [criteria]({{ site.baseurl }}/criteria) options in the dropdown lists
 </div>
 
 --------------------------------
-
+<div style="text-align:center; font-size:0.85em; font-style:italic;">
+Rather than suggesting a single 'unicorn' method, NaviDAM provides a subset of candidate methods that meet the specified criteria and offer complementary insights into the studied system
+</div>
+--------------------------------
 <a id="suggested-methods"></a>
-## *Candidate methods*
+## *Set of* candidate methods
+
+
 
 <div id="filtered-methods"></div>
 
+{: .important }
+> Investigators are invited to specify method assumptions at the end of the filtering process.
+> This way, when assumptions are not (fully) specified with `Any` options, NaviDAM suggests a **set of methods** relying on **different assumptions**. This enables users to **compare results** across methods, assess the robustness or sensitivity of findings to assumptions, and interpret their results with multiple lines of evidence.
 
-
-## *Graph Explorer*
+## Graph Explorer
 
 {: .new}
 > A <a href="https://neo4j.com/docs/getting-started/graph-database/" target="_blank" rel="noopener noreferrer"><strong>Neo4j</strong></a> graph database is being developed to explore, vizualize and query the network of methods and criteria.

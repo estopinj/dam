@@ -32,7 +32,7 @@ layout: default
 
 
 {% assign target_method = page.title %}
-{% assign assessment = site.data.method_assessments_clean | where: "Method list", target_method | first %}
+{% assign assessment = site.data.method_assessments_clean | where: "Method", target_method | first %}
 <!-- <p>Method data found for "{{ page.title }}": </p> -->
 
 
@@ -42,7 +42,6 @@ layout: default
   |-----------------------|-------------------------------|---------------------------------|
   | **[Outcome]({{ site.baseurl }}/outcome)**           | Objective                     | {% assign items = assessment.Objective | split: "," %}{% for item in items %}`{{ item | strip }}`{% unless forloop.last %}, {% endunless %}{% endfor %} |
   |                       | Estimand                      | {% assign items = assessment.Estimand | split: "," %}{% for item in items %}`{{ item | strip }}`{% unless forloop.last %}, {% endunless %}{% endfor %} |
-  |                       | Validity                      | {% assign items = assessment.Validity | split: "," %}{% for item in items %}`{{ item | strip }}`{% unless forloop.last %}, {% endunless %}{% endfor %} |
   | **[Data compatibility]({{ site.baseurl }}/data)**| Type                          | {% assign items = assessment.Type | split: "," %}{% for item in items %}`{{ item | strip }}`{% unless forloop.last %}, {% endunless %}{% endfor %} |
   |                       | Required TS length            | {% assign items = assessment["Required TS length"] | split: "," %}{% for item in items %}`{{ item | strip }}`{% unless forloop.last %}, {% endunless %}{% endfor %} |
   |                       | Handles few samples           | {% assign items = assessment["Handles few samples"] | split: "," %}{% for item in items %}`{{ item | strip }}`{% unless forloop.last %}, {% endunless %}{% endfor %} |

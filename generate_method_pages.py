@@ -44,7 +44,7 @@ with open(INPUT_FILE, newline='', encoding='utf-8') as f:
 reader = csv.DictReader(lines, delimiter="\t")
 
 for row in reader:
-    method = row.get("Method list", "").strip()
+    method = row.get("Method", "").strip()
     category_raw = row.get("Category", "").strip()
     subcategory_raw = row.get("Sub-category", "").strip()
     assessor = row.get("Assessor", "").strip()
@@ -91,7 +91,7 @@ for row in reader:
 
     ### Check if file already exists ###
     if os.path.exists(filepath):
-        # print(f"Skipping existing: {filepath}")
+        print(f"Skipping existing: {filepath}")
         continue
     ####################################
 

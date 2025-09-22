@@ -1,7 +1,7 @@
 ---
 layout: method
-title: "Biogeochemistry models"
-parent: "Ecosystem Process Models"
+title: "Tree-based ML algorithms"
+parent: "Predictive models +  interpretability metrics"
 date: 2025-07-17
 author: Mrs. Young
 ---

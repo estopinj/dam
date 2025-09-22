@@ -1,7 +1,7 @@
 ---
 layout: method
-title: "Biogeochemistry models"
-parent: "Ecosystem Process Models"
+title: "SHAP"
+parent: "Predictive models +  interpretability metrics"
 date: 2025-07-17
 author: Mrs. Young
 ---
@@ -9,7 +9,7 @@ author: Mrs. Young
 
 {% if page.category_note != '' %}
 {: .note }
-
+This method also belongs to [Causal ML]({{ site.baseurl }}/causal_ML).
 {% endif %}
 
 

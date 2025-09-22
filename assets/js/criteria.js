@@ -3,7 +3,6 @@ export const criteria = [
   { key: "Objective", label: "Objective", category: "__standalone__" },
   // Outcome
   { key: "Estimand", label: "Estimand", category: "Outcome" },
-  { key: "Validity", label: "Min. target validity", category: "Outcome" },
   // Data compatibility
   { key: "Type", label: "Type", category: "Data compatibility" },
   { key: "Required TS length", label: "Time-series length", category: "Data compatibility" },
@@ -41,7 +40,6 @@ export const criteria = [
 // for an ordinal criterion in its ordinalCriteriaOrder array,
 // in the correct order from lowest to highest.
 export const ordinalCriteriaOrder = {
-  "Validity": ["Internal", "Varying", "Moderate confidence", "External"],
   "Required TS length": ["Handles ≤ 10", "≥ 10", "≥ 100"],
   "Handles huge datasets (n)": ["No", "Most dont", "Most do", "Yes", "Necessary"],
   "Handles missing data": ["No: requires prelim. correction", "Partially", "Yes"],
@@ -123,9 +121,6 @@ export const criteriaOptionLabelMap = {
   // "Estimand": {
     // "ATE": "Average Treatment Effect",
   // },
-  "Validity": {
-    // "option_value": "Option Label",
-  },
   "Type": {
     // "option_value": "Option Label",
   },

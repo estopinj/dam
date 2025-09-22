@@ -156,240 +156,249 @@ document.addEventListener('DOMContentLoaded', function() {
       if (!categoryOrder.includes(c.category)) categoryOrder.push(c.category);
   });
 
-  criteria.forEach(criterion => {
-    // Insert category heading and collapsible container if this is a new category
-    if (criterion.category !== lastCategory && criterion.category !== "__standalone__") {
-      const catHeading = document.createElement("div");
-      catHeading.style.marginTop = "1.5em";
-      catHeading.style.marginLeft = "0em";
-      catHeading.style.fontSize = "1.3em";
-      catHeading.style.cursor = "pointer";
-      catHeading.style.display = "flex";
-      catHeading.style.alignItems = "center";
+  // Move "Assumptions" to the end of categoryOrder
+  const idx = categoryOrder.indexOf("Assumptions");
+  if (idx !== -1) {
+    categoryOrder.splice(idx, 1); // Remove "Assumptions"
+    categoryOrder.push("Assumptions"); // Add it at the end
+  }
 
-      // Category name (as span, not link)
-      const catName = document.createElement("span");
-      catName.textContent = criterion.category;
-      catName.style.fontWeight = "bold";
+  categoryOrder.forEach(category => {
+    criteria.filter(c => c.category === category).forEach(criterion => {
+      // Insert category heading and collapsible container if this is a new category
+      if (criterion.category !== lastCategory && criterion.category !== "__standalone__") {
+        const catHeading = document.createElement("div");
+        catHeading.style.marginTop = "1.5em";
+        catHeading.style.marginLeft = "0em";
+        catHeading.style.fontSize = "1.3em";
+        catHeading.style.cursor = "pointer";
+        catHeading.style.display = "flex";
+        catHeading.style.alignItems = "center";
 
-      // Add expand/collapse indicator
-      const arrow = document.createElement("span");
-      arrow.textContent = " ▶";
-      arrow.style.marginLeft = "0.5em";
-      arrow.style.marginRight = "0.5em";
+        // Category name (as span, not link)
+        const catName = document.createElement("span");
+        catName.textContent = criterion.category;
+        catName.style.fontWeight = "bold";
 
-      // Create the help link (?)
-      const catHelp = document.createElement("a");
-      catHelp.href = categoryLinks[criterion.category] || "#";
-      catHelp.target = "_blank";
-      catHelp.rel = "noopener noreferrer";
-      catHelp.title = `More info about ${criterion.category}`;
-      catHelp.style.marginLeft = "0.5em";
-      catHelp.style.fontSize = "0.75em";
-      catHelp.innerHTML = "(?)";
+        // Add expand/collapse indicator
+        const arrow = document.createElement("span");
+        arrow.textContent = " ▶";
+        arrow.style.marginLeft = "0.5em";
+        arrow.style.marginRight = "0.5em";
 
-      // Collapsible container for this category's criteria
-      const catContainer = document.createElement("div");
-      catContainer.style.display = "none";
-      catContainer.dataset.category = criterion.category;
-      categoryContainers[criterion.category] = catContainer;
+        // Create the help link (?)
+        const catHelp = document.createElement("a");
+        catHelp.href = categoryLinks[criterion.category] || "#";
+        catHelp.target = "_blank";
+        catHelp.rel = "noopener noreferrer";
+        catHelp.title = `More info about ${criterion.category}`;
+        catHelp.style.marginLeft = "0.5em";
+        catHelp.style.fontSize = "0.75em";
+        catHelp.innerHTML = "(?)";
 
-      // Toggle on heading click (but not when clicking the help link)
-      catHeading.addEventListener("click", function(e) {
-        if (e.target === catHelp) return; // Don't toggle if help clicked
-        const isOpen = catContainer.style.display === "block";
-        catContainer.style.display = isOpen ? "none" : "block";
-        arrow.textContent = isOpen ? " ▶" : " ▼";
-      });
+        // Collapsible container for this category's criteria
+        const catContainer = document.createElement("div");
+        catContainer.style.display = "none";
+        catContainer.dataset.category = criterion.category;
+        categoryContainers[criterion.category] = catContainer;
 
-      catHeading.appendChild(catName);
-      catHeading.appendChild(arrow);
-      catHeading.appendChild(catHelp);
-      filtersDiv.appendChild(catHeading);
-      filtersDiv.appendChild(catContainer);
-      lastCategory = criterion.category;
-    }
+        // Toggle on heading click (but not when clicking the help link)
+        catHeading.addEventListener("click", function(e) {
+          if (e.target === catHelp) return; // Don't toggle if help clicked
+          const isOpen = catContainer.style.display === "block";
+          catContainer.style.display = isOpen ? "none" : "block";
+          arrow.textContent = isOpen ? " ▶" : " ▼";
+        });
 
-    const label = document.createElement("label");
-    label.style.display = "inline-block";
-    label.style.whiteSpace = "nowrap";
-    if (criterion.key === "Objective") {
-      label.classList.add("objective-highlight");
-    }
-    label.appendChild(document.createTextNode(criterion.label + ": "));
+        catHeading.appendChild(catName);
+        catHeading.appendChild(arrow);
+        catHeading.appendChild(catHelp);
+        filtersDiv.appendChild(catHeading);
+        filtersDiv.appendChild(catContainer);
+        lastCategory = criterion.category;
+      }
 
-    // Create a container for (?) and select, and indent it
-    const rightContainer = document.createElement("span");
-    rightContainer.className = "criteria-select-container";
+      const label = document.createElement("label");
+      label.style.display = "inline-block";
+      label.style.whiteSpace = "nowrap";
+      if (criterion.key === "Objective") {
+        label.classList.add("objective-highlight");
+      }
+      label.appendChild(document.createTextNode(criterion.label + ": "));
 
-    const criterionSlug = slugify(criterion.key);
-    const helpLink = document.createElement("a");
-    const criteriaMapping = JSON.parse(document.getElementById('criteria-mapping').textContent);
+      // Create a container for (?) and select, and indent it
+      const rightContainer = document.createElement("span");
+      rightContainer.className = "criteria-select-container";
 
-    // When creating the help link for a criterion:
-    const helpHref = criteriaMapping[criterion.key]
-      ? siteBaseurl + criteriaMapping[criterion.key]
-      : `${siteBaseurl}/contents/criteria/${criterionSlug}`;
-    helpLink.href = helpHref;
-    helpLink.target = "_blank";
-    helpLink.rel = "noopener noreferrer";
-    helpLink.title = `More info about ${criterion.label}`;
-    helpLink.style.position = "absolute";
-    helpLink.style.left = "220px"; // Adjust this value to align all (?) marks vertically
-    helpLink.style.marginLeft = "0"; // Remove any previous margin-left
-    helpLink.style.marginRight = "6px";
-    helpLink.style.fontSize = "0.75em";
-    // helpLink.style.color = "#a89cc8";
-    helpLink.innerHTML = "(?)";
+      const criterionSlug = slugify(criterion.key);
+      const helpLink = document.createElement("a");
+      const criteriaMapping = JSON.parse(document.getElementById('criteria-mapping').textContent);
 
-    label.style.position = "relative";
-    label.style.minWidth = "220px";
+      // When creating the help link for a criterion:
+      const helpHref = criteriaMapping[criterion.key]
+        ? siteBaseurl + criteriaMapping[criterion.key]
+        : `${siteBaseurl}/contents/criteria/${criterionSlug}`;
+      helpLink.href = helpHref;
+      helpLink.target = "_blank";
+      helpLink.rel = "noopener noreferrer";
+      helpLink.title = `More info about ${criterion.label}`;
+      helpLink.style.position = "absolute";
+      helpLink.style.left = "220px"; // Adjust this value to align all (?) marks vertically
+      helpLink.style.marginLeft = "0"; // Remove any previous margin-left
+      helpLink.style.marginRight = "6px";
+      helpLink.style.fontSize = "0.75em";
+      // helpLink.style.color = "#a89cc8";
+      helpLink.innerHTML = "(?)";
 
-    const select = document.createElement("select");
-    select.id = "filter-" + criterion.key;
+      label.style.position = "relative";
+      label.style.minWidth = "220px";
 
-
-    // Allow multiple selection if in multipleAllowedCriteria
-    if (multipleAllowedCriteria.includes(criterion.key)) {
-      select.multiple = true;
-      select.size = Math.min(optionsByCriterion[criterion.key].length, 6); // or any preferred size
-      select.value = ""; // Select "Any" by default
-    }
+      const select = document.createElement("select");
+      select.id = "filter-" + criterion.key;
 
 
-    if (criterion.key === "Objective") {
-      select.classList.add("objective-highlight");
-    }
-    let optionsHtml = `<option value="" style="font-style:italic;">Any</option>` +
-    optionsByCriterion[criterion.key].map(opt => {
-      const displayLabel = criteriaOptionLabelMap[criterion.key] && criteriaOptionLabelMap[criterion.key][opt]
-        ? criteriaOptionLabelMap[criterion.key][opt]
-        : opt;
-      return `<option value="${opt}">${displayLabel}</option>`;
-    }).join("");
-    if (criterion.key !== "Objective") {
-      optionsHtml += `<option value="__unsure__" style="font-style:italic;">Unsure</option>`;
-    }
-    select.innerHTML = optionsHtml;
+      // Allow multiple selection if in multipleAllowedCriteria
+      if (multipleAllowedCriteria.includes(criterion.key)) {
+        select.multiple = true;
+        select.size = Math.min(optionsByCriterion[criterion.key].length, 6); // or any preferred size
+        select.value = ""; // Select "Any" by default
+      }
 
-    // When a selection is made, expand the next category
-    select.addEventListener("change", function() {
-    // Find all VISIBLE criteria in this category
-    const currentCategory = criterion.category;
-    // Only consider divs that are visible and in this category
-    if (!categoryContainers[currentCategory]) return;
-    const visibleCriteriaInCategory = Array.from(categoryContainers[currentCategory].children)
-      .filter(child => child.style.display !== "none");
-    // Check if this is the last visible criterion in the category
-    if (
-      visibleCriteriaInCategory.length > 0 &&
-  visibleCriteriaInCategory[visibleCriteriaInCategory.length - 1] === rowDiv
-    ) {
-      // Find the next category in order
-      const idx = categoryOrder.indexOf(currentCategory);
-      if (idx !== -1 && idx < categoryOrder.length - 1) {
-        const nextCat = categoryOrder[idx + 1];
-        const nextContainer = categoryContainers[nextCat];
-        // Find the heading for the next category
-        const nextHeading = Array.from(filtersDiv.children).find(
-          el => el.querySelector && el.querySelector("span") && el.querySelector("span").textContent === nextCat
-        );
-        if (nextContainer && nextHeading) {
-          nextContainer.style.display = "block";
-          // Update arrow
-          const arrow = nextHeading.querySelector("span:nth-child(2)");
-          if (arrow) arrow.textContent = " ▼";
+
+      if (criterion.key === "Objective") {
+        select.classList.add("objective-highlight");
+      }
+      let optionsHtml = `<option value="" style="font-style:italic;">Any</option>` +
+      optionsByCriterion[criterion.key].map(opt => {
+        const displayLabel = criteriaOptionLabelMap[criterion.key] && criteriaOptionLabelMap[criterion.key][opt]
+          ? criteriaOptionLabelMap[criterion.key][opt]
+          : opt;
+        return `<option value="${opt}">${displayLabel}</option>`;
+      }).join("");
+      if (criterion.key !== "Objective") {
+        optionsHtml += `<option value="__unsure__" style="font-style:italic;">Unsure</option>`;
+      }
+      select.innerHTML = optionsHtml;
+
+      // When a selection is made, expand the next category
+      select.addEventListener("change", function() {
+      // Find all VISIBLE criteria in this category
+      const currentCategory = criterion.category;
+      // Only consider divs that are visible and in this category
+      if (!categoryContainers[currentCategory]) return;
+      const visibleCriteriaInCategory = Array.from(categoryContainers[currentCategory].children)
+        .filter(child => child.style.display !== "none");
+      // Check if this is the last visible criterion in the category
+      if (
+        visibleCriteriaInCategory.length > 0 &&
+    visibleCriteriaInCategory[visibleCriteriaInCategory.length - 1] === rowDiv
+      ) {
+        // Find the next category in order
+        const idx = categoryOrder.indexOf(currentCategory);
+        if (idx !== -1 && idx < categoryOrder.length - 1) {
+          const nextCat = categoryOrder[idx + 1];
+          const nextContainer = categoryContainers[nextCat];
+          // Find the heading for the next category
+          const nextHeading = Array.from(filtersDiv.children).find(
+            el => el.querySelector && el.querySelector("span") && el.querySelector("span").textContent === nextCat
+          );
+          if (nextContainer && nextHeading) {
+            nextContainer.style.display = "block";
+            // Update arrow
+            const arrow = nextHeading.querySelector("span:nth-child(2)");
+            if (arrow) arrow.textContent = " ▼";
+          }
         }
       }
+    });
+
+      label.appendChild(helpLink);
+      rightContainer.appendChild(select);
+
+      // Choices.js initialization for multi-select
+      if (multipleAllowedCriteria.includes(criterion.key)) {
+        const choicesInstance = new Choices(select, {
+          removeItemButton: true,
+          shouldSort: false,
+          position: 'bottom',
+          placeholder: true,
+          placeholderValue: 'Select options',
+          searchEnabled: false
+        });
+        choicesInstances[criterion.key] = choicesInstance;
+        // Ensure "Any" is visually selected on load
+        choicesInstance.setChoiceByValue('');
+
+        let prevSelectedValues = Array.from(select.selectedOptions).map(opt => opt.value);
+        select.addEventListener('change', function(e) {
+          const anyOption = select.querySelector('option[value=""]');
+          const selectedValues = Array.from(select.selectedOptions).map(opt => opt.value);
+
+          // Only remove "Any" if it was previously selected and now another option is selected
+          if (
+            anyOption &&
+            prevSelectedValues.includes("") && // "Any" was previously selected
+            selectedValues.includes("") &&
+            selectedValues.length > 1
+          ) {
+            setTimeout(() => {
+              anyOption.selected = false;
+              choicesInstances[criterion.key].removeActiveItemsByValue('');
+              // Reselect all other selected values to ensure Choices.js UI is correct
+              selectedValues.filter(v => v !== "").forEach(val => {
+                choicesInstances[criterion.key].setChoiceByValue(val);
+              });
+            }, 0);
+          }
+
+          // If nothing is selected, select "Any" by default
+          if (selectedValues.length === 0 && anyOption) {
+            setTimeout(() => {
+              anyOption.selected = true;
+              choicesInstances[criterion.key].setChoiceByValue('');
+            }, 0);
+          }
+
+          // Update prevSelectedValues for next change
+          prevSelectedValues = selectedValues;
+        });
     }
-  });
 
-    label.appendChild(helpLink);
-    rightContainer.appendChild(select);
+      // Create a container for tags (right-aligned)
+    const tagContainer = document.createElement("span");
+    tagContainer.className = "criteria-tag-container";
 
-    // Choices.js initialization for multi-select
+    // Ordinal tag
+    if (ordinalCriteriaOrder[criterion.key]) {
+      const ordinalTag = document.createElement("span");
+      ordinalTag.className = "ordinal-tag";
+      ordinalTag.title = "Options are ordered: selecting a value includes all higher options.";
+      ordinalTag.textContent = "Ordinal";
+      tagContainer.appendChild(ordinalTag);
+    }
+
+    // Multiple allowed tag
     if (multipleAllowedCriteria.includes(criterion.key)) {
-      const choicesInstance = new Choices(select, {
-        removeItemButton: true,
-        shouldSort: false,
-        position: 'bottom',
-        placeholder: true,
-        placeholderValue: 'Select options',
-        searchEnabled: false
-      });
-      choicesInstances[criterion.key] = choicesInstance;
-      // Ensure "Any" is visually selected on load
-      choicesInstance.setChoiceByValue('');
-
-      let prevSelectedValues = Array.from(select.selectedOptions).map(opt => opt.value);
-      select.addEventListener('change', function(e) {
-        const anyOption = select.querySelector('option[value=""]');
-        const selectedValues = Array.from(select.selectedOptions).map(opt => opt.value);
-
-        // Only remove "Any" if it was previously selected and now another option is selected
-        if (
-          anyOption &&
-          prevSelectedValues.includes("") && // "Any" was previously selected
-          selectedValues.includes("") &&
-          selectedValues.length > 1
-        ) {
-          setTimeout(() => {
-            anyOption.selected = false;
-            choicesInstances[criterion.key].removeActiveItemsByValue('');
-            // Reselect all other selected values to ensure Choices.js UI is correct
-            selectedValues.filter(v => v !== "").forEach(val => {
-              choicesInstances[criterion.key].setChoiceByValue(val);
-            });
-          }, 0);
-        }
-
-        // If nothing is selected, select "Any" by default
-        if (selectedValues.length === 0 && anyOption) {
-          setTimeout(() => {
-            anyOption.selected = true;
-            choicesInstances[criterion.key].setChoiceByValue('');
-          }, 0);
-        }
-
-        // Update prevSelectedValues for next change
-        prevSelectedValues = selectedValues;
-      });
-  }
-
-    // Create a container for tags (right-aligned)
-  const tagContainer = document.createElement("span");
-  tagContainer.className = "criteria-tag-container";
-
-  // Ordinal tag
-  if (ordinalCriteriaOrder[criterion.key]) {
-    const ordinalTag = document.createElement("span");
-    ordinalTag.className = "ordinal-tag";
-    ordinalTag.title = "Options are ordered: selecting a value includes all higher options.";
-    ordinalTag.textContent = "Ordinal";
-    tagContainer.appendChild(ordinalTag);
-  }
-
-  // Multiple allowed tag
-  if (multipleAllowedCriteria.includes(criterion.key)) {
-    const multiTag = document.createElement("span");
-    multiTag.className = "multiple-tag";
-    multiTag.title = "You can select multiple options (click to select, click again to deselect).";
-    multiTag.textContent = "Multiple";
-    tagContainer.appendChild(multiTag);
-  }
-
-  const rowDiv = document.createElement("div");
-  rowDiv.className = "criteria-row";
-  rowDiv.appendChild(label);
-  rowDiv.appendChild(rightContainer);
-  rowDiv.appendChild(tagContainer);
-  rowDiv.dataset.criterionKey = criterion.key;
-
-    if (criterion.category === "__standalone__") {
-      filtersDiv.appendChild(rowDiv);
-    } else {
-      categoryContainers[criterion.category].appendChild(rowDiv);
+      const multiTag = document.createElement("span");
+      multiTag.className = "multiple-tag";
+      multiTag.title = "You can select multiple options (click to select, click again to deselect).";
+      multiTag.textContent = "Multiple";
+      tagContainer.appendChild(multiTag);
     }
+
+    const rowDiv = document.createElement("div");
+    rowDiv.className = "criteria-row";
+    rowDiv.appendChild(label);
+    rowDiv.appendChild(rightContainer);
+    rowDiv.appendChild(tagContainer);
+    rowDiv.dataset.criterionKey = criterion.key;
+
+      if (criterion.category === "__standalone__") {
+        filtersDiv.appendChild(rowDiv);
+      } else {
+        categoryContainers[criterion.category].appendChild(rowDiv);
+      }
+    });
   });
 
   // After the rendering loop, add this Objective change handler:
@@ -572,8 +581,8 @@ document.addEventListener('DOMContentLoaded', function() {
       const SUBCAT_FOLDER_MAP = catDicts.SUBCAT_FOLDER_MAP;
       const SUBCAT_PARENT = catDicts.SUBCAT_PARENT;
 
-      // Filter out methods with missing "Method list"
-      const validMethods = methods.filter(m => m["Method list"]);
+      // Filter out methods with missing "Method"
+      const validMethods = methods.filter(m => m["Method"]);
       if (validMethods.length === 0) {
           div.innerHTML = "<p>No methods match your criteria.</p>";
           return;
@@ -622,7 +631,7 @@ document.addEventListener('DOMContentLoaded', function() {
           if (grouped[cat]["__no_subcat__"]) {
               html += "<ul>";
               grouped[cat]["__no_subcat__"].forEach(m => {
-                  const methodName = m["Method list"];
+                  const methodName = m["Method"];
                   const methodSlug = slugify(methodName);
                   const categoryFolder = CATEGORY_FOLDER_MAP[cat] || slugify(cat);
                   
@@ -640,7 +649,7 @@ document.addEventListener('DOMContentLoaded', function() {
               html += `<h4 style="margin-left:1em">${subcat}</h4>`;
               html += "<ul>";
               grouped[cat][subcat].forEach(m => {
-                  const methodName = m["Method list"];
+                  const methodName = m["Method"];
                   const methodSlug = slugify(methodName);
                   const categoryFolder = CATEGORY_FOLDER_MAP[cat] || slugify(cat);
                   const subcatFolder = SUBCAT_FOLDER_MAP[subcat] || slugify(subcat);

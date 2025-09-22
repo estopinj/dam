@@ -1,7 +1,6 @@
 {
   "Effect estimation": [
     "Estimand",
-    "Validity",
     "Type",
     "Required TS length",
     "Handles few samples",
@@ -49,7 +48,6 @@
     "Usage"
   ],
   "Predictive task + interpretability": [
-    "Validity",
     "Type",
     "Required TS length",
     "Handles few samples",
@@ -103,7 +101,6 @@
   ],
   "Scenario projection": [
     "Estimand",
-    "Validity",
     "Type",
     "Required TS length",
     "Handles few samples",

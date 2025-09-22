@@ -3,12 +3,9 @@ layout: method
 title: "Bayesian network learning"
 parent: "Causal discovery"
 date: 2025-07-17
-author: "Mrs. Young"
-categories:
-- methods
-- discovery
+author: Mrs. Young
 ---
-<!-- This file was auto-generated from _data/method_assessments.tsv -->
+<!-- This file was auto-generated from _data/Attribution methods - Method Assessment.tsv -->
 
 {% if page.category_note != '' %}
 {: .note }

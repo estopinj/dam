@@ -1,15 +1,11 @@
 ---
 layout: method
-title: PREBAS
+title: "PREBAS"
 parent: "Ecosystem Process Models"
 date: 2025-07-17
-author: "Mrs. Young"
-categories:
-- methods
-- simulations
-- ecosystem_process
+author: Mrs. Young
 ---
-<!-- This file was auto-generated from _data/method_assessments.tsv -->
+<!-- This file was auto-generated from _data/Attribution methods - Method Assessment.tsv -->
 
 {% if page.category_note != '' %}
 {: .note }

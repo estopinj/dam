@@ -1,12 +1,9 @@
 ---
 layout: method
 title: "Long difference estimator"
-parent: Quasi-experiments
+parent: "Quasi-experiments"
 date: 2025-07-17
-author: "Mrs. Young"
-categories:
-- methods
-- quasi-exps
+author: Mrs. Young
 ---
 <!-- This file was auto-generated from _data/Attribution methods - Method Assessment.tsv -->
 
