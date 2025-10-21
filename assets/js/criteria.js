@@ -129,10 +129,11 @@ export const criteriaOptionLabelMap = {
   },
   "Handles few samples": {
     "Yes CT design": "Yes, Control/Treatment design",
+    "No": "No need",
   },
   "Handles huge datasets (n)": {
     "Most dont": "Not prioritized",
-    "No": "Not needed",
+    "No": "No need",
   },
   "Handles missing data": {
     "No: requires prelim. correction": "No, complete data only",
@@ -140,7 +141,7 @@ export const criteriaOptionLabelMap = {
     "Yes": "Yes, built-in / prelim. correction",
   },
   "RS-data proven": {
-    "No": "Not needed",
+    "No": "No need",
     "Few applications": "At least few RS applications exist",
     "Yes": "Yes, many RS applications exist"
   },
@@ -191,7 +192,7 @@ export const criteriaOptionLabelMap = {
     // "option_value": "Option Label",
   },
   "Handles lag effects": {
-    "No": "Not needed",
+    "No": "No need",
   },
   "Parametric nature": {
     // "option_value": "Option Label",
