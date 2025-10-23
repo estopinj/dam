@@ -96,7 +96,7 @@ Rather than suggesting a single 'unicorn' method, NaviDAM provides a subset of c
 
 {: .important }
 > Investigators are invited to specify method assumptions at the end of the filtering process.
-> This way, when assumptions are not (fully) specified with `Any` options, NaviDAM suggests a **set of methods** relying on **different assumptions**. This enables users to **compare results** across methods, assess the robustness or sensitivity of findings to assumptions, and interpret their results with multiple lines of evidence.
+> This way, when assumptions are not (fully) specified with `Any` or `Unsure` options, NaviDAM suggests a **set of methods** relying on **different assumptions**. This enables users to **compare results** across methods, assess the robustness or sensitivity of findings to assumptions, and interpret their results with multiple lines of evidence.
 
 ## Graph Explorer
 

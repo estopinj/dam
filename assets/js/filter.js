@@ -509,58 +509,75 @@ document.addEventListener('DOMContentLoaded', function() {
     const usedCriteriaKeys = getUsedCriteriaKeys();
     criteria.forEach(criterion => {
       if (!usedCriteriaKeys.includes(criterion.key)) return; // skip unused criteria
-      const val = document.getElementById("filter-" + criterion.key).value;
-      if (val && val !== "__unsure__") {
-        // 1. Composite option logic
-        if (
-          compositeOptions[criterion.key] &&
-          compositeOptions[criterion.key][val]
-        ) {
-          const included = compositeOptions[criterion.key][val];
+        // ...existing code...
+        // ---------- REPLACE START (was: const val = document.getElementById(...).value) ----------
+        const selectEl = document.getElementById("filter-" + criterion.key);
+        if (!selectEl) return;
+        // collect selected values (exclude Any "" and __unsure__)
+        let selectedVals = [];
+        if (selectEl.multiple) {
+          selectedVals = Array.from(selectEl.selectedOptions)
+            .map(o => o.value)
+            .filter(v => v !== "" && v !== "__unsure__");
+        } else {
+          const v = selectEl.value;
+          if (v && v !== "__unsure__") selectedVals = [v];
+        }
+
+        // If nothing meaningful selected (Any / Unsure), skip filtering for this criterion
+        if (selectedVals.length === 0) {
+          // do nothing (skip criterion)
+        } else {
+          // 1. Composite option logic (union of constituents for all selected composite opts)
+          if (compositeOptions[criterion.key]) {
+            const compositeForThis = compositeOptions[criterion.key];
+            const isAnyCompositeSelected = selectedVals.some(sv => compositeForThis[sv]);
+            if (isAnyCompositeSelected) {
+              const included = new Set();
+              // add constituents of selected composite options
+              selectedVals.forEach(sv => {
+                if (compositeForThis[sv]) {
+                  compositeForThis[sv].forEach(x => included.add(x));
+                } else {
+                  // also include explicitly selected non-composite options
+                  included.add(sv);
+                }
+              });
+              filtered = filtered.filter(m => {
+                if (!m[criterion.key]) return false;
+                const methodVals = m[criterion.key].split(",").map(x => x.trim());
+                // accept if method has any included option or unknown/inapplicable
+                return methodVals.some(opt => included.has(opt) || opt === "Don't know" || opt === "Inapplicable");
+              });
+              // finished handling this criterion
+              return;
+            }
+          }
+
+          // 2. Ordinal logic: accept if method satisfies ANY selected threshold (union across selections)
+          if (ordinalCriteriaOrder[criterion.key]) {
+            const order = ordinalCriteriaOrder[criterion.key];
+            filtered = filtered.filter(m => {
+              if (!m[criterion.key]) return false;
+              const methodVals = m[criterion.key].split(",").map(x => x.trim());
+              return methodVals.some(opt => {
+                if (opt === "Don't know" || opt === "Inapplicable") return true;
+                return selectedVals.some(sv => order.indexOf(opt) >= order.indexOf(sv));
+              });
+            });
+            // finished handling this criterion
+            return;
+          }
+
+          // 3. Default logic (non-composite, non-ordinal): union — accept methods that have ANY selected value
           filtered = filtered.filter(m => {
             if (!m[criterion.key]) return false;
             const methodVals = m[criterion.key].split(",").map(x => x.trim());
-            // Accept if any of the method's values is in the composite set
-            return (
-              methodVals.some(opt => included.includes(opt)) ||
-              methodVals.includes("Don't know") ||
-              methodVals.includes("Inapplicable")
-            );
+            return methodVals.some(opt => selectedVals.includes(opt) || opt === "Don't know" || opt === "Inapplicable");
           });
-          return; // skip to next criterion
         }
-
-        // 2. Ordinal logic
-        if (
-          ordinalCriteriaOrder[criterion.key] &&
-          ordinalCriteriaOrder[criterion.key].includes(val)
-        ) {
-          const order = ordinalCriteriaOrder[criterion.key];
-          const selectedIdx = order.indexOf(val);
-          filtered = filtered.filter(m => {
-            if (!m[criterion.key]) return false;
-            const methodVals = m[criterion.key].split(",").map(x => x.trim());
-            // Accept if any of the method's values is at or above the selected level
-            return (
-              methodVals.some(opt => order.indexOf(opt) >= selectedIdx) ||
-              methodVals.includes("Don't know") ||
-              methodVals.includes("Inapplicable")
-            );
-          });
-          return; // skip to next criterion
-        }
-
-        // 3. Default logic (non-composite, non-ordinal)
-        filtered = filtered.filter(m => {
-          if (!m[criterion.key]) return false;
-          const methodVals = m[criterion.key].split(",").map(x => x.trim());
-          return (
-            methodVals.includes(val) ||
-            methodVals.includes("Don't know") ||
-            methodVals.includes("Inapplicable")
-          );
-        });
-      }
+        // ---------- REPLACE END ----------
+  // ...existing code...
       // If val is "" (Any) or "__unsure__", do not filter (i.e., skip filtering for this criterion)
     });
     displayMethods(filtered);

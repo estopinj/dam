@@ -38,9 +38,11 @@ export const criteria = [
 
 // Always include all possible options (other than "Any" and "Unsure") 
 // for an ordinal criterion in its ordinalCriteriaOrder array,
-// in the correct order from lowest to highest.
+// in the correct order from lowest to highest:
+// Right options are included when a lowest level (left) is selected.
 export const ordinalCriteriaOrder = {
   "Required TS length": ["Handles ≤ 10", "≥ 10", "≥ 100"],
+  "Handles few samples": ["No", "10 to 100", "Yes ≤ 10", "Yes CT design"],
   "Handles huge datasets (n)": ["No", "Most dont", "Most do", "Yes", "Necessary"],
   "Handles missing data": ["No: requires prelim. correction", "Partially", "Yes"],
   "RS-data proven": ["No", "Few applications", "Yes"],
@@ -210,7 +212,7 @@ export const criteriaOptionLabelMap = {
 export const multipleAllowedCriteria = [
   "Estimand",
   "Type",
-  "Handles few samples",
+  // "Handles few samples",
   "Fonctional form",
   "No unobserved confounders",
   "No interference",
