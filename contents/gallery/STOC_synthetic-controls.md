@@ -49,6 +49,7 @@ This survey enables studying the evolution of specialization groups of birds thr
 
 <!-- TODO: Add some STOC plots metrics -->
 ### Example abundance curves per observation plot
+{: .no_toc}
 
 On [Figure 3](#figA1) we plot the monitored abundance of one common species, *Picus viridis*, for a selection of observation squares to give a sense of sampling effort.
 
