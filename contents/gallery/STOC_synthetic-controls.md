@@ -115,7 +115,7 @@ We extracted land cover data on the 2x2-km squares matching the STOC survey squa
 # Objectives
 
 The objective of this work is twofold: 
-1. `Detection` To identify STOC monitoring squares that have been affected by abrupt landscape changes. To achieve this, we compute landscape metrics on the annual land cover squares and **detect** extreme deviations from the mean annual change.
+1. `Detection` To identify STOC monitoring squares that have been affected by abrupt landscape changes. To achieve this, we first compute landscape metrics on the annual land cover squares, and second look for a suited detection method with **NaviDAM**.
 2. `Effect estimation` To test if the detected landscape changes result in bird diversity metric shifts. If we succeed in estimating significant effects, we could therefore confidently **attribute** or not the diversity shifts to the land cover changes.
 
 
@@ -126,9 +126,8 @@ The objective of this work is twofold:
 
 - Then, we tested several landscape metrics assumed to be ecologically relevant for bird populations (e.g. according to the [forest edge effect](https://en.wikipedia.org/wiki/Edge_effects)): `["proportion_of_landscape", "number_of_patches", "largest_patch_index", "total_edge", "landscape_shape_index", "contagion", "shannon_diversity_index"]`.
 
-
 The objective now is to find a suitable detection method for identifying abrupt changes in landscape metrics. To achieve this, we can use the NaviDAM tool.
-œ
+
 ## **NaviDAM for detection**
 
 On the <a href="{{ site.baseurl }}/" target="_blank" rel="noopener noreferrer">home</a> page, we reach the <a href="{{ site.baseurl }}/#user-input" target="_blank" rel="noopener noreferrer">User input invite</a> to evaluate the task needs:
