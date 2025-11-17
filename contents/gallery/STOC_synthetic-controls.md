@@ -398,7 +398,7 @@ As we did with the *Detection* objective, we will now go through the different c
 - Finally, the assumptions:
   - As indicated in the above box, a number of criteria are only informed with `Unsure`: It avoids filtering based on their options when the user does not want to emphasise an assumption. The opposite would be looking for a method that explicitly *relaxes* or firmly *requires* an assumption. Criteria with `Unsure` are note detailed here.
   - **No unobserved confounders:** `Recommended / Desirable`, `No need: method relaxes assumption`. In our case study, we certainly have unobserved confounders impacting both the tested outcome and our exposure. We also have *observed* confounders like climatic variables that will be controlled for, but others are unobserved, e.g. land use intensity. We therefore need a method that can deal with such bias, hence the chosen options.
-  - **IDD:** `Assumption required`, `Recommended / Desirable` - We can reasonably assum having IDD samples regarding the semi-standardized sampling protocol.
+  - **IDD:** `Assumption required`, `Recommended / Desirable` - We can reasonably assume having IDD samples regarding the semi-standardized sampling protocol.
 
 
 <p style="color:#008080;"><em><strong>--></strong> All criteria have been assessed or at least considered with `Unsure`, so the counter on the right turns to teal.</em></p>

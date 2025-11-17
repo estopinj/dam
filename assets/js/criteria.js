@@ -118,7 +118,7 @@ export const hideCompositeConstituents = {
 
 export const criteriaOptionLabelMap = {
   "Objective": {
-    // "option_value": "Option Label",
+    "Detection": "Change detection"
   },
   // "Estimand": {
     // "ATE": "Average Treatment Effect",
