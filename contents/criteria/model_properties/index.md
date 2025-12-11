@@ -1,6 +1,6 @@
 ---
 title: "Model properties"
-nav_order: 4
+nav_order: 3
 parent: Criteria
 permalink: /properties
 categories:
