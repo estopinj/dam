@@ -83,7 +83,7 @@ Choose the [criteria]({{ site.baseurl }}/criteria) options in the dropdown lists
 </div>
 
 --------------------------------
-<div style="text-align:center; font-size:0.85em; font-style:italic;">
+<div style="text-align:center; font-size:0.95em; font-style:italic;">
 Rather than suggesting a single 'unicorn' method, NaviDAM provides a subset of candidate methods that meet the specified criteria and offer complementary insights into the studied system
 </div>
 --------------------------------

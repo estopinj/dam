@@ -121,7 +121,7 @@ The objective of this work is twofold:
 
 # Detection of abrupt landscape changes
 
-- Using [PyLandStats](https://pylandstats.readthedocs.io/en/latest/#) {% cite bosch2019 %}, we computed landscape metrics on the successive land cover annual squares as depicted [Figure7](#fig5). For the list of available metrics, see PylandStats publication's [Table S1](https://doi.org/10.1371/journal.pone.0225734.s002). We also relied on their user-friendly [notebooks](https://github.com/martibosch/pylandstats-notebooks/tree/main/notebooks) for easy implementation. The R equivalent package is [landscapemetrics](https://r-spatialecology.github.io/landscapemetrics/).
+- Using [PyLandStats](https://pylandstats.readthedocs.io/en/latest/#) {% cite bosch2019 %}, we computed landscape metrics on the successive land cover annual squares as depicted [Figure 7](#fig5). For the list of available metrics, see PylandStats publication's [Table S1](https://doi.org/10.1371/journal.pone.0225734.s002). We also relied on their user-friendly [notebooks](https://github.com/martibosch/pylandstats-notebooks/tree/main/notebooks) for easy implementation. The R equivalent package is [landscapemetrics](https://r-spatialecology.github.io/landscapemetrics/).
 
 
 - Then, we tested several landscape metrics assumed to be ecologically relevant for bird populations (e.g. according to the [forest edge effect](https://en.wikipedia.org/wiki/Edge_effects)): `["proportion_of_landscape", "number_of_patches", "largest_patch_index", "total_edge", "landscape_shape_index", "contagion", "shannon_diversity_index"]`.
@@ -203,7 +203,7 @@ On the <a href="{{ site.baseurl }}/" target="_blank" rel="noopener noreferrer">h
 
 
 - Finally the assumptions, again adapted to the `Detection` objective:
-  - **Functional form:** `Rule-based`, `Non-linear`, `Assumption-free` Expecting an abrupt change to be detected, the best option is likely `Rule-based` with a rule level fitted on the data. However, we also keep other options to avoid being to stringent on the method sub-selection & retain more candidate methods.
+  - **Functional form:** `Rule-based`, `Non-linear`, `Assumption-free` Expecting an abrupt change to be detected, the best option is likely `Rule-based` with a rule level fitted on the data. However, we also keep other options to avoid being too stringent on the method sub-selection & retain more candidate methods.
   - **Model specific:** `No specific` No particular expectation.
 
 
