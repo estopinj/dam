@@ -1,18 +1,16 @@
 name: Documentation method 
 description: Create a new documentation method page.
 title: "[Documentation method]: "
-labels: ["bug", "triage"]
-projects: ["octo-org/1", "octo-org/44"]
+labels: ["method", "documentation"]
 assignees:
-  - octocat
-type: method
+  - estopinj
 body:
   - type: markdown
     attributes:
       value: |
         Thanks for taking the time to fill out this documentation method request!
   - type: input
-    id: Author
+    id: author
     attributes:
       label: Page’s Author & Date
       placeholder: ex. Jean Dupont
@@ -35,7 +33,7 @@ body:
     validations:
       required: false
   - type: textarea
-    id: online_ressources
+    id: online_resources
     attributes:
       label: Further online resources
       description: References to useful online resources to get started, e.g. explanation blogs, video tutorials, etc.
@@ -44,12 +42,17 @@ body:
       required: false
   - type: textarea
     id: references
+    attributes:
+      label: References (general)
+      placeholder: ex. DOI or URL
+    validations:
+      required: false
   - type: markdown
     attributes:
-      label: ref_title
       value: |
         References Articles
-  - type: markdown 
+  - type: textarea
+    id: method_references
     attributes:
       label: Method 
       description: One or a few key academic references that introduce or formalize the method.
@@ -61,15 +64,15 @@ body:
       value: |
         Research applications
   - type: textarea
-    id: RS_data
+    id: rs_data
     attributes:
       label: With Remote Sensing data (Ecology / Biodiversity)
-      description: If the method has been used in remote sensing research, please list the refere
+      description: If the method has been used in remote sensing research, please list the references here.
       placeholder: ex. DOI or URL
     validations:
       required: false
   - type: textarea
-    id: RS_data_bis 
+    id: rs_data_field
     attributes:
       label: Without Remote Sensing data (Ecology Field)
       description: If the method has been used in research without remote sensing data, please list the references here.
@@ -81,7 +84,7 @@ body:
       value: |
         Packages
   - type: textarea
-    id: Python_pckg
+    id: python_pkg
     attributes:
       label: Python packages
       description: If there are Python packages that implement the method, please list them here.
@@ -89,7 +92,7 @@ body:
     validations:
       required: false
   - type: textarea
-    id: r_pckg
+    id: r_pkg
     attributes:
       label: R packages
       description: If there are R packages that implement the method, please list them here.
