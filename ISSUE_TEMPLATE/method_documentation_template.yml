@@ -1,0 +1,104 @@
+name: Documentation method 
+description: Create a new documentation method page.
+title: "[Documentation method]: "
+labels: ["bug", "triage"]
+projects: ["octo-org/1", "octo-org/44"]
+assignees:
+  - octocat
+type: Documentation method
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this documentation method request!
+  - type: input
+    id: Author
+    attributes:
+      label: Page’s Author & Date
+      placeholder: ex. Jean Dupont
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Description & principle 
+      description: A clear, technical yet accessible explanation of the method, its core principle(s).
+      placeholder: This method is used to...
+      value: "A documentation method request!"
+    validations:
+      required: true
+  - type: textarea
+    id: variant
+    attributes:
+      label: Major variants
+      description: If the method has variants that seem important, either already widespread or promising and well documented. 
+    validations:
+      required: false
+  - type: textarea
+    id: online_ressources
+    attributes:
+      label: Further online resources
+      description: References to useful online resources to get started, e.g. explanation blogs, video tutorials, etc.
+      placeholder: ex. https://example.com/method
+    validations:
+      required: false
+  - type: textarea
+    id: references
+  - type: markdown
+    attributes:
+      value: |
+        References Articles
+    attributes:
+      label: Method 
+      description: One or a few key academic references that introduce or formalize the method.
+      placeholder: ex. DOI or URL
+    validations:
+      required: false
+  - type: markdown
+    attributes:
+      value: |
+        Research applications
+  - type: textarea
+    id: RS_data
+    attributes:
+      label: With Remote Sensing data (Ecology / Biodiversity)
+      description: If the method has been used in remote sensing research, please list the refere
+      placeholder: ex. DOI or URL
+    validations:
+      required: false
+  - type: textarea
+    id: RS_data_bis 
+    attributes:
+      label: Without Remote Sensing data (Ecology Field)
+      description: If the method has been used in research without remote sensing data, please list the references here.
+      placeholder: ex. DOI or URL
+    validations:
+      required: false
+  - type: markdown
+    attributes:
+      value: |
+        Packages
+  - type: textarea
+    id: Python_pckg
+    attributes:
+      label: Python packages
+      description: If there are Python packages that implement the method, please list them here.
+      placeholder: Link toward the package documentation or repository.
+    validations:
+      required: false
+  - type: textarea
+    id: r_pckg
+    attributes:
+      label: R packages
+      description: If there are R packages that implement the method, please list them here.
+      placeholder: Link toward the package documentation or repository.
+    validations:
+      required: false
+  - type: textarea
+    id: code_list
+    attributes:
+      label: Code implementations
+      description: If there are code implementations of the method, please list them here.
+      placeholder: Code examples to run the method
+    validations:
+      required: false
