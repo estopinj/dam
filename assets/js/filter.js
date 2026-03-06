@@ -576,9 +576,6 @@ document.addEventListener('DOMContentLoaded', function() {
             return methodVals.some(opt => selectedVals.includes(opt) || opt === "Don't know" || opt === "Inapplicable");
           });
         }
-        // ---------- REPLACE END ----------
-  // ...existing code...
-      // If val is "" (Any) or "__unsure__", do not filter (i.e., skip filtering for this criterion)
     });
     displayMethods(filtered);
   }
