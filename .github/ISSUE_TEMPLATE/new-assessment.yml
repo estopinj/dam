@@ -1,0 +1,361 @@
+name: New Assessment
+description: Describe a new method by filling its assessment table
+title: "[New Assessment]: "
+labels: ["method", "assessment"]
+body:
+  - type: input
+    id: method_name
+    attributes:
+      label: Name of the method
+      description: Give the name of the method you want to describe.
+      placeholder: ex. Synthetic Control Method
+    validations:
+      required: true
+  - type: markdown
+    attributes:
+      value: |
+        ## Outcome
+
+        Please fill the different values for the outcome
+  - type: dropdown
+    id: objective
+    attributes:
+      label: Objective
+      description: Describe the main goal(s) of the method.
+      multiple: true
+      options:
+        - Effect estimation
+        - Causal relationship(s)
+        - Predictive task + interpretability
+        - Detection
+        - Significance and robustness tests
+        - Scenario projection
+    validations:
+      required: true
+  - type: dropdown
+    id: estimand
+    attributes:
+      label: Estimand
+      multiple: true
+      options:
+        - ATT
+        - ATE
+        - LATE
+        - CATE
+        - Mediation effects
+        - Oriented link
+        - Risk ratios
+        - Maps & generalisations
+        - Others
+    validations:
+      required: true
+  - type: markdown
+    attributes:
+      value: |
+        ## Data compatibility
+  - type: dropdown
+    id: data_type
+    attributes:
+      label: Data type
+      multiple: true
+      options:
+        - Spatial only (cross-sectional)
+        - Time-series (one sample)
+        - Panel data (many samples)
+    validations:
+      required: true
+  - type: dropdown
+    id: required_ts_length
+    attributes:
+      label: Required TS length
+      multiple: true
+      options:
+        - Handles ≤ 10
+        - ≥ 10
+        - ≥ 100
+    validations:
+      required: true
+  - type: dropdown
+    id: handles_few_samples
+    attributes:
+      label: Handles few samples
+      options:
+        - Yes CT design
+        - Yes ≤ 10
+        - 10 to 100
+        - No
+    validations:
+      required: true
+  - type: dropdown
+    id: handles_huge_datasets
+    attributes:
+      label: Handles huge datasets (n)
+      options:
+        - Yes
+        - Most do
+        - Most don't
+        - No
+    validations:
+      required: true
+  - type: dropdown
+    id: handles_missing_data
+    attributes:
+      label: Handles missing data
+      options:
+        - Yes
+        - Partially
+        - "No: requires prelim. correction"
+    validations:
+      required: true
+  - type: dropdown
+    id: rs_data_proven
+    attributes:
+      label: Proven with remote sensing data
+      options:
+        - Yes
+        - Few applications
+        - No
+    validations:
+      required: true
+  - type: markdown
+    attributes:
+      value: "## Assumptions"
+  - type: dropdown
+    id: functional_form
+    attributes:
+      label: Functional form
+      multiple: true
+      options:
+        - Linear
+        - Quadratic
+        - Non-linear
+        - Additivity
+        - Assumption-free
+        - Rule-based
+        - Log-linear
+        - Inapplicable
+    validations:
+      required: true
+  - type: dropdown
+    id: no_unobserved_confounders
+    attributes:
+      label: No unobserved confounders
+      options:
+        - Required
+        - Recommended
+        - Desirable
+        - Relaxes assumption
+        - Time-varying OR site-varying
+        - Inapplicable
+    validations:
+      required: true
+  - type: dropdown
+    id: no_interference
+    attributes:
+      label: No interference
+      multiple: true
+      options:
+        - Required
+        - Recommended
+        - Desirable
+        - Relaxes assumption
+        - Not required
+        - Inapplicable
+    validations:
+      required: true
+  - type: dropdown
+    id: well_defined_treatments
+    attributes:
+      label: Well-defined treatments
+      options:
+        - Required
+        - Recommended
+        - Desirable
+        - Relaxes assumption
+        - Inapplicable
+    validations:
+      required: true
+  - type: dropdown
+    id: common_support_positivity
+    attributes:
+      label: Common support (positivity)
+      options:
+        - Required
+        - Recommended
+        - Desirable
+        - Relaxes assumption
+        - Inapplicable
+    validations:
+      required: true
+  - type: dropdown
+    id: causal_markov_condition
+    attributes:
+      label: Causal Markov Condition
+      options:
+        - Required
+        - Recommended
+        - Desirable
+        - Relaxes assumption
+        - Inapplicable
+    validations:
+      required: true
+  - type: dropdown
+    id: faithfulness
+    attributes:
+      label: Faithfulness
+      options:
+        - Required
+        - Recommended
+        - Desirable
+        - Relaxes assumption
+        - Inapplicable
+    validations:
+      required: true
+  - type: dropdown
+    id: idd
+    attributes:
+      label: IDD
+      options:
+        - Required
+        - Recommended
+        - Desirable
+        - Relaxes assumption
+        - Inapplicable
+    validations:
+      required: true
+  - type: dropdown
+    id: model_specific_assumptions
+    attributes:
+      label: Model-specific assumptions
+      multiple: true
+      options:
+        - Parallel trends
+        - Stationarity
+        - Dispersal / reproduction / mortality
+        - Instrument validity
+        - Normality of random effects
+        - No M-O confounding
+        - Good covariate balance
+        - Effect entirely mediated
+        - Cutoff + PO continuity
+        - B/A treatment obs.
+        - Good pretreatment fit
+        - Inapplicable
+    validations:
+      required: true
+  - type: markdown
+    attributes:
+      value: "## Model properties"
+  - type: dropdown
+    id: requires_explicit_processes
+    attributes:
+      label: Requires explicit processes
+      options:
+        - Yes
+        - Optional
+        - Agnostic
+    validations:
+      required: true
+  - type: dropdown
+    id: exposure_type
+    attributes:
+      label: Exposure type
+      multiple: true
+      options:
+        - Binary
+        - Categorical
+        - Continuous / Time-varying
+        - Compositional
+        - Multivariate
+        - Others
+        - All
+    validations:
+      required: true
+  - type: dropdown
+    id: number_of_variables
+    attributes:
+      label: Number of variables
+      multiple: true
+      options:
+        - Univariate
+        - Bivariate
+        - Multivariate
+        - High-dimensional (p≫n)
+    validations:
+      required: true
+  - type: dropdown
+    id: propagates_uncertainty
+    attributes:
+      label: Propagates uncertainty
+      options:
+        - Inherent capacity
+        - Model-specific tools
+        - Needs model-agnostic propagation
+        - Inapplicable
+    validations:
+      required: true
+  - type: dropdown
+    id: handles_lag_effects
+    attributes:
+      label: Handles lag effects
+      options:
+        - Yes
+        - Possible
+        - No
+    validations:
+      required: true
+  - type: dropdown
+    id: parametric_nature
+    attributes:
+      label: Parametric nature
+      multiple: true
+      options:
+        - Parametric
+        - Semi-parametric
+        - Non-parametric
+        - Rule-based
+        - Inapplicable
+    validations:
+      required: true
+  - type: markdown
+    attributes:
+      value: "## Packages"
+  - type: dropdown
+    id: language
+    attributes:
+      label: Language
+      multiple: true
+      options:
+        - R
+        - Python
+        - GIS
+        - Others
+        - None
+    validations:
+      required: true
+  - type: dropdown
+    id: usage
+    attributes:
+      label: Usage
+      options:
+        - User-friendly
+        - Technical but well documented
+        - Sparse documentation
+        - Domain-specific skills
+        - Varying
+    validations:
+      required: true
+  - type: textarea
+    id: comments
+    attributes:
+      label: Additional comments
+      description: Give us any detail you would like on the method you would like to describe
+      placeholder: Tell us about the method!
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Code of Conduct
+      description: By submitting this issue, you agree to follow our [Code of Conduct](https://example.com).
+      options:
+        - label: I agree to follow this project's Code of Conduct
+          required: true
