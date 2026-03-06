@@ -91,10 +91,10 @@ body:
     attributes:
       label: Handles huge datasets (n)
       options:
-        - Yes
+        - "Yes"
         - Most do
         - Most don't
-        - No
+        - "No"
     validations:
       required: true
   - type: dropdown
@@ -102,7 +102,7 @@ body:
     attributes:
       label: Handles missing data
       options:
-        - Yes
+        - "Yes"
         - Partially
         - "No: requires prelim. correction"
     validations:
@@ -112,9 +112,9 @@ body:
     attributes:
       label: Proven with remote sensing data
       options:
-        - Yes
+        - "Yes"
         - Few applications
-        - No
+        - "No"
     validations:
       required: true
   - type: markdown
@@ -251,7 +251,7 @@ body:
     attributes:
       label: Requires explicit processes
       options:
-        - Yes
+        - "Yes"
         - Optional
         - Agnostic
     validations:
@@ -299,9 +299,9 @@ body:
     attributes:
       label: Handles lag effects
       options:
-        - Yes
+        - "Yes"
         - Possible
-        - No
+        - "No"
     validations:
       required: true
   - type: dropdown
@@ -330,7 +330,7 @@ body:
         - Python
         - GIS
         - Others
-        - None
+        - No package
     validations:
       required: true
   - type: dropdown
