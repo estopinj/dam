@@ -5,7 +5,7 @@ labels: ["bug", "triage"]
 projects: ["octo-org/1", "octo-org/44"]
 assignees:
   - octocat
-type: Documentation method
+type: method
 body:
   - type: markdown
     attributes:
@@ -46,8 +46,10 @@ body:
     id: references
   - type: markdown
     attributes:
+      label: ref_title
       value: |
         References Articles
+  - type: markdown 
     attributes:
       label: Method 
       description: One or a few key academic references that introduce or formalize the method.
