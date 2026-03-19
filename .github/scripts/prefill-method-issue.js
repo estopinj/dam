@@ -191,9 +191,9 @@ function findMatchingMethodFile(methodsRoot, issueTitle) {
 }
 
 function readIssueSection(body, label) {
-  // Try to match textarea-style sections with ### headers first
+  // Try to match textarea-style sections with ## or ### headers
   const textareaRegex = new RegExp(
-    `(^###\\s+${escapeRegExp(label)}\\s*\\n)([\\s\\S]*?)(?=\\n#+\\s+|$)`,
+    `(^#{2,4}\\s+${escapeRegExp(label)}\\s*\\n)([\\s\\S]*?)(?=\\n#{2,4}\\s+|$)`,
     "m"
   );
   
@@ -205,7 +205,7 @@ function readIssueSection(body, label) {
   // For input type fields: try bold labels ending with newline (GitHub can use different formats)
   // Patterns: "**Label**\nValue" or "Label\nValue" at line start
   const inputRegex = new RegExp(
-    `^\\*\\*${escapeRegExp(label)}\\*\\*\\s*\\n([\\s\\S]*?)(?=\\n(?:\\*\\*|###)|$)`,
+    `^\\*\\*${escapeRegExp(label)}\\*\\*\\s*\\n([\\s\\S]*?)(?=\\n(?:\\*\\*|#{2,4}\\s+)|$)`,
     "m"
   );
   
@@ -214,9 +214,9 @@ function readIssueSection(body, label) {
     return match[1].trim();
   }
   
-  // Try unformatted input fields: "Label\nValue" (bare text without ###)
+  // Try unformatted input fields: "Label\nValue" (bare text without ##/###)
   const bareInputRegex = new RegExp(
-    `^${escapeRegExp(label)}\\s*\\n([\\s\\S]*?)(?=\\n(?:^[A-Z]|\\*\\*|###)|$)`,
+    `^${escapeRegExp(label)}\\s*\\n([\\s\\S]*?)(?=\\n(?:^[A-Z]|\\*\\*|#{2,4}\\s+)|$)`,
     "m"
   );
   
@@ -238,9 +238,9 @@ function extractTargetMethodName(issueBody) {
 }
 
 function replaceIssueSection(body, label, nextValue) {
-  // Try textarea-style sections first
+  // Try textarea-style sections first (## or ###)
   const textareaRegex = new RegExp(
-    `(^###\\s+${escapeRegExp(label)}\\s*\\n)([\\s\\S]*?)(?=\\n#+\\s+|$)`,
+    `(^#{2,4}\\s+${escapeRegExp(label)}\\s*\\n)([\\s\\S]*?)(?=\\n#{2,4}\\s+|$)`,
     "m"
   );
   
@@ -250,7 +250,7 @@ function replaceIssueSection(body, label, nextValue) {
   
   // Try bold formatted input fields: **Label**\nValue
   const boldInputRegex = new RegExp(
-    `(^\\*\\*${escapeRegExp(label)}\\*\\*\\s*\\n)([\\s\\S]*?)(?=\\n(?:\\*\\*|###)|$)`,
+    `(^\\*\\*${escapeRegExp(label)}\\*\\*\\s*\\n)([\\s\\S]*?)(?=\\n(?:\\*\\*|#{2,4}\\s+)|$)`,
     "m"
   );
   
@@ -260,7 +260,7 @@ function replaceIssueSection(body, label, nextValue) {
   
   // Try bare input fields: Label\nValue
   const bareInputRegex = new RegExp(
-    `(^${escapeRegExp(label)}\\s*\\n)([\\s\\S]*?)(?=\\n(?:^[A-Z]|\\*\\*|###)|$)`,
+    `(^${escapeRegExp(label)}\\s*\\n)([\\s\\S]*?)(?=\\n(?:^[A-Z]|\\*\\*|#{2,4}\\s+)|$)`,
     "m"
   );
   
@@ -307,7 +307,7 @@ function extractMainContentBeforeNestedHeadings(text) {
 }
 
 function buildPrefilledBody({ issueTitle, issueBody, methodsRoot }) {
-  if (!issueBody.includes(`### ${ISSUE_LABELS.description}`)) {
+  if (!issueBody.match(new RegExp(`^#{2,4}\\s+${escapeRegExp(ISSUE_LABELS.description)}`, "m"))) {
     return {
       changed: false,
       updatedBody: issueBody,
