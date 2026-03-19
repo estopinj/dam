@@ -33,6 +33,40 @@ jobs:
               methodsRoot,
             });
 
+            if (result.reason === 'missing_target_method') {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issue.number,
+                body: [
+                  'Sanity check: no target method name could be determined from this issue.',
+                  '',
+                  'Please fill the `Target method name` field with the method page name you want to match.',
+                  'The issue body was left unchanged.',
+                ].join('\n'),
+              });
+              core.info('No update applied (reason: missing_target_method)');
+              return;
+            }
+
+            if (result.reason === 'no_match') {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issue.number,
+                body: [
+                  'Sanity check: no existing method page was found for this issue.',
+                  '',
+                  `Target method name: ${result.targetMethodName || 'unknown'}`,
+                  `Issue title: ${issue.title || 'unknown'}`,
+                  'Checked under: contents/methods/**/*.md',
+                  'The issue body was left unchanged.',
+                ].join('\n'),
+              });
+              core.info(`No update applied (reason: no_match, target: ${result.targetMethodName || 'unknown'})`);
+              return;
+            }
+
             if (!result.changed) {
               core.info(`No update applied (reason: ${result.reason || 'unknown'})`);
               return;
@@ -55,6 +89,7 @@ jobs:
                 'This issue was prefilled from an existing method page for transparency.',
                 'Merge mode: existing content is kept first; newly submitted content is appended after it when both are present.',
                 '',
+                `Target method name: ${result.targetMethodName || 'unknown'}`,
                 `Matched file: ${result.matchedFile || 'unknown'}`,
                 '',
                 'Fields using existing content:',

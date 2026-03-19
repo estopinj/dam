@@ -1,6 +1,6 @@
 name: New Method documentation
 description: Create a new documentation method page.
-title: "[Name of the method to be documented]"
+title: "[Documentation request]: "
 labels: ["method", "documentation"]
 assignees:
   - estopinj
@@ -9,6 +9,14 @@ body:
     attributes:
       value: |
         Thanks for taking the time to fill out this documentation method request!
+  - type: input
+    id: method_name
+    attributes:
+      label: Target method name
+      description: Name of the existing or intended method page to document.
+      placeholder: ex. Frescalo
+    validations:
+      required: true
   - type: input
     id: author
     attributes:

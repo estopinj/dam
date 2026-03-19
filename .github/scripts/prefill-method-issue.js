@@ -4,6 +4,7 @@ const fs = require("fs");
 const path = require("path");
 
 const NO_RESPONSE = "_No response_";
+const TARGET_METHOD_LABEL = "Target method name";
 
 const ISSUE_LABELS = {
   author: "Page’s Author & Date",
@@ -208,6 +209,15 @@ function readIssueSection(body, label) {
   return match[2].trim();
 }
 
+function extractTargetMethodName(issueBody) {
+  const fromBody = readIssueSection(issueBody, TARGET_METHOD_LABEL);
+  if (isMeaningful(fromBody)) {
+    return fromBody.trim();
+  }
+
+  return "";
+}
+
 function splitSectionAnswerAndStaticTail(sectionContent) {
   const lines = (sectionContent || "").replace(/\r\n/g, "\n").split("\n");
   let markerIndex = -1;
@@ -272,16 +282,29 @@ function buildPrefilledBody({ issueTitle, issueBody, methodsRoot }) {
       updatedBody: issueBody,
       reason: "not_issue_form",
       usedExistingFields: [],
+      targetMethodName: "",
     };
   }
 
-  const match = findMatchingMethodFile(methodsRoot, issueTitle);
+  const targetMethodName = extractTargetMethodName(issueBody);
+  if (!targetMethodName) {
+    return {
+      changed: false,
+      updatedBody: issueBody,
+      reason: "missing_target_method",
+      usedExistingFields: [],
+      targetMethodName: "",
+    };
+  }
+
+  const match = findMatchingMethodFile(methodsRoot, targetMethodName);
   if (!match) {
     return {
       changed: false,
       updatedBody: issueBody,
       reason: "no_match",
       usedExistingFields: [],
+      targetMethodName,
     };
   }
 
@@ -318,6 +341,7 @@ function buildPrefilledBody({ issueTitle, issueBody, methodsRoot }) {
     matchedFile: path.relative(process.cwd(), match.filePath).replace(/\\/g, "/"),
     reason: "matched",
     usedExistingFields: [...new Set(usedExistingFields)],
+    targetMethodName,
   };
 }
 
