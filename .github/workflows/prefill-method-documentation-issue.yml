@@ -2,7 +2,7 @@ name: Prefill method documentation issue
 
 on:
   issues:
-    types: [opened]
+    types: [opened, edited, reopened]
 
 permissions:
   contents: read
@@ -10,7 +10,6 @@ permissions:
 
 jobs:
   prefill:
-    if: contains(github.event.issue.labels.*.name, 'method') && contains(github.event.issue.labels.*.name, 'documentation')
     runs-on: ubuntu-latest
 
     steps:
@@ -27,9 +26,17 @@ jobs:
             const issue = context.payload.issue;
             const methodsRoot = path.join(process.cwd(), 'contents', 'methods');
 
+            // Process only documentation-form issues, independent of label availability.
+            const body = issue.body || '';
+            const isDocumentationFormIssue = body.includes('### Target method name') && body.includes('### Description & principle');
+            if (!isDocumentationFormIssue) {
+              core.info('Issue does not look like the documentation form; skipping.');
+              return;
+            }
+
             const result = buildPrefilledBody({
               issueTitle: issue.title,
-              issueBody: issue.body || '',
+              issueBody: body,
               methodsRoot,
             });
 
