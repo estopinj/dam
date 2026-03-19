@@ -90,8 +90,11 @@ jobs:
               core.info(`Issue body prefilled from ${result.matchedFile}`);
             }
 
-            if (Array.isArray(result.usedExistingFields) && result.usedExistingFields.length > 0) {
-              const fields = result.usedExistingFields.map((label) => `- ${label}`).join('\n');
+            const hasExisting = Array.isArray(result.usedExistingFields) && result.usedExistingFields.length > 0;
+            const hasSuggested = Array.isArray(result.suggestedFields) && result.suggestedFields.length > 0;
+            if (hasExisting || hasSuggested) {
+              const existingList = (result.usedExistingFields || []).map((label) => `- ${label}`).join('\n');
+              const suggestedList = (result.suggestedFields || []).map((label) => `- ${label}`).join('\n');
               const commentBody = [
                 'This issue was prefilled from an existing method page for transparency.',
                 'Merge mode: existing content is kept first; newly submitted content is appended after it when both are present.',
@@ -100,7 +103,10 @@ jobs:
                 `Matched file: ${result.matchedFile || 'unknown'}`,
                 '',
                 'Fields using existing content:',
-                fields,
+                existingList || '_none_',
+                '',
+                'Fields with suggested content to be added:',
+                suggestedList || '_none_',
               ].join('\n');
 
               await github.rest.issues.createComment({

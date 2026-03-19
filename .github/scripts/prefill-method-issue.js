@@ -11,20 +11,13 @@ const ISSUE_LABELS = {
   description: "Description & principle",
   variant: "Major variants",
   online_resources: "Further online resources",
-  references: "References (general)",
   method_references: "Method",
-  rs_data: "With Remote Sensing data (Ecology / Biodiversity)",
-  rs_data_field: "Without Remote Sensing data (Ecology Field)",
-  python_pkg: "Python packages",
-  r_pkg: "R packages",
-  code_list: "Code implementations",
+  rs_data: "With RS data in Ecology / Biodiversity",
+  rs_data_field: "Without RS data (Ecology domain)",
+  python_pkg: "Python",
+  r_pkg: "R",
+  code_list: "Code Cells",
 };
-
-const STATIC_BLOCK_MARKERS = new Set([
-  "References Articles",
-  "Research applications",
-  "Packages",
-]);
 
 function normalizeText(value) {
   return (value || "")
@@ -199,7 +192,7 @@ function findMatchingMethodFile(methodsRoot, issueTitle) {
 
 function readIssueSection(body, label) {
   const regex = new RegExp(
-    `(^###\\s+${escapeRegExp(label)}\\s*\\n)([\\s\\S]*?)(?=\\n###\\s+|$)`,
+    `(^###\\s+${escapeRegExp(label)}\\s*\\n)([\\s\\S]*?)(?=\\n#+\\s+|$)`,
     "m"
   );
   const match = body.match(regex);
@@ -218,33 +211,9 @@ function extractTargetMethodName(issueBody) {
   return "";
 }
 
-function splitSectionAnswerAndStaticTail(sectionContent) {
-  const lines = (sectionContent || "").replace(/\r\n/g, "\n").split("\n");
-  let markerIndex = -1;
-
-  for (let i = 0; i < lines.length; i += 1) {
-    if (STATIC_BLOCK_MARKERS.has(lines[i].trim())) {
-      markerIndex = i;
-      break;
-    }
-  }
-
-  if (markerIndex < 0) {
-    return {
-      answer: sectionContent.trim(),
-      staticTail: "",
-    };
-  }
-
-  return {
-    answer: lines.slice(0, markerIndex).join("\n").trim(),
-    staticTail: lines.slice(markerIndex).join("\n").trim(),
-  };
-}
-
 function replaceIssueSection(body, label, nextValue) {
   const regex = new RegExp(
-    `(^###\\s+${escapeRegExp(label)}\\s*\\n)([\\s\\S]*?)(?=\\n###\\s+|$)`,
+    `(^###\\s+${escapeRegExp(label)}\\s*\\n)([\\s\\S]*?)(?=\\n#+\\s+|$)`,
     "m"
   );
 
@@ -312,17 +281,15 @@ function buildPrefilledBody({ issueTitle, issueBody, methodsRoot }) {
   let updatedBody = issueBody;
   let changed = false;
   const usedExistingFields = [];
+  const suggestedFields = [];
 
   for (const [fieldKey, label] of Object.entries(ISSUE_LABELS)) {
     const before = readIssueSection(updatedBody, label);
-    const { answer: submitted, staticTail } = splitSectionAnswerAndStaticTail(before);
+    const submitted = before;
     const existing = isMeaningful(existingFields[fieldKey]) ? existingFields[fieldKey].trim() : "";
     const merged = mergeField(existing, submitted);
-    const replacement = staticTail
-      ? `${merged || NO_RESPONSE}\n\n${staticTail}`
-      : merged;
 
-    const candidateBody = replaceIssueSection(updatedBody, label, replacement);
+    const candidateBody = replaceIssueSection(updatedBody, label, merged);
     const after = readIssueSection(candidateBody, label);
 
     if (normalizeText(before) !== normalizeText(after)) {
@@ -333,6 +300,9 @@ function buildPrefilledBody({ issueTitle, issueBody, methodsRoot }) {
     if (existing && merged && normalizeText(merged).includes(normalizeText(existing))) {
       usedExistingFields.push(label);
     }
+    if (isMeaningful(submitted) && merged && normalizeText(merged).includes(normalizeText(submitted.trim()))) {
+      suggestedFields.push(label);
+    }
   }
 
   return {
@@ -341,6 +311,7 @@ function buildPrefilledBody({ issueTitle, issueBody, methodsRoot }) {
     matchedFile: path.relative(process.cwd(), match.filePath).replace(/\\/g, "/"),
     reason: "matched",
     usedExistingFields: [...new Set(usedExistingFields)],
+    suggestedFields: [...new Set(suggestedFields)],
     targetMethodName,
   };
 }

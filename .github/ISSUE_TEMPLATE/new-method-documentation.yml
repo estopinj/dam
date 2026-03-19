@@ -48,17 +48,10 @@ body:
       placeholder: ex. https://example.com/method
     validations:
       required: false
-  - type: textarea
-    id: references
-    attributes:
-      label: References (general)
-      placeholder: ex. DOI or URL
-    validations:
-      required: false
   - type: markdown
     attributes:
       value: |
-        References Articles
+        ## Reference articles
   - type: textarea
     id: method_references
     attributes:
@@ -70,11 +63,11 @@ body:
   - type: markdown
     attributes:
       value: |
-        Research applications
+        ## Research applications
   - type: textarea
     id: rs_data
     attributes:
-      label: With Remote Sensing data (Ecology / Biodiversity)
+      label: With RS data in Ecology / Biodiversity
       description: If the method has been used in remote sensing research, please list the references here.
       placeholder: ex. DOI or URL
     validations:
@@ -82,7 +75,7 @@ body:
   - type: textarea
     id: rs_data_field
     attributes:
-      label: Without Remote Sensing data (Ecology Field)
+      label: Without RS data (Ecology domain)
       description: If the method has been used in research without remote sensing data, please list the references here.
       placeholder: ex. DOI or URL
     validations:
@@ -90,28 +83,28 @@ body:
   - type: markdown
     attributes:
       value: |
-        Packages
+        ## Packages
   - type: textarea
     id: python_pkg
     attributes:
-      label: Python packages
-      description: If there are Python packages that implement the method, please list them here.
+      label: Python
+      description: Python packages implementing the method.
       placeholder: Link toward the package documentation or repository.
     validations:
       required: false
   - type: textarea
     id: r_pkg
     attributes:
-      label: R packages
-      description: If there are R packages that implement the method, please list them here.
+      label: R
+      description: R packages implementing the method.
       placeholder: Link toward the package documentation or repository.
     validations:
       required: false
   - type: textarea
     id: code_list
     attributes:
-      label: Code implementations
-      description: If there are code implementations of the method, please list them here.
+      label: Code Cells
+      description: Code implementations or notebooks to run the method.
       placeholder: Code examples to run the method
     validations:
       required: false
