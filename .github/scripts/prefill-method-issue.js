@@ -191,15 +191,41 @@ function findMatchingMethodFile(methodsRoot, issueTitle) {
 }
 
 function readIssueSection(body, label) {
-  const regex = new RegExp(
+  // Try to match textarea-style sections with ### headers first
+  const textareaRegex = new RegExp(
     `(^###\\s+${escapeRegExp(label)}\\s*\\n)([\\s\\S]*?)(?=\\n#+\\s+|$)`,
     "m"
   );
-  const match = body.match(regex);
-  if (!match) {
-    return "";
+  
+  let match = body.match(textareaRegex);
+  if (match) {
+    return match[2].trim();
   }
-  return match[2].trim();
+  
+  // For input type fields: try bold labels ending with newline (GitHub can use different formats)
+  // Patterns: "**Label**\nValue" or "Label\nValue" at line start
+  const inputRegex = new RegExp(
+    `^\\*\\*${escapeRegExp(label)}\\*\\*\\s*\\n([\\s\\S]*?)(?=\\n(?:\\*\\*|###)|$)`,
+    "m"
+  );
+  
+  match = body.match(inputRegex);
+  if (match) {
+    return match[1].trim();
+  }
+  
+  // Try unformatted input fields: "Label\nValue" (bare text without ###)
+  const bareInputRegex = new RegExp(
+    `^${escapeRegExp(label)}\\s*\\n([\\s\\S]*?)(?=\\n(?:^[A-Z]|\\*\\*|###)|$)`,
+    "m"
+  );
+  
+  match = body.match(bareInputRegex);
+  if (match) {
+    return match[1].trim();
+  }
+  
+  return "";
 }
 
 function extractTargetMethodName(issueBody) {
@@ -212,16 +238,37 @@ function extractTargetMethodName(issueBody) {
 }
 
 function replaceIssueSection(body, label, nextValue) {
-  const regex = new RegExp(
+  // Try textarea-style sections first
+  const textareaRegex = new RegExp(
     `(^###\\s+${escapeRegExp(label)}\\s*\\n)([\\s\\S]*?)(?=\\n#+\\s+|$)`,
     "m"
   );
-
-  if (!regex.test(body)) {
-    return body;
+  
+  if (textareaRegex.test(body)) {
+    return body.replace(textareaRegex, (_full, header) => `${header}${nextValue || NO_RESPONSE}\n`);
   }
-
-  return body.replace(regex, (_full, header) => `${header}${nextValue || NO_RESPONSE}\n`);
+  
+  // Try bold formatted input fields: **Label**\nValue
+  const boldInputRegex = new RegExp(
+    `(^\\*\\*${escapeRegExp(label)}\\*\\*\\s*\\n)([\\s\\S]*?)(?=\\n(?:\\*\\*|###)|$)`,
+    "m"
+  );
+  
+  if (boldInputRegex.test(body)) {
+    return body.replace(boldInputRegex, (_full, header) => `${header}${nextValue || NO_RESPONSE}\n`);
+  }
+  
+  // Try bare input fields: Label\nValue
+  const bareInputRegex = new RegExp(
+    `(^${escapeRegExp(label)}\\s*\\n)([\\s\\S]*?)(?=\\n(?:^[A-Z]|\\*\\*|###)|$)`,
+    "m"
+  );
+  
+  if (bareInputRegex.test(body)) {
+    return body.replace(bareInputRegex, (_full, header) => `${header}${nextValue || NO_RESPONSE}\n`);
+  }
+  
+  return body;
 }
 
 function mergeField(existingValue, submittedValue) {
@@ -242,6 +289,21 @@ function mergeField(existingValue, submittedValue) {
     return submitted;
   }
   return "";
+}
+
+function extractMainContentBeforeNestedHeadings(text) {
+  const lines = (text || "").replace(/\r\n/g, "\n").split("\n");
+  let mainContentLines = [];
+
+  for (const line of lines) {
+    // Stop before any heading (any level)
+    if (/^#+\s+/.test(line.trim())) {
+      break;
+    }
+    mainContentLines.push(line);
+  }
+
+  return mainContentLines.join("\n").trim();
 }
 
 function buildPrefilledBody({ issueTitle, issueBody, methodsRoot }) {
@@ -283,16 +345,22 @@ function buildPrefilledBody({ issueTitle, issueBody, methodsRoot }) {
   const usedExistingFields = [];
   const suggestedFields = [];
 
+  // Extract all original submissions from issue body BEFORE modifying it
+  const originalSubmissions = {};
   for (const [fieldKey, label] of Object.entries(ISSUE_LABELS)) {
-    const before = readIssueSection(updatedBody, label);
-    const submitted = before;
+    originalSubmissions[fieldKey] = readIssueSection(issueBody, label);
+  }
+
+  for (const [fieldKey, label] of Object.entries(ISSUE_LABELS)) {
+    const submitted = originalSubmissions[fieldKey];
+    const isSubmittedMeaningful = isMeaningful(submitted);
     const existing = isMeaningful(existingFields[fieldKey]) ? existingFields[fieldKey].trim() : "";
     const merged = mergeField(existing, submitted);
 
     const candidateBody = replaceIssueSection(updatedBody, label, merged);
     const after = readIssueSection(candidateBody, label);
 
-    if (normalizeText(before) !== normalizeText(after)) {
+    if (normalizeText(readIssueSection(updatedBody, label)) !== normalizeText(after)) {
       changed = true;
       updatedBody = candidateBody;
     }
@@ -300,7 +368,8 @@ function buildPrefilledBody({ issueTitle, issueBody, methodsRoot }) {
     if (existing && merged && normalizeText(merged).includes(normalizeText(existing))) {
       usedExistingFields.push(label);
     }
-    if (isMeaningful(submitted) && merged && normalizeText(merged).includes(normalizeText(submitted.trim()))) {
+    // Only count as suggested if user submitted meaningful content to the issue
+    if (isSubmittedMeaningful) {
       suggestedFields.push(label);
     }
   }
