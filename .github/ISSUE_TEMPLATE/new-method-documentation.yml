@@ -1,6 +1,6 @@
 name: New Method documentation
 description: Create a new documentation method page.
-title: "[New method documentation]: "
+title: "[Name of the method to be documented]"
 labels: ["method", "documentation"]
 assignees:
   - estopinj
@@ -22,7 +22,7 @@ body:
       label: Description & principle 
       description: A clear, technical yet accessible explanation of the method, its core principle(s).
       placeholder: This method is used to...
-      value: "A documentation method request!"
+      value: "Method description"
     validations:
       required: true
   - type: textarea

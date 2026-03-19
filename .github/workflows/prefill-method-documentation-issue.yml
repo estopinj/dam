@@ -1,0 +1,70 @@
+name: Prefill method documentation issue
+
+on:
+  issues:
+    types: [opened]
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  prefill:
+    if: contains(github.event.issue.labels.*.name, 'method') && contains(github.event.issue.labels.*.name, 'documentation')
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Prefill issue body from existing method page
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const path = require('path');
+            const { buildPrefilledBody } = require('./.github/scripts/prefill-method-issue.js');
+
+            const issue = context.payload.issue;
+            const methodsRoot = path.join(process.cwd(), 'contents', 'methods');
+
+            const result = buildPrefilledBody({
+              issueTitle: issue.title,
+              issueBody: issue.body || '',
+              methodsRoot,
+            });
+
+            if (!result.changed) {
+              core.info(`No update applied (reason: ${result.reason || 'unknown'})`);
+              return;
+            }
+
+            await github.rest.issues.update({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: issue.number,
+              body: result.updatedBody,
+            });
+
+            if (result.matchedFile) {
+              core.info(`Issue body prefilled from ${result.matchedFile}`);
+            }
+
+            if (Array.isArray(result.usedExistingFields) && result.usedExistingFields.length > 0) {
+              const fields = result.usedExistingFields.map((label) => `- ${label}`).join('\n');
+              const commentBody = [
+                'This issue was prefilled from an existing method page for transparency.',
+                'Merge mode: existing content is kept first; newly submitted content is appended after it when both are present.',
+                '',
+                `Matched file: ${result.matchedFile || 'unknown'}`,
+                '',
+                'Fields using existing content:',
+                fields,
+              ].join('\n');
+
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issue.number,
+                body: commentBody,
+              });
+            }

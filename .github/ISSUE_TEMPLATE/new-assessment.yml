@@ -1,6 +1,6 @@
 name: New Assessment
 description: Describe a new method by filling its assessment table
-title: "[New Assessment]: "
+title: "[Name of the method to be assessed]"
 labels: ["method", "assessment"]
 body:
   - type: input
