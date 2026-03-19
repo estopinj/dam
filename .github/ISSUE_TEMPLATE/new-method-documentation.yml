@@ -1,6 +1,6 @@
-name: Documentation method 
+name: New method 
 description: Create a new documentation method page.
-title: "[Documentation method]: "
+title: "[New method documentation page]: "
 labels: ["method", "documentation"]
 assignees:
   - estopinj
