@@ -191,36 +191,24 @@ function findMatchingMethodFile(methodsRoot, issueTitle) {
 }
 
 function readIssueSection(body, label) {
-  // Try to match textarea-style sections with ## or ### headers
-  const textareaRegex = new RegExp(
-    `(^#{2,4}\\s+${escapeRegExp(label)}\\s*\\n)([\\s\\S]*?)(?=\\n#{2,4}\\s+|$)`,
+  // Try to match sections with ## or ### headers (most common in issue forms)
+  let regex = new RegExp(
+    `^#+\\s+${escapeRegExp(label)}\\s*$\\s*([\\s\\S]*?)(?=^#+\\s+|$)`,
     "m"
   );
   
-  let match = body.match(textareaRegex);
-  if (match) {
-    return match[2].trim();
-  }
-  
-  // For input type fields: try bold labels ending with newline (GitHub can use different formats)
-  // Patterns: "**Label**\nValue" or "Label\nValue" at line start
-  const inputRegex = new RegExp(
-    `^\\*\\*${escapeRegExp(label)}\\*\\*\\s*\\n([\\s\\S]*?)(?=\\n(?:\\*\\*|#{2,4}\\s+)|$)`,
-    "m"
-  );
-  
-  match = body.match(inputRegex);
+  let match = body.match(regex);
   if (match) {
     return match[1].trim();
   }
   
-  // Try unformatted input fields: "Label\nValue" (bare text without ##/###)
-  const bareInputRegex = new RegExp(
-    `^${escapeRegExp(label)}\\s*\\n([\\s\\S]*?)(?=\\n(?:^[A-Z]|\\*\\*|#{2,4}\\s+)|$)`,
+  // Try bold format **Label** (some issue forms use this for input fields)
+  regex = new RegExp(
+    `^\\*\\*${escapeRegExp(label)}\\*\\*\\s*$\\s*([\\s\\S]*?)(?=^(?:\\*\\*|#+\\s+)|$)`,
     "m"
   );
   
-  match = body.match(bareInputRegex);
+  match = body.match(regex);
   if (match) {
     return match[1].trim();
   }
@@ -238,34 +226,15 @@ function extractTargetMethodName(issueBody) {
 }
 
 function replaceIssueSection(body, label, nextValue) {
-  // Try textarea-style sections first (## or ###)
-  const textareaRegex = new RegExp(
-    `(^#{2,4}\\s+${escapeRegExp(label)}\\s*\\n)([\\s\\S]*?)(?=\\n#{2,4}\\s+|$)`,
+  // Match: header line (# or **) + optional whitespace + old content + next section
+  const regex = new RegExp(
+    `(^(?:#+\\s+|\\*\\*)${escapeRegExp(label)}(?:\\*\\*)?\\s*$\\s*)([\\s\\S]*?)(?=^(?:#+\\s+|\\*\\*)|$)`,
     "m"
   );
   
-  if (textareaRegex.test(body)) {
-    return body.replace(textareaRegex, (_full, header) => `${header}${nextValue || NO_RESPONSE}\n`);
-  }
-  
-  // Try bold formatted input fields: **Label**\nValue
-  const boldInputRegex = new RegExp(
-    `(^\\*\\*${escapeRegExp(label)}\\*\\*\\s*\\n)([\\s\\S]*?)(?=\\n(?:\\*\\*|#{2,4}\\s+)|$)`,
-    "m"
-  );
-  
-  if (boldInputRegex.test(body)) {
-    return body.replace(boldInputRegex, (_full, header) => `${header}${nextValue || NO_RESPONSE}\n`);
-  }
-  
-  // Try bare input fields: Label\nValue
-  const bareInputRegex = new RegExp(
-    `(^${escapeRegExp(label)}\\s*\\n)([\\s\\S]*?)(?=\\n(?:^[A-Z]|\\*\\*|#{2,4}\\s+)|$)`,
-    "m"
-  );
-  
-  if (bareInputRegex.test(body)) {
-    return body.replace(bareInputRegex, (_full, header) => `${header}${nextValue || NO_RESPONSE}\n`);
+  if (regex.test(body)) {
+    // Replace: keep header line + new content
+    return body.replace(regex, `$1${nextValue || NO_RESPONSE}\n`);
   }
   
   return body;
