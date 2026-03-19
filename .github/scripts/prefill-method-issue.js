@@ -226,18 +226,44 @@ function extractTargetMethodName(issueBody) {
 }
 
 function replaceIssueSection(body, label, nextValue) {
-  // Match: header line (# or **) + optional whitespace + old content + next section
-  const regex = new RegExp(
-    `(^(?:#+\\s+|\\*\\*)${escapeRegExp(label)}(?:\\*\\*)?\\s*$\\s*)([\\s\\S]*?)(?=^(?:#+\\s+|\\*\\*)|$)`,
-    "m"
-  );
+  // Find the heading line (### or ## format)
+  const headingPattern = `###\\s+${escapeRegExp(label)}`;
+  const headingRegex = new RegExp(`^${headingPattern}\\s*$`, "m");
   
-  if (regex.test(body)) {
-    // Replace: keep header line + new content
-    return body.replace(regex, `$1${nextValue || NO_RESPONSE}\n`);
+  if (!headingRegex.test(body)) {
+    return body;
   }
   
-  return body;
+  // Find the heading, extract everything from it to the next heading (or end)
+  const lines = body.split("\n");
+  let headingIndex = -1;
+  
+  for (let i = 0; i < lines.length; i++) {
+    if (new RegExp(`^${headingPattern}\\s*$`).test(lines[i])) {
+      headingIndex = i;
+      break;
+    }
+  }
+  
+  if (headingIndex === -1) {
+    return body;
+  }
+  
+  // Find the next heading (## or ###)
+  let nextHeadingIndex = lines.length;
+  for (let i = headingIndex + 1; i < lines.length; i++) {
+    if (/^#{2,4}\s+/.test(lines[i])) {
+      nextHeadingIndex = i;
+      break;
+    }
+  }
+  
+  // Replace: keep heading line, replace content, keep following sections
+  const before = lines.slice(0, headingIndex + 1).join("\n");
+  const after = lines.slice(nextHeadingIndex).join("\n");
+  const newContent = `\n${nextValue || NO_RESPONSE}\n`;
+  
+  return before + newContent + (after.length > 0 ? "\n" + after : "");
 }
 
 function mergeField(existingValue, submittedValue) {
