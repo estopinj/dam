@@ -28,7 +28,8 @@ body:
 
   - type: markdown
     attributes:
-      value: "## Outcome"
+      value: |
+        ## Outcome
   
   - type: dropdown
     id: objective
@@ -68,7 +69,8 @@ body:
   
   - type: markdown
     attributes:
-      value: "## Data compatibility"
+      value: |
+        ## Data compatibility
   
   - type: dropdown
     id: data_type
@@ -148,7 +150,8 @@ body:
   
   - type: markdown
     attributes:
-      value: "## Assumptions"
+      value: |
+        ## Assumptions
   
   - type: dropdown
     id: functional_form
@@ -284,7 +287,8 @@ body:
   
   - type: markdown
     attributes:
-      value: "## Model properties"
+      value: | 
+        ## Model properties
   
   - type: dropdown
     id: requires_explicit_processes
@@ -369,7 +373,8 @@ body:
   
   - type: markdown
     attributes:
-      value: "## Packages"
+      value: | 
+        ## Packages
   
   - type: dropdown
     id: language
