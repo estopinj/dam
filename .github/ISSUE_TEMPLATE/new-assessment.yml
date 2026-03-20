@@ -1,22 +1,35 @@
-name: New Assessment
-description: Describe a new method by filling its assessment table
-title: "[Name of the method to be assessed]"
+name: Method assessment
+description: Submit a new method assessment
+title: "[Assessment request]: "
 labels: ["method", "assessment"]
+assignees:
+  - estopinj
 body:
-  - type: input
-    id: method_name
-    attributes:
-      label: Name of the method
-      description: Give the name of the method you want to describe.
-      placeholder: ex. Synthetic Control Method
-    validations:
-      required: true
   - type: markdown
     attributes:
       value: |
-        ## Outcome
+        Thanks for taking the time to fill out this method assessment!
+  - type: input
+    id: method_name
+    attributes:
+      label: Target method name
+      description: Name of the existing or intended method page to assess.
+      placeholder: ex. Synthetic Control Method
+    validations:
+      required: true
 
-        Please fill the different values for the outcome
+  - type: input
+    id: author
+    attributes:
+      label: Page’s Author & Date
+      placeholder: ex. Jean Dupont
+    validations:
+      required: true
+
+  - type: markdown
+    attributes:
+      value: "## Outcome"
+  
   - type: dropdown
     id: objective
     attributes:
@@ -32,6 +45,7 @@ body:
         - Scenario projection
     validations:
       required: true
+  
   - type: dropdown
     id: estimand
     attributes:
@@ -47,23 +61,28 @@ body:
         - Risk ratios
         - Maps & generalisations
         - Others
+        - Inapplicable
     validations:
       required: true
+      
+  
   - type: markdown
     attributes:
-      value: |
-        ## Data compatibility
+      value: "## Data compatibility"
+  
   - type: dropdown
     id: data_type
     attributes:
-      label: Data type
+      label: Type
       multiple: true
       options:
         - Spatial only (cross-sectional)
         - Time-series (one sample)
         - Panel data (many samples)
+        - Inapplicable
     validations:
       required: true
+  
   - type: dropdown
     id: required_ts_length
     attributes:
@@ -73,8 +92,10 @@ body:
         - Handles ≤ 10
         - ≥ 10
         - ≥ 100
+        - Inapplicable
     validations:
       required: true
+  
   - type: dropdown
     id: handles_few_samples
     attributes:
@@ -84,8 +105,10 @@ body:
         - Yes ≤ 10
         - 10 to 100
         - No
+        - Inapplicable
     validations:
       required: true
+  
   - type: dropdown
     id: handles_huge_datasets
     attributes:
@@ -93,10 +116,12 @@ body:
       options:
         - "Yes"
         - Most do
-        - Most don't
+        - Most dont
         - "No"
+        - Inapplicable
     validations:
       required: true
+  
   - type: dropdown
     id: handles_missing_data
     attributes:
@@ -105,21 +130,26 @@ body:
         - "Yes"
         - Partially
         - "No: requires prelim. correction"
+        - Inapplicable
     validations:
       required: true
+  
   - type: dropdown
     id: rs_data_proven
     attributes:
-      label: Proven with remote sensing data
+      label: RS-data proven
       options:
         - "Yes"
         - Few applications
         - "No"
+        - Inapplicable
     validations:
       required: true
+  
   - type: markdown
     attributes:
       value: "## Assumptions"
+  
   - type: dropdown
     id: functional_form
     attributes:
@@ -136,6 +166,7 @@ body:
         - Inapplicable
     validations:
       required: true
+  
   - type: dropdown
     id: no_unobserved_confounders
     attributes:
@@ -149,6 +180,7 @@ body:
         - Inapplicable
     validations:
       required: true
+  
   - type: dropdown
     id: no_interference
     attributes:
@@ -163,6 +195,7 @@ body:
         - Inapplicable
     validations:
       required: true
+  
   - type: dropdown
     id: well_defined_treatments
     attributes:
@@ -175,6 +208,7 @@ body:
         - Inapplicable
     validations:
       required: true
+  
   - type: dropdown
     id: common_support_positivity
     attributes:
@@ -187,6 +221,7 @@ body:
         - Inapplicable
     validations:
       required: true
+  
   - type: dropdown
     id: causal_markov_condition
     attributes:
@@ -199,6 +234,7 @@ body:
         - Inapplicable
     validations:
       required: true
+  
   - type: dropdown
     id: faithfulness
     attributes:
@@ -211,6 +247,7 @@ body:
         - Inapplicable
     validations:
       required: true
+  
   - type: dropdown
     id: idd
     attributes:
@@ -223,6 +260,7 @@ body:
         - Inapplicable
     validations:
       required: true
+  
   - type: dropdown
     id: model_specific_assumptions
     attributes:
@@ -240,12 +278,14 @@ body:
         - Cutoff + PO continuity
         - B/A treatment obs.
         - Good pretreatment fit
-        - Inapplicable
+        - No specific
     validations:
       required: true
+  
   - type: markdown
     attributes:
       value: "## Model properties"
+  
   - type: dropdown
     id: requires_explicit_processes
     attributes:
@@ -254,8 +294,10 @@ body:
         - "Yes"
         - Optional
         - Agnostic
+        - Inapplicable
     validations:
       required: true
+  
   - type: dropdown
     id: exposure_type
     attributes:
@@ -269,8 +311,10 @@ body:
         - Multivariate
         - Others
         - All
+        - Inapplicable        
     validations:
       required: true
+  
   - type: dropdown
     id: number_of_variables
     attributes:
@@ -281,8 +325,22 @@ body:
         - Bivariate
         - Multivariate
         - High-dimensional (p≫n)
+        - Inapplicable
     validations:
       required: true
+  
+  - type: dropdown
+    id: handles_lag_effects
+    attributes:
+      label: Handles lag effects
+      options:
+        - "Yes"
+        - Possible
+        - "No"
+        - Inapplicable
+    validations:
+      required: true
+
   - type: dropdown
     id: propagates_uncertainty
     attributes:
@@ -294,16 +352,7 @@ body:
         - Inapplicable
     validations:
       required: true
-  - type: dropdown
-    id: handles_lag_effects
-    attributes:
-      label: Handles lag effects
-      options:
-        - "Yes"
-        - Possible
-        - "No"
-    validations:
-      required: true
+  
   - type: dropdown
     id: parametric_nature
     attributes:
@@ -317,9 +366,11 @@ body:
         - Inapplicable
     validations:
       required: true
+  
   - type: markdown
     attributes:
       value: "## Packages"
+  
   - type: dropdown
     id: language
     attributes:
@@ -330,9 +381,11 @@ body:
         - Python
         - GIS
         - Others
-        - No package
+        - None
+        - Inapplicable
     validations:
       required: true
+  
   - type: dropdown
     id: usage
     attributes:
@@ -343,14 +396,17 @@ body:
         - Sparse documentation
         - Domain-specific skills
         - Varying
+        - Inapplicable
     validations:
       required: true
+  
   - type: textarea
     id: comments
     attributes:
       label: Additional comments
       description: Give us any detail you would like on the method you would like to describe
       placeholder: Tell us about the method!
+  
   - type: checkboxes
     id: terms
     attributes:

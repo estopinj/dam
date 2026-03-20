@@ -1,5 +1,5 @@
-name: New Method documentation
-description: Create a new documentation method page.
+name: Method documentation
+description: Submit a new documentation method page or complete an existing one
 title: "[Documentation request]: "
 labels: ["method", "documentation"]
 assignees:
@@ -17,6 +17,7 @@ body:
       placeholder: ex. Frescalo
     validations:
       required: true
+  
   - type: input
     id: author
     attributes:
@@ -24,6 +25,7 @@ body:
       placeholder: ex. Jean Dupont
     validations:
       required: true
+  
   - type: textarea
     id: description
     attributes:
@@ -33,6 +35,7 @@ body:
       value: "Method description"
     validations:
       required: true
+  
   - type: textarea
     id: variant
     attributes:
@@ -40,6 +43,7 @@ body:
       description: If the method has variants that seem important, either already widespread or promising and well documented. 
     validations:
       required: false
+  
   - type: textarea
     id: online_resources
     attributes:
@@ -48,10 +52,12 @@ body:
       placeholder: ex. https://example.com/method
     validations:
       required: false
+  
   - type: markdown
     attributes:
       value: |
         ## Reference articles
+  
   - type: textarea
     id: method_references
     attributes:
@@ -60,10 +66,12 @@ body:
       placeholder: ex. DOI or URL
     validations:
       required: false
+  
   - type: markdown
     attributes:
       value: |
         ## Research applications
+  
   - type: textarea
     id: rs_data
     attributes:
@@ -72,6 +80,7 @@ body:
       placeholder: ex. DOI or URL
     validations:
       required: false
+  
   - type: textarea
     id: rs_data_field
     attributes:
@@ -80,10 +89,12 @@ body:
       placeholder: ex. DOI or URL
     validations:
       required: false
+  
   - type: markdown
     attributes:
       value: |
         ## Packages
+  
   - type: textarea
     id: python_pkg
     attributes:
@@ -92,6 +103,7 @@ body:
       placeholder: Link toward the package documentation or repository.
     validations:
       required: false
+  
   - type: textarea
     id: r_pkg
     attributes:
@@ -100,6 +112,7 @@ body:
       placeholder: Link toward the package documentation or repository.
     validations:
       required: false
+  
   - type: textarea
     id: code_list
     attributes:
