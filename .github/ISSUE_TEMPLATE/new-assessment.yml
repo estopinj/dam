@@ -65,16 +65,6 @@ body:
         - Inapplicable
     validations:
       required: true
-
-  - type: textarea
-    id: estimand_rationale
-    attributes:
-      label: Estimand rationale
-      description: If useful, explain why the selected estimand(s) fit the method.
-      placeholder: Briefly justify the estimand choices if deemed necessary.
-    validations:
-      required: false
-      
   
   - type: markdown
     attributes:
@@ -413,13 +403,14 @@ body:
         - Inapplicable
     validations:
       required: true
-  
+
   - type: textarea
-    id: comments
+    id: rationale
     attributes:
-      label: Additional comments
-      description: Give us any detail you would like on the method you would like to describe
-      placeholder: Tell us about the method!
+      label: Rationale and additional comments
+      placeholder: Any rationale you would like to share about the method assessment, how/why some options were chosen, or any other comment you would like to share.
+    validations:
+      required: false
   
   - type: checkboxes
     id: terms
