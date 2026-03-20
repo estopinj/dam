@@ -65,6 +65,15 @@ body:
         - Inapplicable
     validations:
       required: true
+
+  - type: textarea
+    id: estimand_rationale
+    attributes:
+      label: Estimand rationale
+      description: If useful, explain why the selected estimand(s) fit the method.
+      placeholder: Briefly justify the estimand choices if deemed necessary.
+    validations:
+      required: false
       
   
   - type: markdown

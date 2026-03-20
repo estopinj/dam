@@ -16,7 +16,7 @@ categories:
 | `Python` | Well‑supported Python packages. |
 | `GIS` | Implementations within GIS software (e.g., ArcGIS, QGIS). |
 | `Others` | Other languages (MATLAB, Java, Stata, etc.). |
-| `None` | No known packaged code exists, e.g. only developer scripts. |
+| `No package` | No known packaged code exists, e.g. only developer scripts. |
 
 
 ## Definition
