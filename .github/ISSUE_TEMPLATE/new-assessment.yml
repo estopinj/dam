@@ -104,7 +104,7 @@ body:
         - Yes CT design
         - Yes ≤ 10
         - 10 to 100
-        - No
+        - "No"
         - Inapplicable
     validations:
       required: true
