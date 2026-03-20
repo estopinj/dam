@@ -386,7 +386,7 @@ body:
         - Python
         - GIS
         - Others
-        - None
+        - No package
         - Inapplicable
     validations:
       required: true
