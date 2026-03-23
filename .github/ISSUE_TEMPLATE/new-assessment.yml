@@ -56,18 +56,18 @@ body:
     id: category
     attributes:
       label: Category
-      description: "Multiple: Select at least one"
+      description: "Multiple: Select at least one (only for method page organization)"
       options:
         - label: XX
         - label: YY
 
-  - type: 
+  - type: dropdown
     id: sub_category
     attributes:
       label: Sub-category
-      description: "Multiple, can be left unspecified"
+      description: "Multiple, can be left unspecified (only for method page organization)"
+      multiple: true
       options:
-        - "No sub-category"
         - "Sub-category 1"
         - "Sub-category 2"
 
