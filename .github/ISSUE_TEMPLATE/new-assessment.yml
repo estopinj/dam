@@ -26,22 +26,21 @@ body:
     validations:
       required: true
 
+  # - type: markdown
+  #   attributes:
+  #     value: |
+  #       ## Assessment logic
+  #       - The assessment should be based on the method's capacity to address a set of objectives, its compatibility with different data types, the assumptions it relies on, etc.
+  #       - Situate the method against the unified criteria of NaviDAM will next enable users to filter down the approaches suited to their needs.
+  #       - There are two types of criteria:
+  #         - *Multiple* - Tick **all** the options that apply to the method.
+  #         - *Ordinal* - Options are ordered and selecting one implies that higher (next) options in the dropdown meanu are also satisfied.
 
-  - type: markdown
-    attributes:
-      value: |
-        ## Assessment logic
-        - The assessment should be based on the method's capacity to address a set of objectives, its compatibility with different data types, the assumptions it relies on, etc.
-        - Situate the method against the unified criteria of NaviDAM will next enable users to filter down the approaches suited to their needs.
-        - There are two types of criteria:
-          - *Multiple* - Tick **all** the options that apply to the method.
-          - *Ordinal* - Options are ordered and selecting one implies that higher (next) options in the dropdown meanu are also satisfied.
+  #       ### NB
+  #       - One entry can actually correspond to a family of methods (e.g. DiD), with many variants satisfying different criteria. In this case, the assessment should be based on the most common or original variant of the method and major variants that are already widespread. As most criteria accept multiple optios, assessors can tick all that apply.
+  #       - Rationale and comments can be added at the end of the form to justify the assessment and provide any additional information.
 
-        ### NB
-        - One entry can actually correspond to a family of methods (e.g. DiD), with many variants satisfying different criteria. In this case, the assessment should be based on the most common or original variant of the method and major variants that are already widespread. As most criteria accept multiple optios, assessors can tick all that apply.
-        - Rationale and comments can be added at the end of the form to justify the assessment and provide any additional information.
-
-        *See the [criteria description](https://estopinj.github.io/dam/criteria) for more details on the criteria and how to assess them*
+  #       *See the [criteria description](https://estopinj.github.io/dam/criteria) for more details on the criteria and how to assess them*
 
   - type: markdown
     attributes:
