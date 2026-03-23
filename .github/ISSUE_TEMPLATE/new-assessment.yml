@@ -36,7 +36,6 @@ body:
           - *Multiple* - Tick **all** the options that apply to the method.
           - *Ordinal* - Options are ordered and selecting one implies that higher (next) options in the dropdown meanu are also satisfied.
 
-        ### NB
         - One entry can actually correspond to a family of methods (e.g. DiD), with many variants satisfying different criteria.
         In this case, the assessment should be based on the most common or original variant of the method, and add the options matching major & widespread variants.
         For checkbox criteria, assessors should tick all that apply, and for ordinal criteria, they should select the most permissive option.
@@ -53,7 +52,6 @@ body:
     id: objective
     attributes:
       label: | 
-        ## Objective
       description: Tick all the objectives that the method can address
       options:
         - label: Effect estimation
