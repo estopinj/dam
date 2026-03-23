@@ -47,21 +47,21 @@ body:
       value: |
         ## Objective
 
-  - type: checkboxes
-    id: objective
-    attributes:
-      label: Objective
-      description: Tick all the objectives that the method can address
-      multiple: true
-      options:
-        - Effect estimation
-        - Causal relationship(s)
-        - Predictive task + interpretability
-        - Detection
-        - Significance and robustness tests
-        - Scenario projection
-    validations:
-      required: true
+  # - type: checkboxes
+  #   id: objective
+  #   attributes:
+  #     label: Objective
+  #     description: Tick all the objectives that the method can address
+  #     multiple: true
+  #     options:
+  #       - Effect estimation
+  #       - Causal relationship(s)
+  #       - Predictive task + interpretability
+  #       - Detection
+  #       - Significance and robustness tests
+  #       - Scenario projection
+  #   validations:
+  #     required: true
 
   - type: markdown
     attributes:
