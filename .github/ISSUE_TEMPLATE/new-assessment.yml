@@ -21,7 +21,7 @@ body:
   - type: input
     id: method_name
     attributes:
-      label: Target method name
+      label: METHOD NAME
       description: Name of method to be assessed. For an alternative assessment of an already-assessed method, please use same method name, and provide rationale for the differences at the end of the form.
       placeholder: ex. Synthetic Control Method
     validations:
@@ -229,7 +229,7 @@ body:
     id: requires_explicit_processes
     attributes:
       label: Requires explicit processes
-      description: Pick one
+      description: "Multiple: Tick all that apply & at least one"
       options:
         - label: "Yes"
         - label: Optional
