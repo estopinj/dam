@@ -72,7 +72,7 @@ body:
     id: estimand
     attributes:
       label: Estimand
-      description: Multiple: Select at least one option
+      description: "Multiple: Select at least one option"
       options:
         - label: ATT
         - label: ATE
@@ -121,7 +121,7 @@ body:
     id: handles_few_samples
     attributes:
       label: Handles few samples
-      description: Multiple: Select at least one option
+      description: "Multiple: Select at least one option"
       options:
         - Yes CT design
         - Yes ≤ 10
@@ -193,7 +193,7 @@ body:
     id: exposure_type
     attributes:
       label: Exposure type
-      description: Multiple: Select at least one option
+      description: "Multiple: Select at least one option"
       options:
         - label: Binary
         - label: Categorical
@@ -210,7 +210,7 @@ body:
     id: number_of_variables
     attributes:
       label: Number of variables
-      description: Multiple: Select at least one option
+      description: "Multiple: Select at least one option"
       options:
         - label: Univariate
         - label: Bivariate
@@ -249,7 +249,7 @@ body:
     id: parametric_nature
     attributes:
       label: Parametric nature
-      description: Multiple: Select at least one option
+      description: "Multiple: Select at least one option"
       options:
         - label: Parametric
         - label: Semi-parametric
@@ -302,7 +302,7 @@ body:
     id: functional_form
     attributes:
       label: Functional form
-      description: Multiple: Select at least one option
+      description: "Multiple: Select at least one option"
       options:
         - label: Linear
         - label: Quadratic
@@ -319,7 +319,7 @@ body:
     id: no_unobserved_confounders
     attributes:
       label: No unobserved confounders
-      description: Multiple: Select at least one option
+      description: "Multiple: Select at least one option"
       options:
         - label: Required
         - label: Recommended
@@ -334,7 +334,7 @@ body:
     id: no_interference
     attributes:
       label: No interference
-      description: Multiple: Select at least one option
+      description: "Multiple: Select at least one option"
       options:
         - label: Required
         - label: Recommended
@@ -349,7 +349,7 @@ body:
     id: well_defined_treatments
     attributes:
       label: Well-defined treatments
-      description: Multiple: Select at least one option
+      description: "Multiple: Select at least one option"
       options:
         - label: Required
         - label: Recommended
@@ -363,7 +363,7 @@ body:
     id: common_support_positivity
     attributes:
       label: Common support (positivity)
-      description: Multiple: Select at least one option
+      description: "Multiple: Select at least one option"
       options:
         - label: Required
         - label: Recommended
@@ -377,7 +377,7 @@ body:
     id: causal_markov_condition
     attributes:
       label: Causal Markov Condition
-      description: Multiple: Select at least one option
+      description: "Multiple: Select at least one option"
       options:
         - label: Required
         - label: Recommended
@@ -391,7 +391,7 @@ body:
     id: faithfulness
     attributes:
       label: Faithfulness
-      description: Multiple: Select at least one option
+      description: "Multiple: Select at least one option"
       options:
         - label: Required
         - label: Recommended
@@ -405,7 +405,7 @@ body:
     id: idd
     attributes:
       label: IDD
-      description: Multiple: Select at least one option
+      description: "Multiple: Select at least one option"
       options:
         - label: Required
         - label: Recommended
@@ -419,7 +419,7 @@ body:
     id: model_specific_assumptions
     attributes:
       label: Model-specific assumptions
-      description: Multiple: Select at least one option
+      description: "Multiple: Select at least one option"
       options:
         - label: Parallel trends
         - label: Stationarity
