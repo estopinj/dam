@@ -37,8 +37,10 @@ body:
           - *Ordinal* - Options are ordered and selecting one implies that higher (next) options in the dropdown meanu are also satisfied.
 
         ### NB
-        - One entry can actually correspond to a family of methods (e.g. DiD), with many variants satisfying different criteria. In this case, the assessment should be based on the most common or original variant of the method and major variants that are already widespread. As most criteria accept multiple optios, assessors can tick all that apply.
-        - Rationale and comments can be added at the end of the form to justify the assessment and provide any additional information.
+        - One entry can actually correspond to a family of methods (e.g. DiD), with many variants satisfying different criteria.
+        In this case, the assessment should be based on the most common or original variant of the method, and add the options matching major & widespread variants.
+        For checkbox criteria, assessors should tick all that apply, and for ordinal criteria, they should select the most permissive option.
+        - Rationale and comments can be added at the end of the form to justify the assessment or provide any additional information.
 
         *See the [criteria description](https://estopinj.github.io/dam/criteria) for more details on the criteria and how to assess them*
 
@@ -50,7 +52,7 @@ body:
   - type: checkboxes
     id: objective
     attributes:
-      label: Objective
+      # label: Objective
       description: Tick all the objectives that the method can address
       options:
         - label: Effect estimation
@@ -71,6 +73,7 @@ body:
     id: estimand
     attributes:
       label: Estimand
+      description: Multiple
       options:
         - label: ATT
         - label: ATE
@@ -90,24 +93,24 @@ body:
       value: |
         ## Data compatibility
   
-  - type: dropdown
+  - type: checkboxes
     id: data_type
     attributes:
       label: Type
-      multiple: true
+      description: Multiple
       options:
-        - Spatial only (cross-sectional)
-        - Time-series (one sample)
-        - Panel data (many samples)
-        - Inapplicable
+        - label: Spatial only (cross-sectional)
+        - label: Time-series (one sample)
+        - label: Panel data (many samples)
+        - label: Inapplicable
     validations:
       required: true
   
-  - type: dropdown
+  - type: dropdown # Ordinal criteria
     id: required_ts_length
     attributes:
       label: Required TS length
-      multiple: true
+      description: Ordinal
       options:
         - Handles ≤ 10
         - ≥ 10
@@ -116,10 +119,11 @@ body:
     validations:
       required: true
   
-  - type: dropdown
+  - type: dropdown # Ordinal criteria
     id: handles_few_samples
     attributes:
       label: Handles few samples
+      description: Multiple
       options:
         - Yes CT design
         - Yes ≤ 10
@@ -129,10 +133,11 @@ body:
     validations:
       required: true
   
-  - type: dropdown
+  - type: dropdown # Ordinal criteria
     id: handles_huge_datasets
     attributes:
       label: Handles huge datasets (n)
+      description: Ordinal
       options:
         - "Yes"
         - Most do
@@ -142,10 +147,11 @@ body:
     validations:
       required: true
   
-  - type: dropdown
+  - type: dropdown # Ordinal criteria
     id: handles_missing_data
     attributes:
       label: Handles missing data
+      description: Ordinal
       options:
         - "Yes"
         - Partially
@@ -154,152 +160,16 @@ body:
     validations:
       required: true
   
-  - type: dropdown
+  - type: dropdown # Ordinal criteria
     id: rs_data_proven
     attributes:
       label: RS-data proven
+      description: Ordinal
       options:
         - "Yes"
         - Few applications
         - "No"
         - Inapplicable
-    validations:
-      required: true
-  
-  - type: markdown
-    attributes:
-      value: |
-        ## Assumptions
-  
-  - type: dropdown
-    id: functional_form
-    attributes:
-      label: Functional form
-      multiple: true
-      options:
-        - Linear
-        - Quadratic
-        - Non-linear
-        - Additivity
-        - Assumption-free
-        - Rule-based
-        - Log-linear
-        - Inapplicable
-    validations:
-      required: true
-  
-  - type: dropdown
-    id: no_unobserved_confounders
-    attributes:
-      label: No unobserved confounders
-      options:
-        - Required
-        - Recommended
-        - Desirable
-        - Relaxes assumption
-        - Time-varying OR site-varying
-        - Inapplicable
-    validations:
-      required: true
-  
-  - type: dropdown
-    id: no_interference
-    attributes:
-      label: No interference
-      multiple: true
-      options:
-        - Required
-        - Recommended
-        - Desirable
-        - Relaxes assumption
-        - Not required
-        - Inapplicable
-    validations:
-      required: true
-  
-  - type: dropdown
-    id: well_defined_treatments
-    attributes:
-      label: Well-defined treatments
-      options:
-        - Required
-        - Recommended
-        - Desirable
-        - Relaxes assumption
-        - Inapplicable
-    validations:
-      required: true
-  
-  - type: dropdown
-    id: common_support_positivity
-    attributes:
-      label: Common support (positivity)
-      options:
-        - Required
-        - Recommended
-        - Desirable
-        - Relaxes assumption
-        - Inapplicable
-    validations:
-      required: true
-  
-  - type: dropdown
-    id: causal_markov_condition
-    attributes:
-      label: Causal Markov Condition
-      options:
-        - Required
-        - Recommended
-        - Desirable
-        - Relaxes assumption
-        - Inapplicable
-    validations:
-      required: true
-  
-  - type: dropdown
-    id: faithfulness
-    attributes:
-      label: Faithfulness
-      options:
-        - Required
-        - Recommended
-        - Desirable
-        - Relaxes assumption
-        - Inapplicable
-    validations:
-      required: true
-  
-  - type: dropdown
-    id: idd
-    attributes:
-      label: IDD
-      options:
-        - Required
-        - Recommended
-        - Desirable
-        - Relaxes assumption
-        - Inapplicable
-    validations:
-      required: true
-  
-  - type: dropdown
-    id: model_specific_assumptions
-    attributes:
-      label: Model-specific assumptions
-      multiple: true
-      options:
-        - Parallel trends
-        - Stationarity
-        - Dispersal / reproduction / mortality
-        - Instrument validity
-        - Normality of random effects
-        - No M-O confounding
-        - Good covariate balance
-        - Effect entirely mediated
-        - Cutoff + PO continuity
-        - B/A treatment obs.
-        - Good pretreatment fit
-        - No specific
     validations:
       required: true
   
@@ -312,6 +182,7 @@ body:
     id: requires_explicit_processes
     attributes:
       label: Requires explicit processes
+      description: One choice
       options:
         - "Yes"
         - Optional
@@ -320,38 +191,51 @@ body:
     validations:
       required: true
   
-  - type: dropdown
+  - type: checkboxes
     id: exposure_type
     attributes:
       label: Exposure type
-      multiple: true
+      description: Multiple
       options:
-        - Binary
-        - Categorical
-        - Continuous / Time-varying
-        - Compositional
-        - Multivariate
-        - Others
-        - All
-        - Inapplicable        
+        - label: Binary
+        - label: Categorical
+        - label: Continuous / Time-varying
+        - label: Compositional
+        - label: Multivariate
+        - label: Others
+        - label: All
+        - label: Inapplicable
     validations:
       required: true
   
-  - type: dropdown
+  - type: checkboxes
     id: number_of_variables
     attributes:
       label: Number of variables
-      multiple: true
+      description: Multiple
       options:
-        - Univariate
-        - Bivariate
-        - Multivariate
-        - High-dimensional (p≫n)
+        - label: Univariate
+        - label: Bivariate
+        - label: Multivariate
+        - label: High-dimensional (p≫n)
+        - label: Inapplicable
+    validations:
+      required: true
+  
+  - type: dropdown # Ordinal criteria
+    id: propagates_uncertainty
+    attributes:
+      label: Propagates uncertainty
+      description: Ordinal
+      options:
+        - Inherent capacity
+        - Model-specific tools
+        - Needs model-agnostic propagation
         - Inapplicable
     validations:
       required: true
   
-  - type: dropdown
+  - type: dropdown # Ordinal criteria
     id: handles_lag_effects
     attributes:
       label: Handles lag effects
@@ -363,29 +247,17 @@ body:
     validations:
       required: true
 
-  - type: dropdown
-    id: propagates_uncertainty
-    attributes:
-      label: Propagates uncertainty
-      options:
-        - Inherent capacity
-        - Model-specific tools
-        - Needs model-agnostic propagation
-        - Inapplicable
-    validations:
-      required: true
-  
-  - type: dropdown
+  - type: checkboxes
     id: parametric_nature
     attributes:
       label: Parametric nature
-      multiple: true
+      description: Multiple
       options:
-        - Parametric
-        - Semi-parametric
-        - Non-parametric
-        - Rule-based
-        - Inapplicable
+        - label: Parametric
+        - label: Semi-parametric
+        - label: Non-parametric
+        - label: Rule-based
+        - label: Inapplicable
     validations:
       required: true
   
@@ -394,34 +266,178 @@ body:
       value: | 
         ## Packages
   
-  - type: dropdown
+  - type: checkboxes
     id: language
     attributes:
       label: Language
-      multiple: true
       options:
-        - R
-        - Python
-        - GIS
-        - Others
-        - No package
-        - Inapplicable
+        - label: R
+        - label: Python
+        - label: GIS
+        - label: Others
+        - label: No package
+        - label: Inapplicable
     validations:
       required: true
   
-  - type: dropdown
+  - type: checkboxes
     id: usage
     attributes:
       label: Usage
       options:
-        - User-friendly
-        - Technical but well documented
-        - Sparse documentation
-        - Domain-specific skills
-        - Varying
-        - Inapplicable
+        - label: User-friendly
+        - label: Technical but well documented
+        - label: Sparse documentation
+        - label: Domain-specific skills
+        - label: Varying
+        - label: Inapplicable
     validations:
       required: true
+
+
+  - type: markdown
+    attributes:
+      value: |
+        ## Assumptions
+  
+  - type: checkboxes
+    id: functional_form
+    attributes:
+      label: Functional form
+      description: Multiple
+      options:
+        - label: Linear
+        - label: Quadratic
+        - label: Non-linear
+        - label: Additivity
+        - label: Assumption-free
+        - label: Rule-based
+        - label: Log-linear
+        - label: Inapplicable
+    validations:
+      required: true
+  
+  - type: checkboxes
+    id: no_unobserved_confounders
+    attributes:
+      label: No unobserved confounders
+      description: Multiple
+      options:
+        - label: Required
+        - label: Recommended
+        - label: Desirable
+        - label: Relaxes assumption
+        - label: Time-varying OR site-varying
+        - label: Inapplicable
+    validations:
+      required: true
+  
+  - type: checkboxes
+    id: no_interference
+    attributes:
+      label: No interference
+      description: Multiple
+      options:
+        - label: Required
+        - label: Recommended
+        - label: Desirable
+        - label: Relaxes assumption
+        - label: Not required
+        - label: Inapplicable
+    validations:
+      required: true
+  
+  - type: checkboxes
+    id: well_defined_treatments
+    attributes:
+      label: Well-defined treatments
+      description: Multiple
+      options:
+        - label: Required
+        - label: Recommended
+        - label: Desirable
+        - label: Relaxes assumption
+        - label: Inapplicable
+    validations:
+      required: true
+  
+  - type: checkboxes
+    id: common_support_positivity
+    attributes:
+      label: Common support (positivity)
+      description: Multiple
+      options:
+        - label: Required
+        - label: Recommended
+        - label: Desirable
+        - label: Relaxes assumption
+        - label: Inapplicable
+    validations:
+      required: true
+  
+  - type: checkboxes
+    id: causal_markov_condition
+    attributes:
+      label: Causal Markov Condition
+      description: Multiple
+      options:
+        - label: Required
+        - label: Recommended
+        - label: Desirable
+        - label: Relaxes assumption
+        - label: Inapplicable
+    validations:
+      required: true
+  
+  - type: checkboxes
+    id: faithfulness
+    attributes:
+      label: Faithfulness
+      description: Multiple
+      options:
+        - label: Required
+        - label: Recommended
+        - label: Desirable
+        - label: Relaxes assumption
+        - label: Inapplicable
+    validations:
+      required: true
+  
+  - type: checkboxes
+    id: idd
+    attributes:
+      label: IDD
+      description: Multiple
+      options:
+        - label: Required
+        - label: Recommended
+        - label: Desirable
+        - label: Relaxes assumption
+        - label: Inapplicable
+    validations:
+      required: true
+  
+  - type: checkboxes
+    id: model_specific_assumptions
+    attributes:
+      label: Model-specific assumptions
+      description: Multiple
+      options:
+        - label: Parallel trends
+        - label: Stationarity
+        - label: Dispersal / reproduction / mortality
+        - label: Instrument validity
+        - label: Normality of random effects
+        - label: No M-O confounding
+        - label: Good covariate balance
+        - label: Effect entirely mediated
+        - label: Cutoff + PO continuity
+        - label: B/A treatment obs.
+        - label: Good pretreatment fit
+        - label: No specific
+    validations:
+      required: true
+
 
   - type: textarea
     id: rationale
@@ -435,7 +451,7 @@ body:
     id: terms
     attributes:
       label: Code of Conduct
-      description: By submitting this issue, you agree to follow our [Code of Conduct](https://example.com).
+      description: By submitting this issue, you agree to follow our [Code of Conduct](https://estopinj.github.io/dam/contributing/).
       options:
         - label: I agree to follow this project's Code of Conduct
           required: true
