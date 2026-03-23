@@ -34,7 +34,8 @@ body:
         - Situate the method against the unified criteria of NaviDAM will next enable users to filter down the approaches suited to their needs.
         - There are two types of criteria:
           - *Multiple* - Tick **all** the options that apply to the method.
-          - *Ordinal* - Options are ordered and selecting one implies that higher (next) options in the dropdown meanu are also satisfied.
+          At least one option should be selected per criterion (if none applies, tick `Inapplicable`).
+          - *Ordinal* - Options are ordered and selecting one implies that higher (next) options in the dropdown menu are also satisfied.
 
         - One entry can actually correspond to a family of methods (e.g. DiD), with many variants satisfying different criteria.
         In this case, the assessment should be based on the most common or original variant of the method, and add the options matching major & widespread variants.
@@ -96,6 +97,7 @@ body:
     id: data_type
     attributes:
       label: Type
+      description: "Multiple: Select at least one option"
       options:
         - label: Spatial only (cross-sectional)
         - label: Time-series (one sample)
@@ -121,7 +123,7 @@ body:
     id: handles_few_samples
     attributes:
       label: Handles few samples
-      description: "Multiple: Select at least one option"
+      description: Ordinal
       options:
         - Yes CT design
         - Yes ≤ 10
@@ -237,6 +239,7 @@ body:
     id: handles_lag_effects
     attributes:
       label: Handles lag effects
+      description: Ordinal
       options:
         - "Yes"
         - Possible
@@ -268,6 +271,7 @@ body:
     id: language
     attributes:
       label: Language
+      description: "Multiple: Select at least one option"
       options:
         - label: R
         - label: Python
@@ -282,6 +286,7 @@ body:
     id: usage
     attributes:
       label: Usage
+      description: "Multiple: Select at least one option"
       options:
         - label: User-friendly
         - label: Technical but well documented
