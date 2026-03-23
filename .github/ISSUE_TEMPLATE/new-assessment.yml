@@ -54,8 +54,16 @@ body:
       label: Category
       description: "Multiple: Tick all that apply & at least one (only for method page organization)"
       options:
-        - label: XX
-        - label: YY
+        - label: "Counterfactual & future simulations"
+        - label: "Experiments"
+        - label: "Ecology-guided Modelling"
+        - label: "Adjusted methods (Backdoor C.)"
+        - label: "Quasi-experiments"
+        - label: "Causal ML"
+        - label: "Causal discovery"
+        - label: "Alternative paradigms"
+        - label: "Versatile tools"
+        - label: "Independent detection"
 
   - type: dropdown
     id: sub_category
@@ -64,8 +72,30 @@ body:
       description: "Multiple, can be left unspecified (only for method page organization)"
       multiple: true
       options:
-        - "Sub-category 1"
-        - "Sub-category 2"
+        - "Climate change attribution methods"
+        - "Process-based methods"
+        - "Dynamic vegetation models"
+        - "Individual-based models"
+        - "Land use change models"
+        - "Ecosystem Process Models"
+        - "Linear regressions & extensions"
+        - "Predictive models +  interpretability metrics"
+        - "Alternative effect identification methods"
+        - "Meta-learners"
+        - "Constraint-based methods"
+        - "Score-based methods"
+        - "Continuous optimization"
+        - "Asymmetry-based"
+        - "Prediction-based approaches"
+        - "Intermediate confounding"
+        - "Visualisation helpers"
+        - "Robustness & significance tests"
+        - "Causal interpretability"
+        - "Uncertainty tools"
+        - "Trend detection"
+        - "RS breakpoint detection"
+        - "Frequently monitored indices"
+        - "Preliminary data correction"
 
   - type: markdown
     attributes:
