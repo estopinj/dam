@@ -22,7 +22,7 @@ body:
     id: method_name
     attributes:
       label: Target method name
-      description: Name of the existing or intended method page to assess. For an alternative assessment of an already-assessed method, please use same method name, and provide rationale for the differences at the end of the form.
+      description: Name of method to be assessed. For an alternative assessment of an already-assessed method, please use same method name, and provide rationale for the differences at the end of the form.
       placeholder: ex. Synthetic Control Method
     validations:
       required: true
@@ -33,15 +33,11 @@ body:
       value: |
         ## Assessment logic
         - The assessment should be based on the method's capacity to address a set of objectives, its compatibility with different data types, the assumptions it relies on, etc.
-        - Situate the method against the unified criteria of NaviDAM will next enable users to filter down the approaches suited to their needs.
-        - There are two main types of criteria:
-          - *Multiple* - Tick **all** the options that apply to the method.
-          At least one should be selected per criterion (if none applies, tick `Inapplicable`).
-          - *Ordinal* - Options are ordered from most to least permissive, so selecting one implies that higher (next) options in the dropdown menu are also satisfied.
+        - **Please tick ALL the options that apply, even for ordinal criteria where some options can be nested within others.**
 
+        - Situating the method against the unified criteria of NaviDAM will next enable users to filter down the approaches suited to their needs.
         - One entry can actually correspond to a family of methods (e.g. DiD), with many variants satisfying different criteria.
         In this case, the assessment should be based on the most common or original variant of the method, and add the options matching major & widespread variants.
-        For checkbox criteria, assessors should tick all that apply, and for ordinal criteria, they should select the most permissive option.
         - Rationale and comments can be added at the end of the form to justify the assessment or provide any additional information.
 
         *See the [criteria description](https://estopinj.github.io/dam/criteria) for more details on the criteria and how to assess them*
@@ -56,7 +52,7 @@ body:
     id: category
     attributes:
       label: Category
-      description: "Multiple: Select at least one (only for method page organization)"
+      description: "Multiple: Tick all that apply & at least one (only for method page organization)"
       options:
         - label: XX
         - label: YY
@@ -98,7 +94,7 @@ body:
     id: estimand
     attributes:
       label: Estimand
-      description: "Multiple: Select at least one"
+      description: "Multiple: Tick all that apply & at least one"
       options:
         - label: ATT
         - label: ATE
@@ -120,14 +116,14 @@ body:
     id: data_type
     attributes:
       label: Type
-      description: "Multiple: Select at least one"
+      description: "Multiple: Tick all that apply & at least one"
       options:
         - label: Spatial only (cross-sectional)
         - label: Time-series (one sample)
         - label: Panel data (many samples)
         - label: Inapplicable
   
-  - type: dropdown # Ordinal criteria
+  - type: checkboxes # Ordinal criteria
     id: required_ts_length
     attributes:
       label: Required TS length
@@ -137,11 +133,10 @@ body:
         - ≥ 10
         - ≥ 100
         - Inapplicable
-      default: 2
     validations:
       required: true
   
-  - type: dropdown # Ordinal criteria
+  - type: checkboxes # Ordinal criteria
     id: handles_few_samples
     attributes:
       label: Handles few samples
@@ -152,11 +147,10 @@ body:
         - 10 to 100
         - "No"
         - Inapplicable
-      default: 3
     validations:
       required: true
   
-  - type: dropdown # Ordinal criteria
+  - type: checkboxes # Ordinal criteria
     id: handles_huge_datasets
     attributes:
       label: Handles huge datasets (n)
@@ -167,11 +161,10 @@ body:
         - Most dont
         - "No"
         - Inapplicable
-      default: 3
     validations:
       required: true
   
-  - type: dropdown # Ordinal criteria
+  - type: checkboxes # Ordinal criteria
     id: handles_missing_data
     attributes:
       label: Handles missing data
@@ -181,11 +174,10 @@ body:
         - Partially
         - "No: requires prelim. correction"
         - Inapplicable
-      default: 2
     validations:
       required: true
   
-  - type: dropdown # Ordinal criteria
+  - type: checkboxes # Ordinal criteria
     id: rs_data_proven
     attributes:
       label: RS-data proven
@@ -195,7 +187,6 @@ body:
         - Few applications
         - "No"
         - Inapplicable
-      default: 2
     validations:
       required: true
   
@@ -204,7 +195,7 @@ body:
       value: | 
         ## Model properties
   
-  - type: dropdown
+  - type: checkboxes
     id: requires_explicit_processes
     attributes:
       label: Requires explicit processes
@@ -214,7 +205,6 @@ body:
         - Optional
         - Agnostic
         - Inapplicable
-      default: 2
     validations:
       required: true
   
@@ -222,7 +212,7 @@ body:
     id: exposure_type
     attributes:
       label: Exposure type
-      description: "Multiple: Select at least one"
+      description: "Multiple: Tick all that apply & at least one"
       options:
         - label: Binary
         - label: Categorical
@@ -237,7 +227,7 @@ body:
     id: number_of_variables
     attributes:
       label: Number of variables
-      description: "Multiple: Select at least one"
+      description: "Multiple: Tick all that apply & at least one"
       options:
         - label: Univariate
         - label: Bivariate
@@ -245,7 +235,7 @@ body:
         - label: High-dimensional (p≫n)
         - label: Inapplicable
   
-  - type: dropdown # Ordinal criteria
+  - type: checkboxes # Ordinal criteria
     id: propagates_uncertainty
     attributes:
       label: Propagates uncertainty
@@ -255,11 +245,10 @@ body:
         - Model-specific tools
         - Needs model-agnostic propagation
         - Inapplicable
-      default: 2
     validations:
       required: true
   
-  - type: dropdown # Ordinal criteria
+  - type: checkboxes # Ordinal criteria
     id: handles_lag_effects
     attributes:
       label: Handles lag effects
@@ -269,7 +258,6 @@ body:
         - Possible
         - "No"
         - Inapplicable
-      default: 2
     validations:
       required: true
 
@@ -277,7 +265,7 @@ body:
     id: parametric_nature
     attributes:
       label: Parametric nature
-      description: "Multiple: Tick at least one"
+      description: "Multiple: Tick all that apply & at least one"
       options:
         - label: Parametric
         - label: Semi-parametric
@@ -294,7 +282,7 @@ body:
     id: language
     attributes:
       label: Language
-      description: "Multiple: Tick at least one"
+      description: "Multiple: Tick all that apply & at least one"
       options:
         - label: R
         - label: Python
@@ -307,7 +295,7 @@ body:
     id: usage
     attributes:
       label: Usage
-      description: "Multiple: Tick at least one"
+      description: "Multiple: Tick all that apply & at least one"
       options:
         - label: User-friendly
         - label: Technical but well documented
@@ -325,7 +313,7 @@ body:
     id: functional_form
     attributes:
       label: Functional form
-      description: "Multiple: Tick at least one"
+      description: "Multiple: Tick all that apply & at least one"
       options:
         - label: Linear
         - label: Quadratic
@@ -340,7 +328,7 @@ body:
     id: no_unobserved_confounders
     attributes:
       label: No unobserved confounders
-      description: "Multiple: Tick at least one"
+      description: "Multiple: Tick all that apply & at least one"
       options:
         - label: Required
         - label: Recommended
@@ -353,7 +341,7 @@ body:
     id: no_interference
     attributes:
       label: No interference
-      description: "Multiple: Tick at least one"
+      description: "Multiple: Tick all that apply & at least one"
       options:
         - label: Required
         - label: Recommended
@@ -366,7 +354,7 @@ body:
     id: well_defined_treatments
     attributes:
       label: Well-defined treatments
-      description: "Multiple: Tick at least one"
+      description: "Multiple: Tick all that apply & at least one"
       options:
         - label: Required
         - label: Recommended
@@ -378,7 +366,7 @@ body:
     id: common_support_positivity
     attributes:
       label: Common support (positivity)
-      description: "Multiple: Tick at least one"
+      description: "Multiple: Tick all that apply & at least one"
       options:
         - label: Required
         - label: Recommended
@@ -390,7 +378,7 @@ body:
     id: causal_markov_condition
     attributes:
       label: Causal Markov Condition
-      description: "Multiple: Tick at least one"
+      description: "Multiple: Tick all that apply & at least one"
       options:
         - label: Required
         - label: Recommended
@@ -402,7 +390,7 @@ body:
     id: faithfulness
     attributes:
       label: Faithfulness
-      description: "Multiple: Tick at least one"
+      description: "Multiple: Tick all that apply & at least one"
       options:
         - label: Required
         - label: Recommended
@@ -414,7 +402,7 @@ body:
     id: idd
     attributes:
       label: IDD
-      description: "Multiple: Tick at least one"
+      description: "Multiple: Tick all that apply & at least one"
       options:
         - label: Required
         - label: Recommended
@@ -426,7 +414,7 @@ body:
     id: model_specific_assumptions
     attributes:
       label: Model-specific assumptions
-      description: "Multiple: Tick at least one"
+      description: "Multiple: Tick all that apply & at least one"
       options:
         - label: Parallel trends
         - label: Stationarity
