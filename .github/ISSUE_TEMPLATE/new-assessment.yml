@@ -9,6 +9,15 @@ body:
     attributes:
       value: |
         Thanks for taking the time to fill out this method assessment!
+  
+  - type: input
+    id: assessor
+    attributes:
+      label: Assessor
+      placeholder: ex. Jeanne Dupont
+    validations:
+      required: true
+
   - type: input
     id: method_name
     attributes:
@@ -18,13 +27,6 @@ body:
     validations:
       required: true
 
-  - type: input
-    id: author
-    attributes:
-      label: Page’s Author & Date
-      placeholder: ex. Jean Dupont, 14/06/2026
-    validations:
-      required: true
 
   - type: markdown
     attributes:
@@ -43,6 +45,33 @@ body:
         - Rationale and comments can be added at the end of the form to justify the assessment or provide any additional information.
 
         *See the [criteria description](https://estopinj.github.io/dam/criteria) for more details on the criteria and how to assess them*
+
+
+  - type: markdown
+    attributes:
+      value: |
+        ## Method group
+
+  - type: checkboxes
+    id: category
+    attributes:
+      label: Category
+      description: "Multiple: Select at least one option"
+      options:
+        - label: XX
+        - label: YY
+    validations:
+      required: true
+
+  - type: dropdown
+    id: sub_category
+    attributes:
+      label: Sub-category
+      description: Multiple or Empty
+      options:
+        - "No sub-category"
+        - "Sub-category 1"
+        - "Sub-category 2"
 
   - type: markdown
     attributes:
