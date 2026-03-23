@@ -127,12 +127,12 @@ body:
     id: required_ts_length
     attributes:
       label: Required TS length
-      description: Ordinal - Pick the minimum option
+      description: Tick all that apply & at least one
       options:
-        - Handles ≤ 10
-        - ≥ 10
-        - ≥ 100
-        - Inapplicable
+        - label: Handles ≤ 10
+        - label: ≥ 10
+        - label: ≥ 100
+        - label: Inapplicable
     validations:
       required: true
   
@@ -140,13 +140,13 @@ body:
     id: handles_few_samples
     attributes:
       label: Handles few samples
-      description: Ordinal - Pick the minimum option
+      description: Tick all that apply & at least one
       options:
-        - Yes CT design
-        - Yes ≤ 10
-        - 10 to 100
-        - "No"
-        - Inapplicable
+        - label: Yes CT design
+        - label: Yes ≤ 10
+        - label: 10 to 100
+        - label: "No"
+        - label: Inapplicable
     validations:
       required: true
   
@@ -154,13 +154,13 @@ body:
     id: handles_huge_datasets
     attributes:
       label: Handles huge datasets (n)
-      description: Ordinal - Pick the minimum option
+      description: Tick all that apply & at least one
       options:
-        - "Yes"
-        - Most do
-        - Most dont
-        - "No"
-        - Inapplicable
+        - label: "Yes"
+        - label: Most do
+        - label: Most dont
+        - label: "No"
+        - label: Inapplicable
     validations:
       required: true
   
@@ -168,12 +168,12 @@ body:
     id: handles_missing_data
     attributes:
       label: Handles missing data
-      description: Ordinal - Pick the minimum option
+      description: Tick all that apply & at least one
       options:
-        - "Yes"
-        - Partially
-        - "No: requires prelim. correction"
-        - Inapplicable
+        - label: "Yes"
+        - label: Partially
+        - label: "No: requires prelim. correction"
+        - label: Inapplicable
     validations:
       required: true
   
@@ -181,12 +181,12 @@ body:
     id: rs_data_proven
     attributes:
       label: RS-data proven
-      description: Ordinal - Pick the minimum option
+      description: Tick all that apply & at least one
       options:
-        - "Yes"
-        - Few applications
-        - "No"
-        - Inapplicable
+        - label: "Yes"
+        - label: Few applications
+        - label: "No"
+        - label: Inapplicable
     validations:
       required: true
   
@@ -201,10 +201,10 @@ body:
       label: Requires explicit processes
       description: Pick one
       options:
-        - "Yes"
-        - Optional
-        - Agnostic
-        - Inapplicable
+        - label: "Yes"
+        - label: Optional
+        - label: Agnostic
+        - label: Inapplicable
     validations:
       required: true
   
@@ -239,12 +239,12 @@ body:
     id: propagates_uncertainty
     attributes:
       label: Propagates uncertainty
-      description: Ordinal - Pick the minimum option
+      description: Tick all that apply & at least one
       options:
-        - Inherent capacity
-        - Model-specific tools
-        - Needs model-agnostic propagation
-        - Inapplicable
+        - label: Inherent capacity
+        - label: Model-specific tools
+        - label: Needs model-agnostic propagation
+        - label: Inapplicable
     validations:
       required: true
   
@@ -252,12 +252,12 @@ body:
     id: handles_lag_effects
     attributes:
       label: Handles lag effects
-      description: Ordinal - Pick the minimum option
+      description: Tick all that apply & at least one
       options:
-        - "Yes"
-        - Possible
-        - "No"
-        - Inapplicable
+        - label: "Yes"
+        - label: Possible
+        - label: "No"
+        - label: Inapplicable
     validations:
       required: true
 
