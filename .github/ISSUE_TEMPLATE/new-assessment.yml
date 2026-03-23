@@ -13,7 +13,7 @@ body:
     id: method_name
     attributes:
       label: Target method name
-      description: Name of the existing or intended method page to assess.
+      description: Name of the existing or intended method page to assess. For an alternative assessment of an already-assessed method, please use same method name, and provide rationale for the differences at the end of the form.
       placeholder: ex. Synthetic Control Method
     validations:
       required: true
@@ -72,7 +72,7 @@ body:
     id: estimand
     attributes:
       label: Estimand
-      description: Multiple
+      description: Multiple: Select at least one option
       options:
         - label: ATT
         - label: ATE
@@ -96,7 +96,6 @@ body:
     id: data_type
     attributes:
       label: Type
-      description: Multiple
       options:
         - label: Spatial only (cross-sectional)
         - label: Time-series (one sample)
@@ -122,7 +121,7 @@ body:
     id: handles_few_samples
     attributes:
       label: Handles few samples
-      description: Multiple
+      description: Multiple: Select at least one option
       options:
         - Yes CT design
         - Yes ≤ 10
@@ -194,7 +193,7 @@ body:
     id: exposure_type
     attributes:
       label: Exposure type
-      description: Multiple
+      description: Multiple: Select at least one option
       options:
         - label: Binary
         - label: Categorical
@@ -211,7 +210,7 @@ body:
     id: number_of_variables
     attributes:
       label: Number of variables
-      description: Multiple
+      description: Multiple: Select at least one option
       options:
         - label: Univariate
         - label: Bivariate
@@ -250,7 +249,7 @@ body:
     id: parametric_nature
     attributes:
       label: Parametric nature
-      description: Multiple
+      description: Multiple: Select at least one option
       options:
         - label: Parametric
         - label: Semi-parametric
@@ -303,7 +302,7 @@ body:
     id: functional_form
     attributes:
       label: Functional form
-      description: Multiple
+      description: Multiple: Select at least one option
       options:
         - label: Linear
         - label: Quadratic
@@ -320,7 +319,7 @@ body:
     id: no_unobserved_confounders
     attributes:
       label: No unobserved confounders
-      description: Multiple
+      description: Multiple: Select at least one option
       options:
         - label: Required
         - label: Recommended
@@ -335,7 +334,7 @@ body:
     id: no_interference
     attributes:
       label: No interference
-      description: Multiple
+      description: Multiple: Select at least one option
       options:
         - label: Required
         - label: Recommended
@@ -350,7 +349,7 @@ body:
     id: well_defined_treatments
     attributes:
       label: Well-defined treatments
-      description: Multiple
+      description: Multiple: Select at least one option
       options:
         - label: Required
         - label: Recommended
@@ -364,7 +363,7 @@ body:
     id: common_support_positivity
     attributes:
       label: Common support (positivity)
-      description: Multiple
+      description: Multiple: Select at least one option
       options:
         - label: Required
         - label: Recommended
@@ -378,7 +377,7 @@ body:
     id: causal_markov_condition
     attributes:
       label: Causal Markov Condition
-      description: Multiple
+      description: Multiple: Select at least one option
       options:
         - label: Required
         - label: Recommended
@@ -392,7 +391,7 @@ body:
     id: faithfulness
     attributes:
       label: Faithfulness
-      description: Multiple
+      description: Multiple: Select at least one option
       options:
         - label: Required
         - label: Recommended
@@ -406,7 +405,7 @@ body:
     id: idd
     attributes:
       label: IDD
-      description: Multiple
+      description: Multiple: Select at least one option
       options:
         - label: Required
         - label: Recommended
@@ -420,7 +419,7 @@ body:
     id: model_specific_assumptions
     attributes:
       label: Model-specific assumptions
-      description: Multiple
+      description: Multiple: Select at least one option
       options:
         - label: Parallel trends
         - label: Stationarity
