@@ -52,7 +52,8 @@ body:
   - type: checkboxes
     id: objective
     attributes:
-      # label: Objective
+      label: | 
+        ## Objective
       description: Tick all the objectives that the method can address
       options:
         - label: Effect estimation
