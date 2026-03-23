@@ -71,18 +71,17 @@ body:
     id: estimand
     attributes:
       label: Estimand
-      multiple: true
       options:
-        - ATT
-        - ATE
-        - LATE
-        - CATE
-        - Mediation effects
-        - Oriented link
-        - Risk ratios
-        - Maps & generalisations
-        - Others
-        - Inapplicable
+        - label: ATT
+        - label: ATE
+        - label: LATE
+        - label: CATE
+        - label: Mediation effects
+        - label: Oriented link
+        - label: Risk ratios
+        - label: Maps & generalisations
+        - label: Others
+        - label: Inapplicable
     validations:
       required: true
   
