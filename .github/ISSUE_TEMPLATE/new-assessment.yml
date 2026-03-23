@@ -51,7 +51,7 @@ body:
     id: objective
     attributes:
       label: Objective
-      # description: Tick all the objectives that the method can address
+      description: Tick all the objectives that the method can address
       multiple: true
       options:
         - Effect estimation
