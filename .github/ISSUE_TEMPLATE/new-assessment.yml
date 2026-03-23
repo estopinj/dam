@@ -41,7 +41,7 @@ body:
         - One entry can actually correspond to a family of methods (e.g. DiD), with many variants satisfying different criteria. In this case, the assessment should be based on the most common or original variant of the method and major variants that are already widespread. As most criteria accept multiple optios, assessors can tick all that apply.
         - Rationale and comments can be added at the end of the form to justify the assessment and provide any additional information.
 
-      *See the [criteria description](https://estopinj.github.io/dam/criteria) for more details on the criteria and how to assess them*
+        *See the [criteria description](https://estopinj.github.io/dam/criteria) for more details on the criteria and how to assess them*
 
   - type: markdown
     attributes:
