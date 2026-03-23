@@ -34,10 +34,10 @@ body:
         ## Assessment logic
         - The assessment should be based on the method's capacity to address a set of objectives, its compatibility with different data types, the assumptions it relies on, etc.
         - Situate the method against the unified criteria of NaviDAM will next enable users to filter down the approaches suited to their needs.
-        - There are two types of criteria:
+        - There are two main types of criteria:
           - *Multiple* - Tick **all** the options that apply to the method.
-          At least one option should be selected per criterion (if none applies, tick `Inapplicable`).
-          - *Ordinal* - Options are ordered and selecting one implies that higher (next) options in the dropdown menu are also satisfied.
+          At least one should be selected per criterion (if none applies, tick `Inapplicable`).
+          - *Ordinal* - Options are ordered from most to least permissive, so selecting one implies that higher (next) options in the dropdown menu are also satisfied.
 
         - One entry can actually correspond to a family of methods (e.g. DiD), with many variants satisfying different criteria.
         In this case, the assessment should be based on the most common or original variant of the method, and add the options matching major & widespread variants.
@@ -56,18 +56,16 @@ body:
     id: category
     attributes:
       label: Category
-      description: "Multiple: Select at least one option"
+      description: "Multiple: Select at least one"
       options:
         - label: XX
         - label: YY
-    validations:
-      required: true
 
-  - type: dropdown
+  - type: 
     id: sub_category
     attributes:
       label: Sub-category
-      description: Multiple or Empty
+      description: "Multiple, can be left unspecified"
       options:
         - "No sub-category"
         - "Sub-category 1"
@@ -82,7 +80,7 @@ body:
     id: objective
     attributes:
       label: Objective
-      description: Tick all the objectives that the method can address
+      description: Tick all the objectives that the method can address (at least one)
       options:
         - label: Effect estimation
         - label: Causal relationship(s)
@@ -90,8 +88,6 @@ body:
         - label: Detection
         - label: Significance and robustness tests
         - label: Scenario projection
-    validations:
-      required: true
 
   - type: markdown
     attributes:
@@ -102,7 +98,7 @@ body:
     id: estimand
     attributes:
       label: Estimand
-      description: "Multiple: Select at least one option"
+      description: "Multiple: Select at least one"
       options:
         - label: ATT
         - label: ATE
@@ -114,8 +110,6 @@ body:
         - label: Maps & generalisations
         - label: Others
         - label: Inapplicable
-    validations:
-      required: true
   
   - type: markdown
     attributes:
@@ -126,25 +120,24 @@ body:
     id: data_type
     attributes:
       label: Type
-      description: "Multiple: Select at least one option"
+      description: "Multiple: Select at least one"
       options:
         - label: Spatial only (cross-sectional)
         - label: Time-series (one sample)
         - label: Panel data (many samples)
         - label: Inapplicable
-    validations:
-      required: true
   
   - type: dropdown # Ordinal criteria
     id: required_ts_length
     attributes:
       label: Required TS length
-      description: Ordinal
+      description: Ordinal - Pick the minimum option
       options:
         - Handles ≤ 10
         - ≥ 10
         - ≥ 100
         - Inapplicable
+      default: 2
     validations:
       required: true
   
@@ -152,13 +145,14 @@ body:
     id: handles_few_samples
     attributes:
       label: Handles few samples
-      description: Ordinal
+      description: Ordinal - Pick the minimum option
       options:
         - Yes CT design
         - Yes ≤ 10
         - 10 to 100
         - "No"
         - Inapplicable
+      default: 3
     validations:
       required: true
   
@@ -166,13 +160,14 @@ body:
     id: handles_huge_datasets
     attributes:
       label: Handles huge datasets (n)
-      description: Ordinal
+      description: Ordinal - Pick the minimum option
       options:
         - "Yes"
         - Most do
         - Most dont
         - "No"
         - Inapplicable
+      default: 3
     validations:
       required: true
   
@@ -180,12 +175,13 @@ body:
     id: handles_missing_data
     attributes:
       label: Handles missing data
-      description: Ordinal
+      description: Ordinal - Pick the minimum option
       options:
         - "Yes"
         - Partially
         - "No: requires prelim. correction"
         - Inapplicable
+      default: 2
     validations:
       required: true
   
@@ -193,12 +189,13 @@ body:
     id: rs_data_proven
     attributes:
       label: RS-data proven
-      description: Ordinal
+      description: Ordinal - Pick the minimum option
       options:
         - "Yes"
         - Few applications
         - "No"
         - Inapplicable
+      default: 2
     validations:
       required: true
   
@@ -211,12 +208,13 @@ body:
     id: requires_explicit_processes
     attributes:
       label: Requires explicit processes
-      description: One choice
+      description: Pick one
       options:
         - "Yes"
         - Optional
         - Agnostic
         - Inapplicable
+      default: 2
     validations:
       required: true
   
@@ -224,7 +222,7 @@ body:
     id: exposure_type
     attributes:
       label: Exposure type
-      description: "Multiple: Select at least one option"
+      description: "Multiple: Select at least one"
       options:
         - label: Binary
         - label: Categorical
@@ -234,33 +232,30 @@ body:
         - label: Others
         - label: All
         - label: Inapplicable
-    validations:
-      required: true
   
   - type: checkboxes
     id: number_of_variables
     attributes:
       label: Number of variables
-      description: "Multiple: Select at least one option"
+      description: "Multiple: Select at least one"
       options:
         - label: Univariate
         - label: Bivariate
         - label: Multivariate
         - label: High-dimensional (p≫n)
         - label: Inapplicable
-    validations:
-      required: true
   
   - type: dropdown # Ordinal criteria
     id: propagates_uncertainty
     attributes:
       label: Propagates uncertainty
-      description: Ordinal
+      description: Ordinal - Pick the minimum option
       options:
         - Inherent capacity
         - Model-specific tools
         - Needs model-agnostic propagation
         - Inapplicable
+      default: 2
     validations:
       required: true
   
@@ -268,12 +263,13 @@ body:
     id: handles_lag_effects
     attributes:
       label: Handles lag effects
-      description: Ordinal
+      description: Ordinal - Pick the minimum option
       options:
         - "Yes"
         - Possible
         - "No"
         - Inapplicable
+      default: 2
     validations:
       required: true
 
@@ -281,15 +277,13 @@ body:
     id: parametric_nature
     attributes:
       label: Parametric nature
-      description: "Multiple: Select at least one option"
+      description: "Multiple: Tick at least one"
       options:
         - label: Parametric
         - label: Semi-parametric
         - label: Non-parametric
         - label: Rule-based
         - label: Inapplicable
-    validations:
-      required: true
   
   - type: markdown
     attributes:
@@ -300,7 +294,7 @@ body:
     id: language
     attributes:
       label: Language
-      description: "Multiple: Select at least one option"
+      description: "Multiple: Tick at least one"
       options:
         - label: R
         - label: Python
@@ -308,14 +302,12 @@ body:
         - label: Others
         - label: No package
         - label: Inapplicable
-    validations:
-      required: true
   
   - type: checkboxes
     id: usage
     attributes:
       label: Usage
-      description: "Multiple: Select at least one option"
+      description: "Multiple: Tick at least one"
       options:
         - label: User-friendly
         - label: Technical but well documented
@@ -323,9 +315,6 @@ body:
         - label: Domain-specific skills
         - label: Varying
         - label: Inapplicable
-    validations:
-      required: true
-
 
   - type: markdown
     attributes:
@@ -336,7 +325,7 @@ body:
     id: functional_form
     attributes:
       label: Functional form
-      description: "Multiple: Select at least one option"
+      description: "Multiple: Tick at least one"
       options:
         - label: Linear
         - label: Quadratic
@@ -346,14 +335,12 @@ body:
         - label: Rule-based
         - label: Log-linear
         - label: Inapplicable
-    validations:
-      required: true
   
   - type: checkboxes
     id: no_unobserved_confounders
     attributes:
       label: No unobserved confounders
-      description: "Multiple: Select at least one option"
+      description: "Multiple: Tick at least one"
       options:
         - label: Required
         - label: Recommended
@@ -361,14 +348,12 @@ body:
         - label: Relaxes assumption
         - label: Time-varying OR site-varying
         - label: Inapplicable
-    validations:
-      required: true
   
   - type: checkboxes
     id: no_interference
     attributes:
       label: No interference
-      description: "Multiple: Select at least one option"
+      description: "Multiple: Tick at least one"
       options:
         - label: Required
         - label: Recommended
@@ -376,84 +361,72 @@ body:
         - label: Relaxes assumption
         - label: Not required
         - label: Inapplicable
-    validations:
-      required: true
   
   - type: checkboxes
     id: well_defined_treatments
     attributes:
       label: Well-defined treatments
-      description: "Multiple: Select at least one option"
+      description: "Multiple: Tick at least one"
       options:
         - label: Required
         - label: Recommended
         - label: Desirable
         - label: Relaxes assumption
         - label: Inapplicable
-    validations:
-      required: true
   
   - type: checkboxes
     id: common_support_positivity
     attributes:
       label: Common support (positivity)
-      description: "Multiple: Select at least one option"
+      description: "Multiple: Tick at least one"
       options:
         - label: Required
         - label: Recommended
         - label: Desirable
         - label: Relaxes assumption
         - label: Inapplicable
-    validations:
-      required: true
   
   - type: checkboxes
     id: causal_markov_condition
     attributes:
       label: Causal Markov Condition
-      description: "Multiple: Select at least one option"
+      description: "Multiple: Tick at least one"
       options:
         - label: Required
         - label: Recommended
         - label: Desirable
         - label: Relaxes assumption
         - label: Inapplicable
-    validations:
-      required: true
   
   - type: checkboxes
     id: faithfulness
     attributes:
       label: Faithfulness
-      description: "Multiple: Select at least one option"
+      description: "Multiple: Tick at least one"
       options:
         - label: Required
         - label: Recommended
         - label: Desirable
         - label: Relaxes assumption
         - label: Inapplicable
-    validations:
-      required: true
   
   - type: checkboxes
     id: idd
     attributes:
       label: IDD
-      description: "Multiple: Select at least one option"
+      description: "Multiple: Tick at least one"
       options:
         - label: Required
         - label: Recommended
         - label: Desirable
         - label: Relaxes assumption
         - label: Inapplicable
-    validations:
-      required: true
   
   - type: checkboxes
     id: model_specific_assumptions
     attributes:
       label: Model-specific assumptions
-      description: "Multiple: Select at least one option"
+      description: "Multiple: Tick at least one"
       options:
         - label: Parallel trends
         - label: Stationarity
@@ -467,9 +440,6 @@ body:
         - label: B/A treatment obs.
         - label: Good pretreatment fit
         - label: No specific
-    validations:
-      required: true
-
 
   - type: textarea
     id: rationale
