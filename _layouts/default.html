@@ -47,6 +47,22 @@ layout: table_wrappers
   {% if site.mermaid %}
     {% include components/mermaid.html %}
   {% endif %}
+
+  {% if site.mathjax != false %}
+    <script>
+      window.MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']],
+          displayMath: [['$$', '$$'], ['\\[', '\\]']],
+          processEscapes: true
+        },
+        options: {
+          skipHtmlTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      };
+    </script>
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  {% endif %}
   
   <!-- <script src="{{ '/assets/js/filter.js' | relative_url }}"></script> -->
 </body>

@@ -5,7 +5,7 @@ import textwrap
 import json
 
 # === CONFIGURATION ===
-INPUT_FILE  = "_data/Attribution methods - Method Assessment.tsv"
+INPUT_FILE  = "_data/DetectionAttribution methods - Method Assessment.tsv"
 OUTPUT_FILE = "_data/method_assessments_clean.tsv"
 
 

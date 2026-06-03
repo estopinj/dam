@@ -65,7 +65,7 @@ Frescalo is a method developed by {% cite hill2012  --style _bibliography/narrat
 - {% cite eichenberg2021  --style _bibliography/narrative %}
 - {% cite redhead2018  --style _bibliography/narrative %}
 - {% cite dyer2017  --style _bibliography/narrative %}
-- {% cite goury2025vegetation  --style _bibliography/narrative %}
+- {% cite goury2025  --style _bibliography/narrative %}
 
 ## Packages 
 

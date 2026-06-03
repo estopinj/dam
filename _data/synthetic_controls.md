@@ -32,7 +32,7 @@ The success of this method has also led to numerous variants. We can cite among 
 - **Sparse SC** from {% cite quistorff2021 --style _bibliography/narrative %}: Helps pre-treatment variables selection and add regularization to meet big data context needs
 - **Penalized SC** from {% cite abadie2021a --style _bibliography/narrative %}: An adaptation of the SC method to deal with disaggregated data gathering varied treated units
 - Finally, a number of recent developement merge the SC method with other approaches:
-    - **Generalized SC** relaxes the parallel trend assumption and unifies the SC method with linear fixed effects models {% cite xu2016 %}
+    - **Generalized SC** relaxes the parallel trend assumption and unifies the SC method with linear fixed effects models {% cite xu2017 %}
     - **Synthetic Diff-in-diffs** combines SCs with the difference-in-differences estimator {% cite arkhangelsky2021 %}
     - {% cite chernozhukov2021 --style _bibliography/narrative %} exploit conformal prediction and structural breaks in conjunction with SCs
     - {% cite imai2023 --style _bibliography/narrative %} developped a flexible estimation procedure combining matching and SCs ideas with diff-and-diffs.
@@ -65,7 +65,7 @@ An updated review paper positioning the method by its original author: {% cite a
 {: .no_toc }
 - {% cite lepissier2021  --style _bibliography/narrative %}
 - {% cite nakanishi2022  --style _bibliography/narrative %}
-- {% cite kaiser2025  --style _bibliography/narrative %}
+- {% cite kaiser2026synthetic  --style _bibliography/narrative %}
 
 ## Packages 
 

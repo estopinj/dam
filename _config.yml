@@ -99,7 +99,7 @@ plugins:
 
 scholar:
   style: apa
-  bibliography: my_references.bib
+  bibliography: 1DAM.bib
   locale: en
 
 
