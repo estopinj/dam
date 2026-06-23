@@ -30,7 +30,7 @@ Statistically, an occupancy model comprises two linked models:
 - A model for detection probability that estimates the probability of detecting a species (𝑝)  given it is present; 
 - And a model for occupancy probability (𝜓), used to describe the true presence/absence state (a latent variable, typically represented as 𝑧). 
 
-At their simplest, these two models have the form of a binomial GLM. Both the true state ($z$) and the detection probability ($\rho$) influences the observed species detection data  ($y$), as follows:
+At their simplest, these two models have the form of a binomial GLM. Both the true state ($z$) and the detection probability ($p$) influences the observed species detection data  ($y$), as follows:
 
 - **Occupancy state model:**
 
@@ -45,8 +45,8 @@ $$
 
 $$ 
 \begin{aligned}
-y_{ij} \mid z_i &\sim \operatorname{Bernoulli}(\rho_i \cdot z_i) \\
-\operatorname{logit}(\rho_{ij}) &= \alpha_0 + \alpha_1 \cdot \text{covariate}
+y_{ij} \mid z_i &\sim \operatorname{Bernoulli}(p_i \cdot z_i) \\
+\operatorname{logit}(p_{ij}) &= \alpha_0 + \alpha_1 \cdot \text{covariate}
 \end{aligned}
 $$
 
