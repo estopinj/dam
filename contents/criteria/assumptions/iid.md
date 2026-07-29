@@ -1,14 +1,14 @@
 ---
-title: IDD
+title: IID
 parent: Assumptions
-nav_order: 8
-permalink: /idd
+nav_order: 1
+permalink: /iid
 categories:
 - criteria
 - assumptions
 ---
 
-# Independent & Identically Distributed (IDD)
+# Independent & Identically Distributed (IID)
 
 |  **Option**        | **Description**            |
 |:------------------:|----------------------------|

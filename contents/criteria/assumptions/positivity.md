@@ -1,7 +1,7 @@
 ---
 title: "Common support"
 parent: Assumptions
-nav_order: 5
+nav_order: 6
 permalink: /positivity
 categories:
 - criteria

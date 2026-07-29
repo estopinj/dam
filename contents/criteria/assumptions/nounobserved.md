@@ -1,7 +1,7 @@
 ---
 title: "No unobserved confounders"
 parent: Assumptions
-nav_order: 2
+nav_order: 3
 permalink: /nounobserved
 categories:
 - criteria

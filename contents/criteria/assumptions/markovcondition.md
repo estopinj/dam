@@ -1,7 +1,7 @@
 ---
 title: "Causal Markov condition"
 parent: Assumptions
-nav_order: 6
+nav_order: 7
 permalink: /markovcondition
 categories:
 - criteria

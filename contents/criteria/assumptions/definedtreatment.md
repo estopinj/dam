@@ -1,7 +1,7 @@
 ---
 title: "Well-defined treatment"
 parent: Assumptions
-nav_order: 4
+nav_order: 5
 permalink: /definedtreatment
 categories:
 - criteria
