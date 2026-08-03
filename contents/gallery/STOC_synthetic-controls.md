@@ -1,9 +1,9 @@
 ---
 title: "STOC & land cover changes"
-parent: Gallery
+parent: Examples
 nav_order: 1
 categories:
-- gallery
+- examples
 ---
 
 # Impacts of abrupt land cover changes on French common birds
@@ -21,7 +21,7 @@ categories:
 
 Observed biodiversity changes can be hard to attribute to their pressures since they are often highly entangled and barely measured.
 
-*In this [Gallery]({{ site.baseurl }}/gallery) page, we showcase how **NaviDAM** can be used to guide method selection (with the [filtering motor]({{ site.baseurl }}/#user-input)) after introducing the [**data**]({{ site.baseurl }}/data) & [**objectives**]({{ site.baseurl }}/objective).*
+*In this [Example]({{ site.baseurl }}/examples) page, we showcase how **NaviDAM** can be used to guide method selection (with the [filtering motor]({{ site.baseurl }}/#user-input)) after introducing the [**data**]({{ site.baseurl }}/data) & [**objectives**]({{ site.baseurl }}/objective).*
 {: .fs-6 .fw-300 }
 
 
@@ -444,7 +444,7 @@ We plan to further exploit {% cite reif2021 santini2017 %} to guide tests on:
 - *iii)* which landscape changes.
 
 {: .note }
-In this gallery example, we don't cover the significance and robustness tests independently as it could be done in the filtering tool as the page is already large. However, synthetic controls already present model-specific inherent placebo and significance tests.
+In this example, we don't cover the significance and robustness tests independently as it could be done in the filtering tool as the page is already large. However, synthetic controls already present model-specific inherent placebo and significance tests.
 
 
 # References

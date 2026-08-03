@@ -52,7 +52,7 @@ Its exploration in regards with the landing page is key for good use of the navi
         This panel provides information on every method listed in the navigator. The methods are described along a common documentation structure: *Description & principle*, *Reference articles*, *Implementation* and the *Assessment table* reflecting how the method is filtered against criteria evaluation.
 
 
-    1. [Gallery] panel
+    1. [Examples] panel
 
         This final panel illustrates how the DAM can be used with examples, from the question + data at hands, to the criteria assessment and the method application. Examples include:
         - STOC + synthetic controls 
@@ -98,6 +98,6 @@ The deployment GitHub Actions workflow is heavily based on GitHub's mixed-party 
 [methods]: https://estopinj.github.io/dam/methods
 [Landing page]: https://estopinj.github.io/dam/
 [Good practices]: https://estopinj.github.io/dam/practices
-[Gallery]: https://estopinj.github.io/dam/gallery
+[Examples]: https://estopinj.github.io/dam/examples
 
 

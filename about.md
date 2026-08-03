@@ -85,7 +85,7 @@ NaviDAM is implemented in this collaborative website and is organized around a d
     - Comparing multiple methods etc.
 
 
-1. [Gallery]({{ site.baseurl }}/gallery)
+1. [Examples]({{ site.baseurl }}/examples)
 
     This final panel illustrates how the DAM can be used with examples, from the question + data at hands, to the criteria assessment and the method application. Examples will include:
     - STOC + synthetic controls 

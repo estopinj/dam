@@ -32,7 +32,7 @@ NaviDAM is an interactive decision-support tool designed to help users explore, 
 
 - **Users are invited [below](#user-input) to qualify their _objective_, _data at hands_ and affordable _assumptions_ between others by assessing different <a href="{{ site.baseurl }}/criteria" target="_blank" rel="noopener noreferrer">criteria</a>**
 - **~~A single~~ *<u>A set of</u>* [suited methods](#candidate-methods) is provided and methods are described in more detail on <a href="{{ site.baseurl }}/methods" target="_blank" rel="noopener noreferrer">documentation pages</a>, allowing users to get started on their project using relevant resources**
-- The <a href="{{ site.baseurl }}/practices" target="_blank" rel="noopener noreferrer">Good practices</a> and <a href="{{ site.baseurl }}/gallery" target="_blank" rel="noopener noreferrer">Gallery</a> panels respectively provide conceptual and general resources on attribution, causal inference & detection, and NaviDAM application examples [*ongoing work*]
+- The <a href="{{ site.baseurl }}/practices" target="_blank" rel="noopener noreferrer">Good practices</a> and <a href="{{ site.baseurl }}/examples" target="_blank" rel="noopener noreferrer">Examples</a> panels respectively provide conceptual and general resources on attribution, causal inference & detection, and NaviDAM application examples [*ongoing work*]
 
 *Check the [About]({{ site.baseurl }}/about) page for further information*
 
