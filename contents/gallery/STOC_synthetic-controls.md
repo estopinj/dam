@@ -21,7 +21,7 @@ categories:
 
 Observed biodiversity changes can be hard to attribute to their pressures since they are often highly entangled and barely measured.
 
-*In this [Example]({{ site.baseurl }}/examples) page, we showcase how **NaviDAM** can be used to guide method selection (with the [filtering motor]({{ site.baseurl }}/#user-input)) after introducing the [**data**]({{ site.baseurl }}/data) & [**objectives**]({{ site.baseurl }}/objective).*
+*In this [example]({{ site.baseurl }}/examples) page, we showcase how **NaviDAM** can be used to guide method selection (with the [filtering motor]({{ site.baseurl }}/#user-input)) after introducing the [**data**]({{ site.baseurl }}/data) & [**objectives**]({{ site.baseurl }}/objective).*
 {: .fs-6 .fw-300 }
 
 
