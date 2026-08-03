@@ -9,7 +9,7 @@ categories:
 # Criteria
 
 - This panel provides information on every criterion used to subset detection & attribution [methods]({{ site.baseurl }}/methods) when using the navigator.
-- Criteria are grouped in five descriptive categories: *Outcome*, *Data Compatibility*, *Assumptions*, *Model Properties*, and *Packages*.
+- Criteria are grouped in five descriptive categories: *Outcome*, *Data Compatibility*, *Assumptions*, *Model Properties*, and *Implementation*.
 {: .fs-6 .fw-300 }
 
 They capture: 

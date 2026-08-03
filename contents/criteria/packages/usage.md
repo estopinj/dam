@@ -1,14 +1,14 @@
 ---
 title: Usage
-parent: Packages
+parent: Implementation
 nav_order: 2
 permalink: /usage
 categories:
 - criteria
-- packages
+- implementation
 ---
 
-# Packages
+# Implementation
 
 |  **Option**        | **Description**            |
 |:------------------:|----------------------------|

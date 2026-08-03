@@ -1,11 +1,11 @@
 ---
 title: Language
-parent: Packages
+parent: Implementation
 nav_order: 1
 permalink: /language
 categories:
 - criteria
-- packages
+- implementation
 ---
 
 # Programing language
@@ -13,10 +13,10 @@ categories:
 |  **Option**        | **Description**            |
 |:------------------:|----------------------------|
 | `R` | Robust, community‑driven libraries in R. |
-| `Python` | Well‑supported Python packages. |
+| `Python` | Well‑supported Python implementation. |
 | `GIS` | Implementations within GIS software (e.g., ArcGIS, QGIS). |
 | `Others` | Other languages (MATLAB, Java, Stata, etc.). |
-| `No package` | No known packaged code exists, e.g. only developer scripts. |
+| `No package` | No known implementation exists, e.g. only developer scripts. |
 
 
 ## Definition

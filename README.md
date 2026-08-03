@@ -49,7 +49,7 @@ Its exploration in regards with the landing page is key for good use of the navi
 
     1. [Methods] panel
 
-        This panel provides information on every method listed in the navigator. The methods are described along a common documentation structure: *Description & principle*, *Reference articles*, *Implementation packages* and the *Assessment table* reflecting how the method is filtered against criteria evaluation.
+        This panel provides information on every method listed in the navigator. The methods are described along a common documentation structure: *Description & principle*, *Reference articles*, *Implementation* and the *Assessment table* reflecting how the method is filtered against criteria evaluation.
 
 
     1. [Gallery] panel

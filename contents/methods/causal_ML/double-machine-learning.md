@@ -70,7 +70,7 @@ Since ML algorithms are highly flexible to non-parametric relationships, they ca
 {: .no_toc }
 - {% cite fink2023double --style _bibliography/narrative %}
 
-## Packages 
+## Implementation 
 
 #### Python
 {: .no_toc }

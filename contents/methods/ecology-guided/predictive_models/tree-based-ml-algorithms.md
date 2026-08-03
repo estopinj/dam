@@ -81,7 +81,7 @@ As for Random Forest, Boosted decision tree relationships are not directly inter
 - {% cite bland2015predicting  --style _bibliography/narrative_full %}
 - {% cite cazalis2023prioritizing  --style _bibliography/narrative_full %}
 
-## Packages 
+## Implementation 
 
 #### Python
 {: .no_toc }

@@ -100,7 +100,7 @@ Occupancy models rely on repeated surveys to estimate detection probability and 
 {: .no_toc }
 - {% cite vanstrien2013opportunistic --style _bibliography/narrative %}
 
-## Packages
+## Implementation
 
 #### R
 {: .no_toc }

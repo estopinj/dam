@@ -27,9 +27,9 @@ export const criteria = [
   { key: "Propaguates uncertainty", label: "Propagates uncertainty", category: "Model properties" },
   { key: "Handles lag effects", label: "Handles lag effects", category: "Model properties" },
   { key: "Parametric nature", label: "Parametric nature", category: "Model properties" },
-  // Packages
-  { key: "Language", label: "Language", category: "Packages" },
-  { key: "Usage", label: "Usage", category: "Packages" }
+  // Implementation
+  { key: "Language", label: "Language", category: "Implementation" },
+  { key: "Usage", label: "Usage", category: "Implementation" }
 ];
 
 

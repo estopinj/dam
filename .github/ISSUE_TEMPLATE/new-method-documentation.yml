@@ -93,13 +93,13 @@ body:
   - type: markdown
     attributes:
       value: |
-        ## Packages
+        ## Implementation
   
   - type: textarea
     id: python_pkg
     attributes:
       label: Python
-      description: Python packages implementing the method.
+      description: Python implementation of the method.
       placeholder: Link toward the package documentation or repository.
     validations:
       required: false
@@ -108,7 +108,7 @@ body:
     id: r_pkg
     attributes:
       label: R
-      description: R packages implementing the method.
+      description: R implementation of the method.
       placeholder: Link toward the package documentation or repository.
     validations:
       required: false

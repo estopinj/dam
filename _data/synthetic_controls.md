@@ -67,7 +67,7 @@ An updated review paper positioning the method by its original author: {% cite a
 - {% cite nakanishi2022  --style _bibliography/narrative %}
 - {% cite kaiser2026synthetic  --style _bibliography/narrative %}
 
-## Packages 
+## Implementation 
 
 #### Python
 {: .no_toc }

@@ -178,13 +178,13 @@ On the <a href="{{ site.baseurl }}/" target="_blank" rel="noopener noreferrer">h
     <img src="{{ site.baseurl }}/assets/images/packages.png" style="width:85%; display:block; margin:0 auto;" />
     <figcaption style="text-align:center; font-size:normal; padding-top:0.4rem;">
       <a id="fig8"></a>
-      <a href="#fig8"><strong>Figure 10</strong></a>: <em>Detection</em> user input | Packages.
+      <a href="#fig8"><strong>Figure 10</strong></a>: <em>Detection</em> user input | Implementation.
     </figcaption  >
   </figure>
 </div>
 
 
-- About the packages, simple expectations :
+- About the implementation, simple expectations :
   - **Language:** `Python`, `R` We prefer here these two common programming languages for running analyses in batch.
   - **Usage:** `User-friendly`, `Technical but well documented` To keep analyses easily reproducible.
 
@@ -368,12 +368,12 @@ As we did with the *Detection* objective, we will now go through the different c
     <img src="{{ site.baseurl }}/assets/images/attrib_2.png" style="width:85%; display:block; margin:0 auto;" />
     <figcaption style="text-align:center; font-size:normal; padding-top:0.4rem;">
       <a id="fig19"></a>
-      <a href="#fig19"><strong>Figure 19</strong></a>: <em>Attribution</em> user input | Packages.
+      <a href="#fig19"><strong>Figure 19</strong></a>: <em>Attribution</em> user input | Implementation.
     </figcaption  >
   </figure>
 </div>
 
-- About the expectations on packages:
+- About the expectations on the implementation:
   - **Language:** `Python`, `R`, same as for detection
   - **Usage:** `Domain-specific skills` added to `User-friendly` and `Technical but well documented` to keep maximum suggested methods and assuming the user is used to such impact analysis
 

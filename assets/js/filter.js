@@ -139,7 +139,7 @@ document.addEventListener('DOMContentLoaded', function() {
     "Data compatibility": `${siteBaseurl}/data`,
     "Assumptions": `${siteBaseurl}/assumptions`,
     "Model properties": `${siteBaseurl}/properties`,
-    "Packages": `${siteBaseurl}/packages`
+    "Implementation": `${siteBaseurl}/implementation`
   };
 
   // 4. Render dropdowns
