@@ -2,7 +2,7 @@
 layout: baserefs
 title: "Causal paradigms"
 parent: "Good practices"
-nav_order: 2
+nav_order: 4
 categories:
 - practices
 ---

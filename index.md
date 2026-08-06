@@ -42,8 +42,12 @@ NaviDAM is an interactive decision-support platform designed to help users explo
 > 
 > This website is under active development.
 
+{: .important }
+Consult the [Good practices]({{ site.baseurl }}/practices) panel and especially the <a href="{{ site.baseurl }}/contents/practices/box1/" target="_blank" rel="noopener noreferrer">Beyond method selection page</a> for guidance on how to design a robust study and reach credible results.
 
 --------------------------------
+
+
 <a id="user-input"></a>
 ## [User input invite](#user-input){: .btn .btn-purple } <span style="font-size:1em;">&#8594;</span> Evaluating your project's needs
 
