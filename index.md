@@ -78,6 +78,14 @@ Choose the [criteria]({{ site.baseurl }}/criteria) options in the dropdown lists
 
 <div id="criteria-filters"></div>
 
+<details markdown="block">
+<summary>Note on assumptions</summary>
+
+{: .important }
+> Investigators are invited to specify method assumptions at the end of the filtering process. This way, when assumptions are not (fully) specified with `Any` or `Unsure` options, NaviDAM suggests a **set of methods** relying on **different assumptions**. This enables users to **compare results** across methods, assess the robustness or sensitivity of findings to assumptions, and interpret their results with multiple lines of evidence.
+</details>
+
+
 <div class="criteria-status-row">
   <div id="criteria-status"></div>
 </div>
@@ -86,30 +94,31 @@ Choose the [criteria]({{ site.baseurl }}/criteria) options in the dropdown lists
   <a href="#" id="reset-filters-btn" class="btn">Reset all criteria</a>
 </div>
 
+
 --------------------------------
-<div style="text-align:center; font-size:0.95em; font-style:italic; font-style:bold;">
-Rather than suggesting a single 'unicorn' method, NaviDAM provides a subset of candidate methods that meet the specified criteria and offer complementary insights into the studied system
-</div>
---------------------------------
-<a id="suggested-methods"></a>
-## *Set of* candidate methods
-
-
-
-<div id="filtered-methods"></div>
+## Candidate methods
 
 {: .important }
-> Investigators are invited to specify method assumptions at the end of the filtering process.
-> This way, when assumptions are not (fully) specified with `Any` or `Unsure` options, NaviDAM suggests a **set of methods** relying on **different assumptions**. This enables users to **compare results** across methods, assess the robustness or sensitivity of findings to assumptions, and interpret their results with multiple lines of evidence.
+> Consult the [Good practices](http://127.0.0.1:4000/practices) panel and especially the [Beyond method selection page](http://127.0.0.1:4000/contents/practices/box1/) for guidance on how to design a robust study and reach credible results.
+
+<div style="text-align:center; font-size:0.9em; font-style:italic; font-style:bold;">
+Rather than suggesting a single 'unicorn' method, NaviDAM provides a subset of candidate methods that meet the specified criteria and offer complementary insights into the studied system
+</div>
+
+<a id="suggested-methods"></a>
+<div id="filtered-methods"></div>
 
 
-<!-- ## Graph Explorer
+<div class="assessment-export-panel">
+  <h3>Export assessment</h3>
+  <p>Download the selected criteria, category rationales, and suggested methods.</p>
+  <label for="assessment-title">Assessment title</label>
+  <input type="text" id="assessment-title" maxlength="120" placeholder="optional">
+  <button type="button" id="export-assessment-btn" class="btn">Export assessment (.csv)</button>
+  <span id="export-assessment-status" role="status" aria-live="polite"></span>
+</div>
 
-{: .new}
-> A <a href="https://neo4j.com/docs/getting-started/graph-database/" target="_blank" rel="noopener noreferrer"><strong>Neo4j</strong></a> graph database is being developed to explore, vizualize and query the network of methods and criteria.
 
-- Illustrative scheme highlighting some methods
-![]({{ site.baseurl }}/assets/images/DAM_Scheme_greenHighlight.png){: width="75%" } -->
 
 
 ------------------------------------

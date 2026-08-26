@@ -105,6 +105,33 @@
   line-height: 1.3;
 }
 
+#filtered-methods {
+  margin: 1em 0;
+}
+
+#filtered-methods::before,
+#filtered-methods::after {
+  content: "";
+  display: block;
+  width: 35%;
+  margin-left: auto;
+  margin-right: auto;
+  border-top: 2px solid #c4b5fd;
+}
+
+#filtered-methods::before {
+  margin-bottom: 1em;
+}
+
+#filtered-methods::after {
+  margin-top: 1em;
+}
+
+.any-method-message,
+.no-methods-message {
+  text-align: center;
+}
+
 .method-categories {
   display: flex;
   flex-wrap: wrap;
@@ -229,6 +256,95 @@
   margin-left: auto;
   display: flex;
   gap: 0.5em;
+}
+
+.criteria-rationale-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 1em;
+  margin: 1em 0 1.25em;
+  padding-top: 0.75em;
+}
+
+.criteria-rationale-toggle {
+  display: block;
+  margin: 0.75em 0 0.5em;
+  padding: 0.35em 0;
+  border: 0;
+  background: transparent;
+  color: #2a3a8c;
+  font: inherit;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+}
+
+.criteria-rationale-toggle::before {
+  content: "▶";
+  display: inline-block;
+  margin-right: 0.5em;
+  font-size: 0.8em;
+}
+
+.criteria-rationale-toggle[aria-expanded="true"]::before {
+  content: "▼";
+}
+
+.criteria-rationale {
+  flex: 1 1 auto;
+  min-height: 4.5em;
+  padding: 0.6em 0.75em;
+  border: 1px solid #bbb;
+  border-radius: 6px;
+  background: #fff;
+  font: inherit;
+  resize: vertical;
+  box-sizing: border-box;
+}
+
+.criteria-rationale:focus {
+  border-color: #0078d4;
+  outline: none;
+  box-shadow: 0 0 0 2px #e3f0fc;
+}
+
+.assessment-export-panel {
+  margin-top: 1.5em;
+  padding: 1em 1.25em;
+  border-left: 4px solid #2a3a8c;
+  background: #f5f7ff;
+}
+
+.assessment-export-panel h3 {
+  margin-top: 0;
+}
+
+.assessment-export-panel label {
+  display: inline-block;
+  margin-right: 0.5em;
+  font-weight: 600;
+}
+
+#assessment-title {
+  width: min(100%, 28em);
+  margin: 0 0.75em 0.75em 0;
+  padding: 0.45em 0.6em;
+  border: 1px solid #bbb;
+  border-radius: 6px;
+  font: inherit;
+  box-sizing: border-box;
+}
+
+#export-assessment-status {
+  margin-left: 1em;
+  color: #218838;
+}
+
+@media (max-width: 700px) {
+  .criteria-rationale-row {
+    display: block;
+  }
+
 }
 
 

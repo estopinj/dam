@@ -4,6 +4,7 @@ console.log("Filter.js loaded!");
 const siteBaseurl = JSON.parse(document.getElementById('site-baseurl').textContent);
 const objectiveCriteriaMap = JSON.parse(document.getElementById('objective-criteria-map').textContent);
 const choicesInstances = {};
+let currentFilteredMethods = [];
 
 
 function updateCriteriaStatus() {
@@ -141,7 +142,6 @@ document.addEventListener('DOMContentLoaded', function() {
     "Model properties": `${siteBaseurl}/properties`,
     "Implementation": `${siteBaseurl}/implementation`
   };
-
   // 4. Render dropdowns
   const filtersDiv = document.getElementById("criteria-filters");
   console.log("filtersDiv:", filtersDiv);
@@ -287,7 +287,7 @@ document.addEventListener('DOMContentLoaded', function() {
       // Only consider divs that are visible and in this category
       if (!categoryContainers[currentCategory]) return;
       const visibleCriteriaInCategory = Array.from(categoryContainers[currentCategory].children)
-        .filter(child => child.style.display !== "none");
+        .filter(child => child.dataset.criterionKey && child.style.display !== "none");
       // Check if this is the last visible criterion in the category
       if (
         visibleCriteriaInCategory.length > 0 &&
@@ -296,17 +296,21 @@ document.addEventListener('DOMContentLoaded', function() {
         // Find the next category in order
         const idx = categoryOrder.indexOf(currentCategory);
         if (idx !== -1 && idx < categoryOrder.length - 1) {
-          const nextCat = categoryOrder[idx + 1];
-          const nextContainer = categoryContainers[nextCat];
-          // Find the heading for the next category
-          const nextHeading = Array.from(filtersDiv.children).find(
-            el => el.querySelector && el.querySelector("span") && el.querySelector("span").textContent === nextCat
-          );
-          if (nextContainer && nextHeading) {
-            nextContainer.style.display = "block";
-            // Update arrow
-            const arrow = nextHeading.querySelector("span:nth-child(2)");
-            if (arrow) arrow.textContent = " ▼";
+          for (let nextIdx = idx + 1; nextIdx < categoryOrder.length; nextIdx++) {
+            const nextCat = categoryOrder[nextIdx];
+            if (nextCat === "__standalone__") continue;
+            const nextContainer = categoryContainers[nextCat];
+            const nextHeading = Array.from(filtersDiv.children).find(
+              el => el.querySelector && el.querySelector("span") && el.querySelector("span").textContent === nextCat
+            );
+            const hasVisibleCriteria = nextContainer && Array.from(nextContainer.children)
+              .some(child => child.dataset.criterionKey && child.style.display !== "none");
+            if (nextContainer && nextHeading && nextHeading.style.display !== "none" && hasVisibleCriteria) {
+              nextContainer.style.display = "block";
+              const arrow = nextHeading.querySelector("span:nth-child(2)");
+              if (arrow) arrow.textContent = " ▼";
+              break;
+            }
           }
         }
       }
@@ -399,6 +403,34 @@ document.addEventListener('DOMContentLoaded', function() {
         categoryContainers[criterion.category].appendChild(rowDiv);
       }
     });
+
+    if (category !== "__standalone__") {
+      const rationaleToggle = document.createElement("button");
+      rationaleToggle.type = "button";
+      rationaleToggle.className = "criteria-rationale-toggle";
+      rationaleToggle.textContent = `Rationale for ${category}`;
+      rationaleToggle.setAttribute("aria-expanded", "false");
+
+      const rationaleRow = document.createElement("div");
+      rationaleRow.className = "criteria-rationale-row";
+      rationaleRow.style.display = "none";
+
+      const rationale = document.createElement("textarea");
+      rationale.id = `rationale-${slugify(category)}`;
+      rationale.className = "criteria-rationale";
+      rationale.rows = 3;
+      rationale.placeholder = "Explain the reasoning behind your choices in this category (optional)";
+      rationale.setAttribute("aria-label", `Rationale for ${category}`);
+
+      rationaleRow.appendChild(rationale);
+      rationaleToggle.addEventListener("click", function() {
+        const isOpen = rationaleRow.style.display !== "none";
+        rationaleRow.style.display = isOpen ? "none" : "";
+        rationaleToggle.setAttribute("aria-expanded", String(!isOpen));
+      });
+      categoryContainers[category].appendChild(rationaleToggle);
+      categoryContainers[category].appendChild(rationaleRow);
+    }
   });
 
   // After the rendering loop, add this Objective change handler:
@@ -436,6 +468,8 @@ document.addEventListener('DOMContentLoaded', function() {
         const arrow = heading.querySelector("span:nth-child(2)");
         if (arrow) arrow.textContent = " ▶";
       }
+      const rationaleToggle = container && container.querySelector(".criteria-rationale-toggle");
+      if (rationaleToggle) rationaleToggle.style.display = "block";
     });
 
     // Restore previously open category, if any
@@ -471,7 +505,14 @@ document.addEventListener('DOMContentLoaded', function() {
       el => el.querySelector && el.querySelector("span") && el.querySelector("span").textContent === cat
     );
     // Check if any visible criterion in this category
-    const hasVisible = Array.from(container.children).some(child => child.style.display !== "none");
+    const hasVisible = Array.from(container.children).some(child => child.dataset.criterionKey && child.style.display !== "none");
+    const rationaleToggle = container.querySelector(".criteria-rationale-toggle");
+    if (rationaleToggle) rationaleToggle.style.display = hasVisible ? "block" : "none";
+    const rationaleRow = container.querySelector(".criteria-rationale-row");
+    if (!hasVisible && rationaleRow) {
+      rationaleRow.style.display = "none";
+      rationaleToggle?.setAttribute("aria-expanded", "false");
+    }
     if (!hasVisible) {
       container.style.display = "none";
       if (heading) heading.style.display = "none";
@@ -577,6 +618,7 @@ document.addEventListener('DOMContentLoaded', function() {
           });
         }
     });
+    currentFilteredMethods = filtered;
     displayMethods(filtered);
   }
 
@@ -597,12 +639,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
       // Filter out methods with missing "Method"
       const validMethods = methods.filter(m => m["Method"]);
+      currentFilteredMethods = validMethods;
       if (validMethods.length === 0) {
-          div.innerHTML = "<p>No methods match your criteria.</p>";
+          div.innerHTML = "<div class=\"no-methods-message\">No methods match your criteria.</div>";
           return;
       }
       if (validMethods.length === methodData.length) {
-          div.innerHTML = `Any <a href="${siteBaseurl}/methods" target="_blank" rel="noopener noreferrer">method</a>!`;
+          div.innerHTML = `<div class="any-method-message">Any <a href="${siteBaseurl}/methods" target="_blank" rel="noopener noreferrer">method</a>!</div>`;
           return;
       }
 
@@ -688,6 +731,66 @@ document.addEventListener('DOMContentLoaded', function() {
     div.innerHTML = html;
   }
 
+  function csvCell(value) {
+    return `"${String(value ?? "").replace(/"/g, '""')}"`;
+  }
+
+  function selectedCriterionValues(criterion) {
+    const select = document.getElementById("filter-" + criterion.key);
+    if (!select) return [];
+    return Array.from(select.selectedOptions || [select.selectedOptions?.[0]])
+      .filter(option => option && option.value !== "")
+      .map(option => {
+        if (option.value === "__unsure__") return "Unsure";
+        return criteriaOptionLabelMap[criterion.key]?.[option.value] || option.textContent;
+      });
+  }
+
+  function exportAssessment() {
+    const titleInput = document.getElementById("assessment-title");
+    const title = titleInput ? titleInput.value.trim() : "";
+    const safeTitle = title.replace(/[\\/:*?"<>|]+/g, "-").replace(/\s+/g, " ").replace(/[. ]+$/, "");
+    const rows = [
+      [title.toUpperCase()],
+      [],
+      ["", "CONSULT THE GOOD PRACTICES PANEL AND ESPECIALLY THE BEYOND METHOD SELECTION PAGE FOR GUIDANCE ON HOW TO DESIGN A ROBUST STUDY AND REACH CREDIBLE RESULTS."],
+      [],
+      ["Section", "Category", "Item", "Selection or rationale"]
+    ];
+    const usedCriteriaKeys = getUsedCriteriaKeys();
+
+    criteria.forEach(criterion => {
+      if (!usedCriteriaKeys.includes(criterion.key)) return;
+      rows.push(["Criteria", criterion.category === "__standalone__" ? "" : criterion.category, criterion.label, selectedCriterionValues(criterion).join("; ")]);
+    });
+    rows.push([]);
+
+    categoryOrder.forEach(category => {
+      if (category === "__standalone__") return;
+      const rationale = document.getElementById(`rationale-${slugify(category)}`);
+      rows.push(["Rationale", category, "", rationale ? rationale.value : ""]);
+    });
+    rows.push([]);
+
+    currentFilteredMethods.filter(method => method["Method"]).forEach(method => {
+      const category = method["Category"] ? method["Category"].split(",")[0].trim() : "";
+      rows.push(["Suggested method", category, method["Method"], ""]);
+    });
+
+    const csv = rows.map(row => row.map(csvCell).join(",")).join("\r\n");
+    const blob = new Blob(["\uFEFF", csv], { type: "text/csv;charset=utf-8" });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = safeTitle ? `${safeTitle}_NavidamResults.csv` : "NavidamResults.csv";
+    link.click();
+    URL.revokeObjectURL(link.href);
+    const status = document.getElementById("export-assessment-status");
+    if (status) status.textContent = "Assessment exported.";
+  }
+
+  const exportBtn = document.getElementById("export-assessment-btn");
+  if (exportBtn) exportBtn.addEventListener("click", exportAssessment);
+
   // 7. Attach event listeners
   criteria.forEach(criterion => {
   document.getElementById("filter-" + criterion.key).addEventListener("change", function() {
@@ -716,6 +819,9 @@ document.addEventListener('DOMContentLoaded', function() {
           } else {
             select.value = "";
           }
+        });
+        document.querySelectorAll(".criteria-rationale").forEach(rationale => {
+          rationale.value = "";
         });
         filterMethods();
         updateCriteriaStatus();
