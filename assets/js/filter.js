@@ -408,7 +408,7 @@ document.addEventListener('DOMContentLoaded', function() {
       const rationaleToggle = document.createElement("button");
       rationaleToggle.type = "button";
       rationaleToggle.className = "criteria-rationale-toggle";
-      rationaleToggle.textContent = `Rationale for ${category}`;
+      rationaleToggle.textContent = `Describe the rationale behind the ${category} choices`;
       rationaleToggle.setAttribute("aria-expanded", "false");
 
       const rationaleRow = document.createElement("div");
@@ -420,7 +420,7 @@ document.addEventListener('DOMContentLoaded', function() {
       rationale.className = "criteria-rationale";
       rationale.rows = 3;
       rationale.placeholder = "Explain the reasoning behind your choices in this category (optional)";
-      rationale.setAttribute("aria-label", `Rationale for ${category}`);
+      rationale.setAttribute("aria-label", `Describe the rationale behind the ${category} choices`);
 
       rationaleRow.appendChild(rationale);
       rationaleToggle.addEventListener("click", function() {
@@ -747,7 +747,7 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function exportAssessment() {
-    const titleInput = document.getElementById("assessment-title");
+    const titleInput = document.getElementById("evaluation-title");
     const title = titleInput ? titleInput.value.trim() : "";
     const safeTitle = title.replace(/[\\/:*?"<>|]+/g, "-").replace(/\s+/g, " ").replace(/[. ]+$/, "");
     const rows = [
@@ -784,11 +784,11 @@ document.addEventListener('DOMContentLoaded', function() {
     link.download = safeTitle ? `${safeTitle}_NavidamResults.csv` : "NavidamResults.csv";
     link.click();
     URL.revokeObjectURL(link.href);
-    const status = document.getElementById("export-assessment-status");
-    if (status) status.textContent = "Assessment exported.";
+    const status = document.getElementById("export-evaluation-status");
+    if (status) status.textContent = "Evaluation exported.";
   }
 
-  const exportBtn = document.getElementById("export-assessment-btn");
+  const exportBtn = document.getElementById("export-evaluation-btn");
   if (exportBtn) exportBtn.addEventListener("click", exportAssessment);
 
   // 7. Attach event listeners

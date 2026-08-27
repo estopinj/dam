@@ -274,6 +274,8 @@
   background: transparent;
   color: #2a3a8c;
   font: inherit;
+  font-size: 0.95em;
+  font-style: italic;
   font-weight: 600;
   text-align: left;
   cursor: pointer;
@@ -308,24 +310,24 @@
   box-shadow: 0 0 0 2px #e3f0fc;
 }
 
-.assessment-export-panel {
+.evaluation-export-panel {
   margin-top: 1.5em;
   padding: 1em 1.25em;
   border-left: 4px solid #2a3a8c;
   background: #f5f7ff;
 }
 
-.assessment-export-panel h3 {
+.evaluation-export-panel h3 {
   margin-top: 0;
 }
 
-.assessment-export-panel label {
+.evaluation-export-panel label {
   display: inline-block;
   margin-right: 0.5em;
   font-weight: 600;
 }
 
-#assessment-title {
+#evaluation-title {
   width: min(100%, 28em);
   margin: 0 0.75em 0.75em 0;
   padding: 0.45em 0.6em;
@@ -335,7 +337,7 @@
   box-sizing: border-box;
 }
 
-#export-assessment-status {
+#export-evaluation-status {
   margin-left: 1em;
   color: #218838;
 }

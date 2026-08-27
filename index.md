@@ -109,13 +109,13 @@ Rather than suggesting a single 'unicorn' method, NaviDAM provides a subset of c
 <div id="filtered-methods"></div>
 
 
-<div class="assessment-export-panel">
-  <h3>Export assessment</h3>
-  <p>Download the selected criteria, category rationales, and suggested methods.</p>
-  <label for="assessment-title">Assessment title</label>
-  <input type="text" id="assessment-title" maxlength="120" placeholder="optional">
-  <button type="button" id="export-assessment-btn" class="btn">Export assessment (.csv)</button>
-  <span id="export-assessment-status" role="status" aria-live="polite"></span>
+<div class="evaluation-export-panel">
+  <h3>Export evaluation</h3>
+  <p>Download the selected criteria options, category rationales, and suggested methods.</p>
+  <label for="evaluation-title">Title</label>
+  <input type="text" id="evaluation-title" maxlength="120" placeholder="optional">
+  <button type="button" id="export-evaluation-btn" class="btn">Export (.csv)</button>
+  <span id="export-evaluation-status" role="status" aria-live="polite"></span>
 </div>
 
 
