@@ -113,7 +113,7 @@ Rather than suggesting a single 'unicorn' method, NaviDAM provides a subset of c
   <h3>Export evaluation</h3>
   <p>Download the selected criteria options, category rationales, and suggested methods.</p>
   <label for="evaluation-title">Title</label>
-  <input type="text" id="evaluation-title" maxlength="120" placeholder="optional">
+  <input type="text" id="evaluation-title" maxlength="120" placeholder="project_name" />
   <button type="button" id="export-evaluation-btn" class="btn">Export (.csv)</button>
   <span id="export-evaluation-status" role="status" aria-live="polite"></span>
 </div>
