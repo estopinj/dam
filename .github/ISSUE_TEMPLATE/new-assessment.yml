@@ -154,9 +154,9 @@ body:
         - label: Inapplicable
   
   - type: checkboxes # Ordinal criteria
-    id: required_ts_length
+    id: minimal_ts_length
     attributes:
-      label: Required TS length
+      label: Minimal TS length
       description: Tick all that apply & at least one
       options:
         - label: Handles ≤ 10

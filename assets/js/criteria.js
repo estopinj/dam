@@ -5,7 +5,7 @@ export const criteria = [
   { key: "Estimand", label: "Estimand", category: "Outcome" },
   // Data compatibility
   { key: "Type", label: "Type", category: "Data compatibility" },
-  { key: "Required TS length", label: "Time-series length", category: "Data compatibility" },
+  { key: "Minimal TS length", label: "Minimal TS length", category: "Data compatibility" },
   { key: "Handles few samples", label: "Handles few samples", category: "Data compatibility" },
   { key: "Handles huge datasets (n)", label: "Scalable to big data", category: "Data compatibility" },
   { key: "Handles missing data", label: "Handles missing data", category: "Data compatibility" },
@@ -40,8 +40,9 @@ export const criteria = [
 // for an ordinal criterion in its ordinalCriteriaOrder array,
 // in the correct order from lowest to highest:
 // Right options are included when a lowest level (left) is selected.
+// From most to least permissive options
 export const ordinalCriteriaOrder = {
-  "Required TS length": ["Handles ≤ 10", "≥ 10", "≥ 100"],
+  "Minimal TS length": ["≥ 100", "≥ 10", "Handles ≤ 10"],
   "Handles few samples": ["No", "10 to 100", "Yes ≤ 10", "Yes CT design"],
   "Handles huge datasets (n)": ["No", "Most dont", "Most do", "Yes", "Necessary"],
   "Handles missing data": ["No: requires prelim. correction", "Partially", "Yes"],
@@ -90,8 +91,9 @@ export const criteriaOptionLabelMap = {
   "Type": {
     // "option_value": "Option Label",
   },
-  "Required TS length": {
-    "Handles ≤ 10": "≤ 10",
+  "Minimal TS length": {
+    "≥ 10": "At least ~10 time points",
+    "≥ 100": "100 as order of magnitude",
   },
   "Handles few samples": {
     "Yes CT design": "Yes, Control/Treatment design",
