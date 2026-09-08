@@ -2,7 +2,7 @@
     "Well-defined treatments": "/definedtreatment",
     "Faithfulness": "/faithfulness",
     "Fonctional form": "/funform",
-    "IDD": "/idd",
+    "IID": "/iid",
     "Causal Markov Condition": "/markovcondition",
     "Model specific": "/modelspecific",
     "No interference": "/nointerference",

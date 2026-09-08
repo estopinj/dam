@@ -14,7 +14,6 @@ categories:
 |:------------------:|----------------------------|
 | `Required` | Must hold exactly. |
 | `Recommended` | Advisable if using graphs. |
-| `Desirable` | Aids clarity. |
 | `Relaxes assumption` | Some methods can handle approximate violations. |
 
 ## Definition
@@ -25,7 +24,7 @@ Fundamental for graphical causal inference: it ensures that the graph’s condit
 
 ## Tools/rationale for helping assessment
 1. Use domain expertise to enumerate all direct parent variables of each node in your causal graph. 
-2. If you are confident that no hidden pathways exist once you condition on those parents, mark `Required`; if you believe the graph is mostly correct, `Recommended`; if important paths may be missing, `Desirable`; `Relaxes assumption` if you target a method focused to specifically study this assumption’s impact on results. 
+2. If you are confident that no hidden pathways exist once you condition on those parents, mark `Required`; if you believe the graph is mostly correct, `Recommended`; `Relaxes assumption` if you target a method focused to specifically study this assumption’s impact on results. 
 3. Use partial‐correlation tests (e.g. with dagitty R package) to check if conditioning on parent variables blocks other associations. 
 
 ## Example

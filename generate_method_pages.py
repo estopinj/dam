@@ -3,9 +3,10 @@ import csv
 import re
 import textwrap
 import json
+from tsv_clean import clean_tsv
 
 # === CONFIGURATION ===
-INPUT_FILE = "_data/Attribution methods - Method Assessment.tsv"
+INPUT_FILE = "_data/DetectionAttribution methods - Method Assessment.tsv"
 OUTPUT_FILE = "_data/method_assessments_clean.tsv"
 DICTS_FILE = "_data/cat_dicts.json"
 OUTPUT_ROOT = "contents/methods"
@@ -22,11 +23,7 @@ SUBCAT_FOLDER_MAP = data["SUBCAT_FOLDER_MAP"]
 SUBCAT_PARENT = data["SUBCAT_PARENT"]
 
 
-with open(INPUT_FILE, newline='', encoding='utf-8') as infile, \
-     open(OUTPUT_FILE, "w", newline='', encoding='utf-8') as outfile:
-    
-    lines = infile.readlines()[3:]  # skip metadata
-    writer = outfile.writelines(lines)
+clean_tsv(INPUT_FILE, OUTPUT_FILE)
 
 
 

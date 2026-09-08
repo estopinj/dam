@@ -362,7 +362,6 @@ body:
       options:
         - label: Required
         - label: Recommended
-        - label: Desirable
         - label: Relaxes assumption
         - label: Time-varying OR site-varying
         - label: Inapplicable
@@ -375,7 +374,6 @@ body:
       options:
         - label: Required
         - label: Recommended
-        - label: Desirable
         - label: Relaxes assumption
         - label: Not required
         - label: Inapplicable
@@ -388,7 +386,6 @@ body:
       options:
         - label: Required
         - label: Recommended
-        - label: Desirable
         - label: Relaxes assumption
         - label: Inapplicable
   
@@ -400,7 +397,6 @@ body:
       options:
         - label: Required
         - label: Recommended
-        - label: Desirable
         - label: Relaxes assumption
         - label: Inapplicable
   
@@ -412,7 +408,6 @@ body:
       options:
         - label: Required
         - label: Recommended
-        - label: Desirable
         - label: Relaxes assumption
         - label: Inapplicable
   
@@ -424,19 +419,17 @@ body:
       options:
         - label: Required
         - label: Recommended
-        - label: Desirable
         - label: Relaxes assumption
         - label: Inapplicable
   
   - type: checkboxes
-    id: idd
+    id: iid
     attributes:
-      label: IDD
+      label: IID
       description: "Multiple: Tick all that apply & at least one"
       options:
         - label: Required
         - label: Recommended
-        - label: Desirable
         - label: Relaxes assumption
         - label: Inapplicable
   

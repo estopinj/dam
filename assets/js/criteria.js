@@ -18,7 +18,7 @@ export const criteria = [
   { key: "Common support (positivity)", label: "Common support (positivity)", category: "Assumptions" },
   { key: "Causal Markov Condition", label: "Causal Markov Condition", category: "Assumptions" },
   { key: "Faithfulness", label: "Faithfulness", category: "Assumptions" },
-  { key: "IDD", label: "IDD", category: "Assumptions" },
+  { key: "IID", label: "IID", category: "Assumptions" },
   { key: "Model specific", label: "Model specific", category: "Assumptions" },
   // Model properties
   { key: "Requires explicit processes", label: "Requires explicit processes", category: "Model properties" },
@@ -48,9 +48,15 @@ export const ordinalCriteriaOrder = {
   "RS-data proven": ["No", "Few applications", "Yes"],
   "Propaguates uncertainty": ["Needs model-agnostic propagation", "Model-specific tools", "Inherent capacity"],
   "Handles lag effects": ["No", "Possible", "Yes"],
+  "No unobserved confounders": ["Required", "Recommended", "Relaxes assumption"],
+  "No interference": ["Required", "Recommended", "Relaxes assumption"],
+  "Well-defined treatments": ["Required", "Recommended", "Relaxes assumption"],
+  "Common support (positivity)": ["Required", "Recommended", "Relaxes assumption"],
+  "Causal Markov Condition": ["Required", "Recommended", "Relaxes assumption"],
+  "Faithfulness": ["Required", "Recommended", "Relaxes assumption"],
+  "IID": ["Required", "Recommended", "Relaxes assumption"],
   // Add more ordinal criteria as needed
 };
-
 
 
 
@@ -62,27 +68,6 @@ export const compositeOptions = {
   },
   "Handles huge datasets (n)": {
     "Necessary": ["Yes", "Most do"]
-  },
-  "No unobserved confounders": {
-    "Recommended / Desirable": ["Recommended", "Desirable"]
-  },
-  "No interference": {
-    "Recommended / Desirable": ["Recommended", "Desirable"]
-  },
-  "Well-defined treatments": {
-    "Recommended / Desirable": ["Recommended", "Desirable"]
-  },
-  "Common support (positivity)": {
-    "Recommended / Desirable": ["Recommended", "Desirable"]
-  },
-  "Causal Markov Condition": {
-    "Recommended / Desirable": ["Recommended", "Desirable"]
-  },
-  "Faithfulness": {
-    "Recommended / Desirable": ["Recommended", "Desirable"]
-  },
-  "IDD": {
-    "Recommended / Desirable": ["Recommended", "Desirable"]
   }
 };
 
@@ -90,27 +75,6 @@ export const compositeOptions = {
 export const hideCompositeConstituents = {
   "Handles huge datasets (n)": {
     "Necessary": true
-  },
-  "No unobserved confounders": {
-    "Recommended / Desirable": true
-  },
-  "No interference": {
-    "Recommended / Desirable": true
-  },
-  "Well-defined treatments": {
-    "Recommended / Desirable": true
-  },
-  "Common support (positivity)": {
-    "Recommended / Desirable": true
-  },
-  "Causal Markov Condition": {
-    "Recommended / Desirable": true
-  },
-  "Faithfulness": {
-    "Recommended / Desirable": true
-  },
-  "IDD": {
-    "Recommended / Desirable": true
   }
 };
 
@@ -151,31 +115,31 @@ export const criteriaOptionLabelMap = {
     // "option_value": "Option Label",
   },
   "No unobserved confounders": {
-    "Relaxes assumption": "No need: method relaxes assumption",
+    "Relaxes assumption": "Method relaxes assumption",
     "Required": "Assumption required",
   },
   "No interference": {
-    "Relaxes assumption": "No need: method relaxes assumption",
+    "Relaxes assumption": "Method relaxes assumption",
     "Required": "Assumption required",
   },
   "Well-defined treatments": {
-    "Relaxes assumption": "No need: method relaxes assumption",
+    "Relaxes assumption": "Method relaxes assumption",
     "Required": "Assumption required",
   },
   "Common support (positivity)": {
-    "Relaxes assumption": "No need: method relaxes assumption",
+    "Relaxes assumption": "Method relaxes assumption",
     "Required": "Assumption required",
   },
   "Causal Markov Condition": {
-    "Relaxes assumption": "No need: method relaxes assumption",
+    "Relaxes assumption": "Method relaxes assumption",
     "Required": "Assumption required",
   },
   "Faithfulness": {
-    "Relaxes assumption": "No need: method relaxes assumption",
+    "Relaxes assumption": "Method relaxes assumption",
     "Required": "Assumption required",
   },
-  "IDD": {
-    "Relaxes assumption": "No need: method relaxes assumption",
+  "IID": {
+    "Relaxes assumption": "Method relaxes assumption",
     "Required": "Assumption required",
   },
   "Model specific": {
@@ -214,13 +178,6 @@ export const multipleAllowedCriteria = [
   "Type",
   // "Handles few samples",
   "Fonctional form",
-  "No unobserved confounders",
-  "No interference",
-  "Well-defined treatments",
-  "Common support (positivity)",
-  "Causal Markov Condition",
-  "Faithfulness",
-  "IDD",
   "Model specific",
   "Requires explicit processes",
   "Exposure type",
