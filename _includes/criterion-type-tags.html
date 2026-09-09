@@ -1,0 +1,13 @@
+{% if site.data.criteria_types.single contains page.url %}
+  <div class="criterion-type-tags" aria-label="Criterion type">
+    <span class="single-tag" title="Single choice: select one option that best matches your objective.">Single choice</span>
+  </div>
+{% elsif site.data.criteria_types.ordinal contains page.url %}
+  <div class="criterion-type-tags" aria-label="Criterion type">
+    <span class="ordinal-tag" title="Ordinal: options are ordered from most to least permissive. Selecting an option also includes the options below it.">Ordinal</span>
+  </div>
+{% elsif site.data.criteria_types.multiple contains page.url %}
+  <div class="criterion-type-tags" aria-label="Criterion type">
+    <span class="multiple-tag" title="Multiple: select all options that apply. A method qualifies when it matches any selected option.">Multiple</span>
+  </div>
+{% endif %}

@@ -12,9 +12,9 @@ categories:
 
 |  **Option**        | **Description**            |
 |:------------------:|----------------------------|
-| `Yes` | Built-in handling of missing values (e.g., likelihood‐based, imputation). |
-| `Partially` | Limited capacity to handle missing data, e.g. by automatically discarding incomplete time series. |
 | `No: requires prelim. correction` | Cannot function without complete data and therefore requires the data to be imputed before applying. |
+| `Partially` | Limited capacity to handle missing data, e.g. by automatically discarding incomplete time series. |
+| `Yes` | Built-in handling of missing values (e.g., likelihood‐based, imputation). |
 
 
 ## Definition

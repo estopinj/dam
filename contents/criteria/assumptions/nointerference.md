@@ -15,7 +15,6 @@ categories:
 | `Required` | Assumes strict no‐spillover. |
 | `Recommended` | Best if spillovers are minimal. |
 | `Relaxes assumption` | Explicitly allows and models interference (e.g., network models). |
-| `Not required` | Interference is irrelevant or explicitly allowed. |
 
 ## Definition
 Whether the method assumes each unit’s treatment does not affect any other unit’s outcome. It is, with the well-defined treatments assumption, part of the *SUTVA* condition (Stable Unit Treatment Value Assumption). 

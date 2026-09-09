@@ -12,9 +12,9 @@ categories:
 
 |  **Option**        | **Description**            |
 |:------------------:|----------------------------|
-| `Inherent capacity` | Fully incorporates input and parameter uncertainty into output intervals. |
-| `Model-specific tools` | Specialized extensions or package functions (e.g., bootstrap routines, sandwich variance estimators, delta method) are available to propagate uncertainty for that method. |
 | `Needs model-agnostic propagation` | Requires external, generic workflows (e.g., Monte Carlo simulation, bootstrap wrappers) to track and quantify uncertainty across model outputs. |
+| `Model-specific tools` | Specialized extensions or package functions (e.g., bootstrap routines, sandwich variance estimators, delta method) are available to propagate uncertainty for that method. |
+| `Inherent capacity` | Fully incorporates input and parameter uncertainty into output intervals. |
 
 
 ## Definition

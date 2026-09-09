@@ -1,7 +1,8 @@
 ---
 layout: method
-title: "Wavelength analysis"
-parent: "Independent detection"
+title: "Process-based models"
+nav_order: 1
+parent: "Counterfactual & future simulations"
 date: 2025-07-17
 author: Mrs. Young
 ---

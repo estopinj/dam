@@ -1,7 +1,8 @@
 ---
 layout: method
-title: "PREBAS"
-parent: "Ecosystem Process Models"
+title: "CLUE model"
+nav_order: 2
+parent: "Counterfactual & future simulations"
 date: 2025-07-17
 author: Mrs. Young
 ---

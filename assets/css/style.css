@@ -230,6 +230,32 @@
   white-space: nowrap;
 }
 
+.single-tag {
+  display: inline-block;
+  margin-left: 0;
+  padding: 0.1em 0.5em;
+  font-size: 0.85em;
+  background: #eef5ff;
+  color: #315a8a;
+  border-radius: 4px;
+  cursor: help;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.criterion-type-tags {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5em;
+  margin-bottom: 0.75em;
+}
+
+.criterion-type-tags .ordinal-tag,
+.criterion-type-tags .multiple-tag,
+.criterion-type-tags .single-tag {
+  margin-left: 0;
+}
+
 
 .criteria-select-container {
   display: flex;

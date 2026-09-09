@@ -376,7 +376,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (ordinalCriteriaOrder[criterion.key]) {
       const ordinalTag = document.createElement("span");
       ordinalTag.className = "ordinal-tag";
-      ordinalTag.title = "Options are ordered: selecting a value includes all higher options.";
+      ordinalTag.title = "Ordinal: options are ordered from most to least permissive. Selecting an option also includes the options below it.";
       ordinalTag.textContent = "Ordinal";
       tagContainer.appendChild(ordinalTag);
     }
@@ -385,7 +385,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (multipleAllowedCriteria.includes(criterion.key)) {
       const multiTag = document.createElement("span");
       multiTag.className = "multiple-tag";
-      multiTag.title = "You can select multiple options (click to select, click again to deselect).";
+      multiTag.title = "Multiple: select all options that apply. A method qualifies when it matches any selected option.";
       multiTag.textContent = "Multiple";
       tagContainer.appendChild(multiTag);
     }

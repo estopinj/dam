@@ -20,6 +20,8 @@ categories:
 | `Oriented link` | Identifies the existence and directions of associations (edges) in a causal graph without quantifying effect sizes. |
 | `Risk ratios` | The ratio of outcome probabilities between treated and control groups (and derivatives). |
 | `Maps & generalisations` | A model projection is the main method target, be it in space or time, rather than a causal effect. |
+| `Abrupt change` | A sudden and significant change in the variable of interest over time. |
+| `Trend` | A gradual change in the variable of interest over time. |
 | `Others` | Any specialized causal or association measure not listed above. |
 
 

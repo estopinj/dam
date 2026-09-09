@@ -78,7 +78,11 @@ Assuming [Jekyll] and [Bundler] are installed on your computer:
 
 ## Licensing and Attribution
 
-This repository is licensed under the [MIT License]. You are generally free to reuse or extend upon this code as you see fit; just include the original copy of the license (which is preserved when you "make a template").
+The original NaviDAM source code is distributed under the [GNU General Public License v3.0 or later][GPLv3].
+
+The original documentation and scientific text are distributed under the [Creative Commons Attribution 4.0 International License][CC BY 4.0].
+
+These licenses apply only to original project material. Third-party components and externally sourced content retain their own licenses and attributions. See [THIRD_PARTY_NOTICES](THIRD_PARTY_NOTICES) for details.
 
 The deployment GitHub Actions workflow is heavily based on GitHub's mixed-party [starter workflows]. A copy of their MIT License is available in [actions/starter-workflows].
 
@@ -89,7 +93,8 @@ The deployment GitHub Actions workflow is heavily based on GitHub's mixed-party 
 [Jekyll]: https://jekyllrb.com
 [Just the Docs]: https://just-the-docs.github.io/just-the-docs/
 [GitHub Pages]: https://docs.github.com/en/pages
-[MIT License]: https://en.wikipedia.org/wiki/MIT_License
+[GPLv3]: https://www.gnu.org/licenses/gpl-3.0.html
+[CC BY 4.0]: https://creativecommons.org/licenses/by/4.0/
 [actions/starter-workflows]: https://github.com/actions/starter-workflows/blob/main/LICENSE
 
 

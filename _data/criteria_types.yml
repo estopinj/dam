@@ -1,0 +1,28 @@
+single:
+  - /objective
+ordinal:
+  - /tslength
+  - /fewsamples
+  - /bigdata
+  - /missingdata
+  - /rsdata
+  - /iid
+  - /nounobserved
+  - /nointerference
+  - /definedtreatment
+  - /positivity
+  - /markovcondition
+  - /faithfulness
+  - /lags
+  - /uncertainty
+multiple:
+  - /estimand
+  - /type
+  - /funform
+  - /modelspecific
+  - /explicitprocess
+  - /exposuretype
+  - /variablenumber
+  - /parametric
+  - /language
+  - /usage

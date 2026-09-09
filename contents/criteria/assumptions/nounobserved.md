@@ -15,7 +15,6 @@ categories:
 | `Required` | Method assumes no unobserved confounders. |
 | `Recommended` | Best practice but not strictly enforced. |
 | `Relaxes assumption` | Can tolerate some unmeasured confounding (e.g., DiD). |
-| `Time-varying OR site-varying` | Assumes confounding is either time‐invariant and site-specific or time-varying but common to all sites. |
 
 ## Definition
 Whether the method requires that all variables confounding the treatment-outcome relationship are observed and controlled or is designed to handle acknowledged / suspected unobserved confounders.
