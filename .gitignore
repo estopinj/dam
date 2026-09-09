@@ -19,6 +19,5 @@ __pycache__/
 !.bundle/config  # ← Keep this line to commit the config file
 vendor/
 
-# Ignore just-the-docs folder
+# Ignore local theme and archive folders
 .just-the-docs/
-.archives/

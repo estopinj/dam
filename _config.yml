@@ -7,6 +7,9 @@ url: https://estopinj.github.io/dam/
 baseurl: ""
 permalink: /:categories/:title/
 
+exclude:
+  - archive/
+
 aux_links:
   NaviDAM on GitHub: https://github.com/estopinj/dam
 aux_links_new_tab: true

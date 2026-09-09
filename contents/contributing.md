@@ -2,7 +2,10 @@
 title: Contributing
 layout: about
 nav_order: 7
+permalink: /contributing/
 description: "Describe how to contribute to NaviDAM"
+categories:
+- contributing
 ---
 
 <!-- Logos -->
@@ -21,9 +24,7 @@ description: "Describe how to contribute to NaviDAM"
 1. TOC
 {:toc} -->
 
-
 As the project is still in its early stages, **contributions are currently limited to members of the OBSGESSION and IMPACTS projects**.
-**However**, an open contribution system will be set up once the project mature enough (through GitHub pull requests, see e.g. [LOST contribution guide](https://lost-stats.github.io/Contributing/Contributing.html){:target="_blank"}).
+**However**, an open contribution system will be set up once the project matures (through GitHub pull requests, see e.g. [LOST contribution guide](https://lost-stats.github.io/Contributing/Contributing.html){:target="_blank"}).
 Ultimately, NaviDAM is intended to be highly collaborative for maximum benefit.
 We indeed believe that open sourcing and contribution are the only ways to fully achieve its ambitious guidance objective.
-
