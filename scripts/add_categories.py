@@ -1,7 +1,9 @@
 import os
+from pathlib import Path
 import yaml
 
-FOLDER = "contents"
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+FOLDER = PROJECT_ROOT / "contents"
 
 def get_categories_from_path(filepath):
     rel_path = os.path.relpath(filepath, FOLDER)

@@ -3,13 +3,16 @@ import csv
 import re
 import textwrap
 import json
+from pathlib import Path
 from tsv_clean import clean_tsv
 
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+
 # === CONFIGURATION ===
-INPUT_FILE = "_data/DetectionAttribution methods - Method Assessment.tsv"
-OUTPUT_FILE = "_data/method_assessments_clean.tsv"
-DICTS_FILE = "_data/cat_dicts.json"
-OUTPUT_ROOT = "contents/methods"
+INPUT_FILE = PROJECT_ROOT / "_data/DetectionAttribution methods - Method Assessment.tsv"
+OUTPUT_FILE = PROJECT_ROOT / "_data/method_assessments_clean.tsv"
+DICTS_FILE = PROJECT_ROOT / "_data/cat_dicts.json"
+OUTPUT_ROOT = PROJECT_ROOT / "contents/methods"
 LAYOUT = "method"
 
 

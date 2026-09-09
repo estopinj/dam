@@ -1,4 +1,7 @@
 import json
+from pathlib import Path
+
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
 
 # === Category → folder mapping ===
 CATEGORY_FOLDER_MAP = {
@@ -79,5 +82,5 @@ data = {
 
 
 # Write to file
-with open("_data/cat_dicts.json", "w") as f:
+with open(PROJECT_ROOT / "_data" / "cat_dicts.json", "w") as f:
     json.dump(data, f, indent=4)

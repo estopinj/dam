@@ -1,6 +1,8 @@
-# Detection & Attribution Modelling Navigator
+# NaviDAM
 
-[![DOI](https://zenodo.org/badge/974315324.svg)](https://doi.org/10.5281/zenodo.22675343)
+<p align="center">
+    <a href="https://doi.org/10.5281/zenodo.22675343"><img src="https://img.shields.io/badge/DOI-10.5281%2Fzenodo.22675343-blue?logo=doi&logoColor=white" alt="DOI: 10.5281/zenodo.22675343" width="205" height="20"></a>
+</p>
 
 
 ## Objective
@@ -15,7 +17,7 @@ It **situates methods**, both *widespread* methods used in ecological studies an
 
 NaviDAM is implemented in this collaborative website and is organized around a dynamical method filtering tool on the *Home* page:
 
-1. [Home]:
+1. [Home](https://estopinj.github.io/dam/):
     - Brief description of the project
     - User input invite: Evaluate their project's needs
         - Criteria default to `Any`, including all options and therefore not filtering the set of suggested methods
@@ -46,15 +48,6 @@ Its exploration in regards with the home page is key for robust use of the navig
         - STOC + synthetic controls 
 
 
-## Building and previewing your site locally
-
-Assuming [Jekyll] and [Bundler] are installed on your computer:
-1.  Change your working directory to the root directory of your site.
-2.  Run `bundle install`.
-3.  Run `bundle exec jekyll serve` to build your site and preview it at `localhost:4000`.
-    The built site is stored in the directory `_site`.
-
-
 ## Licensing and Attribution
 
 The original NaviDAM source code is distributed under the [GNU General Public License v3.0 or later][GPLv3].
@@ -64,6 +57,10 @@ The original documentation and scientific text are distributed under the [Creati
 These licenses apply only to original project material. Third-party components and externally sourced content retain their own licenses and attributions. See [THIRD_PARTY_NOTICES](THIRD_PARTY_NOTICES) for details.
 
 The deployment GitHub Actions workflow is heavily based on GitHub's mixed-party [starter workflows]. A copy of their MIT License is available in [actions/starter-workflows].
+
+## Maintenance scripts
+
+Repository maintenance scripts are kept in [`scripts/`](scripts/). Run them from the repository root with Python 3; see [`scripts/README.md`](scripts/README.md) for details.
 
 ----
 

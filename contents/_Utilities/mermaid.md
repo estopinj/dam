@@ -1,3 +1,11 @@
+---
+title: Mermaid scheme example
+parent: Utilities
+nav_order: 2
+categories:
+- _Utilities
+---
+
 - Mermaid scheme example
 
 ```mermaid

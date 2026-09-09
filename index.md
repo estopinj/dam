@@ -40,7 +40,8 @@ NaviDAM is an interactive decision-support platform designed to help users explo
 {: .highlight-title}
 > Status
 > 
-> This website is under active development. <em>Latest release:</em> <a href="https://doi.org/10.5281/zenodo.22675343"><img src="https://zenodo.org/badge/974315324.svg" alt="DOI" style="vertical-align: middle;"></a>
+> This website is under active development.
+> <p style="text-align: right;"><em>Latest release:</em> <a href="https://doi.org/10.5281/zenodo.22675343"><img src="https://img.shields.io/badge/DOI-10.5281%2Fzenodo.22675343-blue?logo=doi&logoColor=white" alt="DOI: 10.5281/zenodo.22675343" width="205" height="20" style="vertical-align: middle;"></a></p>
 
 {: .important }
 Consult the [Good practices]({{ site.baseurl }}/practices) panel and especially the <a href="{{ site.baseurl }}/contents/practices/box1/" target="_blank" rel="noopener noreferrer">Beyond method selection page</a> for guidance on how to design a robust study and reach credible results.
