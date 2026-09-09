@@ -2,10 +2,9 @@
 
 <p align="center">
     <a href="https://doi.org/10.5281/zenodo.22675343"><img src="https://img.shields.io/badge/DOI-10.5281%2Fzenodo.22675343-blue?logo=doi&logoColor=white" alt="DOI: 10.5281/zenodo.22675343" width="205" height="20"></a>
-   <a href="https://github.com/estopinj/dam/graphs/contributors"><img src="https://img.shields.io/github/contributors/estopinj/dam" alt="GitHub contributors"></a>
+   <!-- <a href="https://github.com/estopinj/dam/graphs/contributors"><img src="https://img.shields.io/github/contributors/estopinj/dam" alt="GitHub contributors"></a>
    <a href="https://github.com/estopinj/dam/network/members"><img src="https://img.shields.io/github/forks/estopinj/dam" alt="GitHub forks"></a>
-   <a href="https://github.com/estopinj/dam/issues"><img src="https://img.shields.io/github/issues/estopinj/dam" alt="GitHub issues"></a>
-   <a href="https://github.com/estopinj/dam/blob/main/LICENSE"><img src="https://img.shields.io/github/license/estopinj/dam" alt="License"></a>
+   <a href="https://github.com/estopinj/dam/issues"><img src="https://img.shields.io/github/issues/estopinj/dam" alt="GitHub issues"></a> -->
 </p>
 
 
@@ -14,18 +13,8 @@
 **detection and attribution methods** for studying biodiversity change.
 
 It brings together established ecological approaches with methods from causal
-inference and econometrics, then compares them against a structured set of [criteria]. The goal is to help investigators:
-
-- **Clarify the project**: describe the scientific objective, available data,
-   assumptions, and practical constraints.
-- **Explore the method landscape**: filter and compare methods according to
-   the properties that matter for the study.
-- **Support informed choices**: consult methodological documentation, tools,
-   references, and examples before designing or applying an analysis.
-
-The result is not a single prescriptive answer, but a focused **set of candidate
-methods** whose strengths, assumptions, and limitations can be compared.
-
+inference and econometrics, then compares them against a structured set of [criteria].
+After evaluating their project's needs, users are suggested **a set of candidate methods** based on their specific context and requirements. 
 
 
 ## Website structure
@@ -37,12 +26,10 @@ method landscape, then consult the supporting documentation.
 
 1. Start on the [Home page](https://estopinj.github.io/dam/) and describe the
    project's objective, data, assumptions, and modelling needs.
-2. Use the criteria-based filtering tool to identify a set of candidate
-   methods.
-3. Explore the documentation panels to compare methods, understand trade-offs,
+2. Explore the documentation panels to compare methods, understand trade-offs,
    and find relevant guidance or examples.
 
-**Documentation panels**
+**Panels**
 
 | Panel | Purpose |
 | --- | --- |
@@ -60,9 +47,6 @@ The original documentation and scientific text are distributed under the [Creati
 
 See [`LICENSE`](LICENSE) for the complete licensing and attribution summary, including the licenses of Just the Docs, the Jekyll/Ruby dependencies, and other third-party material. Externally sourced content retains the licenses and attributions indicated in its source.
 
-## Maintenance scripts
-
-Repository maintenance scripts are kept in [`scripts/`](scripts/). Run them from the repository root with Python 3; see [`scripts/README.md`](scripts/README.md) for details.
 
 ## Acknowledgements
 
@@ -71,8 +55,8 @@ This work was funded through the European Union’s Horizon Europe under grant a
 The views and opinions expressed are those of the authors only and do not necessarily reflect those of the European Union or the European Commission. Neither the European Union nor the European Commission can be held responsible for them.
 
 <p align="center">
-   <a href="https://obsgession.eu/"><img src="assets/images/logos/Obsgession_text_logo.png" alt="OBSGESSION" width="250"></a>
-   <a href="https://www.fondationbiodiversite.fr/en/the-frb-in-action/programs-and-projects/impacts/"><img src="assets/images/logos/logo-FRB-Cesab-anglais_cropped.png" alt="IMPACTS - FRB-CESAB" width="175"></a>
+   <a href="https://obsgession.eu/"><img src="assets/images/logos/Obsgession_text_logo.png" alt="OBSGESSION" height="100"></a>
+   <a href="https://www.fondationbiodiversite.fr/en/the-frb-in-action/programs-and-projects/impacts/"><img src="assets/images/logos/logo-FRB-Cesab-anglais_cropped.png" alt="IMPACTS - FRB-CESAB" height="100"></a>
 </p>
 
 ----
