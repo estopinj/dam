@@ -1,5 +1,7 @@
 # Detection & Attribution Modelling Navigator
 
+[![DOI](https://zenodo.org/badge/974315324.svg)](https://doi.org/10.5281/zenodo.22675343)
+
 
 ## Objective
 - The Detection Attribution Modeling ([DAM]) Navigator serves the goal to orient users looking methods for detecting and disentangling the drivers of observed biodiversity change.
@@ -11,69 +13,46 @@ It **situates methods**, both *widespread* methods used in ecological studies an
 
 ## Website structure
 
-The DAM Navigator is implemented in this collaborative website and is organized around a dynamical method scheme on the landing page:
+NaviDAM is implemented in this collaborative website and is organized around a dynamical method filtering tool on the *Home* page:
 
-1. [Landing page]:
-    - Brief description of the navigator
-    - Invite users to fill in [criteria] in default order
-        - Criteria default to `Unevaluated`, including all options and therefore not filtering the set of suggested methods
+1. [Home]:
+    - Brief description of the project
+    - User input invite: Evaluate their project's needs
+        - Criteria default to `Any`, including all options and therefore not filtering the set of suggested methods
    
-    - Method scheme
-        - Gets refined with criteria assessment
-        <!-- ![Illustrative scheme highlighting some methods](/assets/images/DAM_Scheme_greenHighlight.png) -->
-        <img src="https://estopinj.github.io/dam/assets/images/DAM_Scheme_greenHighlight.png" width="350" />
-
-        *Illustrative scheme highlighting some methods*
-
 
 2. The sidebar provides access to different panels grouping resource pages logically.
-Its exploration in regards with the landing page is key for good use of the navigator.
-
-    1. [Good practices] panel
-        
-        This panel provides general resources that aim to help conceptualising and applying attribution methods. Here are page examples that fit this category:
-        - Getting started 
-        - Causal diagrams
-        <!-- - Review articles -->
-        - Compare multiple methods etc.
-
+Its exploration in regards with the home page is key for robust use of the navigator.
 
     1. [Criteria] panel
 
         This panel provides information on every criterion used to subset detection & attribution methods when using the navigator. Pages follow a common documentation structure: *Definition*, *Explanation*, *Tools/rationale for helping assessment* and *Example*.
 
-        <!-- ![criteria list](/assets/images/DAM_criteria.png) -->
-         <img src="https://estopinj.github.io/dam/assets/images/DAM_criteria.png" width="220" />
-         
-         *Criteria list*
-
     1. [Methods] panel
 
         This panel provides information on every method listed in the navigator. The methods are described along a common documentation structure: *Description & principle*, *Reference articles*, *Implementation* and the *Assessment table* reflecting how the method is filtered against criteria evaluation.
 
+    1. [Good practices] panel
+        
+        This panel provides general resources that aim to help conceptualising and applying attribution methods. Here are page examples that fit this category:
+        - A primer on causal graphs
+        - Beyond method selection
+        - NavviDAM usage diagram
+        <!-- - Review articles -->
 
     1. [Examples] panel
 
-        This final panel illustrates how the DAM can be used with examples, from the question + data at hands, to the criteria assessment and the method application. Examples include:
+        This final panel illustrates how NaviDAM can be used with examples, from the question + data at hands, to the criteria assessment and the method application. Examples include:
         - STOC + synthetic controls 
-        - Other T3.2 applications and project’s voluntary studies 
-
-
-
 
 
 ## Building and previewing your site locally
 
 Assuming [Jekyll] and [Bundler] are installed on your computer:
-
 1.  Change your working directory to the root directory of your site.
-
 2.  Run `bundle install`.
-
 3.  Run `bundle exec jekyll serve` to build your site and preview it at `localhost:4000`.
-
     The built site is stored in the directory `_site`.
-
 
 
 ## Licensing and Attribution
