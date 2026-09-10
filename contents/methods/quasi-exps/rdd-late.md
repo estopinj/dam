@@ -21,9 +21,7 @@ This method also belongs to [Adjusted methods (Backdoor C.)]({{ site.baseurl }}/
 
 
 ## Description & principle 
-First description! Should replace "A clear, technical yet accessible explanation of the method, its core principle(s)."??
-
-First description! Should replace "Wrong cat"??
+A clear, technical yet accessible explanation of the method, its core principle(s).
 
 
 ### Major variants
@@ -32,31 +30,24 @@ First description! Should replace "Wrong cat"??
 optional
 {: .label}
 
-First description!  Should replace text in place?? 
-
-Wrong cat content
+If the method has variants that seem important, either already widespread or promising and well documented. 
 
 ### Further online resources
 {: .no_toc }
 
-First doc, Should replace "primary message"??
+References to useful online resources to get started, e.g. [explanation blogs](https://matheusfacure.github.io/python-causality-handbook/15-Synthetic-Control.html){:target="_blank"}
 
-Wrong cat content
 
 ## Reference articles
 ### Method
 {: .no_toc }
-- First doc, Should replace "primary message"?? 
-
-Wrong cat content
+- One or a few key academic references that introduce or formalize the method. 
 
 ### Research applications
 {: .no_toc }
 #### With RS data in Ecology / Biodiversity
 {: .no_toc }
-- First doc, Should replace "primary message"??
-
-Wrong cat content
+- A
 
 #### Without RS data (Ecology domain)
 {: .no_toc }
@@ -64,25 +55,15 @@ Wrong cat content
 optional
 {: .label}
 
-- First doc, Should replace "primary message"??
-
-Wrong cat content
+- B
 
 ## Implementation 
 
 #### Python
 {: .no_toc }
 
-First doc, Should replace "primary message"??
-
-Wrong cat content
-
 #### R
 {: .no_toc }
-
-First doc, Should replace "primary message"??
-
-Wrong cat content
 
 ### Code Cells
 {: .no_toc }
@@ -92,13 +73,4 @@ optional
 
 
 <!-- For referencement in toc before automatic table -->
-
-```shell
-First doc, Should replace "primary message"??
-```
-
-```shell
-Wrong cat content
-```
-
 ## Assessment table
