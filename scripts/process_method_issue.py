@@ -174,7 +174,24 @@ def merge_section(text, heading, placeholder, new_value):
     return "\n".join(new_lines)
 
 
+def warn_if_category_mismatch(path, fields):
+    """The existing file's category/sub-category always takes precedence: this
+    only logs a warning when the issue's submitted category diverges from it."""
+    categories = fields.get("category") or []
+    if not categories:
+        return
+    expected_dir, _ = determine_destination(fields)
+    if path.parent != expected_dir:
+        print(
+            f"Warning: issue category suggests '{expected_dir.relative_to(METHODS_ROOT)}' "
+            f"but existing page lives in '{path.parent.relative_to(METHODS_ROOT)}'. "
+            "Keeping the existing classification.",
+            file=sys.stderr,
+        )
+
+
 def update_existing_file(path, fields):
+    warn_if_category_mismatch(path, fields)
     text = path.read_text(encoding="utf-8")
     for field_id, heading, placeholder in SECTIONS:
         text = merge_section(text, heading, placeholder, fields.get(field_id, ""))
@@ -290,9 +307,19 @@ def create_new_file(method_name, fields):
     if filepath.exists():
         print(f"{filepath} already exists, updating it instead of creating", file=sys.stderr)
         update_existing_file(filepath, fields)
-        return
+        return "updated", filepath
     filepath.write_text(render_new_file(method_name, fields, parent), encoding="utf-8")
     print(f"Created {filepath.relative_to(PROJECT_ROOT)}")
+    return ("created-pending" if parent == "Uncategorized" else "created"), filepath
+
+
+def write_github_output(status, filepath):
+    output_file = os.environ.get("GITHUB_OUTPUT")
+    if not output_file:
+        return
+    with open(output_file, "a", encoding="utf-8") as f:
+        f.write(f"status={status}\n")
+        f.write(f"filepath={filepath.relative_to(PROJECT_ROOT)}\n")
 
 
 def main():
@@ -305,8 +332,11 @@ def main():
     existing = find_existing_file(method_name)
     if existing:
         update_existing_file(existing, fields)
+        status, filepath = "updated", existing
     else:
-        create_new_file(method_name, fields)
+        status, filepath = create_new_file(method_name, fields)
+
+    write_github_output(status, filepath)
 
 
 if __name__ == "__main__":

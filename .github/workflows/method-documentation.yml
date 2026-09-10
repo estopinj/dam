@@ -49,7 +49,9 @@ jobs:
           body: |
             Automatically generated from #${{ github.event.issue.number }}.
 
-            Please review before merging: new pages are placed under
-            `contents/methods/_pending/` and need manual categorization.
+            ${{ steps.process.outputs.status == 'created-pending' && format('New page created at `{0}`, but no Category was selected in the issue: please move it to the right `contents/methods/<category>/` folder and set `parent` accordingly.', steps.process.outputs.filepath) || (steps.process.outputs.status == 'created' && format('New page created at `{0}`.', steps.process.outputs.filepath) || format('Existing page `{0}` updated with the submitted fields.', steps.process.outputs.filepath)) }}
+
+            Please review before merging.
           labels: method, documentation
           base: main
+
