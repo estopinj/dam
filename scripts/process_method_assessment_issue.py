@@ -16,8 +16,11 @@ Behavior:
   (i.e. it's just a placeholder entry), the empty cells are filled in from
   the issue. Any already non-empty cell (e.g. an existing Category) is left
   untouched rather than overwritten.
-- If a matching row exists and already has assessment content, nothing is
-  changed; a warning is logged so a maintainer can review manually.
+- If a matching row exists and already has assessment content, the issue is
+  treated as a *review* of that existing assessment: differing criteria are
+  applied to the row (Category/Sub-category are never touched), and the PR
+  body lists each suggested change (old -> new) for a maintainer to accept or
+  reject via normal review. If nothing actually differs, no PR is opened.
 - generate_method_pages.py is only ever called to fill in *missing* pages
   (it already skips a method's file if it exists), so an existing
   documentation page is never overwritten by this script.
@@ -167,7 +170,25 @@ def fill_empty_row(row, fields):
             row[column] = field_value_for_column(column, fields)
 
 
-def write_github_output(status, page_status, method_name):
+def compute_changes(row, fields):
+    """List of (column, old_value, new_value) for criteria the issue answers
+    differently from the existing row. Category/Sub-category are excluded:
+    they're never revised by an assessment issue."""
+    changes = []
+    for column in ASSESSMENT_COLUMNS:
+        old_value = (row.get(column) or "").strip()
+        new_value = field_value_for_column(column, fields).strip()
+        if new_value and new_value != old_value:
+            changes.append((column, old_value, new_value))
+    return changes
+
+
+def apply_changes(row, changes):
+    for column, _old_value, new_value in changes:
+        row[column] = new_value
+
+
+def write_github_output(status, page_status, method_name, changes=None):
     output_file = os.environ.get("GITHUB_OUTPUT")
     if not output_file:
         return
@@ -175,6 +196,11 @@ def write_github_output(status, page_status, method_name):
         f.write(f"status={status}\n")
         f.write(f"page_status={page_status}\n")
         f.write(f"method_name={method_name}\n")
+        changes_md = "\n".join(
+            f"- **{column}**: `{old or '(empty)'}` \u2192 `{new}`"
+            for column, old, new in (changes or [])
+        )
+        f.write(f"changes<<GH_OUTPUT_EOF\n{changes_md}\nGH_OUTPUT_EOF\n")
 
 
 def run_generate_method_pages():
@@ -201,13 +227,14 @@ def main():
         fill_empty_row(row, fields)
         status = "row-filled"
     else:
-        print(
-            f"Warning: '{method_name}' already has assessment data in the TSV; "
-            "leaving the existing row untouched.",
-            file=sys.stderr,
-        )
-        write_github_output("already-assessed", "unchanged", method_name)
-        return
+        changes = compute_changes(row, fields)
+        if not changes:
+            print(f"'{method_name}' already assessed and issue suggests no changes; nothing to do.")
+            write_github_output("already-assessed-no-changes", "unchanged", method_name)
+            return
+        print(f"'{method_name}' already assessed; applying {len(changes)} suggested change(s) for review.")
+        apply_changes(row, changes)
+        status = "assessment-revised"
 
     write_raw_tsv(header_lines, rows)
     # Always refresh the cleaned data file: it drives the Assessment table
@@ -223,7 +250,7 @@ def main():
         run_generate_method_pages()
         page_status = "generated"
 
-    write_github_output(status, page_status, method_name)
+    write_github_output(status, page_status, method_name, changes if status == "assessment-revised" else None)
 
 
 if __name__ == "__main__":
