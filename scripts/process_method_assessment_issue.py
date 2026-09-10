@@ -1,0 +1,230 @@
+"""Create or fill a row in the raw method-assessment TSV from a 'Method
+assessment' GitHub issue (.github/ISSUE_TEMPLATE/new-assessment.yml), then
+call generate_method_pages.py to (re)build the cleaned data file and any
+missing method documentation pages.
+
+Input: the parsed issue form answers as JSON (field id -> string, or list of
+strings for checkboxes/multi-selects), provided via the ISSUE_JSON env var
+(see .github/workflows/method-assessment.yml). Can also be supplied by hand
+for local testing, same convention as process_method_issue.py.
+
+Behavior:
+- If no row in the raw TSV has a matching "Method" name, a new row is
+  appended with Category/Sub-category/Assessor and all assessment columns
+  filled from the issue.
+- If a matching row exists but every column after "Sub-category" is empty
+  (i.e. it's just a placeholder entry), the empty cells are filled in from
+  the issue. Any already non-empty cell (e.g. an existing Category) is left
+  untouched rather than overwritten.
+- If a matching row exists and already has assessment content, nothing is
+  changed; a warning is logged so a maintainer can review manually.
+- generate_method_pages.py is only ever called to fill in *missing* pages
+  (it already skips a method's file if it exists), so an existing
+  documentation page is never overwritten by this script.
+"""
+import csv
+import json
+import os
+import subprocess
+import sys
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from process_method_issue import find_existing_file  # noqa: E402
+from tsv_clean import clean_tsv  # noqa: E402
+
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+RAW_TSV = PROJECT_ROOT / "_data/DetectionAttribution methods - Method Assessment.tsv"
+CLEAN_TSV = PROJECT_ROOT / "_data/method_assessments_clean.tsv"
+HEADER_SKIP_LINES = 3
+
+COLUMNS = [
+    "Author", "Status", "Reviewer", "Assessor", "Method", "Category", "Sub-category",
+    "Objective", "Estimand", "Type", "Minimal TS length", "Handles few samples",
+    "Handles huge datasets (n)", "Handles missing data", "RS-data proven",
+    "Fonctional form", "No unobserved confounders", "No interference",
+    "Well-defined treatments", "Common support (positivity)", "Causal Markov Condition",
+    "Faithfulness", "IID", "Model specific", "Requires explicit processes",
+    "Exposure type", "Number of variables", "Propaguates uncertainty",
+    "Handles lag effects", "Parametric nature", "Language", "Usage",
+]
+# Columns an issue can never overwrite; only "Assessor" may be filled if empty.
+IDENTITY_COLUMNS = ["Author", "Status", "Reviewer", "Assessor", "Method", "Category", "Sub-category"]
+ASSESSMENT_COLUMNS = [c for c in COLUMNS if c not in IDENTITY_COLUMNS]
+
+# Maps TSV column -> issue field id. List-valued fields are joined with ", ".
+FIELD_MAP = {
+    "Objective": "objective",
+    "Estimand": "estimand",
+    "Type": "data_type",
+    "Minimal TS length": "minimal_ts_length",
+    "Handles few samples": "handles_few_samples",
+    "Handles huge datasets (n)": "handles_huge_datasets",
+    "Handles missing data": "handles_missing_data",
+    "RS-data proven": "rs_data_proven",
+    "Fonctional form": "functional_form",
+    "No unobserved confounders": "no_unobserved_confounders",
+    "No interference": "no_interference",
+    "Well-defined treatments": "well_defined_treatments",
+    "Common support (positivity)": "common_support_positivity",
+    "Causal Markov Condition": "causal_markov_condition",
+    "Faithfulness": "faithfulness",
+    "IID": "iid",
+    "Model specific": "model_specific_assumptions",
+    "Requires explicit processes": "requires_explicit_processes",
+    "Exposure type": "exposure_type",
+    "Number of variables": "number_of_variables",
+    "Propaguates uncertainty": "propagates_uncertainty",
+    "Handles lag effects": "handles_lag_effects",
+    "Parametric nature": "parametric_nature",
+    "Language": "language",
+    "Usage": "usage",
+}
+LIST_FIELDS = {
+    "category", "sub_category", "objective", "estimand", "data_type",
+    "requires_explicit_processes", "exposure_type", "number_of_variables",
+    "parametric_nature", "language", "usage", "functional_form",
+    "model_specific_assumptions",
+}
+
+
+def load_issue_fields():
+    raw = os.environ.get("ISSUE_JSON")
+    if not raw:
+        print("ISSUE_JSON env var is empty or missing", file=sys.stderr)
+        sys.exit(1)
+    data = json.loads(raw)
+    fields = {}
+    for key, value in data.items():
+        if key in LIST_FIELDS:
+            if isinstance(value, str):
+                value = [v.strip() for v in value.split("\n") if v.strip()]
+            fields[key] = [str(v).strip() for v in value or []]
+        else:
+            if isinstance(value, list):
+                value = ", ".join(str(v) for v in value)
+            fields[key] = (value or "").strip()
+    return fields
+
+
+def field_value_for_column(column, fields):
+    field_id = FIELD_MAP[column]
+    value = fields.get(field_id)
+    if isinstance(value, list):
+        return ", ".join(value)
+    return value or ""
+
+
+def read_raw_tsv():
+    with open(RAW_TSV, newline="", encoding="utf-8") as f:
+        lines = f.readlines()
+    header_lines = lines[:HEADER_SKIP_LINES]
+    reader = csv.DictReader(lines[HEADER_SKIP_LINES:], delimiter="\t")
+    rows = [dict(row) for row in reader]
+    return header_lines, rows
+
+
+def write_raw_tsv(header_lines, rows):
+    with open(RAW_TSV, "w", newline="", encoding="utf-8") as f:
+        f.writelines(header_lines)
+        writer = csv.DictWriter(f, fieldnames=COLUMNS, delimiter="\t", restval="", extrasaction="ignore")
+        writer.writeheader()
+        writer.writerows(rows)
+
+
+def find_row(rows, method_name):
+    target = method_name.strip().casefold()
+    for row in rows:
+        if (row.get("Method") or "").strip().casefold() == target:
+            return row
+    return None
+
+
+def is_assessment_empty(row):
+    return all(not (row.get(col) or "").strip() for col in ASSESSMENT_COLUMNS)
+
+
+def build_new_row(method_name, fields):
+    row = {col: "" for col in COLUMNS}
+    row["Method"] = method_name
+    row["Assessor"] = fields.get("author", "")
+    row["Category"] = ", ".join(fields.get("category") or [])
+    row["Sub-category"] = ", ".join(fields.get("sub_category") or [])
+    for column in ASSESSMENT_COLUMNS:
+        row[column] = field_value_for_column(column, fields)
+    return row
+
+
+def fill_empty_row(row, fields):
+    if not (row.get("Category") or "").strip():
+        row["Category"] = ", ".join(fields.get("category") or [])
+    if not (row.get("Sub-category") or "").strip():
+        row["Sub-category"] = ", ".join(fields.get("sub_category") or [])
+    if not (row.get("Assessor") or "").strip():
+        row["Assessor"] = fields.get("author", "")
+    for column in ASSESSMENT_COLUMNS:
+        if not (row.get(column) or "").strip():
+            row[column] = field_value_for_column(column, fields)
+
+
+def write_github_output(status, page_status, method_name):
+    output_file = os.environ.get("GITHUB_OUTPUT")
+    if not output_file:
+        return
+    with open(output_file, "a", encoding="utf-8") as f:
+        f.write(f"status={status}\n")
+        f.write(f"page_status={page_status}\n")
+        f.write(f"method_name={method_name}\n")
+
+
+def run_generate_method_pages():
+    subprocess.run(
+        [sys.executable, str(PROJECT_ROOT / "scripts/generate_method_pages.py")],
+        cwd=PROJECT_ROOT, check=True,
+    )
+
+
+def main():
+    fields = load_issue_fields()
+    method_name = fields.get("method_name", "").strip()
+    if not method_name:
+        print("No method_name field found in issue, aborting", file=sys.stderr)
+        sys.exit(1)
+
+    header_lines, rows = read_raw_tsv()
+    row = find_row(rows, method_name)
+
+    if row is None:
+        rows.append(build_new_row(method_name, fields))
+        status = "row-created"
+    elif is_assessment_empty(row):
+        fill_empty_row(row, fields)
+        status = "row-filled"
+    else:
+        print(
+            f"Warning: '{method_name}' already has assessment data in the TSV; "
+            "leaving the existing row untouched.",
+            file=sys.stderr,
+        )
+        write_github_output("already-assessed", "unchanged", method_name)
+        return
+
+    write_raw_tsv(header_lines, rows)
+    # Always refresh the cleaned data file: it drives the Assessment table
+    # rendered on every method page, independently of whether a page is created.
+    clean_tsv(RAW_TSV, CLEAN_TSV)
+
+    # Never overwrite (or duplicate) an existing documentation page, wherever it lives.
+    existing_page = find_existing_file(method_name)
+    if existing_page:
+        page_status = "existing-elsewhere"
+        print(f"Row updated; documentation page already exists at {existing_page.relative_to(PROJECT_ROOT)}, not touching it.")
+    else:
+        run_generate_method_pages()
+        page_status = "generated"
+
+    write_github_output(status, page_status, method_name)
+
+
+if __name__ == "__main__":
+    main()
