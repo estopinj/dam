@@ -95,8 +95,8 @@ body:
       label: Method 
       description: One or a few key academic references that introduce or formalize the method.
       placeholder: |
-      - Examples et al. (2020) Title of the article. Journal Name, 1(1), 1-10. https://doi.org/10.xxxx/xxxx
-      - Others et al. (2021)
+        - Examples et al. (2020) Title of the article. Journal Name, 1(1), 1-10. https://doi.org/10.xxxx/xxxx
+        - Others et al. (2021)
     validations:
       required: false
   
@@ -111,8 +111,8 @@ body:
       label: With RS data in Ecology / Biodiversity
       description: If the method has been used in remote sensing research, please list the references here.
       placeholder: |
-      - Application A et al. (2022) Title of the article. Journal Name, 1(1), 1-10. https://doi.org/10.xxxx/xxxx
-      - Application B et al. (2023)
+        - Application A et al. (2022) Title of the article. Journal Name, 1(1), 1-10. https://doi.org/10.xxxx/xxxx
+        - Application B et al. (2023)
     validations:
       required: false
   
@@ -122,8 +122,8 @@ body:
       label: Without RS data (Ecology domain)
       description: If the method has been used in research without remote sensing data, please list the references here.
       placeholder: |
-      - Application C et al. (2023)
-      - Application D et al. (2023)
+        - Application C et al. (2023)
+        - Application D et al. (2023)
     validations:
       required: false
   
@@ -138,8 +138,8 @@ body:
       label: Python
       description: Python implementation of the method.
       placeholder: |
-      - Link toward the package documentation or repository
-      - Package name on PyPI or conda-forge
+        - Link toward the package documentation or repository
+        - Package name on PyPI or conda-forge
     validations:
       required: false
   
@@ -149,8 +149,8 @@ body:
       label: R
       description: R implementation of the method.
       placeholder: |
-      - Link toward the package documentation or repository
-      - Package name on CRAN or Bioconductor
+        - Link toward the package documentation or repository
+        - Package name on CRAN or Bioconductor
     validations:
       required: false
   
