@@ -21,6 +21,8 @@ This method also belongs to [Adjusted methods (Backdoor C.)]({{ site.baseurl }}/
 
 
 ## Description & principle 
+First description! Should replace "A clear, technical yet accessible explanation of the method, its core principle(s)."??
+
 First description! Should replace "Wrong cat"??
 
 

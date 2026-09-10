@@ -163,9 +163,10 @@ def merge_section(text, heading, placeholder, new_value):
     section_lines = lines[heading_idx + 1:end_idx]
     section_text = "\n".join(section_lines)
 
-    if placeholder and placeholder in section_text:
-        section_text = section_text.replace(placeholder, new_value, 1)
-    elif not placeholder and section_text.strip() == "":
+    # Only replace when the section still holds nothing but the untouched
+    # auto-generated placeholder; a substring check would misfire if a real
+    # contribution happens to quote the placeholder text.
+    if section_text.strip() == (placeholder or "").strip():
         section_text = "\n" + new_value + "\n"
     else:
         section_text = section_text.rstrip("\n") + "\n\n" + new_value + "\n"
