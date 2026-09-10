@@ -1,0 +1,55 @@
+name: Method documentation from issue
+
+on:
+  issues:
+    types: [opened, edited]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  process:
+    if: contains(github.event.issue.labels.*.name, 'documentation')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Parse issue form
+        id: issue-parser
+        uses: stefanbuck/github-issue-parser@v3
+        with:
+          template-path: .github/ISSUE_TEMPLATE/new-method-documentation.yml
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Install dependencies
+        run: pip install pyyaml
+
+      - name: Create or update method page
+        id: process
+        env:
+          ISSUE_JSON: ${{ steps.issue-parser.outputs.jsonString }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          ISSUE_AUTHOR: ${{ github.event.issue.user.login }}
+          ISSUE_URL: ${{ github.event.issue.html_url }}
+          ISSUE_DATE: ${{ github.event.issue.created_at }}
+        run: python scripts/process_method_issue.py
+
+      - name: Open pull request
+        uses: peter-evans/create-pull-request@v6
+        with:
+          commit-message: "docs: method page update from issue #${{ github.event.issue.number }}"
+          branch: method-doc/issue-${{ github.event.issue.number }}
+          title: "Method documentation update (issue #${{ github.event.issue.number }})"
+          body: |
+            Automatically generated from #${{ github.event.issue.number }}.
+
+            Please review before merging: new pages are placed under
+            `contents/methods/_pending/` and need manual categorization.
+          labels: method, documentation
+          base: main

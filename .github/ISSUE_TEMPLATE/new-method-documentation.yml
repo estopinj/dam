@@ -54,7 +54,55 @@ body:
       placeholder: ex. Frescalo
     validations:
       required: true
-  
+
+  - type: markdown
+    attributes:
+      value: |
+        ## Method group
+
+  - type: checkboxes
+    id: category
+    attributes:
+      label: Category
+      description: "Multiple: Tick all that apply & at least one (only for method page organization)"
+      options:
+        - label: "Counterfactual & future simulations"
+        - label: "Experiments"
+        - label: "Ecology-guided Modelling"
+        - label: "Adjusted methods (Backdoor C.)"
+        - label: "Quasi-experiments"
+        - label: "Causal ML"
+        - label: "Causal discovery"
+        - label: "Alternative paradigms"
+        - label: "Versatile tools"
+        - label: "Independent detection"
+
+  - type: dropdown
+    id: sub_category
+    attributes:
+      label: Sub-category
+      description: "Multiple, can be left unspecified (only for method page organization)"
+      multiple: true
+      options:
+        - "Process-based methods"
+        - "Linear regressions & extensions"
+        - "Predictive models +  interpretability metrics"
+        - "Alternative effect identification methods"
+        - "Meta-learners"
+        - "Constraint-based methods"
+        - "Score-based methods"
+        - "Continuous optimization"
+        - "Asymmetry-based"
+        - "Prediction-based approaches"
+        - "Intermediate confounding"
+        - "Visualisation helpers"
+        - "Robustness & significance tests"
+        - "Causal interpretability"
+        - "Uncertainty tools"
+        - "Trend detection"
+        - "RS breakpoint detection"
+        - "Frequently monitored indices"
+        - "Preliminary data correction"
 
   
   - type: textarea
