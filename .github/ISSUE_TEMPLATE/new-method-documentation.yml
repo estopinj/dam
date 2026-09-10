@@ -110,8 +110,7 @@ body:
     attributes:
       label: Description & principle 
       description: A clear, technical yet accessible explanation of the method, its core principle(s).
-      placeholder: This method is used to...
-      value: "Method description. Images can be added, please provide sources."
+      placeholder: "Method description. Images can be added, please provide sources."
     validations:
       required: true
   
