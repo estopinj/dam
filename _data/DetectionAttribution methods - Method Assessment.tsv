@@ -92,3 +92,4 @@ Rachid Oucheikh	Invited		Joaquim Estopinan	Physics/ecology informed neural netwo
 	No			Moderator analysis	Adjusted methods (Backdoor C.)																		Unevaluated								
 	No			Wavelength analysis	Independent detection			Abrupt change															Unevaluated								
 	No			Process-based models	Counterfactual & future simulations	Process-based methods		Trend															Unevaluated								
+			Copilot Demo A	Regression Discontinuity in Time (RDiT)	Quasi-experiments		Effect estimation, Detection	ATT, LATE	Time-series (one sample)	≥ 100	10 to 100	Most do	Partially	Few applications	Linear	Required	Required	Required	Recommended	Inapplicable	Inapplicable	Relaxes assumption	Stationarity	Agnostic	Continuous / Time-varying	Univariate	Model-specific tools	Possible	Parametric	R, Python	Technical but well documented
