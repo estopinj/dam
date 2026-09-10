@@ -31,9 +31,9 @@ body:
     attributes:
       label: Is the method already documented in NaviDAM?
       description: Look if the method is already documented in NaviDAM. If it is, please provide the exact same name below.
-    options:
-      - Yes
-      - No
+      options:
+        - Yes
+        - No
     validations:
       required: true
   - type: dropdown
@@ -41,9 +41,9 @@ body:
     attributes:
       label: Is the method already assessed in NaviDAM?
       description: Look if the method is already assessed in NaviDAM. If it is, please provide the exact same name below.
-    options:
-      - Yes
-      - No
+      options:
+        - Yes
+        - No
     validations:
       required: true
   - type: input
