@@ -34,11 +34,9 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from process_method_issue import find_existing_file  # noqa: E402
-from tsv_clean import clean_tsv  # noqa: E402
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 RAW_TSV = PROJECT_ROOT / "_data/DetectionAttribution methods - Method Assessment.tsv"
-CLEAN_TSV = PROJECT_ROOT / "_data/method_assessments_clean.tsv"
 HEADER_SKIP_LINES = 3
 
 COLUMNS = [
@@ -237,9 +235,9 @@ def main():
         status = "assessment-revised"
 
     write_raw_tsv(header_lines, rows)
-    # Always refresh the cleaned data file: it drives the Assessment table
-    # rendered on every method page, independently of whether a page is created.
-    clean_tsv(RAW_TSV, CLEAN_TSV)
+    # The cleaned data file is a build artifact regenerated from the raw TSV
+    # by clean_method_assessments.py during the site build, so it is never
+    # written here and never appears in auto-generated PRs.
 
     # Never overwrite (or duplicate) an existing documentation page, wherever it lives.
     existing_page = find_existing_file(method_name)

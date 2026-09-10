@@ -21,3 +21,6 @@ vendor/
 
 # Ignore local theme and archive folders
 .just-the-docs/
+
+# Generated assessment data: rebuilt from the raw TSV at build time
+_data/method_assessments_clean.tsv
