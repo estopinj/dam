@@ -202,11 +202,11 @@ body:
       label: Handles few samples
       description: Ordinal from most to least permissive, pick highest option that applies.
       options:
-        - label: "No"
-        - label: 10 to 100
-        - label: Yes ≤ 10
-        - label: Yes CT design
-        - label: Inapplicable
+        - "No"
+        - 10 to 100
+        - Yes ≤ 10
+        - Yes CT design
+        - Inapplicable
     validations:
       required: true
   
@@ -216,11 +216,11 @@ body:
       label: Handles huge datasets (n)
       description: Ordinal from most to least permissive, pick highest option that applies.
       options:
-        - label: "No"
-        - label: Most dont
-        - label: Most do
-        - label: "Yes"
-        - label: Inapplicable
+        - "No"
+        - Most dont
+        - Most do
+        - "Yes"
+        - Inapplicable
     validations:
       required: true
   
@@ -230,10 +230,10 @@ body:
       label: Handles missing data
       description: Ordinal from most to least permissive, pick highest option that applies.
       options:
-        - label: "No: requires prelim. correction"
-        - label: Partially
-        - label: "Yes"
-        - label: Inapplicable
+        - "No: requires prelim. correction"
+        - Partially
+        - "Yes"
+        - Inapplicable
     validations:
       required: true
   
@@ -243,10 +243,10 @@ body:
       label: RS-data proven
       description: Ordinal from most to least permissive, pick highest option that applies.
       options:
-        - label: "No"
-        - label: Few applications
-        - label: "Yes"
-        - label: Inapplicable
+        - "No"
+        - Few applications
+        - "Yes"
+        - Inapplicable
     validations:
       required: true
   
@@ -305,10 +305,10 @@ body:
       label: Propagates uncertainty
       description: Ordinal from most to least permissive, pick highest option that applies.
       options:
-        - label: Needs model-agnostic propagation
-        - label: Model-specific tools
-        - label: Inherent capacity
-        - label: Inapplicable
+        - Needs model-agnostic propagation
+        - Model-specific tools
+        - Inherent capacity
+        - Inapplicable
     validations:
       required: true
   
@@ -318,10 +318,10 @@ body:
       label: Handles lag effects
       description: Ordinal from most to least permissive, pick highest option that applies.
       options:
-        - label: "No"
-        - label: Possible
-        - label: "Yes"
-        - label: Inapplicable
+        - "No"
+        - Possible
+        - "Yes"
+        - Inapplicable
     validations:
       required: true
 
@@ -402,10 +402,10 @@ body:
       label: No unobserved confounders
       description: Ordinal from most to least permissive, pick highest option that applies.
       options:
-        - label: Required
-        - label: Recommended
-        - label: Relaxes assumption
-        - label: Inapplicable
+        - Required
+        - Recommended
+        - Relaxes assumption
+        - Inapplicable
     validations:
       required: true
 
@@ -415,10 +415,10 @@ body:
       label: No interference
       description: "Multiple: Tick all that apply & at least one"
       options:
-        - label: Required
-        - label: Recommended
-        - label: Relaxes assumption
-        - label: Inapplicable
+        - Required
+        - Recommended
+        - Relaxes assumption
+        - Inapplicable
     validations:
       required: true
 
@@ -428,10 +428,10 @@ body:
       label: Well-defined treatments
       description: "Multiple: Tick all that apply & at least one"
       options:
-        - label: Required
-        - label: Recommended
-        - label: Relaxes assumption
-        - label: Inapplicable
+        - Required
+        - Recommended
+        - Relaxes assumption
+        - Inapplicable
     validations:
       required: true
   
@@ -441,10 +441,10 @@ body:
       label: Common support (positivity)
       description: Ordinal from most to least permissive, pick highest option that applies.
       options:
-        - label: Required
-        - label: Recommended
-        - label: Relaxes assumption
-        - label: Inapplicable
+        - Required
+        - Recommended
+        - Relaxes assumption
+        - Inapplicable
     validations:
       required: true
   
@@ -454,10 +454,10 @@ body:
       label: Causal Markov Condition
       description: Ordinal from most to least permissive, pick highest option that applies.
       options:
-        - label: Required
-        - label: Recommended
-        - label: Relaxes assumption
-        - label: Inapplicable
+        - Required
+        - Recommended
+        - Relaxes assumption
+        - Inapplicable
     validations:
       required: true
   
@@ -467,10 +467,10 @@ body:
       label: Faithfulness
       description: Ordinal from most to least permissive, pick highest option that applies.
       options:
-        - label: Required
-        - label: Recommended
-        - label: Relaxes assumption
-        - label: Inapplicable
+        - Required
+        - Recommended
+        - Relaxes assumption
+        - Inapplicable
     validations:
       required: true
   
@@ -480,10 +480,10 @@ body:
       label: IID
       description: Ordinal from most to least permissive, pick highest option that applies.
       options:
-        - label: Required
-        - label: Recommended
-        - label: Relaxes assumption
-        - label: Inapplicable
+        - Required
+        - Recommended
+        - Relaxes assumption
+        - Inapplicable
     validations:
       required: true
 
@@ -513,11 +513,11 @@ body:
       label: Confidence in assessment
       description: How confident are you in your method assessment?
       options:
-        - label: 1
-        - label: 2
-        - label: 3
-        - label: 4
-        - label: 5
+        - "1"
+        - "2"
+        - "3"
+        - "4"
+        - "5"
     validations:
       required: true
 
