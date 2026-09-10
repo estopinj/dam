@@ -23,7 +23,7 @@ Joaquim Estopinan	Online		Joaquim Estopinan	Synthetic controls	Quasi-experiments
 	No			S,T, X learners	Causal ML	Meta-learners																									
 	No			NNs	Causal ML																										
 	No			BART	Causal ML, Alternative paradigms																										
-Franziska Schrodt	To review	Marianne Tzivanopoulos		Causal forests	Causal ML																										
+Franziska Schrodt	To review	Marianne Tzivanopoulos	Copilot Demo B	Causal forests	Causal ML		Effect estimation, Predictive task + interpretability	CATE, ATE	Spatial only (cross-sectional), Panel data (many samples)	Inapplicable	No	Yes	No: requires prelim. correction	Few applications	Non-linear, Assumption-free	Required	Required	Required	Required	Inapplicable	Inapplicable	Recommended		Agnostic	Binary, Categorical	Multivariate	Model-specific tools	No	Non-parametric	R, Python	Technical but well documented
 Andrea Zampetti	Online	Pierre Gaüzère	Andrea Zampetti	Double Machine learning	Causal ML		Effect estimation	ATE	Spatial only (cross-sectional)	Inapplicable	No	Most do	No: requires prelim. correction	Few applications	Linear, Non-linear	Required	Required	Required	Recommended	Recommended	Recommended	Recommended		Agnostic	Continuous / Time-varying	Multivariate, High-dimensional (p≫n)	Inherent capacity	No	Semi-parametric	R, Python	Technical but well documented
 	No			R-learner, TMLE, MTP	Causal ML	Meta-learners																									
 Sara Si-Moussi	Invited			Reinforcement learning	Causal ML																										
