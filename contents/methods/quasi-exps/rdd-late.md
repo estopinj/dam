@@ -21,7 +21,7 @@ This method also belongs to [Adjusted methods (Backdoor C.)]({{ site.baseurl }}/
 
 
 ## Description & principle 
-First description! Should replace "A clear, technical yet accessible explanation of the method, its core principle(s)."??
+First description! Should replace "Wrong cat"??
 
 
 ### Major variants
@@ -32,22 +32,29 @@ optional
 
 First description!  Should replace text in place?? 
 
+Wrong cat content
+
 ### Further online resources
 {: .no_toc }
 
 First doc, Should replace "primary message"??
 
+Wrong cat content
 
 ## Reference articles
 ### Method
 {: .no_toc }
 - First doc, Should replace "primary message"?? 
 
+Wrong cat content
+
 ### Research applications
 {: .no_toc }
 #### With RS data in Ecology / Biodiversity
 {: .no_toc }
 - First doc, Should replace "primary message"??
+
+Wrong cat content
 
 #### Without RS data (Ecology domain)
 {: .no_toc }
@@ -57,6 +64,8 @@ optional
 
 - First doc, Should replace "primary message"??
 
+Wrong cat content
+
 ## Implementation 
 
 #### Python
@@ -64,10 +73,14 @@ optional
 
 First doc, Should replace "primary message"??
 
+Wrong cat content
+
 #### R
 {: .no_toc }
 
 First doc, Should replace "primary message"??
+
+Wrong cat content
 
 ### Code Cells
 {: .no_toc }
@@ -80,6 +93,10 @@ optional
 
 ```shell
 First doc, Should replace "primary message"??
+```
+
+```shell
+Wrong cat content
 ```
 
 ## Assessment table
