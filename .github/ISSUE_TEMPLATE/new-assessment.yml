@@ -9,20 +9,47 @@ body:
     attributes:
       value: |
         Thanks for taking the time to fill out this method assessment!
-  
   - type: input
-    id: assessor
+    id: contact
     attributes:
-      label: Assessor
-      placeholder: ex. Jeanne Dupont
+      label: Contact Details
+      description: How can we get in touch with you if we need more info?
+      placeholder: ex. email@example.com
+    validations:
+      required: false
+  - type: input
+    id: author
+    attributes:
+      label: Page’s Author & Date
+      placeholder: ex. Jean Dupont
     validations:
       required: true
 
+  - type: dropdown
+    id: documented_method
+    attributes:
+      label: Is the method already documented in NaviDAM?
+      description: Look if the method is already documented in NaviDAM. If it is, please provide the exact same name below.
+    options:
+      - Yes
+      - No
+    validations:
+      required: true
+  - type: dropdown
+    id: assessed_method
+    attributes:
+      label: Is the method already assessed in NaviDAM?
+      description: Look if the method is already assessed in NaviDAM. If it is, please provide the exact same name below.
+    options:
+      - Yes
+      - No
+    validations:
+      required: true
   - type: input
     id: method_name
     attributes:
       label: METHOD NAME
-      description: Name of method to be assessed. For an alternative assessment of an already-assessed method, please use same method name, and provide rationale for the differences at the end of the form.
+      description: Name of method to be assessed.
       placeholder: ex. Synthetic Control Method
     validations:
       required: true
@@ -32,12 +59,10 @@ body:
     attributes:
       value: |
         ## Assessment logic
-        - The assessment should be based on the method's capacity to address a set of objectives, its compatibility with different data types, the assumptions it relies on, etc.
-        - **Please tick ALL the options that apply, even for ordinal criteria where some options can be nested within others.**
-
+        - **Please tick ALL the options that apply.**
         - Situating the method against the unified criteria of NaviDAM will next enable users to filter down the approaches suited to their needs.
-        - One entry can actually correspond to a family of methods (e.g. DiD), with many variants satisfying different criteria.
-        In this case, the assessment should be based on the most common or original variant of the method, and add the options matching major & widespread variants.
+        - One entry can actually correspond to a family of methods (e.g. DiD).
+          - In this case, the assessment should be based on the **most common** or **original** variant of the method, and add the options matching major & widespread variants.
         - Rationale and comments can be added at the end of the form to justify the assessment or provide any additional information.
 
         *See the [criteria description](https://estopinj.github.io/dam/criteria) for more details on the criteria and how to assess them*
@@ -64,6 +89,8 @@ body:
         - label: "Alternative paradigms"
         - label: "Versatile tools"
         - label: "Independent detection"
+    validations:
+      required: true
 
   - type: dropdown
     id: sub_category
@@ -72,12 +99,7 @@ body:
       description: "Multiple, can be left unspecified (only for method page organization)"
       multiple: true
       options:
-        - "Climate change attribution methods"
         - "Process-based methods"
-        - "Dynamic vegetation models"
-        - "Individual-based models"
-        - "Land use change models"
-        - "Ecosystem Process Models"
         - "Linear regressions & extensions"
         - "Predictive models +  interpretability metrics"
         - "Alternative effect identification methods"
@@ -114,6 +136,8 @@ body:
         - label: Detection
         - label: Significance and robustness tests
         - label: Scenario projection
+    validations:
+      required: true
 
   - type: markdown
     attributes:
@@ -134,8 +158,12 @@ body:
         - label: Oriented link
         - label: Risk ratios
         - label: Maps & generalisations
+        - label: Abrupt change
+        - label: Trend
         - label: Others
         - label: Inapplicable
+    validations:
+      required: true 
   
   - type: markdown
     attributes:
@@ -152,70 +180,72 @@ body:
         - label: Time-series (one sample)
         - label: Panel data (many samples)
         - label: Inapplicable
-  
-  - type: checkboxes # Ordinal criteria
+    validations:
+      required: true
+
+  - type: dropdown # Ordinal criteria
     id: minimal_ts_length
     attributes:
       label: Minimal TS length
-      description: Tick all that apply & at least one
+      description: Ordinal from most to least permissive, pick highest option that applies.
       options:
-        - label: Handles ≤ 10
-        - label: ≥ 10
-        - label: ≥ 100
-        - label: Inapplicable
+        - ≥ 100
+        - ≥ 10
+        - Handles ≤ 10
+        - Inapplicable
     validations:
       required: true
   
-  - type: checkboxes # Ordinal criteria
+  - type: dropdown # Ordinal criteria
     id: handles_few_samples
     attributes:
       label: Handles few samples
-      description: Tick all that apply & at least one
+      description: Ordinal from most to least permissive, pick highest option that applies.
       options:
-        - label: Yes CT design
-        - label: Yes ≤ 10
-        - label: 10 to 100
         - label: "No"
+        - label: 10 to 100
+        - label: Yes ≤ 10
+        - label: Yes CT design
         - label: Inapplicable
     validations:
       required: true
   
-  - type: checkboxes # Ordinal criteria
+  - type: dropdown # Ordinal criteria
     id: handles_huge_datasets
     attributes:
       label: Handles huge datasets (n)
-      description: Tick all that apply & at least one
+      description: Ordinal from most to least permissive, pick highest option that applies.
       options:
-        - label: "Yes"
-        - label: Most do
-        - label: Most dont
         - label: "No"
+        - label: Most dont
+        - label: Most do
+        - label: "Yes"
         - label: Inapplicable
     validations:
       required: true
   
-  - type: checkboxes # Ordinal criteria
+  - type: dropdown # Ordinal criteria
     id: handles_missing_data
     attributes:
       label: Handles missing data
-      description: Tick all that apply & at least one
+      description: Ordinal from most to least permissive, pick highest option that applies.
       options:
-        - label: "Yes"
-        - label: Partially
         - label: "No: requires prelim. correction"
+        - label: Partially
+        - label: "Yes"
         - label: Inapplicable
     validations:
       required: true
   
-  - type: checkboxes # Ordinal criteria
+  - type: dropdown # Ordinal criteria
     id: rs_data_proven
     attributes:
       label: RS-data proven
-      description: Tick all that apply & at least one
+      description: Ordinal from most to least permissive, pick highest option that applies.
       options:
-        - label: "Yes"
-        - label: Few applications
         - label: "No"
+        - label: Few applications
+        - label: "Yes"
         - label: Inapplicable
     validations:
       required: true
@@ -252,6 +282,8 @@ body:
         - label: Others
         - label: All
         - label: Inapplicable
+    validations:
+      required: true
   
   - type: checkboxes
     id: number_of_variables
@@ -264,29 +296,31 @@ body:
         - label: Multivariate
         - label: High-dimensional (p≫n)
         - label: Inapplicable
+    validations:
+      required: true
   
-  - type: checkboxes # Ordinal criteria
+  - type: dropdown # Ordinal criteria
     id: propagates_uncertainty
     attributes:
       label: Propagates uncertainty
-      description: Tick all that apply & at least one
+      description: Ordinal from most to least permissive, pick highest option that applies.
       options:
-        - label: Inherent capacity
-        - label: Model-specific tools
         - label: Needs model-agnostic propagation
+        - label: Model-specific tools
+        - label: Inherent capacity
         - label: Inapplicable
     validations:
       required: true
   
-  - type: checkboxes # Ordinal criteria
+  - type: dropdown # Ordinal criteria
     id: handles_lag_effects
     attributes:
       label: Handles lag effects
-      description: Tick all that apply & at least one
+      description: Ordinal from most to least permissive, pick highest option that applies.
       options:
-        - label: "Yes"
-        - label: Possible
         - label: "No"
+        - label: Possible
+        - label: "Yes"
         - label: Inapplicable
     validations:
       required: true
@@ -302,7 +336,9 @@ body:
         - label: Non-parametric
         - label: Rule-based
         - label: Inapplicable
-  
+    validations:
+      required: true
+
   - type: markdown
     attributes:
       value: | 
@@ -320,7 +356,9 @@ body:
         - label: Others
         - label: No package
         - label: Inapplicable
-  
+    validations:
+      required: true
+
   - type: checkboxes
     id: usage
     attributes:
@@ -333,6 +371,8 @@ body:
         - label: Domain-specific skills
         - label: Varying
         - label: Inapplicable
+    validations:
+      required: true
 
   - type: markdown
     attributes:
@@ -353,20 +393,23 @@ body:
         - label: Rule-based
         - label: Log-linear
         - label: Inapplicable
-  
-  - type: checkboxes
+    validations:
+      required: true
+
+  - type: dropdown # Ordinal criteria
     id: no_unobserved_confounders
     attributes:
       label: No unobserved confounders
-      description: "Multiple: Tick all that apply & at least one"
+      description: Ordinal from most to least permissive, pick highest option that applies.
       options:
         - label: Required
         - label: Recommended
         - label: Relaxes assumption
-        - label: Time-varying OR site-varying
         - label: Inapplicable
-  
-  - type: checkboxes
+    validations:
+      required: true
+
+  - type: dropdown # Ordinal criteria
     id: no_interference
     attributes:
       label: No interference
@@ -375,10 +418,11 @@ body:
         - label: Required
         - label: Recommended
         - label: Relaxes assumption
-        - label: Not required
         - label: Inapplicable
-  
-  - type: checkboxes
+    validations:
+      required: true
+
+  - type: dropdown # Ordinal criteria
     id: well_defined_treatments
     attributes:
       label: Well-defined treatments
@@ -388,51 +432,61 @@ body:
         - label: Recommended
         - label: Relaxes assumption
         - label: Inapplicable
+    validations:
+      required: true
   
-  - type: checkboxes
+  - type: dropdown # Ordinal criteria
     id: common_support_positivity
     attributes:
       label: Common support (positivity)
-      description: "Multiple: Tick all that apply & at least one"
+      description: Ordinal from most to least permissive, pick highest option that applies.
       options:
         - label: Required
         - label: Recommended
         - label: Relaxes assumption
         - label: Inapplicable
+    validations:
+      required: true
   
-  - type: checkboxes
+  - type: dropdown # Ordinal criteria
     id: causal_markov_condition
     attributes:
       label: Causal Markov Condition
-      description: "Multiple: Tick all that apply & at least one"
+      description: Ordinal from most to least permissive, pick highest option that applies.
       options:
         - label: Required
         - label: Recommended
         - label: Relaxes assumption
         - label: Inapplicable
+    validations:
+      required: true
   
-  - type: checkboxes
+  - type: dropdown # Ordinal criteria
     id: faithfulness
     attributes:
       label: Faithfulness
-      description: "Multiple: Tick all that apply & at least one"
+      description: Ordinal from most to least permissive, pick highest option that applies.
       options:
         - label: Required
         - label: Recommended
         - label: Relaxes assumption
         - label: Inapplicable
+    validations:
+      required: true
   
-  - type: checkboxes
+  - type: dropdown # Ordinal criteria
     id: iid
     attributes:
       label: IID
-      description: "Multiple: Tick all that apply & at least one"
+      description: Ordinal from most to least permissive, pick highest option that applies.
       options:
         - label: Required
         - label: Recommended
         - label: Relaxes assumption
         - label: Inapplicable
-  
+    validations:
+      required: true
+
   - type: checkboxes
     id: model_specific_assumptions
     attributes:
@@ -450,7 +504,22 @@ body:
         - label: Cutoff + PO continuity
         - label: B/A treatment obs.
         - label: Good pretreatment fit
-        - label: No specific
+        - label: Time-varying or site-varying C.
+        - label: Dynamic system
+
+  - type: dropdown # Ordinal criteria
+    id: confidence
+    attributes:
+      label: Confidence in assessment
+      description: How confident are you in your method assessment?
+      options:
+        - label: 1
+        - label: 2
+        - label: 3
+        - label: 4
+        - label: 5
+    validations:
+      required: true
 
   - type: textarea
     id: rationale
@@ -459,12 +528,13 @@ body:
       placeholder: Any rationale you would like to share about the method assessment, how/why some options were chosen, or any other comment you would like to share.
     validations:
       required: false
-  
+
+
   - type: checkboxes
     id: terms
     attributes:
       label: Code of Conduct
-      description: By submitting this issue, you agree to follow our [Code of Conduct](https://estopinj.github.io/dam/contributing/).
+      description: By submitting this issue, you agree to follow our [Code of Conduct](https://github.com/estopinj/dam/blob/main/CODE_OF_CONDUCT.md).
       options:
         - label: I agree to follow this project's Code of Conduct
           required: true
