@@ -17,6 +17,7 @@ author: Joaquim Estopinan
 ## Description & principle
 Method description. Images can be added, please provide sources.
 
+Description for an already doc method: should be appended
 
 ### Major variants
 {: .no_toc }
@@ -26,11 +27,14 @@ optional
 
 Testtttt
 
+Description for an already doc method: should be appended
+
 ### Further online resources
 {: .no_toc }
 
 test
 
+Description for an already doc method: should be appended
 
 ## Reference articles
 ### Method
@@ -38,11 +42,13 @@ test
 - A
 - B
 
+Description for an already doc method: should be appended
+
 ### Research applications
 {: .no_toc }
 #### With RS data in Ecology / Biodiversity
 {: .no_toc }
-- An app
+Description for an already doc method: should be appendedn app
 
 #### Without RS data (Ecology domain)
 {: .no_toc }
@@ -50,7 +56,7 @@ test
 optional
 {: .label}
 
-- B
+Description for an already doc method: should be appended
 
 ## Implementation
 
@@ -59,10 +65,14 @@ optional
 
 - Python package
 
+Description for an already doc method: should be appended
+
 #### R
 {: .no_toc }
 
 - Some package
+
+Description for an already doc method: should be appended
 
 ### Code Cells
 {: .no_toc }
@@ -76,4 +86,9 @@ Some code
 
 
 <!-- For referencement in toc before automatic table -->
+
+```shell
+Description for an already doc method: should be appended
+```
+
 ## Assessment table
