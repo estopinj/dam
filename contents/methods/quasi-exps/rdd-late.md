@@ -21,7 +21,7 @@ This method also belongs to [Adjusted methods (Backdoor C.)]({{ site.baseurl }}/
 
 
 ## Description & principle 
-A clear, technical yet accessible explanation of the method, its core principle(s).
+First description! Should replace "A clear, technical yet accessible explanation of the method, its core principle(s)."??
 
 
 ### Major variants
@@ -30,24 +30,24 @@ A clear, technical yet accessible explanation of the method, its core principle(
 optional
 {: .label}
 
-If the method has variants that seem important, either already widespread or promising and well documented. 
+First description!  Should replace text in place?? 
 
 ### Further online resources
 {: .no_toc }
 
-References to useful online resources to get started, e.g. [explanation blogs](https://matheusfacure.github.io/python-causality-handbook/15-Synthetic-Control.html){:target="_blank"}
+First doc, Should replace "primary message"??
 
 
 ## Reference articles
 ### Method
 {: .no_toc }
-- One or a few key academic references that introduce or formalize the method. 
+- First doc, Should replace "primary message"?? 
 
 ### Research applications
 {: .no_toc }
 #### With RS data in Ecology / Biodiversity
 {: .no_toc }
-- A
+- First doc, Should replace "primary message"??
 
 #### Without RS data (Ecology domain)
 {: .no_toc }
@@ -55,15 +55,19 @@ References to useful online resources to get started, e.g. [explanation blogs](h
 optional
 {: .label}
 
-- B
+- First doc, Should replace "primary message"??
 
 ## Implementation 
 
 #### Python
 {: .no_toc }
 
+First doc, Should replace "primary message"??
+
 #### R
 {: .no_toc }
+
+First doc, Should replace "primary message"??
 
 ### Code Cells
 {: .no_toc }
@@ -73,4 +77,9 @@ optional
 
 
 <!-- For referencement in toc before automatic table -->
+
+```shell
+First doc, Should replace "primary message"??
+```
+
 ## Assessment table
