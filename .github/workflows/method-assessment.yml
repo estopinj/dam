@@ -43,7 +43,7 @@ jobs:
         with:
           commit-message: "docs: method assessment update from issue #${{ github.event.issue.number }}"
           branch: method-assessment/issue-${{ github.event.issue.number }}
-          title: ${{ steps.process.outputs.status == 'assessment-revised' && format('[Review] Method assessment revision suggested for "{0}" (issue #{1})', steps.process.outputs.method_name, github.event.issue.number) || format('Method assessment update (issue #{0})', github.event.issue.number) }}
+          title: "${{ steps.process.outputs.status == 'assessment-revised' && format('[Review] Method assessment revision suggested for {0} (issue no. {1})', steps.process.outputs.method_name, github.event.issue.number) || format('Method assessment update (issue no. {0})', github.event.issue.number) }}"
           body: |
             Automatically generated from #${{ github.event.issue.number }}.
 
