@@ -59,7 +59,6 @@ body:
     attributes:
       value: |
         ## Assessment logic
-        - **Please tick ALL the options that apply.**
         - Situating the method against the unified criteria of NaviDAM will next enable users to filter down the approaches suited to their needs.
         - One entry can actually correspond to a family of methods (e.g. DiD).
           - In this case, the assessment should be based on the **most common** or **original** variant of the method, and add the options matching major & widespread variants.
