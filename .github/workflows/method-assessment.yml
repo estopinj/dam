@@ -54,7 +54,8 @@ jobs:
             ${{ steps.process.outputs.status == 'row-created' && format('New assessment row added for "{0}".', steps.process.outputs.method_name) || steps.process.outputs.status == 'row-filled' && format('Existing assessment row for "{0}" filled in.', steps.process.outputs.method_name) || format('"{0}" already has an assessment: this is a suggested revision to review, not an automatic replacement.', steps.process.outputs.method_name) }}
             ${{ steps.process.outputs.page_status == 'generated' && 'A new documentation page was also generated (pending Category selection review).' || (steps.process.outputs.page_status == 'existing-elsewhere' && 'A documentation page already exists for this method; it was left untouched.' || '') }}
 
-            ${{ steps.process.outputs.status == 'assessment-revised' && format('**Suggested changes:**\n{0}', steps.process.outputs.changes) || '' }}
+            ${{ steps.process.outputs.status == 'assessment-revised' && '**Suggested changes:**' || '' }}
+            ${{ steps.process.outputs.changes }}
 
             Please review before merging.
           labels: method, assessment
