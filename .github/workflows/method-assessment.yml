@@ -20,7 +20,7 @@ jobs:
         id: issue-parser
         uses: stefanbuck/github-issue-parser@v3
         with:
-          template-path: .github/ISSUE_TEMPLATE/new-assessment.yml
+          template-path: .github/ISSUE_TEMPLATE/method-assessment.yml
 
       - name: Setup Python
         uses: actions/setup-python@v5

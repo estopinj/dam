@@ -111,6 +111,16 @@ kramdown:
     block:
       line_numbers: false
 
+# Silence Sass deprecation noise from the just-the-docs theme gem
+# (Dart Sass 3.0 warnings for @import, map-get, darken()/lighten()).
+# These come from theme files, not from this repo, so they are safe to hide.
+sass:
+  quiet_deps: true
+  silence_deprecations:
+    - import
+    - global-builtin
+    - color-functions
+
 compress_html:
   clippings: all
   comments: all
