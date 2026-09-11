@@ -1,6 +1,6 @@
 name: Method assessment
-description: Submit a new method assessment
-title: "[Assessment request]: "
+description: Submit a new method assessment or suggest a revision to an existing one
+title: "[Assessment]: "
 labels: ["method", "assessment"]
 assignees:
   - estopinj
@@ -9,6 +9,8 @@ body:
     attributes:
       value: |
         Thanks for taking the time to fill out this method assessment!
+        Use this form both to submit a **new assessment** and to suggest a **revision**
+        of an existing one (tick "Yes" below and give the exact method name).
   - type: input
     id: contact
     attributes:
@@ -39,7 +41,7 @@ body:
     id: assessed_method
     attributes:
       label: Is the method already assessed in NaviDAM?
-      description: Look if the method is already assessed in NaviDAM. If it is, please provide the exact same name below.
+      description: 'Look if the method is already assessed in NaviDAM. If it is, please provide the exact same name below. Ticking "Yes" turns this issue into a suggested revision of the existing assessment.'
       options:
         - "Yes"
         - "No"
@@ -49,7 +51,7 @@ body:
     id: method_name
     attributes:
       label: METHOD NAME
-      description: Name of method to be assessed.
+      description: Name of method to be assessed, or exact name of the existing assessment to revise.
       placeholder: ex. Synthetic Control Method
     validations:
       required: true
@@ -62,6 +64,7 @@ body:
         - Situating the method against the unified criteria of NaviDAM will next enable users to filter down the approaches suited to their needs.
         - One entry can actually correspond to a family of methods (e.g. DiD).
           - In this case, the assessment should be based on the **most common** or **original** variant of the method, and add the options matching major & widespread variants.
+        - To **revise an existing assessment**, fill in the full form with your suggested values; only criteria that differ from the current assessment will be proposed as changes for maintainer review.
         - Rationale and comments can be added at the end of the form to justify the assessment or provide any additional information.
 
         *See the [criteria description](https://estopinj.github.io/dam/criteria) for more details on the criteria and how to assess them*

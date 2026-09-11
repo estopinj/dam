@@ -1,5 +1,5 @@
 """Create or fill a row in the raw method-assessment TSV from a 'Method
-assessment' GitHub issue (.github/ISSUE_TEMPLATE/new-assessment.yml), then
+assessment' GitHub issue (.github/ISSUE_TEMPLATE/method-assessment.yml), then
 call generate_method_pages.py to (re)build the cleaned data file and any
 missing method documentation pages.
 
