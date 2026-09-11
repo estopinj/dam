@@ -72,7 +72,7 @@ NaviDAM is implemented in this collaborative website and is organized around a d
 
 1. [Method panel]({{ site.baseurl }}/methods)
 
-    This panel provides information on every method listed in the navigator. The methods are described along a common documentation structure: *Description & principle*, *Reference articles*, *Implementation packages* and the *Assessment table* reflecting how the method is filtered against the user's criteria evaluation.
+    This panel provides information on every method listed in the navigator. The methods are described along a common documentation structure: *Description & principle*, *Reference articles*, *Implementation and the *Assessment table* reflecting how the method is filtered against the user's criteria evaluation.
 
 
 
@@ -85,7 +85,7 @@ NaviDAM is implemented in this collaborative website and is organized around a d
     - Comparing multiple methods etc.
 
 
-1. [Gallery]({{ site.baseurl }}/gallery)
+1. [Examples]({{ site.baseurl }}/examples)
 
     This final panel illustrates how the DAM can be used with examples, from the question + data at hands, to the criteria assessment and the method application. Examples will include:
     - STOC + synthetic controls 

@@ -1,3 +1,0 @@
-Current behavior:
-- Methods with criteria assessed as Don't or Inapplicable are kept for every criterion option made by user
-- User has both Any and Unsure options, both applying no filtering

@@ -5,7 +5,7 @@ parent: "Climate change attribution methods"
 date: 2025-07-17
 author: Mrs. Young
 ---
-<!-- This file was auto-generated from _data/Attribution methods - Method Assessment.tsv -->
+<!-- This file was auto-generated from /home/runner/work/dam/dam/_data/DetectionAttribution methods - Method Assessment.tsv -->
 
 {% if page.category_note != '' %}
 {: .note }
@@ -57,7 +57,7 @@ optional
 
 - B
 
-## Packages 
+## Implementation 
 
 #### Python
 {: .no_toc }

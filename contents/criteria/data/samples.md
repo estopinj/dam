@@ -12,10 +12,10 @@ categories:
 
 |  **Option**        | **Description**            |
 |:------------------:|----------------------------|
-| `Yes CT design` | 1 Control vs 1 Treatment design or self‑controlled designs that work with very small *n*. |
-| `Yes ≤ 10` | Can handle 10 samples or less reliably. |
-| `10 to 100` | Requires between ten and one hundred samples. |
 | `No` | Fails or produces unstable estimates when *n* is small. |
+| `10 to 100` | Requires between ten and one hundred samples. |
+| `Yes ≤ 10` | Can handle 10 samples or less reliably. |
+| `Yes CT design` | 1 Control vs 1 Treatment design or self‑controlled designs that work with very small *n*. |
 
 
 ## Definition

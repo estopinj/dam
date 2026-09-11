@@ -1,86 +1,63 @@
-# Detection & Attribution Modelling Navigator
+# NaviDAM
+
+<p align="center">
+    <a href="https://doi.org/10.5281/zenodo.22675343"><img src="https://img.shields.io/badge/DOI-10.5281%2Fzenodo.22675343-blue?logo=doi&logoColor=white" alt="DOI: 10.5281/zenodo.22675343" width="205" height="20"></a>
+   <!-- <a href="https://github.com/estopinj/dam/graphs/contributors"><img src="https://img.shields.io/github/contributors/estopinj/dam" alt="GitHub contributors"></a>
+   <a href="https://github.com/estopinj/dam/network/members"><img src="https://img.shields.io/github/forks/estopinj/dam" alt="GitHub forks"></a>
+   <a href="https://github.com/estopinj/dam/issues"><img src="https://img.shields.io/github/issues/estopinj/dam" alt="GitHub issues"></a> -->
+</p>
 
 
 ## Objective
-- The Detection Attribution Modeling ([DAM]) Navigator serves the goal to orient users looking methods for detecting and disentangling the drivers of observed biodiversity change.
-It **situates methods**, both *widespread* methods used in ecological studies and approaches inherited from *causal inference* or econometrics, against an ordered set of [criteria].
+[NaviDAM](https://estopinj.github.io/dam/) helps ecologists navigate the landscape of
+**detection and attribution methods** for studying biodiversity change.
 
-- The different [criteria] invite users to precisely qualify what they are looking for and what they have at hands to narrow down and suggest detection and/or attribution [methods] and tools suited to their study.
-
+It brings together established ecological approaches with methods from causal
+inference and econometrics, then compares them against a structured set of [criteria].
+After evaluating their project's needs, users are suggested **a set of candidate methods** based on their specific context and requirements. 
 
 
 ## Website structure
 
-The DAM Navigator is implemented in this collaborative website and is organized around a dynamical method scheme on the landing page:
+NaviDAM is organized around a simple workflow: describe a project, filter the
+method landscape, then consult the supporting documentation.
 
-1. [Landing page]:
-    - Brief description of the navigator
-    - Invite users to fill in [criteria] in default order
-        - Criteria default to `Unevaluated`, including all options and therefore not filtering the set of suggested methods
-   
-    - Method scheme
-        - Gets refined with criteria assessment
-        <!-- ![Illustrative scheme highlighting some methods](/assets/images/DAM_Scheme_greenHighlight.png) -->
-        <img src="https://estopinj.github.io/dam/assets/images/DAM_Scheme_greenHighlight.png" width="350" />
+**Typical journey**
 
-        *Illustrative scheme highlighting some methods*
+1. Start on the [Home page](https://estopinj.github.io/dam/) and describe the
+   project's objective, data, assumptions, and modelling needs.
+2. Explore the documentation panels to compare methods, understand trade-offs,
+   and find relevant guidance or examples.
 
+**Panels**
 
-2. The sidebar provides access to different panels grouping resource pages logically.
-Its exploration in regards with the landing page is key for good use of the navigator.
-
-    1. [Good practices] panel
-        
-        This panel provides general resources that aim to help conceptualising and applying attribution methods. Here are page examples that fit this category:
-        - Getting started 
-        - Causal diagrams
-        <!-- - Review articles -->
-        - Compare multiple methods etc.
-
-
-    1. [Criteria] panel
-
-        This panel provides information on every criterion used to subset detection & attribution methods when using the navigator. Pages follow a common documentation structure: *Definition*, *Explanation*, *Tools/rationale for helping assessment* and *Example*.
-
-        <!-- ![criteria list](/assets/images/DAM_criteria.png) -->
-         <img src="https://estopinj.github.io/dam/assets/images/DAM_criteria.png" width="220" />
-         
-         *Criteria list*
-
-    1. [Methods] panel
-
-        This panel provides information on every method listed in the navigator. The methods are described along a common documentation structure: *Description & principle*, *Reference articles*, *Implementation packages* and the *Assessment table* reflecting how the method is filtered against criteria evaluation.
-
-
-    1. [Gallery] panel
-
-        This final panel illustrates how the DAM can be used with examples, from the question + data at hands, to the criteria assessment and the method application. Examples include:
-        - STOC + synthetic controls 
-        - Other T3.2 applications and project’s voluntary studies 
-
-
-
-
-
-## Building and previewing your site locally
-
-Assuming [Jekyll] and [Bundler] are installed on your computer:
-
-1.  Change your working directory to the root directory of your site.
-
-2.  Run `bundle install`.
-
-3.  Run `bundle exec jekyll serve` to build your site and preview it at `localhost:4000`.
-
-    The built site is stored in the directory `_site`.
-
+| Panel | Purpose |
+| --- | --- |
+| [Criteria](https://estopinj.github.io/dam/criteria) | Definitions, options, rationale, and examples for every filtering criterion. |
+| [Methods](https://estopinj.github.io/dam/methods) | Method principles, references, implementation details, and assessment tables. |
+| [Good practices](https://estopinj.github.io/dam/practices) | Guidance on causal graphs, attribution workflows, and robust study design. |
+| [Examples](https://estopinj.github.io/dam/examples) | Worked examples showing how to move from a research question to candidate methods. |
 
 
 ## Licensing and Attribution
 
-This repository is licensed under the [MIT License]. You are generally free to reuse or extend upon this code as you see fit; just include the original copy of the license (which is preserved when you "make a template").
+The original NaviDAM source code is distributed under the [GNU General Public License v3.0 or later][GPLv3].
 
-The deployment GitHub Actions workflow is heavily based on GitHub's mixed-party [starter workflows]. A copy of their MIT License is available in [actions/starter-workflows].
+The original documentation and scientific text are distributed under the [Creative Commons Attribution 4.0 International License][CC BY 4.0].
+
+See [`LICENSE`](LICENSE) for the complete licensing and attribution summary, including the licenses of Just the Docs, the Jekyll/Ruby dependencies, and other third-party material. Externally sourced content retains the licenses and attributions indicated in its source.
+
+
+## Acknowledgements
+
+This work was funded through the European Union’s Horizon Europe under grant agreement no. 101134954 OBSGESSION and the French Foundation for Biodiversity Research (FRB) within the synthesis working group IMPACTS.
+
+The views and opinions expressed are those of the authors only and do not necessarily reflect those of the European Union or the European Commission. Neither the European Union nor the European Commission can be held responsible for them.
+
+<p align="center">
+   <a href="https://obsgession.eu/"><img src="assets/images/logos/Obsgession_text_logo.png" alt="OBSGESSION" height="100"></a>
+   <a href="https://www.fondationbiodiversite.fr/en/the-frb-in-action/programs-and-projects/impacts/"><img src="assets/images/logos/logo-FRB-Cesab-anglais_cropped.png" alt="IMPACTS - FRB-CESAB" height="100"></a>
+</p>
 
 ----
 
@@ -89,15 +66,13 @@ The deployment GitHub Actions workflow is heavily based on GitHub's mixed-party 
 [Jekyll]: https://jekyllrb.com
 [Just the Docs]: https://just-the-docs.github.io/just-the-docs/
 [GitHub Pages]: https://docs.github.com/en/pages
-[MIT License]: https://en.wikipedia.org/wiki/MIT_License
-[actions/starter-workflows]: https://github.com/actions/starter-workflows/blob/main/LICENSE
-
-
+[GPLv3]: https://www.gnu.org/licenses/gpl-3.0.html
+[CC BY 4.0]: https://creativecommons.org/licenses/by/4.0/
 [DAM]: https://estopinj.github.io/dam/
 [criteria]: https://estopinj.github.io/dam/criteria
 [methods]: https://estopinj.github.io/dam/methods
 [Landing page]: https://estopinj.github.io/dam/
 [Good practices]: https://estopinj.github.io/dam/practices
-[Gallery]: https://estopinj.github.io/dam/gallery
+[Examples]: https://estopinj.github.io/dam/examples
 
 

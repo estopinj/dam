@@ -1,10 +1,6 @@
 ---
 title: "Climate change attribution methods"
 parent: "Counterfactual & future simulations"
-categories:
-- methods
-- simulations
-- climate_change
 ---
 
 

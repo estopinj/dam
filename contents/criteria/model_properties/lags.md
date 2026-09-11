@@ -12,9 +12,9 @@ categories:
 
 |  **Option**        | **Description**            |
 |:------------------:|----------------------------|
-| `Yes` | Explicit support for lagged terms. |
-| `Possible` | Options to handle lag effects can be set up by users. |
 | `No` | Totally ignores temporal lags. |
+| `Possible` | Options to handle lag effects can be set up by users. |
+| `Yes` | Explicit support for lagged terms. |
 
 
 ## Definition

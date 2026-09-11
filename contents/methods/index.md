@@ -13,5 +13,5 @@ categories:
 {: .fs-6 .fw-300 }
 
 {: .note }
-> The methods are described along a common documentation format: ***Description & principle***, ***Reference articles***, ***Implementation packages*** and finally the ***Assessment table***.
+> The methods are described along a common documentation format: ***Description & principle***, ***Reference articles***, ***Implementation*** and finally the ***Assessment table***.
 > The latter illustrates how the method is evaluated against the [criteria]({{ site.baseurl }}/criteria).
