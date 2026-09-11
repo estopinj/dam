@@ -66,9 +66,7 @@ Revisions of existing [documentation pages](https://estopinj.github.io/dam/metho
 From the website:
 
 1. Scroll to the bottom and click **Edit this page on GitHub**.
-2. Click the pencil icon to edit the `.md` file:
-
-   <svg width="32" height="32" viewBox="0 0 16 16" style="vertical-align:middle; border:1px solid #d0d7de; border-radius:6px; padding:4px; background:#f6f8fa;" role="img" aria-label="GitHub pencil icon to edit a file"><rect width="16" height="16" rx="3" fill="#f6f8fa" stroke="#d0d7de"></rect><path fill="#24292f" d="M11.013 1.427a1.75 1.75 0 0 1 2.474 0l1.086 1.086a1.75 1.75 0 0 1 0 2.474l-8.61 8.61c-.21.21-.47.364-.756.445l-3.251.93a.75.75 0 0 1-.927-.928l.929-3.25c.081-.286.235-.547.445-.757l8.61-8.61Zm.176 4.823L9.75 4.81l-6.286 6.287a.253.253 0 0 0-.064.108l-.558 1.953 1.953-.558a.253.253 0 0 0 .108-.064l6.286-6.286Zm2.262-3.199-1.086-1.086a.25.25 0 0 0-.354 0L10.925 3.05l1.44 1.44 1.086-1.086a.25.25 0 0 0 0-.354Z"></path></svg>
+2. Click the pencil icon <svg width="18" height="18" viewBox="0 0 16 16" style="vertical-align:-3px; display:inline; border:1px solid #d0d7de; border-radius:4px; padding:2px; background:#f6f8fa;" role="img" aria-label="GitHub pencil icon to edit a file"><rect width="16" height="16" rx="3" fill="#f6f8fa" stroke="#d0d7de"></rect><path fill="#24292f" d="M11.013 1.427a1.75 1.75 0 0 1 2.474 0l1.086 1.086a1.75 1.75 0 0 1 0 2.474l-8.61 8.61c-.21.21-.47.364-.756.445l-3.251.93a.75.75 0 0 1-.927-.928l.929-3.25c.081-.286.235-.547.445-.757l8.61-8.61Zm.176 4.823L9.75 4.81l-6.286 6.287a.253.253 0 0 0-.064.108l-.558 1.953 1.953-.558a.253.253 0 0 0 .108-.064l6.286-6.286Zm2.262-3.199-1.086-1.086a.25.25 0 0 0-.354 0L10.925 3.05l1.44 1.44 1.086-1.086a.25.25 0 0 0 0-.354Z"></path></svg> to edit the `.md` file.
 3. Propose changes on a new `doc/<short-topic>` branch (e.g. `doc/synthetic-controls-refs`), then open a pull request against `main` with a clear title (e.g. `docs: clarify assumptions on Synthetic controls`).
 
 For assessment corrections, use the **Method assessment** issue template instead (see section 1).
@@ -84,10 +82,10 @@ Assessment first ensures the method becomes filterable; documentation then provi
 
 ## 5. Good practices and Examples pages
 
-[Good practices](https://estopinj.github.io/dam/practices) and [Examples](https://estopinj.github.io/dam/examples) pages follow the same process as [method documentation pages](#3-revise-an-existing-documentation-page):
+Revisions of [Good practices](https://estopinj.github.io/dam/practices) and [Examples](https://estopinj.github.io/dam/examples) pages follow the same process as [method documentation pages](#3-revise-an-existing-documentation-page):
 
 1. Scroll to the bottom of the page and click **Edit this page on GitHub**.
-2. Click the pencil icon to edit the `.md` file.
+2. Click the pencil icon <svg width="18" height="18" viewBox="0 0 16 16" style="vertical-align:-3px; display:inline; border:1px solid #d0d7de; border-radius:4px; padding:2px; background:#f6f8fa;" role="img" aria-label="GitHub pencil icon to edit a file"><rect width="16" height="16" rx="3" fill="#f6f8fa" stroke="#d0d7de"></rect><path fill="#24292f" d="M11.013 1.427a1.75 1.75 0 0 1 2.474 0l1.086 1.086a1.75 1.75 0 0 1 0 2.474l-8.61 8.61c-.21.21-.47.364-.756.445l-3.251.93a.75.75 0 0 1-.927-.928l.929-3.25c.081-.286.235-.547.445-.757l8.61-8.61Zm.176 4.823L9.75 4.81l-6.286 6.287a.253.253 0 0 0-.064.108l-.558 1.953 1.953-.558a.253.253 0 0 0 .108-.064l6.286-6.286Zm2.262-3.199-1.086-1.086a.25.25 0 0 0-.354 0L10.925 3.05l1.44 1.44 1.086-1.086a.25.25 0 0 0 0-.354Z"></path></svg> to edit the `.md` file.
 3. Propose changes on a new `doc/<short-topic>` branch, then open a pull request against `main`.
 
 New pages are added the same way: create a `.md` file under `contents/practices/` or `contents/examples/` on a `doc/<short-topic>` branch and open a pull request against `main`.
