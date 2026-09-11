@@ -31,11 +31,9 @@ Please follow the [Code of Conduct](https://github.com/estopinj/dam/blob/main/CO
 |------|-----|
 | New assessment or revision of an existing assessment | [Method assessment issue](#1-assess-a-method-new-or-revision) |
 | New documentation page or completion of an existing one | [Method documentation issue](#2-document-a-method-new-or-completion) |
-| Brand-new method from scratch (assess + document) | [Both issues, in order](#3-add-a-brand-new-method-from-scratch) |
-| Revision of an existing [documentation page](https://estopinj.github.io/dam/methods) | [Pull request](#4-revise-an-existing-documentation-page) |
-| Find a method that needs help | [Pending list](#5-what-methods-need-help) |
-| Revise or add a [Good practices page](https://estopinj.github.io/dam/practices) | [Pull request](#6-good-practices-pages) |
-| Revise or add an [Examples page](https://estopinj.github.io/dam/examples) | [Pull request](#7-examples-pages) |
+| Revision of an existing [documentation page](https://estopinj.github.io/dam/methods) | [Pull request](#3-revise-an-existing-documentation-page) |
+| Brand-new method from scratch (assess + document) | [Both issues, in order](#4-add-a-brand-new-method-from-scratch) |
+| Revise or add a [Good practices](https://estopinj.github.io/dam/practices) or [Examples](https://estopinj.github.io/dam/examples) page | [Pull request](#5-good-practices-and-examples-pages) |
 
 Go to **Issues > New issue** and choose the matching template: <https://github.com/estopinj/dam/issues/new/choose>.
 
@@ -55,16 +53,13 @@ Use the **Method documentation** issue template for both cases. Documentation fi
 - **New page:** choose `Is the method already documented in NaviDAM? > No`. A page is created from the submission.
 - **Completion:** choose `Yes`, give the exact page title, and fill in only the sections to add. Placeholders are replaced on first contribution; later contributions are appended.
 
-## 3. Add a brand-new method from scratch
+### What methods need help?
 
-Fully positioning a new method requires two steps, in order:
+See the pending list of methods waiting to be assessed or documented (auto-generated from the assessment table; file to be added at `contents/methods/pending.md`).
 
-1. **Assess it** with the **Method assessment** issue template.
-2. **Document it** with the **Method documentation** issue template.
+If unsure where to start, pick a method from that list and follow sections 1–2.
 
-Assessment first ensures the method becomes filterable; documentation then provides description, references, and implementation details.
-
-## 4. Revise an existing documentation page
+## 3. Revise an existing documentation page
 
 Revisions of existing [documentation pages](https://estopinj.github.io/dam/methods) are made via pull requests, not issues.
 
@@ -74,37 +69,28 @@ From the website:
 2. Click the pencil icon to edit the `.md` file:
 
    <img src="https://estopinj.github.io/dam/assets/images/github-pencil-edit.svg" alt="GitHub pencil icon to edit a file" width="32" style="vertical-align:middle; border:1px solid #d0d7de; border-radius:6px; padding:4px; background:#f6f8fa;" />
-3. Propose changes on the shared `doc` branch (or a new `doc/<short-topic>` branch for larger work, e.g. `doc/synthetic-controls-refs`), then open a pull request against `main` (or `dev` if open) with a clear title (e.g. `docs: clarify assumptions on Synthetic controls`).
-
-Alternatively, edit the page source directly under `contents/methods/`, commit on the `doc` branch, and open a pull request.
+3. Propose changes on a new `doc/<short-topic>` branch (e.g. `doc/synthetic-controls-refs`), then open a pull request against `main` with a clear title (e.g. `docs: clarify assumptions on Synthetic controls`).
 
 For assessment corrections, use the **Method assessment** issue template instead (see section 1).
 
-## 5. What methods need help?
+## 4. Add a brand-new method from scratch
 
-See the pending list of methods waiting to be assessed or documented (auto-generated from the assessment table; file to be added at `contents/methods/pending.md`).
+Fully positioning a new method requires two steps, in order:
 
-If unsure where to start, pick a method from that list and follow sections 1–2.
+1. **Assess it** with the **Method assessment** issue template.
+2. **Document it** with the **Method documentation** issue template.
 
-## 6. Good practices pages
+Assessment first ensures the method becomes filterable; documentation then provides description, references, and implementation details.
 
-[Good practices pages](https://estopinj.github.io/dam/practices) follow the same process as [method documentation pages](#4-revise-an-existing-documentation-page):
+## 5. Good practices and Examples pages
 
-1. Scroll to the bottom of the page and click **Edit this page on GitHub**.
-2. Click the pencil icon to edit the `.md` file.
-3. Propose changes on the shared `doc` branch (or a new `doc/<short-topic>` branch for larger work), then open a pull request against `main` (or `dev` if open).
-
-New pages are added the same way: create a `.md` file under `contents/practices/` on the `doc` branch and open a pull request.
-
-## 7. Examples pages
-
-[Examples pages](https://estopinj.github.io/dam/examples) follow the same process as [Good practices pages](#6-good-practices-pages):
+[Good practices](https://estopinj.github.io/dam/practices) and [Examples](https://estopinj.github.io/dam/examples) pages follow the same process as [method documentation pages](#3-revise-an-existing-documentation-page):
 
 1. Scroll to the bottom of the page and click **Edit this page on GitHub**.
 2. Click the pencil icon to edit the `.md` file.
-3. Propose changes on the shared `doc` branch (or a new `doc/<short-topic>` branch for larger work), then open a pull request against `main` (or `dev` if open).
+3. Propose changes on a new `doc/<short-topic>` branch, then open a pull request against `main`.
 
-New pages are added the same way: create a `.md` file under `contents/examples/` on the `doc` branch and open a pull request.
+New pages are added the same way: create a `.md` file under `contents/practices/` or `contents/examples/` on a `doc/<short-topic>` branch and open a pull request against `main`.
 
 ## Questions?
 
