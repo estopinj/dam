@@ -1,0 +1,63 @@
+name: Method assessment from issue
+
+on:
+  issues:
+    types: [opened, edited]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  process:
+    if: contains(github.event.issue.labels.*.name, 'assessment')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Parse issue form
+        id: issue-parser
+        uses: stefanbuck/github-issue-parser@v3
+        with:
+          template-path: .github/ISSUE_TEMPLATE/new-assessment.yml
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Install dependencies
+        run: pip install pyyaml
+
+
+      - name: Create or fill assessment row
+        id: process
+        env:
+          ISSUE_JSON: ${{ steps.issue-parser.outputs.jsonString }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          ISSUE_AUTHOR: ${{ github.event.issue.user.login }}
+          ISSUE_URL: ${{ github.event.issue.html_url }}
+          ISSUE_DATE: ${{ github.event.issue.created_at }}
+        run: python scripts/process_method_assessment_issue.py
+
+      - name: Open pull request
+        if: steps.process.outputs.status != 'already-assessed-no-changes'
+        uses: peter-evans/create-pull-request@v6
+        with:
+          commit-message: "docs: method assessment update from issue #${{ github.event.issue.number }}"
+          branch: method-assessment/issue-${{ github.event.issue.number }}
+          title: "${{ steps.process.outputs.status == 'assessment-revised' && format('[Review] Method assessment revision suggested for {0} (issue no. {1})', steps.process.outputs.method_name, github.event.issue.number) || format('Method assessment update (issue no. {0})', github.event.issue.number) }}"
+          body: |
+            Automatically generated from #${{ github.event.issue.number }}.
+
+            ${{ steps.process.outputs.status == 'row-created' && format('New assessment row added for "{0}".', steps.process.outputs.method_name) || steps.process.outputs.status == 'row-filled' && format('Existing assessment row for "{0}" filled in.', steps.process.outputs.method_name) || format('"{0}" already has an assessment: this is a suggested revision to review, not an automatic replacement.', steps.process.outputs.method_name) }}
+            ${{ steps.process.outputs.page_status == 'generated' && 'A new documentation page was also generated (pending Category selection review).' || (steps.process.outputs.page_status == 'existing-elsewhere' && 'A documentation page already exists for this method; it was left untouched.' || '') }}
+
+            ${{ steps.process.outputs.status == 'assessment-revised' && '**Suggested changes:**' || '' }}
+            ${{ steps.process.outputs.changes }}
+
+            Please review before merging.
+          labels: method, assessment
+          base: main
+

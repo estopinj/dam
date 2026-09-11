@@ -1,5 +1,5 @@
 ---
-title: "Required TS length"
+title: "Minimal TS length"
 parent: "Data compatibility"
 nav_order: 2
 permalink: /tslength
@@ -8,13 +8,13 @@ categories:
 - data
 ---
 
-# Required time-series length
+# Minimal time-series length
 
 |  **Option**        | **Description**            |
 |:------------------:|----------------------------|
-| `Handles ≤ 10` | Designed to work reliably even with less than ten time points. |
-| `≥ 10` | Requires at least ten observations. |
 | `≥ 100` | Needs at least one hundred observations for stable estimation. |
+| `≥ 10` | Requires at least ten observations. |
+| `Handles ≤ 10` | Designed to work reliably even with less than ten time points. |
 
 
 ## Definition

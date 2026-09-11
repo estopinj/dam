@@ -12,10 +12,10 @@ categories:
 
 |  **Option**        | **Description**            |
 |:------------------:|----------------------------|
-| `Yes` | Scales smoothly to arbitrarily large *n* without fundamental changes. |
-| `Most do` | Works for large *n* with most method declinations but may need optimization. |
-| `Most don't` | Only a few variants or implementations of the method can handle large *n*. |
 | `No` | Breaks down or becomes computationally infeasible when *n* grows. |
+| `Most don't` | Only a few variants or implementations of the method can handle large *n*. |
+| `Most do` | Works for large *n* with most method declinations but may need optimization. |
+| `Yes` | Scales smoothly to arbitrarily large *n* without fundamental changes. |
 
 
 ## Definition

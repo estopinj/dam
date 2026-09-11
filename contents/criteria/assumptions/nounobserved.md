@@ -1,7 +1,7 @@
 ---
 title: "No unobserved confounders"
 parent: Assumptions
-nav_order: 2
+nav_order: 3
 permalink: /nounobserved
 categories:
 - criteria
@@ -14,9 +14,7 @@ categories:
 |:------------------:|----------------------------|
 | `Required` | Method assumes no unobserved confounders. |
 | `Recommended` | Best practice but not strictly enforced. |
-| `Desirable` | Improves performance but not essential. |
 | `Relaxes assumption` | Can tolerate some unmeasured confounding (e.g., DiD). |
-| `Time-varying OR site-varying` | Assumes confounding is either time‐invariant and site-specific or time-varying but common to all sites. |
 
 ## Definition
 Whether the method requires that all variables confounding the treatment-outcome relationship are observed and controlled or is designed to handle acknowledged / suspected unobserved confounders.
@@ -26,7 +24,7 @@ Unmeasured confounding can bias causal estimates when not accounted for at all. 
 
 ## Tools/rationale for helping assessment
 1. From your field knowledge, list all variables that influence both exposure and outcome and draw a causal graph to check for potential strong but unavailable confounders. 
-2. If you are confident that you have measured every major confounder, mark `Required`; if you aim to but may miss some, `Recommended`; if measurement would help but is not central, `Desirable`; if you lack key confounders, `Relaxes assumption`.  
+2. If you are confident that you have measured every major confounder, mark `Required`; if you aim to but may miss some, `Recommended`; if you lack key confounders, `Relaxes assumption`.  
 3. Perform sensitivity analysis afterwards to challenge estimated effects against unobserved confounding. 
 
 

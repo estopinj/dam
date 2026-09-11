@@ -65,14 +65,14 @@ Frescalo is a method developed by {% cite hill2012  --style _bibliography/narrat
 - {% cite eichenberg2021  --style _bibliography/narrative %}
 - {% cite redhead2018  --style _bibliography/narrative %}
 - {% cite dyer2017  --style _bibliography/narrative %}
-- {% cite goury2025vegetation  --style _bibliography/narrative %}
+- {% cite goury2025  --style _bibliography/narrative %}
 
-## Packages 
+## Implementation 
 
 #### Python
 {: .no_toc }
 
-> *No packages in python are existing*
+> *No Implementation in python are existing*
 
 #### R
 {: .no_toc }

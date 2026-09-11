@@ -1,11 +1,11 @@
 ---
 title: "Example"
-parent: Gallery
+parent: Examples
 nav_order: 99
 categories:
-- gallery
+- examples
 ---
 
-# Gallery example name
+# Example name
 
-This is a gallery example page.
+This is an example page.

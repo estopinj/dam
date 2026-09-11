@@ -26,13 +26,13 @@ permalink: /
 
 ## Welcome !
 
-NaviDAM is an interactive decision-support tool designed to help users explore, compare, and select appropriate detection and attribution methods based on the nature of their project.
+NaviDAM is an interactive decision-support platform designed to help users explore, compare, and select appropriate detection and attribution methods based on the nature of their project.
 {: .fs-6 .fw-300 }
 
 
 - **Users are invited [below](#user-input) to qualify their _objective_, _data at hands_ and affordable _assumptions_ between others by assessing different <a href="{{ site.baseurl }}/criteria" target="_blank" rel="noopener noreferrer">criteria</a>**
-- **~~A single~~ *<u>A set of</u>* [suited methods](#candidate-methods) is provided and methods are described in more detail on <a href="{{ site.baseurl }}/methods" target="_blank" rel="noopener noreferrer">documentation pages</a>, allowing users to get started on their project using relevant resources**
-- The <a href="{{ site.baseurl }}/practices" target="_blank" rel="noopener noreferrer">Good practices</a> and <a href="{{ site.baseurl }}/gallery" target="_blank" rel="noopener noreferrer">Gallery</a> panels respectively provide conceptual and general resources on attribution, causal inference & detection, and NaviDAM application examples [*ongoing work*]
+- ***<u>A set of</u>* [suited methods](#candidate-methods) is provided and methods are described in more detail on <a href="{{ site.baseurl }}/methods" target="_blank" rel="noopener noreferrer">documentation pages</a>, allowing users to get started on their project using relevant resources**
+- The <a href="{{ site.baseurl }}/practices" target="_blank" rel="noopener noreferrer">Good practices</a> and <a href="{{ site.baseurl }}/examples" target="_blank" rel="noopener noreferrer">Examples</a> panels respectively provide conceptual and general resources on attribution, causal inference & detection, and NaviDAM application examples.
 
 *Check the [About]({{ site.baseurl }}/about) page for further information*
 
@@ -41,9 +41,14 @@ NaviDAM is an interactive decision-support tool designed to help users explore, 
 > Status
 > 
 > This website is under active development.
+> <p style="text-align: right;"><em>Latest release:</em> <a href="https://doi.org/10.5281/zenodo.22675343"><img src="https://img.shields.io/badge/DOI-10.5281%2Fzenodo.22675343-blue?logo=doi&logoColor=white" alt="DOI: 10.5281/zenodo.22675343" width="205" height="20" style="vertical-align: middle;"></a></p>
 
+{: .important }
+Consult the [Good practices]({{ site.baseurl }}/practices) panel and especially the <a href="{{ site.baseurl }}/contents/practices/box1/" target="_blank" rel="noopener noreferrer">Beyond method selection page</a> for guidance on how to design a robust study and reach credible results.
 
 --------------------------------
+
+
 <a id="user-input"></a>
 ## [User input invite](#user-input){: .btn .btn-purple } <span style="font-size:1em;">&#8594;</span> Evaluating your project's needs
 
@@ -74,6 +79,14 @@ Choose the [criteria]({{ site.baseurl }}/criteria) options in the dropdown lists
 
 <div id="criteria-filters"></div>
 
+<details markdown="block">
+<summary>Note on assumptions</summary>
+
+{: .important }
+> Investigators are invited to specify method assumptions at the end of the filtering process. This way, when assumptions are not (fully) specified with `Any` or `Unsure` options, NaviDAM suggests a **set of methods** relying on **different assumptions**. This enables users to **compare results** across methods, assess the robustness or sensitivity of findings to assumptions, and interpret their results with multiple lines of evidence.
+</details>
+
+
 <div class="criteria-status-row">
   <div id="criteria-status"></div>
 </div>
@@ -82,29 +95,31 @@ Choose the [criteria]({{ site.baseurl }}/criteria) options in the dropdown lists
   <a href="#" id="reset-filters-btn" class="btn">Reset all criteria</a>
 </div>
 
+
 --------------------------------
-<div style="text-align:center; font-size:0.85em; font-style:italic;">
-Rather than suggesting a single 'unicorn' method, NaviDAM provides a subset of candidate methods that meet the specified criteria and offer complementary insights into the studied system
-</div>
---------------------------------
-<a id="suggested-methods"></a>
-## *Set of* candidate methods
-
-
-
-<div id="filtered-methods"></div>
+## Candidate methods
 
 {: .important }
-> Investigators are invited to specify method assumptions at the end of the filtering process.
-> This way, when assumptions are not (fully) specified with `Any` or `Unsure` options, NaviDAM suggests a **set of methods** relying on **different assumptions**. This enables users to **compare results** across methods, assess the robustness or sensitivity of findings to assumptions, and interpret their results with multiple lines of evidence.
+> Consult the [Good practices](http://127.0.0.1:4000/practices) panel and especially the [Beyond method selection page](http://127.0.0.1:4000/contents/practices/box1/) for guidance on how to design a robust study and reach credible results.
 
-## Graph Explorer
+<div style="text-align:center; font-size:0.9em; font-style:italic; font-style:bold;">
+Rather than suggesting a single 'unicorn' method, NaviDAM provides a subset of candidate methods that meet the specified criteria and offer complementary insights into the studied system
+</div>
 
-{: .new}
-> A <a href="https://neo4j.com/docs/getting-started/graph-database/" target="_blank" rel="noopener noreferrer"><strong>Neo4j</strong></a> graph database is being developed to explore, vizualize and query the network of methods and criteria.
+<a id="suggested-methods"></a>
+<div id="filtered-methods"></div>
 
-- Illustrative scheme highlighting some methods
-![]({{ site.baseurl }}/assets/images/DAM_Scheme_greenHighlight.png){: width="75%" }
+
+<div class="evaluation-export-panel">
+  <h3>Export evaluation</h3>
+  <p>Download the selected criteria options, category rationales, and suggested methods.</p>
+  <label for="evaluation-title">Title</label>
+  <input type="text" id="evaluation-title" maxlength="120" placeholder="project_name" />
+  <button type="button" id="export-evaluation-btn" class="btn">Export (.csv)</button>
+  <span id="export-evaluation-status" role="status" aria-live="polite"></span>
+</div>
+
+
 
 
 ------------------------------------

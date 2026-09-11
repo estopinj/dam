@@ -23,6 +23,7 @@ categories:
 | `Cutoff + PO continuity` | A clearly defined assignment cutoff and continuity of potential outcomes at that threshold. |
 | `B/A treatment obs.` | Assumes a sufficient number of observations both before and after the intervention to establish stable trends. |
 | `Good pretreatment fit` | Validity relies on closely matching pre‐intervention trajectories between treated and control units. |
+| `Time-varying OR site-varying` | Assumes confounding is either time‐invariant and site-specific or time-varying but common to all sites. |
 
 ## Definition
 Any critical assumption unique to the method’s structure and validity (e.g., parallel trends for DiD, stationarity for time‐series, instrument validity for IV). 

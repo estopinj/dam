@@ -12,9 +12,9 @@ categories:
 
 |  **Option**        | **Description**            |
 |:------------------:|----------------------------|
-| `Yes` | Extensively demonstrated on RS datasets in published studies. | 
-| `Few applications` | Some exploratory uses but not widespread. |
 | `No` | No known successful RS applications with biodiversity data. |
+| `Few applications` | Some exploratory uses but not widespread. |
+| `Yes` | Extensively demonstrated on RS datasets in published studies. | 
 
 
 ## Definition
