@@ -41,7 +41,7 @@ jobs:
         run: python scripts/process_method_issue.py
 
       - name: Open pull request
-        uses: peter-evans/create-pull-request@v6
+        uses: peter-evans/create-pull-request@v8
         with:
           commit-message: "docs: method page update from issue #${{ github.event.issue.number }}"
           branch: method-doc/issue-${{ github.event.issue.number }}
