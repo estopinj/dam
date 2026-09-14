@@ -43,7 +43,7 @@ jobs:
 
       - name: Open pull request
         if: steps.process.outputs.status != 'already-assessed-no-changes'
-        uses: peter-evans/create-pull-request@v6
+        uses: peter-evans/create-pull-request@v8
         with:
           commit-message: "docs: method assessment update from issue #${{ github.event.issue.number }}"
           branch: method-assessment/issue-${{ github.event.issue.number }}
