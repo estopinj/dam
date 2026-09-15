@@ -19,12 +19,6 @@ CATEGORY_FOLDER_MAP = {
 
 # === SubCategory → folder mapping ===
 SUBCAT_FOLDER_MAP = {
-"Climate change attribution methods": "climate_change",
-"Process-based methods": "process_based",
-"Dynamic vegetation models": "dynamic_vegetation",
-"Individual-based models": "individual_based",
-"Land use change models": "land_use_change",
-"Ecosystem Process Models": "ecosystem_process",
 "Linear regressions & extensions": "linear_regressions",
 "Predictive models +  interpretability metrics": "predictive_models",
 "Alternative effect identification methods": "alternative_effects",
@@ -47,12 +41,6 @@ SUBCAT_FOLDER_MAP = {
 
 # === SubCategory → parent folder mapping ===
 SUBCAT_PARENT = {
-"Climate change attribution methods": "Counterfactual & future simulations",
-"Process-based methods": "Counterfactual & future simulations",
-"Dynamic vegetation models": "Counterfactual & future simulations",
-"Individual-based models": "Counterfactual & future simulations",
-"Land use change models": "Counterfactual & future simulations",
-"Ecosystem Process Models": "Counterfactual & future simulations",
 "Linear regressions & extensions": "Ecology-guided Modelling",
 "Predictive models +  interpretability metrics": "Ecology-guided Modelling",
 "Alternative effect identification methods": "Adjusted methods (Backdoor C.)",

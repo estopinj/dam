@@ -21,7 +21,7 @@ categories:
 Whether the method mandates building an explicit mechanistic or process‐based model of the underlying system. 
 
 ## Explanation
-Process‐explicit methods (e.g., dynamic vegetation models) leverage domain knowledge to simulate system behavior. Agnostic methods rely on observed statistical patterns and assumptions. 
+Process‐explicit methods leverage domain knowledge to simulate system behavior. Agnostic methods rely on observed statistical patterns and assumptions. 
 
 ## Tools/rationale for helping assessment
 1. Review whether you want to enforce mechanistic equations in your system modeling. 

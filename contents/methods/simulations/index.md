@@ -12,7 +12,7 @@ categories:
 
  - This family includes methods that generate hypothetical or forward-looking scenarios, often by simulating system behavior under altered conditions (e.g. no intervention, future climate).
  
- - These methods are often used in climate change attribution, ecosystem projections, or to produce synthetic counterfactuals.
+ - These methods are often used in ecosystem projections or to produce synthetic counterfactuals.
  
  - They are grounded in ecological, processes and are used to generate what would happen under different counterfactual or future assumptions.
 {: .fs-6 .fw-300 }
