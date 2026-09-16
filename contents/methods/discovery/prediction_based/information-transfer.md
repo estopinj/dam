@@ -1,15 +1,15 @@
 ---
 layout: method
-title: "Phenology models"
-parent: "Process-based methods"
+title: "Information transfer"
+parent: "Prediction-based approaches"
 date: 2025-07-17
 author: Mrs. Young
 ---
-<!-- This file was auto-generated from /home/runner/work/dam/dam/_data/DetectionAttribution methods - Method Assessment.tsv -->
+<!-- This file was auto-generated from /home/estopinj/POSTDOC/src/dam/_data/DetectionAttribution methods - Method Assessment.tsv -->
 
 {% if page.category_note != '' %}
 {: .note }
-
+This method also belongs to [Alternative paradigms]({{ site.baseurl }}/alternative).
 {% endif %}
 
 

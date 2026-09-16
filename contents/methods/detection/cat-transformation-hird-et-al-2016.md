@@ -1,11 +1,11 @@
 ---
 layout: method
-title: "Process-based models"
-parent: "Process-based methods"
+title: "CAT transformation (Hird et al. 2016)"
+parent: "Independent detection"
 date: 2025-07-17
 author: Mrs. Young
 ---
-<!-- This file was auto-generated from /home/runner/work/dam/dam/_data/DetectionAttribution methods - Method Assessment.tsv -->
+<!-- This file was auto-generated from /home/estopinj/POSTDOC/src/dam/_data/DetectionAttribution methods - Method Assessment.tsv -->
 
 {% if page.category_note != '' %}
 {: .note }

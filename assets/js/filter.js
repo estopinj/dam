@@ -637,14 +637,15 @@ document.addEventListener('DOMContentLoaded', function() {
       const SUBCAT_FOLDER_MAP = catDicts.SUBCAT_FOLDER_MAP;
       const SUBCAT_PARENT = catDicts.SUBCAT_PARENT;
 
-      // Filter out methods with missing "Method"
-      const validMethods = methods.filter(m => m["Method"]);
+      // Filter out methods with missing "Method" (e.g. trailing placeholder rows in the TSV)
+      const validMethods = methods.filter(m => m["Method"] && m["Method"].trim());
+      const validTotal = methodData.filter(m => m["Method"] && m["Method"].trim());
       currentFilteredMethods = validMethods;
       if (validMethods.length === 0) {
           div.innerHTML = "<div class=\"no-methods-message\">No methods match your criteria.</div>";
           return;
       }
-      if (validMethods.length === methodData.length) {
+      if (validMethods.length === validTotal.length) {
           div.innerHTML = `<div class="any-method-message">Any <a href="${siteBaseurl}/methods" target="_blank" rel="noopener noreferrer">method</a>!</div>`;
           return;
       }

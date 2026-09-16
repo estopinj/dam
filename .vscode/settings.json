@@ -1,0 +1,8 @@
+{
+    "chat.tools.terminal.autoApprove": {
+        "/^python3 - <<'PY'\npath=\"_data/DetectionAttribution methods - Method Assessment\\.tsv\"\nwith open\\(path, encoding='utf-8'\\) as f:\n    lines=f\\.readlines\\(\\)\nhdr=\\[h\\.strip\\(\\) for h in lines\\[3\\]\\.rstrip\\(\"\\\\n\"\\)\\.split\\(\"\\\\t\"\\)\\]\nfor line in lines\\[4:\\]:\n    parts=line\\.rstrip\\(\"\\\\n\"\\)\\.split\\(\"\\\\t\"\\)\n    while len\\(parts\\)<len\\(hdr\\):\n        parts\\.append\\(\"\"\\)\n    m=parts\\[4\\]\\.strip\\(\\)\n    if m in \\(\"Synthetic controls\",\"Panel designs\",\"TWFE\",\"Interrupted time series\",\"Causal forests\",\"Double Machine learning\"\\):\n        print\\(\"=\"\\*100\\)\n        print\\(f\"METHOD=\\{m\\}\"\\)\n        for j,h in enumerate\\(hdr\\):\n            print\\(f\"  \\[\\{j\\}\\] \\{h\\}=\\{parts\\[j\\]\\.strip\\(\\)\\}\"\\)\nPY$/": {
+            "approve": true,
+            "matchCommandLine": true
+        }
+    }
+}

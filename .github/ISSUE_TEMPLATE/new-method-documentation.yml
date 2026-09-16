@@ -84,7 +84,6 @@ body:
       description: "Multiple, can be left unspecified (only for method page organization)"
       multiple: true
       options:
-        - "Process-based methods"
         - "Linear regressions & extensions"
         - "Predictive models +  interpretability metrics"
         - "Alternative effect identification methods"
