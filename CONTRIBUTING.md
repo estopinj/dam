@@ -29,13 +29,13 @@ Please follow the [Code of Conduct](https://github.com/estopinj/dam/blob/main/CO
 
 | Goal | How |
 |------|-----|
-| New assessment or revision of an existing assessment | [Method assessment issue](#1-assess-a-method-new-or-revision) |
-| New documentation page or completion of an existing one | [Method documentation issue](#2-document-a-method-new-or-completion) |
-| Revision of an existing [documentation page](https://estopinj.github.io/dam/methods) | [Pull request](#3-revise-an-existing-documentation-page) |
-| Brand-new method from scratch (assess + document) | [Both issues, in order](#4-add-a-brand-new-method-from-scratch) |
-| Revise or add a [Good practices](https://estopinj.github.io/dam/practices) or [Examples](https://estopinj.github.io/dam/examples) page | [Pull request](#5-good-practices-and-examples-pages) |
+| New assessment or revision of an existing assessment | Method assessment issue, see [1.](#1-assess-a-method-new-or-revision) |
+| New documentation page or completion of an existing one | Method documentation issue, see [2.](#2-document-a-method-new-or-completion) |
+| Revision of an existing [documentation page](https://estopinj.github.io/dam/methods) | Pull request, see [3.](#3-revise-an-existing-documentation-page) |
+| Brand-new method from scratch (assess + document) | Both issues, in order, see [4.](#4-add-a-brand-new-method-from-scratch) |
+| Revise or add a [Good practices](https://estopinj.github.io/dam/practices) or [Examples](https://estopinj.github.io/dam/examples) page | Pull request, see [5.](#5-good-practices-and-examples-pages) |
 
-Go to **Issues > New issue** and choose the matching template: <https://github.com/estopinj/dam/issues/new/choose>.
+> Go to **Issues > New issue** and choose the matching template: <https://github.com/estopinj/dam/issues/new/choose>.
 
 ## 1. Assess a method (new or revision)
 
@@ -69,7 +69,7 @@ From the website:
 2. Click the pencil icon <svg width="18" height="18" viewBox="0 0 16 16" style="vertical-align:-3px; display:inline; border:1px solid #d0d7de; border-radius:4px; padding:2px; background:#f6f8fa;" role="img" aria-label="GitHub pencil icon to edit a file"><rect width="16" height="16" rx="3" fill="#f6f8fa" stroke="#d0d7de"></rect><path fill="#24292f" d="M11.013 1.427a1.75 1.75 0 0 1 2.474 0l1.086 1.086a1.75 1.75 0 0 1 0 2.474l-8.61 8.61c-.21.21-.47.364-.756.445l-3.251.93a.75.75 0 0 1-.927-.928l.929-3.25c.081-.286.235-.547.445-.757l8.61-8.61Zm.176 4.823L9.75 4.81l-6.286 6.287a.253.253 0 0 0-.064.108l-.558 1.953 1.953-.558a.253.253 0 0 0 .108-.064l6.286-6.286Zm2.262-3.199-1.086-1.086a.25.25 0 0 0-.354 0L10.925 3.05l1.44 1.44 1.086-1.086a.25.25 0 0 0 0-.354Z"></path></svg> to edit the `.md` file.
 3. Propose changes on a new `doc/<short-topic>` branch (e.g. `doc/synthetic-controls-refs`), then open a pull request against `main` with a clear title (e.g. `docs: clarify assumptions on Synthetic controls`).
 
-For assessment corrections, use the **Method assessment** issue template instead (see section 1).
+For assessment corrections, use the **Method assessment** issue template instead (see section [1.](#1-assess-a-method-new-or-revision)).
 
 ## 4. Add a brand-new method from scratch
 
