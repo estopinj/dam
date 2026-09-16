@@ -457,3 +457,23 @@
   background: #ede7f6;
   border-color: #6f42c1;
 }
+
+/* Compact coverage + contribution sections (About / Contributing) */
+.coverage-table {
+  font-size: 0.85em;
+  max-width: 620px;
+}
+.coverage-table table {
+  width: 100%;
+}
+.coverage-table th,
+.coverage-table td {
+  padding: 0.3em 0.6em;
+}
+.contribution-list {
+  margin-left: 1.2em;
+}
+.contribution-list li {
+  margin-bottom: 0.15em;
+  line-height: 1.35;
+}

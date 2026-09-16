@@ -3,9 +3,10 @@
 ### Assessments to review ({{ cov.assess.review_list | size }})
 
 {% if cov.assess.review_list.size > 0 %}
-<ul>
+<ul class="contribution-list" style="font-size:0.85em;">
 {% for m in cov.assess.review_list %}
-  <li>{{ m }}</li>
+{% assign pg = site.pages | where: "title", m | first %}
+  <li>{% if pg %}<a href="{{ pg.url | relative_url }}">{{ m }}</a>{% else %}{{ m }}{% endif %}</li>
 {% endfor %}
 </ul>
 {% else %}
@@ -15,9 +16,10 @@
 ### Documentation pages to create ({{ cov.doc.todo_list | size }})
 
 {% if cov.doc.todo_list.size > 0 %}
-<ul>
+<ul class="contribution-list" style="font-size:0.85em;">
 {% for h in cov.doc.todo_list %}
-  <li>{{ h.method }}</li>
+{% assign pg = site.pages | where: "title", h.method | first %}
+  <li>{% if pg %}<a href="{{ pg.url | relative_url }}">{{ h.method }}</a>{% else %}{{ h.method }}{% endif %}</li>
 {% endfor %}
 </ul>
 {% else %}
@@ -27,9 +29,10 @@
 ### Documentation pages to review ({{ cov.doc.review_list | size }})
 
 {% if cov.doc.review_list.size > 0 %}
-<ul>
+<ul class="contribution-list" style="font-size:0.85em;">
 {% for h in cov.doc.review_list %}
-  <li>{{ h.method }}</li>
+{% assign pg = site.pages | where: "title", h.method | first %}
+  <li>{% if pg %}<a href="{{ pg.url | relative_url }}">{{ h.method }}</a>{% else %}{{ h.method }}{% endif %}</li>
 {% endfor %}
 </ul>
 {% else %}
@@ -39,9 +42,10 @@
 {% if cov.doc.planned_list.size > 0 %}
 ### Planned documentation pages ({{ cov.doc.planned_list | size }})
 
-<ul>
+<ul class="contribution-list" style="font-size:0.85em;">
 {% for h in cov.doc.planned_list %}
-  <li>{{ h.method }} ({{ h.status }})</li>
+{% assign pg = site.pages | where: "title", h.method | first %}
+  <li>{% if pg %}<a href="{{ pg.url | relative_url }}">{{ h.method }}</a>{% else %}{{ h.method }}{% endif %} ({{ h.status }})</li>
 {% endfor %}
 </ul>
 {% endif %}

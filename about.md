@@ -101,7 +101,7 @@ The table below is generated automatically at each site build from the assessmen
 
 {% include coverage_table.html %}
 
-Want to help fill the gaps? See the [Contributing page]({{ site.baseurl }}/contributing/) for the lists of methods, good practices and examples needing contributions. 🌱
+Want to help fill the gaps? See the [Contributing page]({{ site.baseurl }}/contributing/#website-coverage) for the lists of methods needing contributions. 🌱
 
 
 ------------------------------------

@@ -4,6 +4,7 @@
 {% assign gp_total = cov.gp.total | default: 0 %}
 {% assign ex_total = cov.ex.total | default: 0 %}
 
+<div class="coverage-table" style="font-size:0.85em; max-width:620px;">
 <table>
   <thead>
     <tr><th></th><th>Count</th><th>Percent</th></tr>
@@ -38,3 +39,4 @@
     <tr><td><em>Total</em></td><td><em>{{ ex_total }}</em></td><td><em>{% if ex_total > 0 %}100.00%{% endif %}</em></td></tr>
   </tbody>
 </table>
+</div>
