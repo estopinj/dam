@@ -78,7 +78,7 @@ From the website:
 - If the work is still in progress, open a draft pull request to get early feedback.
 - Be responsive to reviewer comments — discussion is part of the process.
 
-For assessment corrections, use the **Method assessment** issue template instead (see section 1).
+For assessment corrections, use the **Method assessment** issue template instead (see section [1.](#1-assess-a-method-new-or-revision)).
 
 ## 4. Add a brand-new method from scratch ✨
 
