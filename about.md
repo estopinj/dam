@@ -95,6 +95,16 @@ NaviDAM is implemented in this collaborative website and is organized around a d
 
 
 ------------------------------------
+## Website coverage 📊
+
+The table below is generated automatically at each site build from the assessment and panels tracking files, so it always reflects the current content.
+
+{% include coverage_table.html %}
+
+Want to help fill the gaps? See the [Contributing page]({{ site.baseurl }}/contributing/) for the lists of methods, good practices and examples needing contributions. 🌱
+
+
+------------------------------------
 ## Contact
 
 - Joaquim Estopinan: firstname.surname @ univ-grenoble-alpes.fr

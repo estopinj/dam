@@ -62,6 +62,8 @@ Use the **Method documentation** issue template for both cases. Documentation fi
 
 Good first contributions include completing thin pages, adding references, or documenting a method you know well. If unsure where to start, browse the [methods panel](https://estopinj.github.io/dam/methods) for pages with placeholders and follow sections 1–2 above.
 
+> 📊 The live [Contributing page on the website](https://estopinj.github.io/dam/contributing/) shows automatically updated coverage numbers and the lists of methods needing assessment review, documentation, or review.
+
 ## 3. Revise an existing documentation page 🔍
 
 Revisions of existing [documentation pages](https://estopinj.github.io/dam/methods) are made via pull requests, not issues. Even small fixes (typos, broken links, clearer wording) are welcome — there is no minimum size for a useful contribution. ✨
