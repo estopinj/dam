@@ -5,7 +5,7 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent
 IN = PROJECT_ROOT / "_data" / "DetectionAttribution methods - Method Assessment.tsv"
 RES = PROJECT_ROOT / "_data" / "DA_usedressources.tsv"
 
-HDR = ['Author','Status','Reviewer','Assessor','Method','Status','AI-assisted','AI flag','Category','Sub-category','Objective','Estimand','Type','Minimal TS length','Handles few samples','Handles huge datasets (n)','Handles missing data','RS-data proven','Fonctional form','No unobserved confounders','No interference','Well-defined treatments','Common support (positivity)','Causal Markov Condition','Faithfulness','IID','Model specific','Requires explicit processes','Exposure type','Number of variables','Propaguates uncertainty','Handles lag effects','Parametric nature','Language','Usage']
+HDR = ['Author','Doc status','Reviewer','Assessor','Method','Assessment status','AI-assisted','AI flag','Category','Sub-category','Objective','Estimand','Type','Minimal TS length','Handles few samples','Handles huge datasets (n)','Handles missing data','RS-data proven','Fonctional form','No unobserved confounders','No interference','Well-defined treatments','Common support (positivity)','Causal Markov Condition','Faithfulness','IID','Model specific','Requires explicit processes','Exposure type','Number of variables','Propaguates uncertainty','Handles lag effects','Parametric nature','Language','Usage','Confidence in assessment']
 
 # Each entry: method -> dict of columns to set (Status->To review, AI-assisted->Yes, Assessor appends AI tag always)
 AI_TAG = "AI initial completion"

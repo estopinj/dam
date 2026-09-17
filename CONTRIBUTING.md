@@ -7,30 +7,31 @@
 </div>
 --------------------------------
 
-# Contributing to NaviDAM 👋
+# Contributing to NaviDAM
 
-Welcome, and thanks for your interest in NaviDAM! ✨
+Welcome, and thanks for your interest in NaviDAM!
 
 NaviDAM is a collaborative effort. Method suggestions depend directly on the quality and number of method assessments: the more complete and accurate the assessments, the more useful the guidance.
 
-All contributions are welcome, and your ideas matter more than perfect formatting. 🙏 No coding skills are required for most contributions — fixing a typo, adding a reference, or sharing domain expertise is already valuable.
+All contributions are welcome, and your ideas matter more than perfect formatting. No coding skills are required for most contributions — fixing a typo, adding a reference, or sharing domain expertise is already valuable.
 
-Please follow the [Code of Conduct](https://github.com/estopinj/dam/blob/main/CODE_OF_CONDUCT.md) in all interactions. Be kind, use inclusive language, and assume good intent, especially when discussing methods or assessments where opinions may differ. 🤝
+Please follow the [Code of Conduct](https://github.com/estopinj/dam/blob/main/CODE_OF_CONDUCT.md) in all interactions. Be kind, use inclusive language, and assume good intent, especially when discussing methods or assessments where opinions may differ.
 
 ## At a glance 💡
 
 | Goal | How |
 |------|-----|
-| New assessment or revision of an existing assessment | 📝 [Method assessment issue](#1-assess-a-method-new-or-revision) |
-| New documentation page or completion of an existing one | 📝 [Method documentation issue](#2-document-a-method-new-or-completion) |
-| Revision of an existing [documentation page](https://estopinj.github.io/dam/methods) | 🔍 [Pull request](#3-revise-an-existing-documentation-page) |
-| Brand-new method from scratch (assess + document) | ✨ [Both issues, in order](#4-add-a-brand-new-method-from-scratch) |
-| Revise or add a [Good practices](https://estopinj.github.io/dam/practices) or [Examples](https://estopinj.github.io/dam/examples) page | 🔍 [Pull request](#5-good-practices-and-examples-pages) |
+| New assessment or revision of an existing assessment | 📝 [Method assessment issue](#assess-method) |
+| New documentation page or completion of an existing one | 📝 [Method documentation issue](#document-method) |
+| Revision of an existing [documentation page](https://estopinj.github.io/dam/methods) | 🔍 [Pull request](#revise-doc) |
+| Brand-new method from scratch (assess + document) | ✨ [Both issues, in order](#new-method) |
+| Revise or add a [Good practices](https://estopinj.github.io/dam/practices) or [Examples](https://estopinj.github.io/dam/examples) page | 🔍 [Pull request](#practices-examples) |
 | Question, site bug, or infrastructure suggestion | 💬 [Blank issue](https://github.com/estopinj/dam/issues/new/choose) |
 
 > Go to **Issues > New issue** and choose the matching template: <https://github.com/estopinj/dam/issues/new/choose>.
 > Before opening a new issue, please search [existing issues](https://github.com/estopinj/dam/issues) to avoid duplicates and consider joining an ongoing discussion.
 
+<a id="assess-method"></a>
 ## 1. Assess a method (new or revision) 📝
 
 Use the **Method assessment** issue template for both cases. Assessments position [methods](https://estopinj.github.io/dam/methods) against the [criteria](https://estopinj.github.io/dam/criteria).
@@ -45,6 +46,7 @@ Use the **Method assessment** issue template for both cases. Assessments positio
 
 What happens next: a pull request is opened automatically. New rows are added directly; revisions are listed as old → new suggestions to accept or reject. A maintainer reviews and may ask for clarification in the issue thread.
 
+<a id="document-method"></a>
 ## 2. Document a method (new or completion) 📝
 
 Use the **Method documentation** issue template for both cases. Documentation fills the [methods](https://estopinj.github.io/dam/methods) pages (description, references, implementation).
@@ -62,6 +64,9 @@ Use the **Method documentation** issue template for both cases. Documentation fi
 
 Good first contributions include completing thin pages, adding references, or documenting a method you know well. If unsure where to start, browse the [methods panel](https://estopinj.github.io/dam/methods) for pages with placeholders and follow sections 1–2 above.
 
+> 📊 The live [Website coverage](https://estopinj.github.io/dam/contributing/#website-coverage) section on the website shows automatically updated coverage numbers and the lists of methods needing assessment review, documentation, or review.
+
+<a id="revise-doc"></a>
 ## 3. Revise an existing documentation page 🔍
 
 Revisions of existing [documentation pages](https://estopinj.github.io/dam/methods) are made via pull requests, not issues. Even small fixes (typos, broken links, clearer wording) are welcome — there is no minimum size for a useful contribution. ✨
@@ -78,8 +83,9 @@ From the website:
 - If the work is still in progress, open a draft pull request to get early feedback.
 - Be responsive to reviewer comments — discussion is part of the process.
 
-For assessment corrections, use the **Method assessment** issue template instead (see section [1.](#1-assess-a-method-new-or-revision)).
+For assessment corrections, use the **Method assessment** issue template instead (see section [1.](#assess-method)).
 
+<a id="new-method"></a>
 ## 4. Add a brand-new method from scratch ✨
 
 Fully positioning a new method requires two steps, in order:
@@ -89,9 +95,10 @@ Fully positioning a new method requires two steps, in order:
 
 Assessment first ensures the method becomes filterable; documentation then provides description, references, and implementation details.
 
+<a id="practices-examples"></a>
 ## 5. Good practices and Examples pages 🔍
 
-Revisions of [Good practices](https://estopinj.github.io/dam/practices) and [Examples](https://estopinj.github.io/dam/examples) pages follow the same process as [method documentation pages](#3-revise-an-existing-documentation-page):
+Revisions of [Good practices](https://estopinj.github.io/dam/practices) and [Examples](https://estopinj.github.io/dam/examples) pages follow the same process as [method documentation pages](#revise-doc):
 
 1. Scroll to the bottom of the page and click **Edit this page on GitHub**.
 2. Click the pencil icon ✏️ to edit the `.md` file.

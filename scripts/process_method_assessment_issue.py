@@ -40,7 +40,8 @@ RAW_TSV = PROJECT_ROOT / "_data/DetectionAttribution methods - Method Assessment
 HEADER_SKIP_LINES = 3
 
 COLUMNS = [
-    "Author", "Status", "Reviewer", "Assessor", "Method", "Category", "Sub-category",
+    "Author", "Doc status", "Reviewer", "Assessor", "Method", "Assessment status",
+    "AI-assisted", "AI flag", "Category", "Sub-category",
     "Objective", "Estimand", "Type", "Minimal TS length", "Handles few samples",
     "Handles huge datasets (n)", "Handles missing data", "RS-data proven",
     "Fonctional form", "No unobserved confounders", "No interference",
@@ -48,9 +49,13 @@ COLUMNS = [
     "Faithfulness", "IID", "Model specific", "Requires explicit processes",
     "Exposure type", "Number of variables", "Propaguates uncertainty",
     "Handles lag effects", "Parametric nature", "Language", "Usage",
+    "Confidence in assessment",
 ]
 # Columns an issue can never overwrite; only "Assessor" may be filled if empty.
-IDENTITY_COLUMNS = ["Author", "Status", "Reviewer", "Assessor", "Method", "Category", "Sub-category"]
+# ("Assessment status", "AI-assisted" and "AI flag" are managed by maintainers /
+# bulk scripts, never by an issue.)
+IDENTITY_COLUMNS = ["Author", "Doc status", "Reviewer", "Assessor", "Method", "Category", "Sub-category",
+                    "Assessment status", "AI-assisted", "AI flag"]
 ASSESSMENT_COLUMNS = [c for c in COLUMNS if c not in IDENTITY_COLUMNS]
 
 # Maps TSV column -> issue field id. List-valued fields are joined with ", ".
@@ -80,6 +85,7 @@ FIELD_MAP = {
     "Parametric nature": "parametric_nature",
     "Language": "language",
     "Usage": "usage",
+    "Confidence in assessment": "confidence",
 }
 LIST_FIELDS = {
     "category", "sub_category", "objective", "estimand", "data_type",

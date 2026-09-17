@@ -1,0 +1,51 @@
+{% assign cov = site.data.coverage %}
+
+### Assessments to review ({{ cov.assess.review_list | size }})
+
+{% if cov.assess.review_list.size > 0 %}
+<ul class="contribution-list" style="font-size:0.85em;">
+{% for m in cov.assess.review_list %}
+{% assign pg = site.pages | where: "title", m | first %}
+  <li>{% if pg %}<a href="{{ pg.url | relative_url }}">{{ m }}</a>{% else %}{{ m }}{% endif %}</li>
+{% endfor %}
+</ul>
+{% else %}
+<p>Nothing to review — all assessments are complete. 🎉</p>
+{% endif %}
+
+### Documentation pages to create ({{ cov.doc.todo_list | size }})
+
+{% if cov.doc.todo_list.size > 0 %}
+<ul class="contribution-list" style="font-size:0.85em;">
+{% for h in cov.doc.todo_list %}
+{% assign pg = site.pages | where: "title", h.method | first %}
+  <li>{% if pg %}<a href="{{ pg.url | relative_url }}">{{ h.method }}</a>{% else %}{{ h.method }}{% endif %}</li>
+{% endfor %}
+</ul>
+{% else %}
+<p>No missing pages. 🎉</p>
+{% endif %}
+
+### Documentation pages to review ({{ cov.doc.review_list | size }})
+
+{% if cov.doc.review_list.size > 0 %}
+<ul class="contribution-list" style="font-size:0.85em;">
+{% for h in cov.doc.review_list %}
+{% assign pg = site.pages | where: "title", h.method | first %}
+  <li>{% if pg %}<a href="{{ pg.url | relative_url }}">{{ h.method }}</a>{% else %}{{ h.method }}{% endif %}</li>
+{% endfor %}
+</ul>
+{% else %}
+<p>Nothing to review. 🎉</p>
+{% endif %}
+
+{% if cov.doc.planned_list.size > 0 %}
+### Planned documentation pages ({{ cov.doc.planned_list | size }})
+
+<ul class="contribution-list" style="font-size:0.85em;">
+{% for h in cov.doc.planned_list %}
+{% assign pg = site.pages | where: "title", h.method | first %}
+  <li>{% if pg %}<a href="{{ pg.url | relative_url }}">{{ h.method }}</a>{% else %}{{ h.method }}{% endif %} ({{ h.status }})</li>
+{% endfor %}
+</ul>
+{% endif %}

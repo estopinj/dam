@@ -457,3 +457,84 @@
   background: #ede7f6;
   border-color: #6f42c1;
 }
+
+/* Compact coverage + contribution sections (About / Contributing) */
+.coverage-table {
+  font-size: 0.85em;
+  max-width: 620px;
+}
+.coverage-table table {
+  width: 100%;
+}
+.coverage-table th,
+.coverage-table td {
+  padding: 0.3em 0.6em;
+}
+.contribution-list {
+  margin-left: 1.2em;
+}
+.contribution-list li {
+  margin-bottom: 0.15em;
+  line-height: 1.35;
+}
+
+/* Assessment + documentation status tags on method pages */
+.assessment-meta {
+  margin: 0.5em 0 1em;
+}
+.assessment-assessor-line {
+  margin-bottom: 0.4em;
+}
+.assessment-flag {
+  font-size: 0.85em;
+  margin: 0.4em 0 0.8em;
+  padding-left: 0.8em;
+  border-left: 3px solid #ddd;
+  color: #555;
+}
+.label.assess-status-complete,
+.label.doc-status-online {
+  background-color: #d4edda;
+  color: #155724;
+}
+.label.assess-status-to-review,
+.label.doc-status-to-review {
+  background-color: #fff3cd;
+  color: #856404;
+}
+.label.doc-status-assigned,
+.label.doc-status-invited {
+  background-color: #cce5ff;
+  color: #004085;
+}
+.label.doc-status-to-do {
+  background-color: #e2e3e5;
+  color: #383d41;
+}
+/* Confidence score colormap: 1 (worst, red) → 5 (best, green) */
+.label.confidence-score-1 {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+.label.confidence-score-2 {
+  background-color: #ffe0b2;
+  color: #7a4a00;
+}
+.label.confidence-score-3 {
+  background-color: #fff3cd;
+  color: #856404;
+}
+.label.confidence-score-4 {
+  background-color: #d1ecf1;
+  color: #0c5460;
+}
+.label.confidence-score-5 {
+  background-color: #d4edda;
+  color: #155724;
+}
+.used-resources-section {
+  margin: 1.5em 0;
+}
+.used-resources-section ul {
+  font-size: 0.9em;
+}

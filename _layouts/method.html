@@ -11,6 +11,10 @@ layout: default
     {% if page.date %}
       <span class="method-date"> | {{ page.date | date: "%B %d, %Y" }}</span>
     {% endif %}
+    {% assign header_meta = site.data.method_meta[page.title] %}
+    {% if header_meta and header_meta.doc_status != "" %}
+      <span class="label doc-status-{{ header_meta.doc_status | slugify }}">{{ header_meta.doc_status }}</span>
+    {% endif %}
   </p>
 </div>
 
@@ -33,7 +37,27 @@ layout: default
 
 {% assign target_method = page.title %}
 {% assign assessment = site.data.method_assessments_clean | where: "Method", target_method | first %}
+{% assign meta = site.data.method_meta[target_method] %}
 <!-- <p>Method data found for "{{ page.title }}": </p> -->
+
+{% if meta %}
+<div class="assessment-meta">
+  <p class="assessment-assessor-line">
+    {% if meta.assessor != "" %}Assessor: {{ meta.assessor }}{% endif %}
+    {% if meta.assess_status != "" %}
+      <span class="label assess-status-{{ meta.assess_status | slugify }}">{{ meta.assess_status }}</span>
+    {% endif %}
+    {% if meta.confidence != "" %}
+      <span class="label confidence-score-{{ meta.confidence | slugify }}">Confidence score: {{ meta.confidence }}</span>
+    {% endif %}
+  </p>
+  {% if meta.ai_flag != "" %}
+  <blockquote class="assessment-flag">
+    <small>Flag: {{ meta.ai_flag }}</small>
+  </blockquote>
+  {% endif %}
+</div>
+{% endif %}
 
 
 <div class="markdown-content">
@@ -71,6 +95,26 @@ layout: default
 
 
 
+
+{% assign page_resources = site.data.used_resources[target_method] %}
+{% if page_resources %}
+<div class="used-resources-section">
+  <h3>Used resources for automatic assessment</h3>
+  <ul>
+    {% for res in page_resources %}
+    <li>
+      {% if res.url != "" and res.url contains "http" %}
+        <a href="{{ res.url }}" target="_blank" rel="noopener noreferrer">{{ res.resource }}</a>
+      {% else %}
+        {{ res.resource }}
+      {% endif %}
+      {% if res.type != "" %}({{ res.type }}){% endif %}
+      {% if res.use != "" %} — {{ res.use }}{% endif %}
+    </li>
+    {% endfor %}
+  </ul>
+</div>
+{% endif %}
 
 <!-- Add References section here -->
 <div class="references-section">
