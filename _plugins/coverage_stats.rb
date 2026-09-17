@@ -37,7 +37,7 @@ module NaviDAM
         coverage["criteria_categories"] = 5
       end
 
-      # --- Method assessment TSV (positional parse: duplicate Status cols) ---
+      # --- Method assessment TSV (positional parse: Doc status col 1, Assessment status col 5) ---
       begin
         input_path = File.join(source, "_data", RAW_ASSESSMENT)
         if File.exist?(input_path)
@@ -91,12 +91,12 @@ module NaviDAM
                 else
                   doc_invited += 1
                 end
-              when "No"
+              when "No", "To do"
                 doc_todo += 1
-                doc_todo_list << { "method" => method, "status" => doc_status }
+                doc_todo_list << { "method" => method, "status" => "To do" }
               when ""
                 doc_todo += 1
-                doc_todo_list << { "method" => method, "status" => "No" }
+                doc_todo_list << { "method" => method, "status" => "To do" }
               else
                 doc_todo += 1
                 doc_todo_list << { "method" => method, "status" => doc_status }
