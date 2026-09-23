@@ -156,8 +156,7 @@
     "Conformal inference": {
         "Conformal Inference of Counterfactuals and Individual Treatment Effects": "https://academic.oup.com/jrsssb/article/83/5/911/7056131",
         "Conformal prediction: A unified review of theory and new challenges": "https://projecteuclid.org/journals/bernoulli/volume-29/issue-1/Conformal-prediction--A-unified-review-of-theory-and-new/10.3150/21-BEJ1447.full",
-        "Uncertainty quantification for probabilistic machine learning in earth observation using conformal prediction": "https://www.nature.com/articles/s41598-024-65954-w",
-        ""
+        "Uncertainty quantification for probabilistic machine learning in earth observation using conformal prediction": "https://www.nature.com/articles/s41598-024-65954-w"
     },
     "First-difference estimator": {
         "11.2 Estimation: First-difference (FD) estimator | Applied Causal Analysis (with R)": "https://bookdown.org/paul/applied-causal-analysis/fdestimation.html#",
@@ -171,7 +170,7 @@
     },
     "Variance partitioning / Variable importance": {
         "Biotic and abiotic variables show little redundancy in explaining tree species distributions": "https://onlinelibrary.wiley.com/doi/10.1111/j.1600-0587.2010.06229.x",
-        "Correlates of extinction risk in squamate reptiles: the relative importance of biology, geography, threat and range size": "http://onlinelibrary.wiley.com/doi/abs/10.1111/geb.12419",
+        "Correlates of extinction risk in squamate reptiles: the relative importance of biology, geography, threat and range size": "http://onlinelibrary.wiley.com/doi/abs/10.1111/geb.12419"
 
     },
     "Moderator analysis": {
@@ -183,12 +182,12 @@
     "ARDL": {
         "ARDL package - RDocumentation": "https://www.rdocumentation.org/packages/ARDL/versions/0.2.4",
         "Autoregressive Distributed Lag (ARDL) cointegration technique: application and interpretation": "https://www.scienpress.com/Upload/JSEM/Vol%205_4_3.pdf",
-        "ARDL bounds test for cointegration: Replicating the Pesaran et al. (2001) results for the UK earnings equation using R": "https://onlinelibrary.wiley.com/doi/abs/10.1002/jae.2919",
+        "ARDL bounds test for cointegration: Replicating the Pesaran et al. (2001) results for the UK earnings equation using R": "https://onlinelibrary.wiley.com/doi/abs/10.1002/jae.2919"
 
     },
     "Bayesian Change point detection": {
         "Bayesian Change Point Detection": "https://help.sap.com/docs/hana-cloud-database/sap-hana-cloud-sap-hana-database-predictive-analysis-library/bayesian-change-point-detection-bayesian-change-point-detection-c6387a3",
-        "A survey of methods for time series change point detection": "https://doi.org/10.1007/s10115-016-0987-z",
+        "A survey of methods for time series change point detection": "https://doi.org/10.1007/s10115-016-0987-z"
 
     },
     "Functional causal model": {
