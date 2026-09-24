@@ -1,14 +1,20 @@
 """Bulk assess 58 incomplete methods. Uses only predefined options from TSV distinct values + criteria.js."""
 import csv
+import json
 from pathlib import Path
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 IN = PROJECT_ROOT / "_data" / "DetectionAttribution methods - Method Assessment.tsv"
 RES = PROJECT_ROOT / "_data" / "DA_usedressources.tsv"
+MANUAL_RES = PROJECT_ROOT / "_data" / "manual_resources.json"
 
 HDR = ['Author','Doc status','Reviewer','Assessor','Method','Assessment status','AI-assisted','AI flag','Category','Sub-category','Objective','Estimand','Type','Minimal TS length','Handles few samples','Handles huge datasets (n)','Handles missing data','RS-data proven','Fonctional form','No unobserved confounders','No interference','Well-defined treatments','Common support (positivity)','Causal Markov Condition','Faithfulness','IID','Model specific','Requires explicit processes','Exposure type','Number of variables','Propaguates uncertainty','Handles lag effects','Parametric nature','Language','Usage','Confidence in assessment']
 
-# Each entry: method -> dict of columns to set (Status->To review, AI-assisted->Yes, Assessor appends AI tag always)
+# Each entry: method -> dict of columns to set (Status->To review, AI-assisted->Yes).
 AI_TAG = "AI initial completion"
+CORRECTED_AI_TAG = "AI corrected completion"
+with open(MANUAL_RES, encoding="utf-8") as _manual_file:
+    CORRECTED_METHODS = set(json.load(_manual_file).keys())
+
 A = {}
 def put(method, **kw):
     base = {"Status": "To review", "AI-assisted": "Yes"}
@@ -81,21 +87,47 @@ put("BART", **{"AI flag": "",
 "Exposure type": "Binary, Categorical, Continuous / Time-varying", "Number of variables": "Multivariate",
 "Propaguates uncertainty": "Inherent capacity", "Handles lag effects": "No",
 "Parametric nature": "Non-parametric", "Language": "R, Python", "Usage": "Technical but well documented"})
-# 6 R-learner TMLE MTP
-put("R-learner, TMLE, MTP", **{"AI flag": "Ambiguous: grouped row covers R-learner, TMLE and MTP which differ in estimands and robustness; assess as doubly-robust meta-learner family.",
+# 6 R-learner
+put("R-learner", **{"AI flag": "Method primarily targets CATE (heterogeneous treatment effects); ATE requires post-estimation aggregation of individual treatment effects rather than direct estimation by the learner itself.",
 "Category": "Causal ML", "Sub-category": "Meta-learners", "Objective": "Effect estimation",
-"Estimand": "ATE, ATT, CATE", "Type": "Spatial only (cross-sectional), Panel data (many samples)",
+"Estimand": "CATE", "Type": "Spatial only (cross-sectional), Panel data (many samples)",
 "Minimal TS length": "Handles ≤ 10, ≥ 10, ≥ 100", "Handles few samples": "10 to 100",
-"Handles huge datasets (n)": "Yes", "Handles missing data": "Partially",
-"RS-data proven": "Few applications", "Fonctional form": "Linear, Non-linear, Assumption-free",
-"No unobserved confounders": "Required", "No interference": "Recommended", "Well-defined treatments": "Required",
+"Handles huge datasets (n)": "Yes", "Handles missing data": "No: requires prelim. correction",
+"RS-data proven": "Few applications", "Fonctional form": "Non-linear, Assumption-free",
+"No unobserved confounders": "Required", "No interference": "Required", "Well-defined treatments": "Required",
 "Common support (positivity)": "Required", "Causal Markov Condition": "Recommended", "Faithfulness": "Recommended",
 "IID": "Recommended", "Model specific": "Good covariate balance", "Requires explicit processes": "Agnostic",
 "Exposure type": "Binary, Continuous / Time-varying", "Number of variables": "Multivariate, High-dimensional (p≫n)",
 "Propaguates uncertainty": "Model-specific tools", "Handles lag effects": "No",
+"Parametric nature": "Semi-parametric, Non-parametric", "Language": "R, Python", "Usage": "Technical but well documented"})
+# 7 TMLE
+put("Targeted Maximum Likelihood Estimation (TMLE)", **{"AI flag": "TMLE combines nuisance-model fitting with a targeting step to achieve semiparametric efficiency; row reflects generic point-treatment observational estimation, while longitudinal variants extend the same logic.",
+"Category": "Adjusted methods (Backdoor C.), Causal ML", "Objective": "Effect estimation",
+"Estimand": "ATE, ATT, CATE", "Type": "Spatial only (cross-sectional), Panel data (many samples)",
+"Minimal TS length": "Handles ≤ 10, ≥ 10, ≥ 100", "Handles few samples": "10 to 100",
+"Handles huge datasets (n)": "Yes", "Handles missing data": "Partially",
+"RS-data proven": "Few applications", "Fonctional form": "Linear, Non-linear, Assumption-free",
+"No unobserved confounders": "Required", "No interference": "Required", "Well-defined treatments": "Required",
+"Common support (positivity)": "Required", "Causal Markov Condition": "Recommended", "Faithfulness": "Recommended",
+"IID": "Recommended", "Model specific": "", "Requires explicit processes": "Agnostic",
+"Exposure type": "Binary, Categorical, Continuous / Time-varying", "Number of variables": "Multivariate, High-dimensional (p≫n)",
+"Propaguates uncertainty": "Inherent capacity", "Handles lag effects": "Possible",
 "Parametric nature": "Semi-parametric", "Language": "R, Python", "Usage": "Technical but well documented"})
-# 7 RL
-put("Reinforcement learning", **{"AI flag": "Ambiguous: broad family (policy learning, dynamic treatment regimes); assessment for sequential decision setting.",
+# 8 Modified treatment policies
+put("Modified Treatment Policies", **{"AI flag": "MTP framework is for realistic policy-dependent interventions rather than static ATE comparisons; linked resources emphasize sequential/longitudinal settings with time-dependent confounding under sequential exchangeability.",
+"Category": "Alternative paradigms, Causal ML", "Sub-category": "Intermediate confounding", "Objective": "Effect estimation, Scenario projection",
+"Estimand": "CATE, Others", "Type": "Panel data (many samples)",
+"Minimal TS length": "≥ 10, ≥ 100", "Handles few samples": "10 to 100",
+"Handles huge datasets (n)": "Yes", "Handles missing data": "Partially",
+"RS-data proven": "No", "Fonctional form": "Assumption-free, Non-linear",
+"No unobserved confounders": "Required", "No interference": "Required", "Well-defined treatments": "Required",
+"Common support (positivity)": "Required", "Causal Markov Condition": "Recommended", "Faithfulness": "Recommended",
+"IID": "Recommended", "Model specific": "Proposed: sequential exchangeability under policy intervention", "Requires explicit processes": "Agnostic",
+"Exposure type": "Categorical, Continuous / Time-varying", "Number of variables": "Multivariate",
+"Propaguates uncertainty": "Model-specific tools", "Handles lag effects": "Yes",
+"Parametric nature": "Semi-parametric, Non-parametric", "Language": "R", "Usage": "Technical but well documented"})
+# 9 RL
+put("Reinforcement learning", **{"AI flag": "Broad family (Q-learning, policy-gradient, actor-critic); assessment assumes sequential decision settings with Markov-style dynamics and dynamic treatment-regime optimization rather than static effect estimation.",
 "Category": "Causal ML", "Objective": "Effect estimation, Scenario projection",
 "Estimand": "CATE, Others", "Type": "Panel data (many samples)",
 "Minimal TS length": "≥ 10, ≥ 100", "Handles few samples": "No",
@@ -108,26 +140,40 @@ put("Reinforcement learning", **{"AI flag": "Ambiguous: broad family (policy lea
 "Number of variables": "Multivariate, High-dimensional (p≫n)",
 "Propaguates uncertainty": "Needs model-agnostic propagation", "Handles lag effects": "Yes",
 "Parametric nature": "Non-parametric", "Language": "Python", "Usage": "Domain-specific skills"})
-# 8 PC PCMCI
-put("PC, PCMCI", **{"AI flag": "",
+# 10 PC
+put("PC", **{"AI flag": "Standard PC is a generic constraint-based DAG learner under causal sufficiency; this row intentionally excludes the lagged time-series PCMCI setting and assumes orientation from conditional-independence structure.",
+"Category": "Causal discovery", "Sub-category": "Constraint-based methods",
+"Objective": "Causal relationship(s)", "Estimand": "Oriented link",
+"Type": "Spatial only (cross-sectional), Panel data (many samples)",
+"Minimal TS length": "Inapplicable", "Handles few samples": "10 to 100",
+"Handles huge datasets (n)": "Most do", "Handles missing data": "No: requires prelim. correction",
+"RS-data proven": "Few applications", "Fonctional form": "Assumption-free, Linear, Non-linear",
+"No unobserved confounders": "Required", "No interference": "Recommended", "Well-defined treatments": "Inapplicable",
+"Common support (positivity)": "Inapplicable", "Causal Markov Condition": "Required", "Faithfulness": "Required",
+"IID": "Recommended", "Model specific": "", "Requires explicit processes": "Agnostic",
+"Exposure type": "Binary, Categorical, Continuous / Time-varying", "Number of variables": "Multivariate",
+"Propaguates uncertainty": "Model-specific tools", "Handles lag effects": "No",
+"Parametric nature": "Non-parametric", "Language": "Python, R", "Usage": "Technical but well documented"})
+# 11 PCMCI
+put("PCMCI", **{"AI flag": "Designed specifically for time-series causal discovery with lag effects; linked resources emphasize stationarity and no hidden system confounding after conditioning, with explicit lagged-edge detection as a core feature.",
 "Category": "Causal discovery", "Sub-category": "Constraint-based methods",
 "Objective": "Causal relationship(s)", "Estimand": "Oriented link",
 "Type": "Time-series (one sample), Panel data (many samples)",
 "Minimal TS length": "≥ 10, ≥ 100", "Handles few samples": "10 to 100",
 "Handles huge datasets (n)": "Most do", "Handles missing data": "No: requires prelim. correction",
-"RS-data proven": "Few applications", "Fonctional form": "Linear, Non-linear, Assumption-free",
+"RS-data proven": "Few applications", "Fonctional form": "Assumption-free, Linear, Non-linear",
 "No unobserved confounders": "Required", "No interference": "Recommended", "Well-defined treatments": "Inapplicable",
 "Common support (positivity)": "Inapplicable", "Causal Markov Condition": "Required", "Faithfulness": "Required",
-"IID": "Recommended", "Model specific": "Stationarity", "Requires explicit processes": "Agnostic",
+"IID": "Relaxes assumption", "Model specific": "Stationarity", "Requires explicit processes": "Agnostic",
 "Exposure type": "Continuous / Time-varying", "Number of variables": "Multivariate",
 "Propaguates uncertainty": "Model-specific tools", "Handles lag effects": "Yes",
-"Parametric nature": "Non-parametric", "Language": "Python, R", "Usage": "Technical but well documented"})
-# 9 FCI TsFCI
-put("FCI, TsFCI", **{"AI flag": "Ambiguous: FCI relaxes causal sufficiency but needs large samples; time-series variant needs stationarity.",
+"Parametric nature": "Non-parametric", "Language": "Python", "Usage": "Technical but well documented"})
+# 12 FCI TsFCI
+put("FCI, TsFCI", **{"AI flag": "FCI relaxes causal sufficiency by allowing latent confounders but needs large samples for reliable conditional-independence testing; TsFCI adds time-series structure and stationarity requirements.",
 "Category": "Causal discovery", "Sub-category": "Constraint-based methods",
 "Objective": "Causal relationship(s)", "Estimand": "Oriented link",
 "Type": "Spatial only (cross-sectional), Time-series (one sample), Panel data (many samples)",
-"Minimal TS length": "≥ 10, ≥ 100", "Handles few samples": "No",
+"Minimal TS length": "≥ 100", "Handles few samples": "No",
 "Handles huge datasets (n)": "Most do", "Handles missing data": "No: requires prelim. correction",
 "RS-data proven": "No", "Fonctional form": "Assumption-free, Non-linear",
 "No unobserved confounders": "Relaxes assumption", "No interference": "Recommended",
@@ -138,12 +184,12 @@ put("FCI, TsFCI", **{"AI flag": "Ambiguous: FCI relaxes causal sufficiency but n
 "Number of variables": "Multivariate", "Propaguates uncertainty": "Model-specific tools",
 "Handles lag effects": "Yes", "Parametric nature": "Non-parametric", "Language": "R, Python",
 "Usage": "Technical but well documented"})
-# 10 GES TsGFCI
-put("GES, TsGFCI", **{"AI flag": "Ambiguous: grouped score-based GES and time-series GFCI; GFCI relaxes sufficiency.",
+# 13 GES TsGFCI
+put("GES, TsGFCI", **{"AI flag": "GES is score-based and needs enough data for reliable score comparison; GFCI combines score-based search with latent-confounding logic, and TsGFCI adds time-series/stationarity constraints.",
 "Category": "Causal discovery", "Sub-category": "Score-based methods",
 "Objective": "Causal relationship(s)", "Estimand": "Oriented link",
 "Type": "Spatial only (cross-sectional), Time-series (one sample), Panel data (many samples)",
-"Minimal TS length": "≥ 10, ≥ 100", "Handles few samples": "No",
+"Minimal TS length": "≥ 10, ≥ 100", "Handles few samples": "10 to 100",
 "Handles huge datasets (n)": "Most do", "Handles missing data": "No: requires prelim. correction",
 "RS-data proven": "No", "Fonctional form": "Linear, Non-linear",
 "No unobserved confounders": "Recommended", "No interference": "Recommended",
@@ -154,7 +200,7 @@ put("GES, TsGFCI", **{"AI flag": "Ambiguous: grouped score-based GES and time-se
 "Propaguates uncertainty": "Model-specific tools", "Handles lag effects": "Yes",
 "Parametric nature": "Semi-parametric, Non-parametric", "Language": "R, Python",
 "Usage": "Technical but well documented"})
-# 11 DYNOTEARS
+# 14 DYNOTEARS
 put("DYNOTEARS", **{"AI flag": "",
 "Category": "Causal discovery, Causal ML", "Sub-category": "Continuous optimization",
 "Objective": "Causal relationship(s)", "Estimand": "Oriented link",
@@ -203,7 +249,7 @@ put("Additive noise models", **{"AI flag": "",
 "Parametric nature": "Semi-parametric, Non-parametric", "Language": "Python, R",
 "Usage": "Technical but well documented"})
 # 14 BN learning
-put("Bayesian network learning", **{"AI flag": "Ambiguous: broad family (constraint, score, hybrid); assessment for generic DAG learning.",
+put("Bayesian network learning", **{"AI flag": "Broad family covering constraint-, score-, and hybrid DAG learning; linked resources support a generic DAG-learning row, but full edge identifiability still depends on assumptions beyond Markov/Faithfulness alone.",
 "Category": "Causal discovery, Alternative paradigms", "Objective": "Causal relationship(s)",
 "Estimand": "Oriented link", "Type": "Spatial only (cross-sectional), Panel data (many samples)",
 "Minimal TS length": "Handles ≤ 10, ≥ 10, ≥ 100", "Handles few samples": "10 to 100",
@@ -218,7 +264,7 @@ put("Bayesian network learning", **{"AI flag": "Ambiguous: broad family (constra
 "Handles lag effects": "Possible", "Parametric nature": "Parametric, Non-parametric",
 "Language": "R, Python", "Usage": "Technical but well documented"})
 # 15 IGCI
-put("Info-geom. causal inference", **{"AI flag": "Ambiguous: bivariate method; multivariate use via pairwise comparisons.",
+put("Info-geom. causal inference", **{"AI flag": "Information-geometric causal inference is primarily bivariate; multivariate use is typically pairwise or screening-based, and the key rationale is independence between the cause distribution and the generating mechanism.",
 "Category": "Alternative paradigms", "Objective": "Causal relationship(s)",
 "Estimand": "Oriented link", "Type": "Spatial only (cross-sectional)",
 "Minimal TS length": "Inapplicable", "Handles few samples": "10 to 100",
@@ -233,7 +279,7 @@ put("Info-geom. causal inference", **{"AI flag": "Ambiguous: bivariate method; m
 "Handles lag effects": "No", "Parametric nature": "Non-parametric", "Language": "R, Python",
 "Usage": "Technical but well documented"})
 # 16 SES network
-put("SES & Network analysis (~adjusted method)", **{"AI flag": "Ambiguous: umbrella label for SES/network descriptive + adjusted analyses; causal interpretation needs extra assumptions.",
+put("SES & Network analysis (~adjusted method)", **{"AI flag": "Umbrella label mixing descriptive SES/network analyses with adjusted causal uses; linked resources support network-based understanding, but causal interpretation still depends on confounding control and correct network specification.",
 "Category": "Alternative paradigms, Adjusted methods (Backdoor C.)",
 "Objective": "Causal relationship(s), Effect estimation",
 "Estimand": "Oriented link, ATE", "Type": "Spatial only (cross-sectional), Panel data (many samples)",
@@ -250,7 +296,7 @@ put("SES & Network analysis (~adjusted method)", **{"AI flag": "Ambiguous: umbre
 "Parametric nature": "Semi-parametric, Non-parametric", "Language": "R, Python",
 "Usage": "Technical but well documented"})
 # 17 diffusion
-put("Causal diffusion models", **{"AI flag": "Ambiguous: emerging generative counterfactual approach; RS evidence limited.",
+put("Causal diffusion models", **{"AI flag": "Emerging generative counterfactual approach; linked resource supports scenario-generation use, but identifiability assumptions and biodiversity/RS evidence remain limited in the current literature.",
 "Category": "Alternative paradigms", "Objective": "Effect estimation, Scenario projection",
 "Estimand": "ATE, CATE, Maps & generalisations",
 "Type": "Spatial only (cross-sectional), Panel data (many samples)",
@@ -281,7 +327,7 @@ put("Marginal structural models", **{"AI flag": "",
 "Handles lag effects": "Possible", "Parametric nature": "Semi-parametric",
 "Language": "R, Python", "Usage": "Technical but well documented"})
 # 19 G methods
-put("G methods", **{"AI flag": "Ambiguous: grouped g-formula, g-estimation and MSM family for time-varying confounding.",
+put("G methods", **{"AI flag": "Grouped label covering g-formula, g-estimation, and MSM-style approaches for time-varying confounding; linked resources support this family view under sequential exchangeability and correct model specification.",
 "Category": "Alternative paradigms, Adjusted methods (Backdoor C.)", "Sub-category": "Intermediate confounding",
 "Objective": "Effect estimation", "Estimand": "ATE, ATT, CATE",
 "Type": "Panel data (many samples), Time-series (one sample)",
@@ -361,7 +407,7 @@ put("Sensitivity analyses", **{"AI flag": "",
 "Handles lag effects": "No", "Parametric nature": "Inapplicable",
 "Language": "R, Python", "Usage": "Technical but well documented"})
 # 27 placebo
-put("Placebo tests", **{"AI flag": "",
+put("Placebo tests", **{"AI flag": "Placebo and falsification tests are robustness tools rather than estimators; linked resources support use for checking design credibility, especially where pretreatment fit or null-effect expectations are available.",
 "Category": "Versatile tools", "Sub-category": "Robustness & significance tests",
 "Objective": "Significance and robustness tests", "Estimand": "Others",
 "Type": "Spatial only (cross-sectional), Time-series (one sample), Panel data (many samples)",
@@ -453,7 +499,7 @@ put("BFast", **{"AI flag": "",
 "Parametric nature": "Parametric, Semi-parametric", "Language": "R, Python",
 "Usage": "Technical but well documented, User-friendly"})
 # 33 DL change
-put("DL change detection", **{"AI flag": "Ambiguous: broad family of supervised/unsupervised deep change detectors; RS performance varies by architecture.",
+put("DL change detection", **{"AI flag": "Broad family of supervised and unsupervised deep change detectors; linked review supports RS relevance, but architecture choice, training labels, and weak uncertainty quantification remain major limitations.",
 "Category": "Independent detection", "Objective": "Detection",
 "Estimand": "Abrupt change, Maps & generalisations",
 "Type": "Spatial only (cross-sectional), Panel data (many samples)",
@@ -469,7 +515,7 @@ put("DL change detection", **{"AI flag": "Ambiguous: broad family of supervised/
 "Propaguates uncertainty": "Needs model-agnostic propagation", "Handles lag effects": "No",
 "Parametric nature": "Non-parametric", "Language": "Python", "Usage": "Technical but well documented"})
 # 34 diversity metrics
-put("Diversity metrics, turnover, variance, phenology, sentinels", **{"AI flag": "Ambiguous: grouped biodiversity indicators, not a single estimator.",
+put("Diversity metrics, turnover, variance, phenology, sentinels", **{"AI flag": "Grouped biodiversity indicators rather than a single estimator; linked resources support change detection value, but causal interpretation of detected shifts still requires separate driver attribution methods.",
 "Category": "Independent detection", "Sub-category": "Frequently monitored indices",
 "Objective": "Detection", "Estimand": "Trend, Abrupt change, Others",
 "Type": "Spatial only (cross-sectional), Time-series (one sample), Panel data (many samples)",
@@ -485,10 +531,10 @@ put("Diversity metrics, turnover, variance, phenology, sentinels", **{"AI flag":
 "Handles lag effects": "No", "Parametric nature": "Inapplicable",
 "Language": "R, Python", "Usage": "User-friendly, Technical but well documented"})
 # 35 Bayesian structured TS
-put("Bayesian Structured TS", **{"AI flag": "Ambiguous: covers BSTS/CausalImpact-style structural time-series; needs pre-period fit.",
+put("Bayesian Structured TS", **{"AI flag": "BSTS/CausalImpact-style structural time-series approach; linked resources support intervention-style counterfactuals but require a substantial and well-fit pre-intervention period.",
 "Category": "Alternative paradigms", "Objective": "Effect estimation, Detection, Scenario projection",
 "Estimand": "ATT, Trend, Abrupt change", "Type": "Time-series (one sample), Panel data (many samples)",
-"Minimal TS length": "≥ 10, ≥ 100", "Handles few samples": "10 to 100",
+"Minimal TS length": "≥ 100", "Handles few samples": "10 to 100",
 "Handles huge datasets (n)": "Most do", "Handles missing data": "Partially",
 "RS-data proven": "Few applications", "Fonctional form": "Linear, Additivity, Non-linear",
 "No unobserved confounders": "Recommended", "No interference": "Required",
@@ -529,7 +575,7 @@ put("Markov switching autoregression models", **{"AI flag": "",
 "Propaguates uncertainty": "Model-specific tools", "Handles lag effects": "Yes",
 "Parametric nature": "Parametric", "Language": "R, Python", "Usage": "Technical but well documented"})
 # 38 bootstrapping
-put("Bootstrapping", **{"AI flag": "",
+put("Bootstrapping", **{"AI flag": "Bootstrap is a general resampling tool for uncertainty quantification rather than a causal estimator; linked resources support broad use, but validity depends on dependence structure and the resampling scheme.",
 "Category": "Versatile tools", "Sub-category": "Uncertainty tools",
 "Objective": "Significance and robustness tests", "Estimand": "Others",
 "Type": "Spatial only (cross-sectional), Time-series (one sample), Panel data (many samples)",
@@ -545,10 +591,10 @@ put("Bootstrapping", **{"AI flag": "",
 "Propaguates uncertainty": "Model-specific tools", "Handles lag effects": "No",
 "Parametric nature": "Non-parametric", "Language": "R, Python", "Usage": "User-friendly, Technical but well documented"})
 # 39 Causal GNNs
-put("Causal GNNs", **{"AI flag": "Ambiguous: emerging family; graph construction choices strongly affect validity.",
+put("Causal GNNs", **{"AI flag": "Emerging family where validity depends strongly on graph construction and architectural choices; linked resources support moderate-data use in some settings, but uncertainty handling remains architecture-specific rather than generic.",
 "Category": "Causal ML", "Objective": "Effect estimation, Causal relationship(s)",
 "Estimand": "CATE, ATE, Oriented link", "Type": "Spatial only (cross-sectional), Panel data (many samples)",
-"Minimal TS length": "Handles ≤ 10, ≥ 10, ≥ 100", "Handles few samples": "No",
+"Minimal TS length": "Handles ≤ 10, ≥ 10, ≥ 100", "Handles few samples": "10 to 100",
 "Handles huge datasets (n)": "Yes", "Handles missing data": "Partially",
 "RS-data proven": "No", "Fonctional form": "Non-linear, Assumption-free",
 "No unobserved confounders": "Required", "No interference": "Relaxes assumption",
@@ -557,7 +603,7 @@ put("Causal GNNs", **{"AI flag": "Ambiguous: emerging family; graph construction
 "Model specific": "", "Requires explicit processes": "Agnostic",
 "Exposure type": "Binary, Categorical, Continuous / Time-varying, Multivariate",
 "Number of variables": "Multivariate, High-dimensional (p≫n)",
-"Propaguates uncertainty": "Needs model-agnostic propagation", "Handles lag effects": "Possible",
+"Propaguates uncertainty": "Model-specific tools", "Handles lag effects": "Possible",
 "Parametric nature": "Non-parametric", "Language": "Python", "Usage": "Domain-specific skills"})
 # 40 conformal
 put("Conformal inference", **{"AI flag": "",
@@ -604,7 +650,7 @@ put("Long difference estimator", **{"AI flag": "",
 "Propaguates uncertainty": "Model-specific tools", "Handles lag effects": "No",
 "Parametric nature": "Parametric", "Language": "R, Python", "Usage": "Technical but well documented"})
 # 43 variance partitioning
-put("Variance partitioning / Variable importance", **{"AI flag": "Ambiguous: descriptive attribution of variance, not intervention causality without extra assumptions.",
+put("Variance partitioning / Variable importance", **{"AI flag": "Descriptive variance attribution rather than intervention causality; linked resources support explanatory usefulness, but inferred importance remains model- and correlation-dependent unless stronger causal assumptions hold.",
 "Category": "Ecology-guided Modelling", "Objective": "Predictive task + interpretability, Detection",
 "Estimand": "Others, Maps & generalisations", "Type": "Spatial only (cross-sectional), Panel data (many samples)",
 "Minimal TS length": "Handles ≤ 10, ≥ 10, ≥ 100", "Handles few samples": "10 to 100",
@@ -666,7 +712,7 @@ put("CLUE model", **{"AI flag": "Ambiguous: land-use allocation scenario model; 
 "Handles lag effects": "No", "Parametric nature": "Parametric, Rule-based",
 "Language": "Others, GIS", "Usage": "Domain-specific skills, Technical but well documented"})
 # 47 ARDL
-put("ARDL", **{"AI flag": "",
+put("ARDL", **{"AI flag": "ARDL is a distributed-lag regression framework for dynamic associations and cointegration-style settings; linked resources support lag handling and parametric time-series use under stationarity/bounds-test assumptions.",
 "Category": "Ecology-guided Modelling, Adjusted methods (Backdoor C.)", "Sub-category": "Linear regressions & extensions",
 "Objective": "Effect estimation, Detection", "Estimand": "ATE, Trend",
 "Type": "Time-series (one sample), Panel data (many samples)",
@@ -682,7 +728,7 @@ put("ARDL", **{"AI flag": "",
 "Parametric nature": "Parametric", "Language": "R, Python, Others",
 "Usage": "Technical but well documented"})
 # 48 Bayesian change point
-put("Bayesian Change point detection", **{"AI flag": "",
+put("Bayesian Change point detection", **{"AI flag": "Bayesian change-point detection explicitly represents uncertainty over breakpoint location and number; linked resources support abrupt-change detection with built-in probabilistic inference.",
 "Category": "Independent detection", "Sub-category": "RS breakpoint detection",
 "Objective": "Detection", "Estimand": "Abrupt change, Trend",
 "Type": "Time-series (one sample), Panel data (many samples)",
@@ -698,11 +744,11 @@ put("Bayesian Change point detection", **{"AI flag": "",
 "Parametric nature": "Semi-parametric, Non-parametric", "Language": "R, Python",
 "Usage": "Technical but well documented"})
 # 49 Functional causal model
-put("Functional causal model", **{"AI flag": "Ambiguous: umbrella for ANM/LiNGAM-type functional models; specific asymmetry assumption varies.",
+put("Functional causal model", **{"AI flag": "Umbrella label for ANM/LiNGAM/related functional causal models; identifiability depends on specific functional restrictions and independent-noise assumptions, which are harder to verify in high-dimensional settings.",
 "Category": "Causal discovery", "Sub-category": "Asymmetry-based",
 "Objective": "Causal relationship(s)", "Estimand": "Oriented link",
 "Type": "Spatial only (cross-sectional), Panel data (many samples)",
-"Minimal TS length": "Handles ≤ 10, ≥ 10, ≥ 100", "Handles few samples": "10 to 100",
+"Minimal TS length": "Handles ≤ 10, ≥ 10", "Handles few samples": "10 to 100",
 "Handles huge datasets (n)": "Most do", "Handles missing data": "No: requires prelim. correction",
 "RS-data proven": "No", "Fonctional form": "Non-linear, Additivity",
 "No unobserved confounders": "Required", "No interference": "Recommended",
@@ -775,11 +821,11 @@ put("Sen's slope", **{"AI flag": "",
 "Handles lag effects": "No", "Parametric nature": "Non-parametric",
 "Language": "R, Python", "Usage": "User-friendly"})
 # 54 Post-Classification Comparison (PCC)
-put("Post-Classification Comparison (PCC)", **{"AI flag": "Ambiguous: groups operational burned-area RS products/algorithms; sensor and threshold choices vary.",
+put("Post-Classification Comparison (PCC)", **{"AI flag": "Operational RS change detector comparing classified pre/post maps; linked resources support change mapping, but accuracy depends heavily on the upstream classifier, sensor, and threshold choices.",
 "Category": "Independent detection", "Sub-category": "RS breakpoint detection",
 "Objective": "Detection", "Estimand": "Abrupt change, Maps & generalisations",
 "Type": "Time-series (one sample), Panel data (many samples)",
-"Minimal TS length": "≥ 10, Handles ≤ 10", "Handles few samples": "Yes ≤ 10",
+"Minimal TS length": "≥ 10", "Handles few samples": "Yes ≤ 10",
 "Handles huge datasets (n)": "Yes", "Handles missing data": "Yes",
 "RS-data proven": "Yes", "Fonctional form": "Rule-based, Non-linear",
 "No unobserved confounders": "Inapplicable", "No interference": "Inapplicable",
@@ -791,11 +837,11 @@ put("Post-Classification Comparison (PCC)", **{"AI flag": "Ambiguous: groups ope
 "Handles lag effects": "No", "Parametric nature": "Rule-based",
 "Language": "Python, Others, GIS", "Usage": "User-friendly, Technical but well documented"})
 # 55 Information transfer
-put("Information transfer", **{"AI flag": "Ambiguous: umbrella for transfer entropy / information-flow measures; bivariate predictive causality, not intervention causality.",
+put("Information transfer", **{"AI flag": "Information-theoretic approach (transfer entropy / information flow) targeting predictive precedence rather than intervention causality; linked resources support mostly bivariate or pairwise time-series use.",
 "Category": "Causal discovery, Alternative paradigms", "Sub-category": "Prediction-based approaches",
-"Objective": "Causal relationship(s)", "Estimand": "Oriented link",
+"Objective": "Causal relationship(s), Predictive task + interpretability", "Estimand": "Oriented link",
 "Type": "Time-series (one sample), Panel data (many samples)",
-"Minimal TS length": "≥ 100", "Handles few samples": "No",
+"Minimal TS length": "≥ 10, ≥ 100", "Handles few samples": "No",
 "Handles huge datasets (n)": "Most do", "Handles missing data": "No: requires prelim. correction",
 "RS-data proven": "Few applications", "Fonctional form": "Assumption-free, Non-linear",
 "No unobserved confounders": "Recommended", "No interference": "Recommended",
@@ -807,7 +853,7 @@ put("Information transfer", **{"AI flag": "Ambiguous: umbrella for transfer entr
 "Parametric nature": "Non-parametric", "Language": "Python, R",
 "Usage": "Technical but well documented"})
 # 56 CAT transformation
-put("CAT transformation (Hird et al. 2016)", **{"AI flag": "Ambiguous: single-study change-after-transformation detector; general validity beyond original context uncertain.",
+put("CAT transformation (Hird et al. 2016)", **{"AI flag": "Single-study change-after-transformation detector based on transformed dense time series; linked resource supports original use case, but broader generalization beyond that context remains limited.",
 "Category": "Independent detection", "Objective": "Detection",
 "Estimand": "Abrupt change, Trend", "Type": "Time-series (one sample)",
 "Minimal TS length": "≥ 10, ≥ 100", "Handles few samples": "10 to 100",
@@ -822,7 +868,7 @@ put("CAT transformation (Hird et al. 2016)", **{"AI flag": "Ambiguous: single-st
 "Parametric nature": "Non-parametric", "Language": "R, Python",
 "Usage": "Technical but well documented"})
 # 57 Trajectory classification
-put("Trajectory classification (Pélissié et al. 2024)", **{"AI flag": "Ambiguous: single-study trajectory classifier; general validity beyond original context uncertain.",
+put("Trajectory classification (Pélissié et al. 2024)", **{"AI flag": "Single-study ecological trajectory classifier; linked resource supports abrupt-shift screening, but transferability outside the original ecological context remains uncertain.",
 "Category": "Independent detection", "Objective": "Detection",
 "Estimand": "Trend, Maps & generalisations", "Type": "Time-series (one sample), Panel data (many samples)",
 "Minimal TS length": "≥ 10, ≥ 100", "Handles few samples": "10 to 100",
@@ -837,7 +883,7 @@ put("Trajectory classification (Pélissié et al. 2024)", **{"AI flag": "Ambiguo
 "Handles lag effects": "No", "Parametric nature": "Non-parametric, Rule-based",
 "Language": "R, Python", "Usage": "Technical but well documented"})
 # 58 Dynamical footprint
-put("Dynamical footprint analysis (Cano et al. 2025)", **{"AI flag": "Ambiguous: single-study dynamical-footprint detector; general validity beyond original context uncertain.",
+put("Dynamical footprint analysis (Cano et al. 2025)", **{"AI flag": "Single-study dynamical-footprint approach for abrupt-shift susceptibility; linked resource supports dynamical-systems framing, but broader cross-system generalization remains uncertain.",
 "Category": "Independent detection", "Objective": "Detection, Causal relationship(s)",
 "Estimand": "Oriented link, Abrupt change, Trend",
 "Type": "Time-series (one sample), Panel data (many samples)",
@@ -869,7 +915,7 @@ def main():
             parts.append("")
         method = parts[4].strip()
         status = parts[5].strip()
-        if status == "Incomplete" and method in A:
+        if status != "Complete" and method in A:
             patch = A[method]
             for k, v in patch.items():
                 # 'Status' key means assessment Status at index 5 (not doc Status at index 1)
@@ -878,8 +924,9 @@ def main():
                 else:
                     j = HDR.index(k)
                 parts[j] = v
-            # Always overwrite Assessor with the AI tag (assessment was empty)
-            parts[3] = AI_TAG
+            # Mark manual-resource methods as corrected AI completions, keep the
+            # original AI label for the remaining bulk-assessed rows.
+            parts[3] = CORRECTED_AI_TAG if method in CORRECTED_METHODS else AI_TAG
             # ensure length
             lines[i] = "\t".join(parts[:len(HDR)])
             updated += 1

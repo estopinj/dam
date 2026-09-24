@@ -64,7 +64,6 @@ module NaviDAM
 
             resources[method] ||= []
             resources[method] << {
-              "type" => (h["Resource type"] || "").strip,
               "resource" => (h["Resource"] || "").strip,
               "url" => (h["URL"] || "").strip,
               "use" => (h["Use"] || "").strip
