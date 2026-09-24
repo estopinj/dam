@@ -27,6 +27,8 @@ Smooth functions are typically estimated using penalized regression splines. The
 
 The degree of smoothness is regulated by a penalty on the wiggliness of the function, scaled by a smoothing parameter λ. This parameter determines how strongly departures from smoothness are penalized. λ is usually estimated automatically during model fitting, commonly via Generalized Cross-Validation (GCV) or via Restricted Maximum Likelihood (REML).
 
+In ecological time-series applications, the choice of smoothing should still be checked explicitly rather than treated as purely automatic. A commonly cited rule of thumb is to limit the effective flexibility of the smoother relative to the length of the series, for example by setting the maximum basis dimension to roughly one third of the number of sampling years, then verifying that the fitted trend is not driven by short-term noise rather than the signal of interest. This pragmatic guidance is often traced to {% cite fewster2000analysis --style _bibliography/narrative %}, but it should be treated as a starting point for sensitivity analysis rather than as a universal rule.
+
 GAMs has an additive structure, where the linear predictor is the sum of smooth functions of the explanatory variables, and the response variable is linked to this predictor via the chosen link function. Interactions can also be modeled, either between smooth and parametric terms or between smooth terms. In the latter case, tensor-product smooths are often employed, particularly when interacting variables have different scales. As in GLMs, GAMs allow for various error families and link functions (e.g., Binomial, Poisson, Gamma).
 
 As with collinearity in GLMs, GAMs can suffer from identifiability issues due to concurvity, a nonlinear form of dependence between predictors or smooths. Concurvity should be assessed, as high concurvity levels may affect interpretability and model stability.
@@ -45,6 +47,7 @@ As with collinearity in GLMs, GAMs can suffer from identifiability issues due to
 {: .no_toc }
 - {% cite hastie1986generalized  --style _bibliography/narrative %}
 - {% cite hastie1992generalized  --style _bibliography/narrative %}
+- {% cite fewster2000analysis  --style _bibliography/narrative %}
 
 ### Research applications
 {: .no_toc }
