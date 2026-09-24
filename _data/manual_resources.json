@@ -199,20 +199,26 @@
         "Demystifying LandTrendr and CCDC temporal segmentation": "https://www.sciencedirect.com/science/article/pii/S1569843222000085"
     },
     "Mann-Kendall test (+ seq. extension)": {
-        "Name": "link",
-        "Name": "link"
+        "Design Trend Mann-Kendall": "https://vsp.pnnl.gov/help/vsample/design_trend_mann_kendall.htm",
+        "Non-Parametric Trend Analysis | Google Earth Engine": "https://developers.google.com/earth-engine/tutorials/community/nonparametric-trends",
+        "Mann Kendall Trend Test: Definition, Running the Test": "https://www.statisticshowto.com/mann-kendall-trend-test/",
+        "Trends in Hydrological Parameters of a Southern Brazilian Watershed and its Relation to Human Induced Changes": "https://doi.org/10.1023/A:1008048212420",
+        "Trend analysis and change point detection of seasonal and annual precipitation in Iran": "https://onlinelibrary.wiley.com/doi/abs/10.1002/joc.6211",
+        "Rainfall and river flow trends using Mann–Kendall and Sen’s slope estimator statistical tests in the Cobres River basin": "https://doi.org/10.1007/s11069-015-1644-7"
     },
     "Pettitt's Test": {
-        "Name": "link",
-        "Name": "link"
+        "Trend estimation and change point detection in individual climatic series using flexible regression methods": "https://onlinelibrary.wiley.com/doi/abs/10.1029/2011JD017077",
+        "R: Pettitt's Test for Change-Point Detection": "https://search.r-project.org/CRAN/refmans/trend/html/pettitt.test.html"
     },
     "Sen's slope": {
-        "Name": "link",
-        "Name": "link"
+        "Regression Coefficient via Kendall's Tau": "https://www.scribd.com/document/875352003/Sen-1968",
+        "Non-Parametric Trend Analysis | Google Earth Engine": "https://developers.google.com/earth-engine/tutorials/community/nonparametric-trends",
+        "Rainfall and river flow trends using Mann–Kendall and Sen’s slope estimator statistical tests in the Cobres River basin": "https://doi.org/10.1007/s11069-015-1644-7"
     },
-    "BA detection": {
-        "Name": "link",
-        "Name": "link"
+    "Post-Classification Comparison (PCC)": {
+        "Change Detection in Remote Sensing Imagery: A Systematic Review of Statistical, Machine Learning, and Deep Learning Methods": "https://www.mdpi.com/2072-4292/18/15/2573",
+        "Land Cover Change Detection: Methods for Tracking How Earth's Surface Evolves": "https://offnadir-delta.com/blog/land-cover-change-detection-methods",
+        "A review on change detection method and accuracy assessment for land use land cover": "https://www.sciencedirect.com/science/article/pii/S2352938521000185"
     },
     "Information transfer": {
         "Causality detection based on information-theoretic approaches in time series analysis": "https://linkinghub.elsevier.com/retrieve/pii/S0370157307000403",

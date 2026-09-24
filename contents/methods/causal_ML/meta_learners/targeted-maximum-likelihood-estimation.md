@@ -1,7 +1,7 @@
 ---
 layout: method
-title: "BA detection"
-parent: "RS breakpoint detection"
+title: "Targeted Maximum Likelihood Estimation"
+parent: "Meta-learners"
 date: 2025-07-17
 author: Mrs. Young
 ---

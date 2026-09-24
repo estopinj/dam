@@ -72,7 +72,7 @@ Continuous Change Detection and Classification (CCDC)	External	LandTrendr / VCT 
 Mann-Kendall test (+ seq. extension)	External	LandTrendr Complete row – non-parametric trend template	Completed assessment in DetectionAttribution methods - Method Assessment.tsv	Rank-based trend calibration.
 Pettitt's Test	External	LandTrendr Complete row – change-point template	Completed assessment in DetectionAttribution methods - Method Assessment.tsv	Single-change-point calibration.
 Sen's slope	External	LandTrendr Complete row – trend-magnitude template	Completed assessment in DetectionAttribution methods - Method Assessment.tsv	Robust-slope calibration.
-BA detection	External	LandTrendr / VCT Complete rows – operational RS product templates	Completed assessments in DetectionAttribution methods - Method Assessment.tsv	Operational burned-area scope flagged.
+Post-Classification Comparison (PCC)	External	LandTrendr / VCT Complete rows – operational RS product templates	Completed assessments in DetectionAttribution methods - Method Assessment.tsv	Operational burned-area scope flagged.
 Information transfer	External	CCM/S-Map Complete rows – predictive-causality templates	Completed assessments in DetectionAttribution methods - Method Assessment.tsv	Transfer-entropy scope flagged as predictive, not interventional.
 CAT transformation (Hird et al. 2016)	External	LandTrendr Complete row – single-study detector template	Completed assessment in DetectionAttribution methods - Method Assessment.tsv	Single-study scope flagged.
 Trajectory classification (Pélissié et al. 2024)	External	LandTrendr / VCT Complete rows – trajectory templates	Completed assessments in DetectionAttribution methods - Method Assessment.tsv	Single-study scope flagged.
