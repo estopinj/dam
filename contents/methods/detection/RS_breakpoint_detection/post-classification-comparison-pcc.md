@@ -1,11 +1,11 @@
 ---
 layout: method
-title: "R-learner, TMLE, MTP"
-parent: "Meta-learners"
+title: "Post-Classification Comparison (PCC)"
+parent: "RS breakpoint detection"
 date: 2025-07-17
 author: Mrs. Young
 ---
-<!-- This file was auto-generated from _data/Attribution methods - Method Assessment.tsv -->
+<!-- This file was auto-generated from /home/estopinj/POSTDOC/src/dam/_data/DetectionAttribution methods - Method Assessment.tsv -->
 
 {% if page.category_note != '' %}
 {: .note }

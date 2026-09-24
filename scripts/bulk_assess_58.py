@@ -774,8 +774,8 @@ put("Sen's slope", **{"AI flag": "",
 "Number of variables": "Univariate", "Propaguates uncertainty": "Model-specific tools",
 "Handles lag effects": "No", "Parametric nature": "Non-parametric",
 "Language": "R, Python", "Usage": "User-friendly"})
-# 54 BA detection
-put("BA detection", **{"AI flag": "Ambiguous: groups operational burned-area RS products/algorithms; sensor and threshold choices vary.",
+# 54 Post-Classification Comparison (PCC)
+put("Post-Classification Comparison (PCC)", **{"AI flag": "Ambiguous: groups operational burned-area RS products/algorithms; sensor and threshold choices vary.",
 "Category": "Independent detection", "Sub-category": "RS breakpoint detection",
 "Objective": "Detection", "Estimand": "Abrupt change, Maps & generalisations",
 "Type": "Time-series (one sample), Panel data (many samples)",

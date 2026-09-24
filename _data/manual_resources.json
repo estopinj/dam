@@ -1,0 +1,236 @@
+{
+    "R-learner": {
+        "Nie & Wager 2021 – Quasi-oracle estimation of heterogeneous treatment effects": "https://doi.org/10.1093/biomet/asaa076",
+        "Meta Learners: Measuring Treatment Effects with Causal Machine Learning": "https://pub.towardsai.net/meta-learners-measuring-treatment-effects-with-causal-machine-learning-53047aed2cfb",
+        "Precision ecology for targeted conservation action": "https://www.nature.com/articles/s41559-025-02733-4",
+        "Causal machine learning for predicting treatment outcomes": "https://www.nature.com/articles/s41591-024-02902-1"
+    },
+    "Targeted Maximum Likelihood Estimator": {
+        "Targeted Learning: Causal Inference for Observational and Experimental Data": "https://link.springer.com/10.1007/978-1-4419-9782-1",
+        "tmle: Targeted Maximum Likelihood Estimation": "https://cran.r-project.org/web/packages/tmle/index.html",
+        "Targeted Maximum Likelihood Estimation for Causal Inference in Observational Studies": "https://doi.org/10.1093/aje/kww165",
+        "Chapter 7 The TMLE Framework | Targeted Learning in R": "https://tlverse.org/tlverse-handbook/tmle3.html",
+        "Estimating treatment effects with machine learning": "https://onlinelibrary.wiley.com/doi/abs/10.1111/1475-6773.13212",
+        "KHstats - An Illustrated Guide to TMLE, Part I: Introduction and Motivation": "https://www.khstats.com/blog/tmle/tutorial",
+        "A Ride in Targeted Learning Territory": "https://achambaz.github.io/tlride/"
+
+    },
+    "Modified Treatment Policies": {
+        "KHstats - An Illustrated Guide to Modified Treatment Policies, Part 1: Introduction and Motivation": "https://www.khstats.com/blog/lmtp/lmtp",
+        "Nonparametric Causal Effects Based on Longitudinal Modified Treatment Policies": "https://doi.org/10.1080/01621459.2021.1955691",
+        "nt-williams/lmtp": "https://github.com/nt-williams/lmtp"
+    },
+    "Reinforcement learning": {
+        "Optimal Control Using Causal Agents - MaryLena Bleile": "https://www.causal-rl-bridges.com/",
+        "Causal Discovery with Reinforcement Learning": "http://arxiv.org/abs/1906.04477",
+        "Causal Bandits: Learning Good Interventions via Causal Inference": "https://proceedings.neurips.cc/paper/2016/hash/b4288d9c0ec0a1841b3b3728321e7088-Abstract.html"
+    },
+    "PC": {
+        "Review of Causal Discovery Methods Based on Graphical Models": "https://www.frontiersin.org/journals/genetics/articles/10.3389/fgene.2019.00524",
+        "Peter-Clark (PC) Algorithm": "https://yzhu.io/courses/core/labs/lab4/"
+    },
+    "PCMCI": {
+        "Detecting and quantifying causal associations in large nonlinear time series datasets": "https://www.science.org/doi/10.1126/sciadv.aau4996",
+        "Causal inference for time series": "https://www.nature.com/articles/s43017-023-00431-y",
+        "Causal Discovery for time series from multiple datasets with latent contexts": "https://proceedings.mlr.press/v216/gunther23a.html"
+
+    },
+    "FCI, TsFCI": {
+        "Review of Causal Discovery Methods Based on Graphical Models": "https://www.frontiersin.org/journals/genetics/articles/10.3389/fgene.2019.00524",
+        "Causation, Prediction, and Search": "https://ics.uci.edu/~dechter/courses/ics-295cr/spring-2021/reading/Causation_Prediction_and_Search.pdf",
+        "On causal discovery from time series data using FCI": "https://www.researchgate.net/publication/268324455_On_Causal_Discovery_from_Time_Series_Data_using_FCI"
+    },
+    "GES, TsGFCI": {
+        "Optimal structure identification with greedy search": "https://www.jmlr.org/papers/volume3/chickering02b/chickering02b.pdf",
+        "Causal structure learning from multivariate time series in settings with unmeasured confounding": "https://proceedings.mlr.press/v92/malinsky18a.html"
+    },
+    "DYNOTEARS": {
+        "DYNOTEARS: Structure Learning from Time-Series Data": "https://proceedings.mlr.press/v108/pamfil20a.html"
+    },
+    "LiNGAM": {
+        "A Linear Non-Gaussian Acyclic Model for Causal Discovery": "https://jmlr.org/papers/volume7/shimizu06a/shimizu06a.pdf",
+        "Distinguishing Cause from Effect Using Observational Data: Methods and Benchmarks": "http://jmlr.org/papers/v17/14-518.html",
+        "Operationalizing Longitudinal Causal Discovery Under Real-World Workflow Constraints": "https://arxiv.org/abs/2602.23800"
+    },
+    "Additive noise models": {
+        "Distinguishing Cause from Effect Using Observational Data: Methods and Benchmarks": "http://jmlr.org/papers/v17/14-518.html",
+        "Nonlinear causal discovery with additive noise models": "https://webdav.tuebingen.mpg.de/causality/NIPS2008-Hoyer.pdf"
+    },
+    "Bayesian network learning": {
+        "A practical introduction to Bayesian estimation of causal effects: Parametric and nonparametric approaches": "https://onlinelibrary.wiley.com/doi/10.1002/sim.8761",
+        "Bayesian causal inference: a critical review": "https://royalsocietypublishing.org/doi/10.1098/rsta.2022.0153",
+        "Anthropogenic climate and land-use change drive short- and long-term biodiversity shifts across taxa": "https://www.nature.com/articles/s41559-024-02326-7",
+        "Learning Bayesian Networks with the bnlearn R Package": "http://arxiv.org/abs/0908.3817",
+        "Seismic multi-hazard and impact estimation via causal inference from satellite imagery": "https://www.nature.com/articles/s41467-022-35418-8"
+    },
+    "Info-geom. causal inference": {
+        "Distinguishing Cause from Effect Using Observational Data: Methods and Benchmarks": "http://jmlr.org/papers/v17/14-518.html",
+        "Information-geometric approach to inferring causal directions": "https://staff.fnwi.uva.nl/j.m.mooij/articles/ai2012.pdf"
+    },
+    "SES & Network analysis (~adjusted method)": {
+        "Improving network approaches to the study of complex social–ecological interdependencies": "https://www.nature.com/articles/s41893-019-0308-0",
+        "Monitoring social–ecological networks for biodiversity and ecosystem services in human-dominated landscapes": "https://www.facetsjournal.com/doi/full/10.1139/facets-2020-0114",
+        "Identifying Causes of Patterns in Ecological Networks: Opportunities and Limitations": "https://www.annualreviews.org/doi/10.1146/annurev-ecolsys-110316-022928"        
+    },
+    "Causal diffusion models": {
+        "Chapter 11 Diffusion effects": "https://chabefer.github.io/STCI/Diffusion.html"
+    },
+    "Marginal structural models": {
+        "Causal inference and effect estimation using observational data": "https://jech.bmj.com/content/76/11/960",
+        "Marginal Structural Models and Causal Inference in Epidemiology:": "http://journals.lww.com/00001648-200009000-00011",
+        "How to Make Causal Inferences with Time-Series Cross-Sectional Data under Selection on Observables": "https://www.cambridge.org/core/journals/american-political-science-review/article/abs/how-to-make-causal-inferences-with-timeseries-crosssectional-data-under-selection-on-observables/498BE04E5AF9802EC4D33DD7A4016584",
+        "Marginal structural models for panel data with GEE and multilevel models": "https://www.andrewheiss.com/blog/2021/01/15/msm-gee-multilevel/"
+    },
+    "G methods": {
+        "Causal inference and effect estimation using observational data": "https://jech.bmj.com/content/76/11/960",
+        "Handling time varying confounding in observational research": "https://www.bmj.com/content/359/bmj.j4587",
+        "8  Causal inference with G-computation – Model to Meaning": "https://marginaleffects.com/chapters/gcomputation.html",
+        "A visual guide to G-computation": "https://www.khstats.com/art/illustrations_viz#g-computation"
+    },
+    "Invariant causal prediction": {
+        "Invariant Causal Prediction for Nonlinear Models": "https://www.degruyter.com/document/doi/10.1515/jci-2017-0016/html",
+        "Causal Inference by using Invariant Prediction: Identification and Confidence Intervals": "https://doi.org/10.1111/rssb.12167",
+        "Exploring invariance in Machine Learning #1: Invariant Causal Prediction": "https://lgmoneda.github.io/2021/02/21/invariant-causal-prediction.html",
+        "The three major axes of terrestrial ecosystem function": "https://www.nature.com/articles/s41586-021-03939-9"
+    },
+    "Partial identification": {
+        "Chapter 21 - Partial Identification | The Effect": "https://theeffectbook.net/ch-PartialIdentification.html#ch-PartialIdentification",
+        "Partial Identification in Econometrics": "https://www.annualreviews.org/content/journals/10.1146/annurev.economics.050708.143401",
+        "Measuring benefits of protected area management: trends across realms and research gaps for freshwater systems": "https://royalsocietypublishing.org/doi/10.1098/rstb.2014.0274"
+    },
+    "Placebo tests": {
+        "Placebo Tests for Causal Inference": "https://onlinelibrary.wiley.com/doi/abs/10.1111/ajps.12818",
+        "Functional diversity of catch mitigates negative effects of temperature variability on fisheries yields": "https://royalsocietypublishing.org/doi/10.1098/rspb.2016.1435"
+    },
+    "Counterfactual explanations": {
+        "9.3 Counterfactual Explanations | Interpretable Machine Learning": "https://christophm.github.io/interpretable-ml-book/counterfactual.html#counterfactual",
+        "Counterfactual Explanations for Machine Learning: A Review": "https://ml-retrospectives.github.io/neurips2020/camera_ready/5.pdf",
+        "Causal Counterfactual Theory for the Attribution of Weather and Climate-Related Events": "https://journals.ametsoc.org/view/journals/bams/97/1/bams-d-14-00034.1.xml",
+        "A counterfactual approach to measure the impact of wet grassland conservation on U.K. breeding bird populations": "https://onlinelibrary.wiley.com/doi/abs/10.1111/cobi.13692",
+        "North American bird occupancy dynamics attributed to climate and land use change": "https://www.biorxiv.org/content/10.64898/2026.08.24.746675v1",
+        "Declines in European bumblebee habitat suitability attributable to climate change": "https://www.nature.com/articles/s41558-026-02734-6"
+    },
+    "Do-calculus rules": {
+        "Introduction to Judea Pearl's Do-Calculus": "http://arxiv.org/abs/1305.5506",
+        "The 3 rules of do-calculus": "https://www.joshua-entrop.com/post/the_3_rules_of_do_calculus.html"
+    },
+    "BFast": {
+        "Break Detection for Satellite Time Series Data — BFAST 0.7 documentation": "https://bfast.readthedocs.io/en/latest/index.html",
+        "Near real-time disturbance detection using satellite image time series": "https://linkinghub.elsevier.com/retrieve/pii/S0034425712001150",
+        "BFAST Lite: A Lightweight Break Detection Method for Time Series Analysis": "https://doi.org/10.3390/rs13163308"
+    },
+    "DL change detection": {
+        "Deep Learning for Change Detection in Remote Sensing Images: Comprehensive Review and Meta-Analysis": "https://ieeexplore.ieee.org/abstract/document/9136674"
+    },
+    "Diversity metrics, turnover, variance, phenology, sentinels": {
+        "Assessing the suitability of diversity metrics to detect biodiversity change": "https://linkinghub.elsevier.com/retrieve/pii/S0006320716303305",
+        "Temporal turnover and the maintenance of diversity in ecological assemblages": "https://royalsocietypublishing.org/doi/epdf/10.1098/rstb.2010.0285",
+        "Rising variance: a leading indicator of ecological transition": "https://onlinelibrary.wiley.com/doi/10.1111/j.1461-0248.2005.00877.x",
+        "Land surface phenology: What do we really ‘see’ from space?": "https://linkinghub.elsevier.com/retrieve/pii/S004896971731954X",
+        "Ecosystem Sentinels as Early-Warning Indicators in the Anthropocene": "https://www.annualreviews.org/content/journals/10.1146/annurev-environ-111522-102317"
+    },
+    "Bayesian Structured TS": {
+        "Inferring causal impact using Bayesian structural time-series models": "https://projecteuclid.org/journals/annals-of-applied-statistics/volume-9/issue-1/Inferring-causal-impact-using-Bayesian-structural-time-series-models/10.1214/14-AOAS788.full",
+        "google/CausalImpact": "https://github.com/google/CausalImpact",
+        "Bayesian Structural Time Series | SAP Help Portal": "https://help.sap.com/docs/hana-cloud-database/sap-hana-cloud-sap-hana-database-predictive-analysis-library/bayesian-structural-time-series-bayesian-structural-time-series-b997257",
+        "Inferring causal impacts of extreme water-level drawdowns on lake water clarity using long-term monitoring data": "https://linkinghub.elsevier.com/retrieve/pii/S0048969722031850"
+    },
+    "TRIM": {
+        "TRIM 3 Manual (TRends & Indices for Monitoring data)": "https://www.researchgate.net/publication/270100638_TRIM_3_manual_TRends_and_Indices_for_Monitoring_data",
+        "Biotope Use and Trends of European Butterflies": "http://link.springer.com/10.1007/s10841-006-6293-4",
+        "Habitat‐specific population trajectories in boreal waterbirds: alarming trends and bioindicators for wetlands": "https://zslpublications.onlinelibrary.wiley.com/doi/10.1111/acv.12226"
+    },
+    "Markov switching autoregression models": {
+        "Markov switching autoregression models - statsmodels 0.15.0 (+647)": "https://www.statsmodels.org/dev/examples/notebooks/generated/markov_autoregression.html"
+    },
+    "Bootstrapping": {
+        "Appendix A — The Bootstrap": "https://www.r-causal.org/appendices/a-bootstrap",
+        "The direct drivers of recent global anthropogenic biodiversity loss": "https://www.science.org/doi/10.1126/sciadv.abm9982",
+        "A Causal Bootstrap": "https://www.nber.org/papers/w24833"
+    },
+    "Causal GNNs": {
+        "Exploring Causal Learning Through Graph Neural Networks: An In-Depth Review": "https://onlinelibrary.wiley.com/doi/abs/10.1002/widm.70024",
+        "When Graph Neural Network Meets Causality: Opportunities, Methodologies and An Outlook": "http://arxiv.org/abs/2312.12477",
+        "Causal Graph Neural Networks for Wildfire Danger Prediction": "https://arxiv.org/pdf/2403.08414"
+    },
+    "Conformal inference": {
+        "Conformal Inference of Counterfactuals and Individual Treatment Effects": "https://academic.oup.com/jrsssb/article/83/5/911/7056131",
+        "Conformal prediction: A unified review of theory and new challenges": "https://projecteuclid.org/journals/bernoulli/volume-29/issue-1/Conformal-prediction--A-unified-review-of-theory-and-new/10.3150/21-BEJ1447.full",
+        "Uncertainty quantification for probabilistic machine learning in earth observation using conformal prediction": "https://www.nature.com/articles/s41598-024-65954-w"
+    },
+    "First-difference estimator": {
+        "11.2 Estimation: First-difference (FD) estimator | Applied Causal Analysis (with R)": "https://bookdown.org/paul/applied-causal-analysis/fdestimation.html#",
+        "Estimating the Economic Impacts of Climate Change Using Weather Observations": "https://www.nber.org/system/files/working_papers/w25537/w25537.pdf",
+        "Assessing Neighbor and Population Growth Influences on Agricultural Land Conversion": "https://doi.org/10.1007/s12061-015-9172-0"
+    },
+    "Long difference estimator": {
+        "Estimating the Economic Impacts of Climate Change Using Weather Observations": "https://www.nber.org/system/files/working_papers/w25537/w25537.pdf",
+        "Adaptation to Climate Change: Evidence from US Agriculture": "https://pubs.aeaweb.org/doi/10.1257/pol.20130025",
+        "X-Differencing and Dynamic Panel Model Estimation": "https://www.jstor.org/stable/24534509"
+    },
+    "Variance partitioning / Variable importance": {
+        "Biotic and abiotic variables show little redundancy in explaining tree species distributions": "https://onlinelibrary.wiley.com/doi/10.1111/j.1600-0587.2010.06229.x",
+        "Correlates of extinction risk in squamate reptiles: the relative importance of biology, geography, threat and range size": "http://onlinelibrary.wiley.com/doi/abs/10.1111/geb.12419"
+
+    },
+    "Moderator analysis": {
+        "7  Moderation analysis": "https://meth.ikmz.uzh.ch/Moderation.html",
+        "Examining moderation analyses in propensity score methods: Application to depression and substance use": "link",
+        "Mediation and Moderation": "https://rpubs.com/RLuttinen/1155445"
+        
+    },
+    "ARDL": {
+        "ARDL package - RDocumentation": "https://www.rdocumentation.org/packages/ARDL/versions/0.2.4",
+        "Autoregressive Distributed Lag (ARDL) cointegration technique: application and interpretation": "https://www.scienpress.com/Upload/JSEM/Vol%205_4_3.pdf",
+        "ARDL bounds test for cointegration: Replicating the Pesaran et al. (2001) results for the UK earnings equation using R": "https://onlinelibrary.wiley.com/doi/abs/10.1002/jae.2919"
+
+    },
+    "Bayesian Change point detection": {
+        "Bayesian Change Point Detection": "https://help.sap.com/docs/hana-cloud-database/sap-hana-cloud-sap-hana-database-predictive-analysis-library/bayesian-change-point-detection-bayesian-change-point-detection-c6387a3",
+        "A survey of methods for time series change point detection": "https://doi.org/10.1007/s10115-016-0987-z"
+
+    },
+    "Functional causal model": {
+        "Causality: models, reasoning, and inference: 1.4 Functional Causal Models": "https://archive.illc.uva.nl/cil/uploaded_files/inlineitem/Pearl_2009_Causality.pdf",
+        "Functional Causal Models Overview": "https://www.emergentmind.com/topics/functional-causal-models"
+    },
+    "Continuous Change Detection and Classification (CCDC)": {
+        "Continuous change detection and classification of land cover using all available Landsat data": "https://linkinghub.elsevier.com/retrieve/pii/S0034425714000248",
+        "Demystifying LandTrendr and CCDC temporal segmentation": "https://www.sciencedirect.com/science/article/pii/S1569843222000085"
+    },
+    "Mann-Kendall test (+ seq. extension)": {
+        "Design Trend Mann-Kendall": "https://vsp.pnnl.gov/help/vsample/design_trend_mann_kendall.htm",
+        "Non-Parametric Trend Analysis | Google Earth Engine": "https://developers.google.com/earth-engine/tutorials/community/nonparametric-trends",
+        "Mann Kendall Trend Test: Definition, Running the Test": "https://www.statisticshowto.com/mann-kendall-trend-test/",
+        "Trends in Hydrological Parameters of a Southern Brazilian Watershed and its Relation to Human Induced Changes": "https://doi.org/10.1023/A:1008048212420",
+        "Trend analysis and change point detection of seasonal and annual precipitation in Iran": "https://onlinelibrary.wiley.com/doi/abs/10.1002/joc.6211",
+        "Rainfall and river flow trends using Mann–Kendall and Sen’s slope estimator statistical tests in the Cobres River basin": "https://doi.org/10.1007/s11069-015-1644-7"
+    },
+    "Pettitt's Test": {
+        "Trend estimation and change point detection in individual climatic series using flexible regression methods": "https://onlinelibrary.wiley.com/doi/abs/10.1029/2011JD017077",
+        "R: Pettitt's Test for Change-Point Detection": "https://search.r-project.org/CRAN/refmans/trend/html/pettitt.test.html"
+    },
+    "Sen's slope": {
+        "Regression Coefficient via Kendall's Tau": "https://www.scribd.com/document/875352003/Sen-1968",
+        "Non-Parametric Trend Analysis | Google Earth Engine": "https://developers.google.com/earth-engine/tutorials/community/nonparametric-trends",
+        "Rainfall and river flow trends using Mann–Kendall and Sen’s slope estimator statistical tests in the Cobres River basin": "https://doi.org/10.1007/s11069-015-1644-7"
+    },
+    "Post-Classification Comparison (PCC)": {
+        "Change Detection in Remote Sensing Imagery: A Systematic Review of Statistical, Machine Learning, and Deep Learning Methods": "https://www.mdpi.com/2072-4292/18/15/2573",
+        "Land Cover Change Detection: Methods for Tracking How Earth's Surface Evolves": "https://offnadir-delta.com/blog/land-cover-change-detection-methods",
+        "A review on change detection method and accuracy assessment for land use land cover": "https://www.sciencedirect.com/science/article/pii/S2352938521000185"
+    },
+    "Information transfer": {
+        "Causality detection based on information-theoretic approaches in time series analysis": "https://linkinghub.elsevier.com/retrieve/pii/S0370157307000403",
+        "Assessing causality from multivariate time series": "https://link.aps.org/doi/10.1103/PhysRevE.72.026222"
+    },
+    "CAT transformation (Hird et al. 2016)": {
+        "A Simple Transformation for Visualizing Non-seasonal Landscape Change From Dense Time Series of Satellite Data": "https://ieeexplore.ieee.org/document/7094220/"
+    },
+    "Trajectory classification (Pélissié et al. 2024)": {
+        "A systematic approach for detecting abrupt shifts in ecological timeseries": "https://doi.org/10.1016/j.biocon.2023.110429"
+    },
+    "Dynamical footprint analysis (Cano et al. 2025)": {
+        "Identifying fish populations prone to abrupt shifts via dynamical footprint analysis": "https://www.pnas.org/doi/abs/10.1073/pnas.2505461122"
+    }
+}
