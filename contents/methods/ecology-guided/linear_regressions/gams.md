@@ -62,16 +62,25 @@ As with collinearity in GLMs, GAMs can suffer from identifiability issues due to
 optional
 {: .label}
 
-- B
+- {% cite guisan2002generalized  --style _bibliography/narrative %}
+- {% cite suarez-seoane2002largescale  --style _bibliography/narrative %}
+- {% cite dimarco2023elevational  --style _bibliography/narrative %}
+- {% cite conenna2021global  --style _bibliography/narrative %}
 
 ## Implementation 
 
 #### Python
 {: .no_toc }
 
+- [pyGAM](https://pygam.readthedocs.io/en/latest/){:target="_blank"}
+- [Statsmodels](https://www.statsmodels.org/stable/index.html){:target="_blank"}
+- [pymgcv](https://smoothforge.github.io/pymgcv/){:target="_blank"}
+
+
 #### R
 {: .no_toc }
-
+- [mgcv: Mixed GAM Computation Vehicle with Automatic Smoothness Estimation](https://cran.r-project.org/web/packages/mgcv/index.html){:target="_blank"}
+- [gam: Generalized Additive Models](https://cran.r-project.org/web/packages/gam/index.html){:target="_blank"}
 
 
 <!-- For referencement in toc before automatic table -->
