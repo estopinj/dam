@@ -1,6 +1,6 @@
 ---
 layout: method
-title: "Targeted Maximum Likelihood Estimation"
+title: "Targeted Maximum Likelihood Estimation (TMLE)"
 parent: "Meta-learners"
 date: 2025-07-17
 author: Mrs. Young
@@ -9,7 +9,7 @@ author: Mrs. Young
 
 {% if page.category_note != '' %}
 {: .note }
-
+This method also belongs to [Causal ML]({{ site.baseurl }}/causal_ML).
 {% endif %}
 
 

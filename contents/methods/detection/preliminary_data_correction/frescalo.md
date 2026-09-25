@@ -84,7 +84,6 @@ Frescalo is a method developed by {% cite hill2012  --style _bibliography/narrat
 
 ### Code Cells
 {: .no_toc }
-{: .d-inline-block }
 
 - [https://github.com/colinharrower/frescalo](https://github.com/colinharrower/frescalo){:target="_blank"}
 - [https://agauffret.github.io/FrescaloFun/FrescaloFun_tutorial250319.html](https://agauffret.github.io/FrescaloFun/FrescaloFun_tutorial250319.html){:target="_blank"} (from the old package) 

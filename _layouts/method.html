@@ -108,8 +108,6 @@ layout: default
       {% else %}
         {{ res.resource }}
       {% endif %}
-      {% if res.type != "" %}({{ res.type }}){% endif %}
-      {% if res.use != "" %} — {{ res.use }}{% endif %}
     </li>
     {% endfor %}
   </ul>

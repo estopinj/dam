@@ -24,3 +24,7 @@ vendor/
 
 # Generated assessment data: rebuilt from the raw TSV at build time
 _data/method_assessments_clean.tsv
+
+# Ignores downloaded pdfs and logs
+scripts/validation/downloaded_pdfs/
+scripts/validation/logs/
