@@ -16,10 +16,28 @@ from openai import OpenAI, APIConnectionError, APIStatusError, APITimeoutError
 SCRIPT_DIR = Path(__file__).resolve().parent
 ROOT_DIR = SCRIPT_DIR.parents[1]
 CSV_DIR = SCRIPT_DIR / "csvs"
-DEFAULT_RESULTS_CSV = SCRIPT_DIR / "NaviDAM_Triage_Results.csv"
+RESULTS_DIR = SCRIPT_DIR / "parsing_results"
+DEFAULT_RESULTS_CSV = RESULTS_DIR / "NaviDAM_Triage_Results.csv"
 DEFAULT_PDF_DIR = SCRIPT_DIR / "downloaded_pdfs"
+DEFAULT_PDF_MANIFEST_CSV = DEFAULT_PDF_DIR / "articles_to_download.csv"
 LOGS_DIR = SCRIPT_DIR / "logs"
 METHOD_ASSESSMENTS_PATH = ROOT_DIR / "_data" / "method_assessments_clean.tsv"
+DEFAULT_LLM_PROVIDER = "ollama"
+DEFAULT_LLM_BASE_URL = "http://localhost:11434/v1"
+DEFAULT_LLM_MODEL = "qwen2.5:7b"
+CURRENT_LLM_MODEL = DEFAULT_LLM_MODEL
+RETRYABLE_STATUSES = {"ASSESSMENT_SYSTEM_ERROR", "LLM_CONFIGURATION_ERROR"}
+GBIF_MANIFEST_COLUMNS = [
+    "Publication ID",
+    "DOI",
+    "Title",
+    "Source Linkout",
+    "Expected PDF Filename",
+    "Uploaded",
+    "First Logged",
+    "Last Seen Status",
+    "Assessment_Model",
+]
 NON_EMPIRICAL_TITLE_PATTERNS = [
     r"\breview\b",
     r"\bperspective\b",
@@ -234,21 +252,58 @@ def build_run_log_path(argv, assessment_model_label):
     return LOGS_DIR / filename
 
 
+def resolve_results_csv_path(input_csv_path, explicit_output_csv=None):
+    if explicit_output_csv:
+        return Path(explicit_output_csv).expanduser().resolve()
+
+    input_csv = Path(input_csv_path)
+    special_names = {
+        "Dimensions-Publication-2026-09-23_10-34-58.csv": "detection_parsed_articles.csv",
+        "Dimensions-Publication-2026-09-23_10-30-05.csv": "attribution_parsed_articles.csv",
+    }
+    output_name = special_names.get(input_csv.name, f"{input_csv.stem}_parsed_articles.csv")
+    RESULTS_DIR.mkdir(parents=True, exist_ok=True)
+    return (RESULTS_DIR / output_name).resolve()
+
+
 def print_log_block(title, lines):
     print(f"\n[{title}]")
     for line in lines:
         print(line)
 
 
-def print_run_header(csv_path, output_csv_path, pdf_dir, log_path, argv):
+def print_run_header(csv_path, output_csv_path, pdf_dir, log_path, argv, args):
     settings = get_llm_settings()
     started_at = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    full_command = f"{shlex.quote(sys.executable)} {shlex.quote(str(Path(__file__).resolve()))}"
+    if argv:
+        full_command = f"{full_command} {shlex.join(argv)}"
+    active_flags = []
+    if getattr(args, "catchup", False):
+        active_flags.append("--catchup")
+    if getattr(args, "error_retry", False):
+        active_flags.append("--error-retry")
+    if getattr(args, "show_llm_config", False):
+        active_flags.append("--show-llm-config")
+    if getattr(args, "input_csv", None):
+        active_flags.append("--input-csv")
+    if getattr(args, "triage_csv", None):
+        active_flags.append("--triage-csv")
     print("\n" + "=" * 72)
     print("NaviDAM Validation Run")
     print("=" * 72)
     print(f"Using input CSV: {csv_path}")
     print(f"Assessment model: {get_assessment_model_label()}")
     print(f"Date and time: {started_at}")
+    print_log_block(
+        "Run Mode",
+        [
+            f"catchup: {'enabled' if args.catchup else 'disabled'}",
+            f"error-retry: {'enabled' if args.error_retry else 'disabled'}",
+            f"auto local-PDF follow-up: {'enabled' if not args.catchup else 'disabled (manual catchup mode)'}",
+            f"active flags: {', '.join(active_flags) if active_flags else 'none'}",
+        ],
+    )
     print_log_block(
         "Run Configuration",
         [
@@ -258,7 +313,7 @@ def print_run_header(csv_path, output_csv_path, pdf_dir, log_path, argv):
             f"Output CSV: {output_csv_path}",
             f"PDF directory: {pdf_dir}",
             f"Log file: {log_path}",
-            f"Command: python {Path(__file__).name} {shlex.join(argv)}" if argv else f"Command: python {Path(__file__).name}",
+            f"Command: {full_command}",
         ],
     )
 
@@ -280,11 +335,11 @@ def restore_run_logger(log_handle, original_stdout, original_stderr):
 
 
 def get_llm_settings():
-    """Read provider settings for any OpenAI-compatible chat completion endpoint."""
+    """Read the built-in Ollama chat completion settings."""
     api_key = os.environ.get("NAVIDAM_LLM_API_KEY") or os.environ.get("OPENAI_API_KEY")
-    model = os.environ.get("NAVIDAM_LLM_MODEL") or os.environ.get("OPENAI_MODEL") or "gpt-4o"
-    base_url = os.environ.get("NAVIDAM_LLM_BASE_URL") or os.environ.get("OPENAI_BASE_URL")
-    provider = os.environ.get("NAVIDAM_LLM_PROVIDER") or ("openai-compatible" if base_url else "openai")
+    model = CURRENT_LLM_MODEL
+    base_url = DEFAULT_LLM_BASE_URL
+    provider = DEFAULT_LLM_PROVIDER
     return {
         "api_key": api_key,
         "model": model,
@@ -546,17 +601,42 @@ def result_row_key(publication_id, assessment_model):
     return (str(publication_id).strip(), str(assessment_model).strip())
 
 
-def existing_result_keys(results_df):
+def existing_result_statuses(results_df):
+    if results_df.empty:
+        return {}
+    statuses = {}
+    for _, row in results_df.iterrows():
+        statuses[result_row_key(row.get("Publication ID", ""), row.get("Assessment_Model", ""))] = str(
+            row.get("NaviDAM_Status", "")
+        ).strip()
+    return statuses
+
+
+def error_retry_pub_ids(results_df, assessment_model):
     if results_df.empty:
         return set()
-    return {
-        result_row_key(row.get("Publication ID", ""), row.get("Assessment_Model", ""))
-        for _, row in results_df.iterrows()
-    }
+
+    pub_ids = set()
+    matching_rows = results_df[
+        (results_df["Assessment_Model"].fillna("").astype(str) == str(assessment_model).strip())
+        & (results_df["NaviDAM_Status"] == "ASSESSMENT_SYSTEM_ERROR")
+    ]
+    for _, row in matching_rows.iterrows():
+        pub_id = str(row.get("Publication ID", "")).strip()
+        if pub_id:
+            pub_ids.add(pub_id)
+    return pub_ids
 
 
-def combine_results(existing_df, new_rows):
+def combine_results(existing_df, new_rows, replace_keys=None):
     new_df = pd.DataFrame(new_rows, columns=RESULT_COLUMNS)
+    replace_keys = replace_keys or set()
+    if replace_keys and not existing_df.empty:
+        keep_mask = [
+            result_row_key(row.get("Publication ID", ""), row.get("Assessment_Model", "")) not in replace_keys
+            for _, row in existing_df.iterrows()
+        ]
+        existing_df = existing_df.loc[keep_mask]
     if existing_df.empty:
         return new_df
     if new_df.empty:
@@ -564,11 +644,38 @@ def combine_results(existing_df, new_rows):
     return pd.concat([existing_df[RESULT_COLUMNS], new_df[RESULT_COLUMNS]], ignore_index=True)
 
 
-def parse_chat_completion_json(response):
+def extract_chat_completion_text(response):
     content = response.choices[0].message.content
-    if isinstance(content, list):
-        content = "".join(part.text for part in content if hasattr(part, "text"))
-    return json.loads(content)
+    if isinstance(content, (dict, list)) and not isinstance(content, str):
+        if isinstance(content, dict):
+            return json.dumps(content, ensure_ascii=True)
+
+        chunks = []
+        for part in content:
+            if isinstance(part, str):
+                chunks.append(part)
+                continue
+            if isinstance(part, dict):
+                for key in ("text", "value", "content"):
+                    value = part.get(key)
+                    if isinstance(value, str) and value.strip():
+                        chunks.append(value)
+                        break
+                continue
+            text_value = getattr(part, "text", None)
+            if isinstance(text_value, str) and text_value.strip():
+                chunks.append(text_value)
+                continue
+            model_dump = getattr(part, "model_dump", None)
+            if callable(model_dump):
+                dumped = model_dump()
+                for key in ("text", "value", "content"):
+                    value = dumped.get(key)
+                    if isinstance(value, str) and value.strip():
+                        chunks.append(value)
+                        break
+        return "\n".join(chunks)
+    return str(content or "")
 
 def extract_text_from_pdf_file(filepath):
     """Helper to extract text from a physical file path safely."""
@@ -650,10 +757,11 @@ def coerce_json_text(content):
     if not text:
         raise json.JSONDecodeError("Empty response content", text, 0)
 
-    if text.startswith("```"):
-        fenced_match = re.match(r"^```(?:json)?\s*(.*?)\s*```$", text, flags=re.DOTALL | re.IGNORECASE)
-        if fenced_match:
-            text = fenced_match.group(1).strip()
+    fenced_match = re.search(r"```(?:json)?\s*(.*?)\s*```", text, flags=re.DOTALL | re.IGNORECASE)
+    if fenced_match:
+        fenced_text = fenced_match.group(1).strip()
+        if fenced_text:
+            text = fenced_text
 
     try:
         json.loads(text)
@@ -667,14 +775,40 @@ def coerce_json_text(content):
 
 
 def parse_chat_completion_json(response):
-    content = response.choices[0].message.content
-    if isinstance(content, list):
-        content = "".join(part.text for part in content if hasattr(part, "text"))
+    content = extract_chat_completion_text(response)
     json_text = coerce_json_text(content)
     return json.loads(json_text)
 
 
-def create_chat_completion(messages, model, base_url):
+def get_model_text_excerpt(full_text, model, base_url):
+    limit = 45000
+    model_name = str(model or "").lower()
+    base = str(base_url or "").lower()
+    if base.startswith("http://localhost") or base.startswith("http://127.0.0.1"):
+        limit = 22000
+        if ":3b" in model_name or "3b" in model_name:
+            limit = 12000
+    return full_text[:limit]
+
+
+def build_json_repair_messages(messages, raw_content):
+    repair_messages = list(messages)
+    cleaned_content = str(raw_content or "").strip()
+    if cleaned_content:
+        repair_messages.append({"role": "assistant", "content": cleaned_content})
+    repair_messages.append(
+        {
+            "role": "user",
+            "content": (
+                "Your previous answer was not valid JSON. Return the same answer again as one strict JSON object only. "
+                "Do not use markdown fences. Do not add explanations."
+            ),
+        }
+    )
+    return repair_messages
+
+
+def create_chat_completion(messages, model, base_url, allow_json_repair=True):
     client = get_llm_client()
     request_kwargs = {
         "model": model,
@@ -684,7 +818,18 @@ def create_chat_completion(messages, model, base_url):
     if llm_endpoint_supports_response_format(base_url):
         request_kwargs["response_format"] = {"type": "json_object"}
     response = client.chat.completions.create(**request_kwargs)
-    return parse_chat_completion_json(response)
+    try:
+        return parse_chat_completion_json(response)
+    except json.JSONDecodeError:
+        if not allow_json_repair:
+            raise
+        repair_messages = build_json_repair_messages(messages, extract_chat_completion_text(response))
+        repair_response = client.chat.completions.create(
+            model=model,
+            messages=repair_messages,
+            temperature=0.0,
+        )
+        return parse_chat_completion_json(repair_response)
 
 
 def method_label_is_broad(method_name):
@@ -696,6 +841,7 @@ def method_label_is_broad(method_name):
 
 def extract_method_from_paper(full_text, row_metadata, context_status, settings):
     metadata_block = json.dumps(row_metadata or {}, indent=2, ensure_ascii=True)
+    excerpt = get_model_text_excerpt(full_text, settings["model"], settings["base_url"])
     prompt = f"""
     You are extracting only the primary method actually implemented and used by the authors in an empirical research paper.
     You are parsing a {context_status}.
@@ -705,7 +851,7 @@ def extract_method_from_paper(full_text, row_metadata, context_status, settings)
 
     Extracted text:
     ---
-    {full_text[:45000]}
+    {excerpt}
     ---
 
     Task:
@@ -731,6 +877,7 @@ def extract_method_from_paper(full_text, row_metadata, context_status, settings)
 
 def refine_method_from_paper(full_text, row_metadata, previous_method, previous_evidence, context_status, settings):
     metadata_block = json.dumps(row_metadata or {}, indent=2, ensure_ascii=True)
+    excerpt = get_model_text_excerpt(full_text, settings["model"], settings["base_url"])
     prompt = f"""
     You are correcting a method extraction that is too broad.
     You are parsing a {context_status}.
@@ -740,7 +887,7 @@ def refine_method_from_paper(full_text, row_metadata, previous_method, previous_
 
     Extracted text:
     ---
-    {full_text[:45000]}
+    {excerpt}
     ---
 
     Previous answer:
@@ -763,6 +910,7 @@ def refine_method_from_paper(full_text, row_metadata, previous_method, previous_
 def extract_criteria_from_paper(full_text, row_metadata, method_name, method_evidence, context_status, settings):
     metadata_block = json.dumps(row_metadata or {}, indent=2, ensure_ascii=True)
     criteria_schema = {criterion: NAVIDAM_ASSESSMENT_SCHEMA[criterion] for criterion in FILTER_CRITERIA}
+    excerpt = get_model_text_excerpt(full_text, settings["model"], settings["base_url"])
     prompt = f"""
     You are extracting NaviDAM criteria from an empirical research paper.
     You are parsing a {context_status}.
@@ -776,7 +924,7 @@ def extract_criteria_from_paper(full_text, row_metadata, method_name, method_evi
 
     Extracted text:
     ---
-    {full_text[:45000]}
+    {excerpt}
     ---
 
     Task:
@@ -901,15 +1049,79 @@ def print_failed_pdf_manifest(results_df, pdf_dir):
         link = row.get("Source Linkout", "")
         print(f" - {pub_id}.pdf | DOI: {doi} | Title: {title} | Link: {link}")
 
+
+def update_download_manifest(results_df, manifest_path=DEFAULT_PDF_MANIFEST_CSV):
+    manifest_path = Path(manifest_path)
+    manifest_path.parent.mkdir(parents=True, exist_ok=True)
+
+    if manifest_path.exists():
+        manifest_df = pd.read_csv(manifest_path)
+    else:
+        manifest_df = pd.DataFrame(columns=GBIF_MANIFEST_COLUMNS)
+
+    for column in GBIF_MANIFEST_COLUMNS:
+        if column not in manifest_df.columns:
+            manifest_df[column] = ""
+    manifest_df = manifest_df[GBIF_MANIFEST_COLUMNS]
+
+    existing_pub_ids = {
+        str(value).strip() for value in manifest_df.get("Publication ID", pd.Series(dtype=str)).fillna("") if str(value).strip()
+    }
+
+    failed_rows = results_df[results_df["NaviDAM_Status"] == "ONLINE_PDF_FAILED"]
+    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    appended = 0
+
+    for _, row in failed_rows.iterrows():
+        pub_id = str(row.get("Publication ID", "")).strip()
+        if not pub_id or pub_id in existing_pub_ids:
+            continue
+        manifest_df.loc[len(manifest_df)] = {
+            "Publication ID": pub_id,
+            "DOI": row.get("DOI", ""),
+            "Title": row.get("Original_Title", ""),
+            "Source Linkout": row.get("Source Linkout", ""),
+            "Expected PDF Filename": f"{pub_id}.pdf",
+            "Uploaded": "No",
+            "First Logged": timestamp,
+            "Last Seen Status": row.get("NaviDAM_Status", ""),
+            "Assessment_Model": row.get("Assessment_Model", ""),
+        }
+        existing_pub_ids.add(pub_id)
+        appended += 1
+
+    manifest_df.to_csv(manifest_path, index=False)
+    return manifest_path, appended, len(manifest_df)
+
+
+def load_uploaded_pdf_pub_ids(manifest_path=DEFAULT_PDF_MANIFEST_CSV):
+    manifest_path = Path(manifest_path)
+    if not manifest_path.exists():
+        return set()
+
+    manifest_df = pd.read_csv(manifest_path)
+    if "Publication ID" not in manifest_df.columns or "Uploaded" not in manifest_df.columns:
+        return set()
+
+    uploaded_flags = manifest_df["Uploaded"].fillna("").astype(str).str.strip().str.casefold()
+    uploaded_rows = manifest_df[uploaded_flags.isin({"yes", "y", "true", "1"})]
+    return {
+        str(pub_id).strip()
+        for pub_id in uploaded_rows["Publication ID"].fillna("").astype(str)
+        if str(pub_id).strip()
+    }
+
 # Mode 1: Initial Online Web Assessment Check
-def run_online_triage_pass(csv_path, max_rows=3, output_csv_path=DEFAULT_RESULTS_CSV, pdf_dir=DEFAULT_PDF_DIR):
+def run_online_triage_pass(csv_path, max_rows=3, output_csv_path=DEFAULT_RESULTS_CSV, pdf_dir=DEFAULT_PDF_DIR, error_retry=False):
     df = pd.read_csv(csv_path, skiprows=1)
     df = df.head(max_rows) # Dev bounded parameters
     existing_df = load_existing_results(output_csv_path)
-    seen_keys = existing_result_keys(existing_df)
+    existing_statuses = existing_result_statuses(existing_df)
     current_model = get_assessment_model_label()
+    retry_pub_ids = error_retry_pub_ids(existing_df, current_model) if error_retry else set()
     
     evaluated_records = []
+    replaced_keys = set()
     print_log_block(
         "Online Triage",
         [
@@ -918,13 +1130,43 @@ def run_online_triage_pass(csv_path, max_rows=3, output_csv_path=DEFAULT_RESULTS
             f"Rows to process in this pass: {len(df)}",
         ],
     )
+
+    if error_retry:
+        if retry_pub_ids:
+            print_log_block(
+                "Error Retry",
+                [
+                    f"Retrying {len(retry_pub_ids)} publication(s) with prior ASSESSMENT_SYSTEM_ERROR status for model '{current_model}'.",
+                    "Rows without a current-model assessment error will be skipped in this pass.",
+                ],
+            )
+        else:
+            print_log_block(
+                "Error Retry",
+                [
+                    f"No current-model ASSESSMENT_SYSTEM_ERROR rows were found for '{current_model}'.",
+                    "Falling back to normal model-scoped behavior.",
+                ],
+            )
     
     for idx, row in df.iterrows():
         pub_id = str(row.get('Publication ID')).strip()
         row_key = result_row_key(pub_id, current_model)
-        if row_key in seen_keys:
+        previous_status = existing_statuses.get(row_key, "")
+        if error_retry and retry_pub_ids:
+            if pub_id not in retry_pub_ids:
+                continue
+            if previous_status == "ASSESSMENT_SYSTEM_ERROR":
+                print(f" - Paper {pub_id}: retrying prior system error for model '{current_model}'.")
+                replaced_keys.add(row_key)
+            else:
+                continue
+        elif previous_status and previous_status not in RETRYABLE_STATUSES:
             print(f" - Paper {pub_id}: skipped because it was already processed with model '{current_model}'.")
             continue
+        if previous_status in RETRYABLE_STATUSES and not error_retry:
+            print(f" - Paper {pub_id}: retrying same-model row because previous status was '{previous_status}'.")
+            replaced_keys.add(row_key)
 
         pdf_url = row.get('Source Linkout', None)
         record = blank_result_record(row)
@@ -966,25 +1208,28 @@ def run_online_triage_pass(csv_path, max_rows=3, output_csv_path=DEFAULT_RESULTS
                 record["Assessment_Error"] = str(exc)
                 print(f"   Warning: {exc}")
         else:
-            print(f" - Paper {pub_id}: warning. PDF URL broken or unreachable. Tagged and skipped.")
+            print(
+                f" - Paper {pub_id}: online PDF access failed. The article could not be retrieved from its Source Linkout, so it was marked ONLINE_PDF_FAILED and skipped for now."
+            )
             
         evaluated_records.append(record)
-        seen_keys.add(row_key)
         
-    results_df = combine_results(existing_df, evaluated_records)
+    results_df = combine_results(existing_df, evaluated_records, replace_keys=replaced_keys)
     results_df.to_csv(output_csv_path, index=False)
+    manifest_path, manifest_added, manifest_total = update_download_manifest(results_df)
     print_log_block(
         "Run Summary",
         [
             f"New rows written in this pass: {len(evaluated_records)}",
             f"Results CSV: {output_csv_path}",
+            f"Download manifest: {manifest_path} ({manifest_total} rows, {manifest_added} new this run)",
         ],
     )
     print_failed_pdf_manifest(pd.DataFrame(evaluated_records, columns=RESULT_COLUMNS), pdf_dir)
     return results_df
 
 # Mode 2: Offline Local Catch-Up Sweep Processing
-def run_local_folder_catchup(triage_csv_path, input_folder_path=DEFAULT_PDF_DIR):
+def run_local_folder_catchup(triage_csv_path, input_folder_path=DEFAULT_PDF_DIR, allowed_pub_ids=None, run_label="Offline Catch-Up"):
     """Sifts out rows with the failure flag and scans your local storage folder for an offline catch-up run."""
     if not os.path.exists(triage_csv_path):
         print(f"Error: Target tracking file '{triage_csv_path}' missing.")
@@ -996,16 +1241,20 @@ def run_local_folder_catchup(triage_csv_path, input_folder_path=DEFAULT_PDF_DIR)
         (df['NaviDAM_Status'] == "ONLINE_PDF_FAILED")
         & (df['Assessment_Model'].fillna("") == current_model)
     ]
+
+    if allowed_pub_ids is not None:
+        allowed_pub_ids = {str(pub_id).strip() for pub_id in allowed_pub_ids if str(pub_id).strip()}
+        failed_rows = failed_rows[failed_rows["Publication ID"].fillna("").astype(str).str.strip().isin(allowed_pub_ids)]
     
     if failed_rows.empty:
         print_log_block(
-            "Offline Catch-Up",
+            run_label,
             [f"No rows found with an active 'ONLINE_PDF_FAILED' flag for model '{current_model}'."],
         )
         return
         
     print_log_block(
-        "Offline Catch-Up",
+        run_label,
         [
             f"Assessment model: {current_model}",
             f"Flagged rows for this model: {len(failed_rows)}",
@@ -1056,6 +1305,23 @@ def run_local_folder_catchup(triage_csv_path, input_folder_path=DEFAULT_PDF_DIR)
     print_failed_pdf_manifest(df, input_folder_path)
 
 
+def run_uploaded_pdf_catchup(triage_csv_path, input_folder_path=DEFAULT_PDF_DIR, manifest_path=DEFAULT_PDF_MANIFEST_CSV):
+    uploaded_pub_ids = load_uploaded_pdf_pub_ids(manifest_path)
+    if not uploaded_pub_ids:
+        print_log_block(
+            "Auto Catch-Up",
+            [f"No manifest entries are marked Uploaded = Yes in '{manifest_path}'."],
+        )
+        return
+
+    run_local_folder_catchup(
+        triage_csv_path,
+        input_folder_path=input_folder_path,
+        allowed_pub_ids=uploaded_pub_ids,
+        run_label="Auto Catch-Up",
+    )
+
+
 def main():
     parser = argparse.ArgumentParser(description="Run NaviDAM validation triage on a CSV export.")
     parser.add_argument(
@@ -1065,14 +1331,19 @@ def main():
         help="CSV filename or path. Falls back to the first CSV in scripts/validation/csvs.",
     )
     parser.add_argument(
+        "--model",
+        default=DEFAULT_LLM_MODEL,
+        help="Ollama model name to use for validation runs.",
+    )
+    parser.add_argument(
         "--input-csv",
         dest="input_csv",
         help="Explicit input CSV filename or path. Overrides the positional csv_filename when provided.",
     )
     parser.add_argument(
         "--output-csv",
-        default=str(DEFAULT_RESULTS_CSV),
-        help="Path for the triage results CSV.",
+        default=None,
+        help="Override the derived parsed-results CSV path.",
     )
     parser.add_argument(
         "--pdf-dir",
@@ -1091,6 +1362,11 @@ def main():
         help="Run the offline local-folder catch-up pass instead of the online pass.",
     )
     parser.add_argument(
+        "--error-retry",
+        action="store_true",
+        help="Only retry rows whose current-model status is ASSESSMENT_SYSTEM_ERROR; falls back to normal behavior if none exist.",
+    )
+    parser.add_argument(
         "--triage-csv",
         default=None,
         help="Tracking CSV for the catch-up pass. Defaults to --output-csv.",
@@ -1101,6 +1377,9 @@ def main():
         help="Print the active provider/model/base-url configuration and exit.",
     )
     args = parser.parse_args()
+
+    global CURRENT_LLM_MODEL
+    CURRENT_LLM_MODEL = args.model or DEFAULT_LLM_MODEL
 
     if args.show_llm_config:
         settings = get_llm_settings()
@@ -1113,7 +1392,7 @@ def main():
         print(f"Provider: {settings['provider']}")
         print(f"Model: {settings['model']}")
         print(f"Assessment Model Label: {get_assessment_model_label()}")
-        print(f"Base URL: {settings['base_url'] or 'default OpenAI endpoint'}")
+        print(f"Base URL: {settings['base_url']}")
         print(f"API key: {masked_key}")
         return
 
@@ -1121,15 +1400,8 @@ def main():
     log_path, log_handle, original_stdout, original_stderr = install_run_logger(argv)
 
     try:
-        output_csv_path = Path(args.output_csv).expanduser().resolve()
         pdf_dir = Path(args.pdf_dir).expanduser().resolve()
         pdf_dir.mkdir(parents=True, exist_ok=True)
-
-        if args.catchup:
-            triage_csv_path = Path(args.triage_csv).expanduser().resolve() if args.triage_csv else output_csv_path
-            print_run_header(triage_csv_path, output_csv_path, pdf_dir, log_path, argv)
-            run_local_folder_catchup(triage_csv_path, pdf_dir)
-            return
 
         requested_csv = args.input_csv or args.csv_filename
         csv_path = resolve_input_csv(requested_csv)
@@ -1139,13 +1411,24 @@ def main():
             )
             return
 
-        print_run_header(csv_path, output_csv_path, pdf_dir, log_path, argv)
+        output_csv_path = resolve_results_csv_path(csv_path, args.output_csv)
+
+        if args.catchup:
+            triage_csv_path = Path(args.triage_csv).expanduser().resolve() if args.triage_csv else output_csv_path
+            print_run_header(triage_csv_path, output_csv_path, pdf_dir, log_path, argv, args)
+            run_local_folder_catchup(triage_csv_path, pdf_dir)
+            return
+
+        print_run_header(csv_path, output_csv_path, pdf_dir, log_path, argv, args)
         run_online_triage_pass(
             csv_path,
             max_rows=args.max_rows,
             output_csv_path=output_csv_path,
             pdf_dir=pdf_dir,
+            error_retry=args.error_retry,
         )
+
+        run_uploaded_pdf_catchup(output_csv_path, pdf_dir)
 
         print_log_block(
             "Workspace Setup",
