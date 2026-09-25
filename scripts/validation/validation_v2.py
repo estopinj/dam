@@ -1114,7 +1114,8 @@ def load_uploaded_pdf_pub_ids(manifest_path=DEFAULT_PDF_MANIFEST_CSV):
 # Mode 1: Initial Online Web Assessment Check
 def run_online_triage_pass(csv_path, max_rows=3, output_csv_path=DEFAULT_RESULTS_CSV, pdf_dir=DEFAULT_PDF_DIR, error_retry=False):
     df = pd.read_csv(csv_path, skiprows=1)
-    df = df.head(max_rows) # Dev bounded parameters
+    if max_rows is not None:
+        df = df.head(max_rows)
     existing_df = load_existing_results(output_csv_path)
     existing_statuses = existing_result_statuses(existing_df)
     current_model = get_assessment_model_label()
@@ -1126,7 +1127,7 @@ def run_online_triage_pass(csv_path, max_rows=3, output_csv_path=DEFAULT_RESULTS
         "Online Triage",
         [
             f"Assessment model: {current_model}",
-            f"Rows requested: {max_rows}",
+            f"Rows requested: {'all' if max_rows is None else max_rows}",
             f"Rows to process in this pass: {len(df)}",
         ],
     )
@@ -1354,7 +1355,12 @@ def main():
         "--max-rows",
         type=int,
         default=3,
-        help="Limit the online triage pass to the first N rows.",
+        help="Limit the online triage pass to the first N rows. Ignored when --all-rows is set.",
+    )
+    parser.add_argument(
+        "--all-rows",
+        action="store_true",
+        help="Process all rows in the input CSV during the online triage pass.",
     )
     parser.add_argument(
         "--catchup",
@@ -1420,9 +1426,11 @@ def main():
             return
 
         print_run_header(csv_path, output_csv_path, pdf_dir, log_path, argv, args)
+        effective_max_rows = None if args.all_rows else args.max_rows
+
         run_online_triage_pass(
             csv_path,
-            max_rows=args.max_rows,
+            max_rows=effective_max_rows,
             output_csv_path=output_csv_path,
             pdf_dir=pdf_dir,
             error_retry=args.error_retry,
