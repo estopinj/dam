@@ -21,29 +21,31 @@ author: Andrea Zampetti, Sapienza University of Rome
 
 
 ## Description & principle 
-Generalized Linear Mixed Models (GLMMs; Breslow & Clayton, 1993) and Generalized Additive Mixed Models (GAMMs; Lin & Zhang, 1999) extend [GLMs]({{ site.baseurl }}/contents/methods/ecology-guided/linear_regressions/glms-gees/){:target="_blank"} and GAMs by incorporating random effects, which account for non-independence and hierarchical structure in the modelled data. In real-world monitoring scenarios, observations are rarely independent: species counts come from repeated visits to the same site, plots are nested within regions, or individuals are observed across years. Ignoring these structures can lead to biased parameter estimates and misleading inference (Figure 1). To mitigate this issue, GLMMs and GAMMs integrate random components (i.e. random intercepts and/or slopes) that help separate within-group variation from between-group variations, reducing pseudoreplication and improving estimates for the predictors of interest (which in a mixed-effects model are called fixed effects). This allows disentangling the true signals of fixed effects from noise and unmeasured heterogeneity associated with grouping factors or hierarchical structure in the data. 
+Generalized Linear Mixed Models (GLMMs; Breslow & Clayton, 1993) and Generalized Additive Mixed Models (GAMMs; Lin & Zhang, 1999) extend [GLMs]({{ site.baseurl }}/contents/methods/ecology-guided/linear_regressions/glms-gees/){:target="_blank"} and [GAMs]({{ site.baseurl }}/contents/methods/ecology-guided/linear_regressions/gams/){:target="_blank"} by incorporating random effects, which account for non-independence and hierarchical structure in the modelled data. In real-world monitoring scenarios, observations are rarely independent: species counts come from repeated visits to the same site, plots are nested within regions, or individuals are observed across years. Ignoring these structures can lead to biased parameter estimates and misleading inference (Figure 1). To mitigate this issue, GLMMs and GAMMs integrate random components (i.e. random intercepts and/or slopes) that help separate within-group variation from between-group variations, reducing pseudoreplication and improving estimates for the predictors of interest (which in a mixed-effects model are called fixed effects). This allows disentangling the true signals of fixed effects from noise and unmeasured heterogeneity associated with grouping factors or hierarchical structure in the data. 
 
-![]({{ site.baseurl }}/assets/images/glmm_gamm.png)
+![]({{ site.baseurl }}/assets/images/GLMM_GAMM.png)
 <a name="fig-glmm"></a>
+
 **Figure 1**  A visual representation of the “Simpson paradox”, which arises when the direction of an association between two variables changes drastically upon accounting for group-level structure in the data ({% cite simpson1951interpretation --style _bibliography/narrative %}). In (A), a single regression is fitted on the whole data, showing a clear negative relationship between predictor variable $x$ and response variable $y$. In (B) however, when accounting for the grouped structure of the observations by fitting group-specific regression lines, the nature of the relationship changes in sign. This illustrates how ignoring underlying group structure can lead to misleading conclusions about the overall relationship between variables. In this case, while the pooled data suggests a negative association between $x$ and $y$, the within-group relationships are actually positive. A comparable mixed-model example arises with repeated observations on the same individuals: a pooled regression can confound between-individual differences with within-individual effects, whereas mixed models help separate these two components ({% cite vandepol2009simple --style _bibliography/narrative %}).
 
 
-Specifically, random intercepts allow each group specified in the random effect structure to have its own baseline for the response (Figure 2A): 
+Specifically, **random intercepts** allow each group specified in the random effect structure to have its own baseline for the response (Figure 2A): 
 
 $$
 y_i= a_j+ bx_i
 $$
 
-Where $y$ and $x$ are, respectively the response and predictor variables for the $i$th observation, $b$ is the coefficient representing the effect of the predictor on the response (the slope coefficient in linear models), and $a_j$ is the group-specific intercept, usually sampled from a Normal distribution $N(0, \sigma_a^2)$. Hence, different groups can have higher or lower baseline values than the overall mean, capturing group-specific offsets. In addition to random intercepts, mixed-effects models can also accommodate random slopes that allow each group specified in the random effect structure to have varying effects of the predictor on the response (Figure 2B):
+Where $y$ and $x$ are, respectively the response and predictor variables for the $i$th observation, $b$ is the coefficient representing the effect of the predictor on the response (the slope coefficient in linear models), and $a_j$ is the group-specific intercept, usually sampled from a Normal distribution $N(0, \sigma_a^2)$. Hence, different groups can have higher or lower baseline values than the overall mean, capturing group-specific offsets. In addition to random intercepts, mixed-effects models can also accommodate **random slopes** that allow each group specified in the random effect structure to have varying effects of the predictor on the response (Figure 2B):
 
 $$
-y_i= a_j+ (b_j x)_i
+y_i= a_j+ b_j x_i
 $$
 
-Where $b_j$ is the group-specific slope, usually sampled from a Normal distribution $N(0,\sigma_b^2)$. The examples reported in these two equations and in Figure 2 are referring for simplicity and ease of visualization to a linear mixed-effects model (LMM) which assumes that the response variable is continuous and normally-distributed; however, the same principles apply to GLMMs (through the use of link functions to allow for different distributions in the response variable; see [GLMs]({{ site.baseurl }}/contents/methods/ecology-guided/linear_regressions/glms-gees/){:target="_blank"}) and GAMMs (through the use of smooth terms that allow non-linear trends between predictors and the response variable; see GAMs).
+Where $b_j$ is the group-specific slope, usually sampled from a Normal distribution $N(0,\sigma_b^2)$. The examples reported in these two equations and in Figure 2 are referring for simplicity and ease of visualization to a linear mixed-effects model (LMM) which assumes that the response variable is continuous and normally-distributed; however, the same principles apply to GLMMs (through the use of link functions to allow for different distributions in the response variable; see [GLMs]({{ site.baseurl }}/contents/methods/ecology-guided/linear_regressions/glms-gees/){:target="_blank"}) and GAMMs (through the use of smooth terms that allow non-linear trends between predictors and the response variable; see [GAMs]({{ site.baseurl }}/contents/methods/ecology-guided/linear_regressions/gams/){:target="_blank"}).
 
-![]({{ site.baseurl }}/assets/images/glmm_gamm2.png)
+![]({{ site.baseurl }}/assets/images/GLMM_GAMM2.png)
 <a name="fig-glmm2"></a>
+
 **Figure 2**  Visual representations of random intercepts and random slopes in a simple linear mixed-effects model (LMM) predicting the effect of variable $x$ on the response $y$. Here, $\mu_{\text{group}}$ is the regression line fitted on the overall data, and $a_n$ are the group-specific regression lines based on the specified random effects structure. In panel (A) only random intercepts are specified, so that each group has its own baseline, but all groups share the same slope (i.e. same effect of the predictor $x$ on the response $y$). In panel (B), both random intercepts and random slopes are used, which results in each group having its own baseline and effect on the response variable $y$. Image taken from Harrison et al. (2018).
 
 
@@ -68,10 +70,10 @@ Where $b_j$ is the group-specific slope, usually sampled from a Normal distribut
 ### Further online resources
 {: .no_toc }
 
-- [A simple method for distinguishing within- versus between-subject effects using mixed models](https://doi.org/10.1016/j.anbehav.2008.11.006){:target="_blank"}
-- [Fitting Linear Mixed-Effects Models Using lme4](https://doi.org/10.18637/jss.v067.i01){:target="_blank"}
-- [Hierarchical generalized additive models in ecology: An introduction with mgcv](https://doi.org/10.7717/peerj.6876){:target="_blank"}
-- [An Introduction to Linear Mixed-Effects Modeling in R](https://doi.org/10.1177/2515245920960351){:target="_blank"}
+- [*A simple method for distinguishing within- versus between-subject effects using mixed models*](https://doi.org/10.1016/j.anbehav.2008.11.006){:target="_blank"} {% cite vandepol2009simple %}
+- [*Fitting Linear Mixed-Effects Models Using lme4*](https://doi.org/10.18637/jss.v067.i01){:target="_blank"} {% cite bates2015fitting %}
+- [*Hierarchical generalized additive models in ecology: An introduction with mgcv*](https://doi.org/10.7717/peerj.6876){:target="_blank"} {% cite pedersen2019hierarchical %}
+- [*An Introduction to Linear Mixed-Effects Modeling in R*](https://doi.org/10.1177/2515245920960351){:target="_blank"} {% cite brown2021introduction %}
 
 
 ## Reference articles
