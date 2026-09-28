@@ -1,17 +1,25 @@
 import pandas as pd
 import requests
 import json
+import hashlib
 import os
 import argparse
 import csv
+import shutil
 import re
 import tempfile
 import sys
 import shlex
 from pathlib import Path
 from datetime import datetime
+from urllib.parse import urljoin
 from pypdf import PdfReader
 from openai import OpenAI, APIConnectionError, APIStatusError, APITimeoutError
+
+try:
+    from playwright.sync_api import sync_playwright
+except ModuleNotFoundError:
+    sync_playwright = None
 
 SCRIPT_DIR = Path(__file__).resolve().parent
 ROOT_DIR = SCRIPT_DIR.parents[1]
@@ -27,6 +35,8 @@ DEFAULT_LLM_BASE_URL = "http://localhost:11434/v1"
 DEFAULT_LLM_MODEL = "qwen2.5:7b"
 CURRENT_LLM_MODEL = DEFAULT_LLM_MODEL
 RETRYABLE_STATUSES = {"ASSESSMENT_SYSTEM_ERROR", "LLM_CONFIGURATION_ERROR"}
+DOWNLOAD_LIST_STATUSES = {"ONLINE_PDF_FAILED", "ASSESSMENT_SYSTEM_ERROR"}
+DEFAULT_PDF_BROWSER = "chromium"
 GBIF_MANIFEST_COLUMNS = [
     "Publication ID",
     "DOI",
@@ -247,7 +257,13 @@ def build_run_log_path(argv, assessment_model_label):
     LOGS_DIR.mkdir(parents=True, exist_ok=True)
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     model_part = sanitize_filename_part(assessment_model_label, fallback="model")
-    args_part = sanitize_filename_part("__".join(argv) if argv else "default-run", fallback="default-run")
+    if argv:
+        joined_args = " ".join(argv)
+        args_hash = hashlib.blake2s(joined_args.encode("utf-8"), digest_size=6).hexdigest()
+        first_tokens = "__".join(argv[:4])
+        args_part = sanitize_filename_part(f"{first_tokens}__{args_hash}", fallback="run")
+    else:
+        args_part = "default-run"
     filename = f"validation_v2__{timestamp}__{model_part}__{args_part}.log"
     return LOGS_DIR / filename
 
@@ -697,6 +713,147 @@ def response_looks_like_pdf(response):
         return True
     return response.content.lstrip().startswith(b"%PDF")
 
+
+def api_response_looks_like_pdf(response):
+    try:
+        body = response.body()
+    except Exception:
+        return False
+    content_type = response.headers.get("content-type", "").lower()
+    return "pdf" in content_type or body.lstrip().startswith(b"%PDF")
+
+
+def find_pdf_link(html, base_url):
+    for pat in (
+        r'<meta[^>]+name=["\']citation_pdf_url["\'][^>]+content=["\']([^"\']+)',
+        r'<meta[^>]+content=["\']([^"\']+)["\'][^>]+name=["\']citation_pdf_url',
+        r'href=["\']([^"\']+\.pdf(?:\?[^"\']*)?)["\']',
+        r'href=["\']([^"\']*/pdf(?:direct)?/[^"\']+)["\']',
+    ):
+        match = re.search(pat, html, re.I)
+        if match:
+            return urljoin(base_url, match.group(1).replace("&amp;", "&"))
+    return None
+
+
+def find_browser_executable(browser_name, explicit_path):
+    if explicit_path:
+        return explicit_path
+    if browser_name == "chromium":
+        for name in ("chromium", "chromium-browser", "google-chrome", "chrome", "/snap/bin/chromium"):
+            candidate = shutil.which(name) if not name.startswith("/") else name
+            if candidate:
+                return candidate
+    elif browser_name == "firefox":
+        for name in ("firefox", "/usr/bin/firefox"):
+            candidate = shutil.which(name) if not name.startswith("/") else name
+            if candidate:
+                return candidate
+    return None
+
+
+def browser_download_pdf(pdf_url, target_path, *, browser_name=DEFAULT_PDF_BROWSER, browser_path=None, browser_cdp=None, browser_profile=None, headless=True):
+    if sync_playwright is None:
+        return False
+
+    browser = None
+    ctx = None
+    profile_guard = None
+    attached_via_cdp = False
+
+    try:
+        with sync_playwright() as pw:
+            if browser_cdp:
+                if browser_name != "chromium":
+                    return False
+                browser = pw.chromium.connect_over_cdp(browser_cdp)
+                ctx = browser.contexts[0]
+                attached_via_cdp = True
+            else:
+                if browser_profile:
+                    profile_path = Path(browser_profile).expanduser().resolve()
+                    profile_path.mkdir(parents=True, exist_ok=True)
+                    profile_dir = str(profile_path)
+                else:
+                    profile_guard = tempfile.TemporaryDirectory(prefix="navidam_pdf_browser_")
+                    profile_dir = profile_guard.name
+
+                browser_type = pw.chromium if browser_name == "chromium" else pw.firefox
+                launch_kwargs = {
+                    "headless": headless,
+                    "accept_downloads": True,
+                    "viewport": None,
+                }
+                executable_path = find_browser_executable(browser_name, browser_path)
+                if executable_path:
+                    launch_kwargs["executable_path"] = executable_path
+                if browser_name == "chromium":
+                    launch_kwargs["args"] = ["--disable-blink-features=AutomationControlled"]
+                ctx = browser_type.launch_persistent_context(profile_dir, **launch_kwargs)
+
+            page = ctx.new_page()
+            downloads = []
+            page.on("download", lambda download: downloads.append(download))
+            try:
+                try:
+                    page.goto(pdf_url, wait_until="domcontentloaded", timeout=45000)
+                except Exception:
+                    pass
+                page.wait_for_timeout(2500)
+
+                if downloads:
+                    downloads[0].save_as(str(target_path))
+                    if target_path.exists() and target_path.read_bytes().startswith(b"%PDF-"):
+                        return True
+                    target_path.unlink(missing_ok=True)
+
+                current_url = page.url
+                request_response = ctx.request.get(
+                    current_url,
+                    headers={"Accept": "application/pdf,text/html;q=0.8,*/*;q=0.5"},
+                    timeout=45000,
+                )
+                if request_response.ok and api_response_looks_like_pdf(request_response):
+                    target_path.write_bytes(request_response.body())
+                    return True
+
+                try:
+                    pdf_link = page.evaluate(
+                        """() => {
+                            const meta = document.querySelector('meta[name="citation_pdf_url"]');
+                            if (meta) return meta.content;
+                            const link = [...document.querySelectorAll('a[href]')]
+                                .find(x => /\\.pdf(\\?|$)|\\/pdf(direct)?\\//i.test(x.href));
+                            return link ? link.href : null;
+                        }"""
+                    )
+                except Exception:
+                    pdf_link = None
+                if pdf_link:
+                    pdf_link = urljoin(current_url, pdf_link)
+                    request_response = ctx.request.get(
+                        pdf_link,
+                        headers={
+                            "Accept": "application/pdf,text/html;q=0.8,*/*;q=0.5",
+                            "Referer": current_url,
+                        },
+                        timeout=45000,
+                    )
+                    if request_response.ok and api_response_looks_like_pdf(request_response):
+                        target_path.write_bytes(request_response.body())
+                        return True
+            finally:
+                page.close()
+
+            return False
+    finally:
+        if ctx is not None and attached_via_cdp:
+            ctx.close()
+        elif browser is not None:
+            browser.close()
+        if profile_guard is not None:
+            profile_guard.cleanup()
+
 def download_and_extract_pdf_url(pdf_url, pub_id):
     """Downloads web open-access links."""
     temp_path = None
@@ -718,6 +875,46 @@ def download_and_extract_pdf_url(pdf_url, pub_id):
         if temp_path is not None:
             temp_path.unlink(missing_ok=True)
         return None
+
+
+def attempt_pdf_retrieval(row, pub_id, pdf_dir, *, browser_name=DEFAULT_PDF_BROWSER, browser_path=None, browser_cdp=None, browser_profile=None, headless=True):
+    try:
+        pdf_dir = Path(pdf_dir)
+        pdf_dir.mkdir(parents=True, exist_ok=True)
+        target_path = pdf_dir / f"{pub_id}.pdf"
+
+        if target_path.exists() and target_path.stat().st_size > 1000:
+            return extract_text_from_pdf_file(target_path), target_path
+
+        candidate_urls = []
+        source_link = str(row.get("Source Linkout", "") or "").strip()
+        doi = str(row.get("DOI", "") or "").strip()
+        if source_link:
+            candidate_urls.append(source_link)
+        if doi:
+            doi_url = f"https://doi.org/{doi}"
+            if doi_url not in candidate_urls:
+                candidate_urls.append(doi_url)
+
+        for candidate_url in candidate_urls:
+            if browser_download_pdf(
+                candidate_url,
+                target_path,
+                browser_name=browser_name,
+                browser_path=browser_path,
+                browser_cdp=browser_cdp,
+                browser_profile=browser_profile,
+                headless=headless,
+            ):
+                text = extract_text_from_pdf_file(target_path)
+                if text:
+                    return text, target_path
+                break
+
+        return None, target_path if target_path.exists() else None
+    except Exception as exc:
+        print(f"   Warning: browser-assisted PDF retrieval failed for {pub_id}: {exc}")
+        return None, None
 
 def extract_json_object_from_text(text):
     start = text.find("{")
@@ -1034,8 +1231,8 @@ def resolve_input_csv(csv_name=None):
 
 
 def print_failed_pdf_manifest(results_df, pdf_dir):
-    """Print a download checklist for rows still blocked on local PDFs."""
-    failed_rows = results_df[results_df["NaviDAM_Status"] == "ONLINE_PDF_FAILED"]
+    """Print a download checklist for rows still blocked on local PDFs or system errors."""
+    failed_rows = results_df[results_df["NaviDAM_Status"].isin(DOWNLOAD_LIST_STATUSES)]
     if failed_rows.empty:
         print("\n[Download List]")
         print("No PDFs remain in ONLINE_PDF_FAILED status.")
@@ -1068,7 +1265,7 @@ def update_download_manifest(results_df, manifest_path=DEFAULT_PDF_MANIFEST_CSV)
         str(value).strip() for value in manifest_df.get("Publication ID", pd.Series(dtype=str)).fillna("") if str(value).strip()
     }
 
-    failed_rows = results_df[results_df["NaviDAM_Status"] == "ONLINE_PDF_FAILED"]
+    failed_rows = results_df[results_df["NaviDAM_Status"].isin(DOWNLOAD_LIST_STATUSES)]
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     appended = 0
 
@@ -1112,7 +1309,19 @@ def load_uploaded_pdf_pub_ids(manifest_path=DEFAULT_PDF_MANIFEST_CSV):
     }
 
 # Mode 1: Initial Online Web Assessment Check
-def run_online_triage_pass(csv_path, max_rows=3, output_csv_path=DEFAULT_RESULTS_CSV, pdf_dir=DEFAULT_PDF_DIR, error_retry=False):
+def run_online_triage_pass(
+    csv_path,
+    max_rows=3,
+    output_csv_path=DEFAULT_RESULTS_CSV,
+    pdf_dir=DEFAULT_PDF_DIR,
+    error_retry=False,
+    auto_pdf_download=True,
+    pdf_browser_name=DEFAULT_PDF_BROWSER,
+    pdf_browser_path=None,
+    pdf_browser_cdp=None,
+    pdf_browser_profile=None,
+    pdf_browser_headless=True,
+):
     df = pd.read_csv(csv_path, skiprows=1)
     if max_rows is not None:
         df = df.head(max_rows)
@@ -1184,6 +1393,24 @@ def run_online_triage_pass(csv_path, max_rows=3, output_csv_path=DEFAULT_RESULTS
         full_text = None
         if pd.notna(pdf_url):
             full_text = download_and_extract_pdf_url(pdf_url, pub_id)
+        if not full_text and auto_pdf_download:
+            print(f" - Paper {pub_id}: source PDF fetch failed, trying browser-assisted download.")
+            try:
+                full_text, downloaded_pdf_path = attempt_pdf_retrieval(
+                    row,
+                    pub_id,
+                    pdf_dir,
+                    browser_name=pdf_browser_name,
+                    browser_path=pdf_browser_path,
+                    browser_cdp=pdf_browser_cdp,
+                    browser_profile=pdf_browser_profile,
+                    headless=pdf_browser_headless,
+                )
+            except Exception as exc:
+                full_text, downloaded_pdf_path = None, None
+                print(f"   Warning: browser-assisted PDF retry failed for {pub_id}: {exc}")
+            if full_text:
+                print(f"   Success: downloaded PDF to {downloaded_pdf_path}; retrying assessment from the new file.")
             
         if full_text:
             print(f" - Paper {pub_id}: link active. Running assessment.")
@@ -1302,7 +1529,14 @@ def run_local_folder_catchup(triage_csv_path, input_folder_path=DEFAULT_PDF_DIR,
         else:
             print(f" - Paper {pub_id}: notice. Local file '{pub_id}.pdf' not found yet. Keeping error flag.")
     df.to_csv(triage_csv_path, index=False)
+    manifest_path, manifest_added, manifest_total = update_download_manifest(df)
     print_log_block("Run Summary", [f"Master log updated: {triage_csv_path}"])
+    print_log_block(
+        "Download Manifest",
+        [
+            f"Download manifest: {manifest_path} ({manifest_total} rows, {manifest_added} new this run)",
+        ],
+    )
     print_failed_pdf_manifest(df, input_folder_path)
 
 
@@ -1382,6 +1616,51 @@ def main():
         action="store_true",
         help="Print the active provider/model/base-url configuration and exit.",
     )
+    parser.add_argument(
+        "--auto-pdf-download",
+        action="store_true",
+        default=True,
+        help="Automatically try browser-assisted PDF download when Source Linkout fetch fails.",
+    )
+    parser.add_argument(
+        "--no-auto-pdf-download",
+        action="store_false",
+        dest="auto_pdf_download",
+        help="Disable browser-assisted PDF download on Source Linkout failures.",
+    )
+    parser.add_argument(
+        "--pdf-browser",
+        choices=("chromium", "firefox"),
+        default=DEFAULT_PDF_BROWSER,
+        help="Browser engine used for automatic PDF retrieval.",
+    )
+    parser.add_argument(
+        "--pdf-browser-path",
+        default="",
+        help="Path to the browser executable used for automatic PDF retrieval.",
+    )
+    parser.add_argument(
+        "--pdf-browser-cdp",
+        default="",
+        help="Attach to an existing Chromium session via CDP for automatic PDF retrieval.",
+    )
+    parser.add_argument(
+        "--pdf-browser-profile",
+        default="",
+        help="Optional browser profile directory for automatic PDF retrieval.",
+    )
+    parser.add_argument(
+        "--pdf-browser-headless",
+        action="store_true",
+        default=True,
+        help="Run browser-assisted PDF retrieval headless.",
+    )
+    parser.add_argument(
+        "--pdf-browser-visible",
+        action="store_false",
+        dest="pdf_browser_headless",
+        help="Show the browser window during automatic PDF retrieval.",
+    )
     args = parser.parse_args()
 
     global CURRENT_LLM_MODEL
@@ -1434,6 +1713,12 @@ def main():
             output_csv_path=output_csv_path,
             pdf_dir=pdf_dir,
             error_retry=args.error_retry,
+            auto_pdf_download=args.auto_pdf_download,
+            pdf_browser_name=args.pdf_browser,
+            pdf_browser_path=args.pdf_browser_path,
+            pdf_browser_cdp=args.pdf_browser_cdp,
+            pdf_browser_profile=args.pdf_browser_profile,
+            pdf_browser_headless=args.pdf_browser_headless,
         )
 
         run_uploaded_pdf_catchup(output_csv_path, pdf_dir)

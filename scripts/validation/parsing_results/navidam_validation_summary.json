@@ -1,12 +1,59 @@
 [
   {
-    "source": "NaviDAM_Triage_Results.csv",
-    "evaluable_articles": 15,
-    "recall": 0.0
+    "source": "detection_parsed_articles.csv",
+    "evaluable_articles": 43,
+    "correctly_recovered_articles": 1,
+    "recall_percent": "2.3%",
+    "correctly_recovered_methods": [
+      ["landtrendr", 1]
+    ],
+    "not_recovered_methods": [
+      ["don t know", 5], ["Tree-based ML algorithms", 3], ["normalized difference vegetation index ndvi", 3], ["continuous change detection classification ccdc algorithm", 2], ["accuracy assessment", 1],
+      ["cart", 1], ["change detection", 1], ["cost", 1], ["cwedi", 1], ["frequency of occurrence fo", 1],
+      ["independent samples t test", 1], ["kappa", 1], ["kappa coefficient", 1], ["landscape metrics", 1], ["mannkendall", 1],
+      ["maxent", 1], ["ndvi threshold classification with visual interpretation", 1], ["ndvi threshold ranges technique", 1], ["nearest neighbor", 1], ["object image obia", 1],
+      ["post classification", 1], ["post classification comparison", 1], ["principal component pca", 1], ["relresvul", 1], ["remote sensing assessment", 1],
+      ["remote sensing assessment of biophysical indicators for land degradation desertification", 1], ["remote sensing gis", 1], ["remote sensing technologies", 1], ["semi automatic classification plugin", 1], ["semivariogram", 1],
+      ["siamese cnn", 1], ["support vector machine svm", 1], ["total variation regularization tvr", 1]
+    ]
+  },
+  {
+    "source": "attribution_parsed_articles.csv",
+    "evaluable_articles": 32,
+    "correctly_recovered_articles": 1,
+    "recall_percent": "3.1%",
+    "correctly_recovered_methods": [
+      ["GLMs, GEEs", 1]
+    ],
+    "not_recovered_methods": [
+      ["don t know", 4], ["DiD & BACI", 3], ["Matching methods", 2], ["Bayesian network learning", 1], ["Synthetic controls", 1],
+      ["causal inference", 1], ["community validation", 1], ["contingent valuation cv", 1], ["correspondence ca", 1], ["dc-CA", 1],
+      ["experim entally manipulating forest structure", 1], ["extended theory of planned behavior tpb", 1], ["fixed effects", 1], ["fixed effects panel data regression", 1], ["generalized linear modelling", 1],
+      ["glmmtmb lme4 packages", 1], ["inductive causation ic algorithm", 1], ["kruskal wallis", 1], ["main", 1], ["microcosm experiments", 1],
+      ["most significant stories msc", 1], ["negative binomial regression", 1], ["randomized block", 1], ["returnn", 1], ["shareholder quorum subsampling sqs classical rarefaction cr", 1]
+    ]
   },
   {
     "source": "combined",
-    "evaluable_articles": 15,
-    "recall": 0.0
+    "evaluable_articles": 75,
+    "correctly_recovered_articles": 2,
+    "recall_percent": "2.7%",
+    "correctly_recovered_methods": [
+      ["GLMs, GEEs", 1], ["landtrendr", 1]
+    ],
+    "not_recovered_methods": [
+      ["don t know", 9], ["DiD & BACI", 3], ["Tree-based ML algorithms", 3], ["normalized difference vegetation index ndvi", 3], ["Matching methods", 2],
+      ["continuous change detection classification ccdc algorithm", 2], ["Bayesian network learning", 1], ["Synthetic controls", 1], ["accuracy assessment", 1], ["cart", 1],
+      ["causal inference", 1], ["change detection", 1], ["community validation", 1], ["contingent valuation cv", 1], ["correspondence ca", 1],
+      ["cost", 1], ["cwedi", 1], ["dc-CA", 1], ["experim entally manipulating forest structure", 1], ["extended theory of planned behavior tpb", 1],
+      ["fixed effects", 1], ["fixed effects panel data regression", 1], ["frequency of occurrence fo", 1], ["generalized linear modelling", 1], ["glmmtmb lme4 packages", 1],
+      ["independent samples t test", 1], ["inductive causation ic algorithm", 1], ["kappa", 1], ["kappa coefficient", 1], ["kruskal wallis", 1],
+      ["landscape metrics", 1], ["main", 1], ["mannkendall", 1], ["maxent", 1], ["microcosm experiments", 1],
+      ["most significant stories msc", 1], ["ndvi threshold classification with visual interpretation", 1], ["ndvi threshold ranges technique", 1], ["nearest neighbor", 1], ["negative binomial regression", 1],
+      ["object image obia", 1], ["post classification", 1], ["post classification comparison", 1], ["principal component pca", 1], ["randomized block", 1],
+      ["relresvul", 1], ["remote sensing assessment", 1], ["remote sensing assessment of biophysical indicators for land degradation desertification", 1], ["remote sensing gis", 1], ["remote sensing technologies", 1],
+      ["returnn", 1], ["semi automatic classification plugin", 1], ["semivariogram", 1], ["shareholder quorum subsampling sqs classical rarefaction cr", 1], ["siamese cnn", 1],
+      ["support vector machine svm", 1], ["total variation regularization tvr", 1]
+    ]
   }
 ]

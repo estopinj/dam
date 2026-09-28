@@ -64,11 +64,72 @@ def summarize_dataframe(df, csv_label):
     total = int(len(evaluable_df))
     hits = int(evaluable_df[WITHIN_NAVIDAM_COLUMN].eq(True).sum()) if total else 0
     recall = hits / total if total else None
+    recovered_counts = (
+        evaluable_df[evaluable_df[WITHIN_NAVIDAM_COLUMN] == True][REPORTED_METHOD_NORMALIZED_COLUMN]
+        .fillna("")
+        .value_counts()
+        .to_dict()
+    )
+    not_recovered_counts = (
+        evaluable_df[evaluable_df[WITHIN_NAVIDAM_COLUMN] != True][REPORTED_METHOD_NORMALIZED_COLUMN]
+        .fillna("")
+        .value_counts()
+        .to_dict()
+    )
+
+    def format_method_counts(method_counts):
+        return [
+            [method, int(count)]
+            for method, count in sorted(method_counts.items(), key=lambda item: (-item[1], item[0]))
+            if method
+        ]
+
     return {
         "source": csv_label,
         "evaluable_articles": total,
-        "recall": recall,
+        "correctly_recovered_articles": hits,
+        "recall_percent": "n/a" if recall is None else f"{recall * 100:.1f}%",
+        "correctly_recovered_methods": format_method_counts(recovered_counts),
+        "not_recovered_methods": format_method_counts(not_recovered_counts),
     }
+
+
+def format_tuple_rows(tuple_rows, tuples_per_row=5, indent=6):
+    if not tuple_rows:
+        return "[]"
+
+    row_indent = " " * indent
+    entry_indent = " " * (indent + 2)
+    lines = ["["]
+    for start in range(0, len(tuple_rows), tuples_per_row):
+        row_entries = tuple_rows[start : start + tuples_per_row]
+        row_text = ", ".join(json.dumps(entry, ensure_ascii=False) for entry in row_entries)
+        suffix = "," if start + tuples_per_row < len(tuple_rows) else ""
+        lines.append(f"{row_indent}{row_text}{suffix}")
+    lines.append(f"{' ' * (indent - 2)}]")
+    return "\n".join(lines)
+
+
+def format_summary_json(summary_entries):
+    lines = ["["]
+    for index, entry in enumerate(summary_entries):
+        lines.append("  {")
+        lines.append(f"    {json.dumps('source')}: {json.dumps(entry['source'], ensure_ascii=False)},")
+        lines.append(f"    {json.dumps('evaluable_articles')}: {json.dumps(entry['evaluable_articles'])},")
+        lines.append(
+            f"    {json.dumps('correctly_recovered_articles')}: {json.dumps(entry['correctly_recovered_articles'])},"
+        )
+        lines.append(f"    {json.dumps('recall_percent')}: {json.dumps(entry['recall_percent'], ensure_ascii=False)},")
+        lines.append(
+            f"    {json.dumps('correctly_recovered_methods')}: {format_tuple_rows(entry['correctly_recovered_methods'])},"
+        )
+        lines.append(
+            f"    {json.dumps('not_recovered_methods')}: {format_tuple_rows(entry['not_recovered_methods'])}"
+        )
+        closing_suffix = "," if index + 1 < len(summary_entries) else ""
+        lines.append(f"  }}{closing_suffix}")
+    lines.append("]")
+    return "\n".join(lines)
 
 
 def parse_args():
@@ -163,21 +224,20 @@ def main():
         combined_summary.append(per_file_summary)
 
         print(f"Updated {output_path}")
-        recall = "n/a" if per_file_summary["recall"] is None else f"{per_file_summary['recall']:.3f}"
-        print(f"  evaluable={per_file_summary['evaluable_articles']} recall={recall}")
+        print(f"  evaluable={per_file_summary['evaluable_articles']} recall={per_file_summary['recall_percent']}")
 
     if combined_frames:
         merged_df = pd.concat(combined_frames, ignore_index=True)
         row = summarize_dataframe(merged_df, "combined")
         combined_summary.append(row)
-        recall = "n/a" if row["recall"] is None else f"{row['recall']:.3f}"
-        print(f"Combined: evaluable={row['evaluable_articles']} recall={recall}")
+        print(f"Combined: evaluable={row['evaluable_articles']} recall={row['recall_percent']}")
 
     if args.summary_json:
         summary_path = Path(args.summary_json).expanduser().resolve()
         summary_path.parent.mkdir(parents=True, exist_ok=True)
         with summary_path.open("w", encoding="utf-8") as handle:
-            json.dump(combined_summary, handle, indent=2)
+            handle.write(format_summary_json(combined_summary))
+            handle.write("\n")
         print(f"Wrote summary to {summary_path}")
 
 
