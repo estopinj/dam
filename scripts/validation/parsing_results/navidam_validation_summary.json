@@ -1,0 +1,12 @@
+[
+  {
+    "source": "NaviDAM_Triage_Results.csv",
+    "evaluable_articles": 15,
+    "recall": 0.0
+  },
+  {
+    "source": "combined",
+    "evaluable_articles": 15,
+    "recall": 0.0
+  }
+]
