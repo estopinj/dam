@@ -29,7 +29,8 @@ Please follow the [Code of Conduct](https://github.com/estopinj/dam/blob/main/CO
 | Question, site bug, or infrastructure suggestion | 💬 [Blank issue](https://github.com/estopinj/dam/issues/new/choose) |
 
 > Go to **Issues > New issue** and choose the matching template: <https://github.com/estopinj/dam/issues/new/choose>.
-> Before opening a new issue, please search [existing issues](https://github.com/estopinj/dam/issues) to avoid duplicates and consider joining an ongoing discussion.
+
+- Before opening a new issue, please search [existing issues](https://github.com/estopinj/dam/issues) to avoid duplicates and consider joining an ongoing discussion.
 
 <a id="assess-method"></a>
 ## 1. Assess a method (new or revision) 📝
