@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import os
 import json
 from pathlib import Path
 
@@ -28,13 +29,22 @@ NON_EVALUABLE_STATUSES = {
     "ONLINE_PDF_FAILED",
     "SCREENED_OUT_NON_EMPIRICAL",
 }
+
+
 def is_evaluable(row):
     status = str(row.get("NaviDAM_Status", "") or "").strip()
     reported_method = str(row.get("Method_Reported_By_Authors", "") or "").strip()
     return status not in NON_EVALUABLE_STATUSES and bool(reported_method)
 
 
-def enrich_dataframe(df, engine, limit=None):
+def write_enriched_csv(df, output_path):
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    temp_output_path = output_path.parent / f".{output_path.name}.tmp"
+    reorder_output_columns(df).to_csv(temp_output_path, index=False)
+    os.replace(temp_output_path, output_path)
+
+
+def enrich_dataframe(df, engine, limit=None, output_path=None):
     enriched_df = df.copy()
     max_rows = len(enriched_df) if limit is None else min(limit, len(enriched_df))
 
@@ -55,6 +65,9 @@ def enrich_dataframe(df, engine, limit=None):
         enriched_df.at[idx, REPORTED_METHOD_NORMALIZED_COLUMN] = reported_concept
         enriched_df.at[idx, WITHIN_NAVIDAM_COLUMN] = bool(reported_concept and reported_concept in set(suggested_concepts)) if evaluable else ""
         enriched_df.at[idx, EVALUABLE_COLUMN] = evaluable
+
+        if output_path is not None:
+            write_enriched_csv(enriched_df, output_path)
 
     return enriched_df
 
@@ -214,10 +227,9 @@ def main():
         if columns_to_drop:
             df = df.drop(columns=columns_to_drop)
 
-        enriched_df = enrich_dataframe(df, engine, limit=args.limit)
-        enriched_df = reorder_output_columns(enriched_df)
         output_path = resolve_output_path(csv_path, args.output_dir)
-        enriched_df.to_csv(output_path, index=False)
+        enriched_df = enrich_dataframe(df, engine, limit=args.limit, output_path=output_path)
+        write_enriched_csv(enriched_df, output_path)
 
         combined_frames.append(enriched_df)
         per_file_summary = summarize_dataframe(enriched_df, csv_path.name)
