@@ -2,8 +2,8 @@
 layout: method
 title: "Autoregressive state-space models"
 parent: "Independent detection"
-date: 2025-07-17
-author: Mrs. Young
+date: 2025-09-29
+author: Jussi Mäkinen, Finnish Environment Research Institute
 ---
 <!-- This file was auto-generated from _data/Attribution methods - Method Assessment.tsv -->
 
@@ -21,55 +21,31 @@ This method also belongs to [Alternative paradigms]({{ site.baseurl }}/alternati
 
 
 ## Description & principle 
-A clear, technical yet accessible explanation of the method, its core principle(s).
-
-
-### Major variants
-{: .no_toc }
-{: .d-inline-block }
-optional
-{: .label}
-
-If the method has variants that seem important, either already widespread or promising and well documented. 
-
-### Further online resources
-{: .no_toc }
-
-References to useful online resources to get started, e.g. [explanation blogs](https://matheusfacure.github.io/python-causality-handbook/15-Synthetic-Control.html){:target="_blank"}
-
+In state-space models, observation and ecological processes are on separate hierarchical levels. In practice, this means that dependence between observations can be modeled on the ecological process level, for example intraspecific competition, whereas observation model deals only with survey-related factors, for example detection probability. Autoregressive means that there is a an autoregressive component, for example spatio-temporal random effect, which explains spatio-temporal correlation between the values of the ecological process. Commonly, autoregressive components are applied at the level of the ecological process and not at the level of the observation process.
+                                                                    
 
 ## Reference articles
 ### Method
 {: .no_toc }
-- One or a few key academic references that introduce or formalize the method. 
+- {% cite auger-methe2021guide --style _bibliography/narrative %}
 
 ### Research applications
 {: .no_toc }
 #### With RS data in Ecology / Biodiversity
 {: .no_toc }
-- A
+- {% cite jonsen2005robust --style _bibliography/narrative %}
 
-#### Without RS data (Ecology domain)
-{: .no_toc }
-{: .d-inline-block }
-optional
-{: .label}
-
-- B
 
 ## Implementation 
 
 #### Python
 {: .no_toc }
+- [Statsmodels](https://www.statsmodels.org/devel/statespace.html){:target="_blank"}
 
 #### R
 {: .no_toc }
-
-### Code Cells
-{: .no_toc }
-{: .d-inline-block }
-optional
-{: .label}
+- [MARSS](https://atsa-es.github.io/MARSS/){:target="_blank"}
+- [INLA](https://www.r-inla.org/){:target="_blank"}
 
 
 <!-- For referencement in toc before automatic table -->
