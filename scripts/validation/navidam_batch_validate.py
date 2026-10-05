@@ -31,10 +31,28 @@ NON_EVALUABLE_STATUSES = {
 }
 
 
+def split_reported_methods(value):
+    if value is None or pd.isna(value):
+        return []
+    return [
+        method.strip()
+        for method in str(value).split(";")
+        if method.strip() and method.strip().casefold() not in {"nan", "none", "null"}
+    ]
+
+
+def reported_method_concepts(value):
+    return [
+        concept
+        for method in split_reported_methods(value)
+        if (concept := method_concept_label(method))
+    ]
+
+
 def is_evaluable(row):
     status = str(row.get("NaviDAM_Status", "") or "").strip()
-    reported_method = str(row.get("Method_Reported_By_Authors", "") or "").strip()
-    return status not in NON_EVALUABLE_STATUSES and bool(reported_method)
+    reported_methods = split_reported_methods(row.get("Method_Reported_By_Authors", ""))
+    return status not in NON_EVALUABLE_STATUSES and bool(reported_methods)
 
 
 def write_enriched_csv(df, output_path):
@@ -51,7 +69,7 @@ def enrich_dataframe(df, engine, limit=None, output_path=None):
     for idx in range(max_rows):
         row = enriched_df.iloc[idx]
         suggestions = engine.suggest_methods(row)
-        reported_concept = method_concept_label(row.get("Method_Reported_By_Authors", ""))
+        reported_concepts = reported_method_concepts(row.get("Method_Reported_By_Authors", ""))
         suggested_concepts = []
         for suggestion in suggestions:
             suggestion_concept = method_concept_label(suggestion)
@@ -62,8 +80,8 @@ def enrich_dataframe(df, engine, limit=None, output_path=None):
         enriched_df.at[idx, SUGGESTED_METHODS_COLUMN] = "; ".join(suggestions) if suggestions else ""
         enriched_df.at[idx, SUGGESTED_METHOD_COUNT_COLUMN] = len(suggestions)
         enriched_df.at[idx, MATCHED_METHODS_COLUMN] = "; ".join(suggested_concepts) if suggested_concepts else ""
-        enriched_df.at[idx, REPORTED_METHOD_NORMALIZED_COLUMN] = reported_concept
-        enriched_df.at[idx, WITHIN_NAVIDAM_COLUMN] = bool(reported_concept and reported_concept in set(suggested_concepts)) if evaluable else ""
+        enriched_df.at[idx, REPORTED_METHOD_NORMALIZED_COLUMN] = "; ".join(reported_concepts)
+        enriched_df.at[idx, WITHIN_NAVIDAM_COLUMN] = bool(set(reported_concepts) & set(suggested_concepts)) if evaluable else ""
         enriched_df.at[idx, EVALUABLE_COLUMN] = evaluable
 
         if output_path is not None:
@@ -77,24 +95,13 @@ def summarize_dataframe(df, csv_label):
     total = int(len(evaluable_df))
     hits = int(evaluable_df[WITHIN_NAVIDAM_COLUMN].eq(True).sum()) if total else 0
     recall = hits / total if total else None
-    recovered_counts = (
-        evaluable_df[evaluable_df[WITHIN_NAVIDAM_COLUMN] == True][REPORTED_METHOD_NORMALIZED_COLUMN]
-        .fillna("")
-        .value_counts()
-        .to_dict()
-    )
-    not_recovered_counts = (
-        evaluable_df[evaluable_df[WITHIN_NAVIDAM_COLUMN] != True][REPORTED_METHOD_NORMALIZED_COLUMN]
-        .fillna("")
-        .value_counts()
-        .to_dict()
-    )
 
-    def format_method_counts(method_counts):
+    def method_groups(recovered):
+        method_df = evaluable_df[evaluable_df[WITHIN_NAVIDAM_COLUMN] == recovered]
         return [
-            [method, int(count)]
-            for method, count in sorted(method_counts.items(), key=lambda item: (-item[1], item[0]))
-            if method
+            concepts
+            for value in method_df[REPORTED_METHOD_NORMALIZED_COLUMN]
+            if (concepts := split_reported_methods(value))
         ]
 
     return {
@@ -102,22 +109,22 @@ def summarize_dataframe(df, csv_label):
         "evaluable_articles": total,
         "correctly_recovered_articles": hits,
         "recall_percent": "n/a" if recall is None else f"{recall * 100:.1f}%",
-        "correctly_recovered_methods": format_method_counts(recovered_counts),
-        "not_recovered_methods": format_method_counts(not_recovered_counts),
+        "correctly_recovered_methods": method_groups(True),
+        "not_recovered_methods": method_groups(False),
     }
 
 
-def format_tuple_rows(tuple_rows, tuples_per_row=5, indent=6):
-    if not tuple_rows:
+def format_list_rows(groups, groups_per_row=5, indent=6):
+    if not groups:
         return "[]"
 
     row_indent = " " * indent
     entry_indent = " " * (indent + 2)
     lines = ["["]
-    for start in range(0, len(tuple_rows), tuples_per_row):
-        row_entries = tuple_rows[start : start + tuples_per_row]
+    for start in range(0, len(groups), groups_per_row):
+        row_entries = groups[start : start + groups_per_row]
         row_text = ", ".join(json.dumps(entry, ensure_ascii=False) for entry in row_entries)
-        suffix = "," if start + tuples_per_row < len(tuple_rows) else ""
+        suffix = "," if start + groups_per_row < len(groups) else ""
         lines.append(f"{row_indent}{row_text}{suffix}")
     lines.append(f"{' ' * (indent - 2)}]")
     return "\n".join(lines)
@@ -134,10 +141,10 @@ def format_summary_json(summary_entries):
         )
         lines.append(f"    {json.dumps('recall_percent')}: {json.dumps(entry['recall_percent'], ensure_ascii=False)},")
         lines.append(
-            f"    {json.dumps('correctly_recovered_methods')}: {format_tuple_rows(entry['correctly_recovered_methods'])},"
+            f"    {json.dumps('correctly_recovered_methods')}: {format_list_rows(entry['correctly_recovered_methods'])},"
         )
         lines.append(
-            f"    {json.dumps('not_recovered_methods')}: {format_tuple_rows(entry['not_recovered_methods'])}"
+            f"    {json.dumps('not_recovered_methods')}: {format_list_rows(entry['not_recovered_methods'])}"
         )
         closing_suffix = "," if index + 1 < len(summary_entries) else ""
         lines.append(f"  }}{closing_suffix}")
