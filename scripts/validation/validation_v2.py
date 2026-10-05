@@ -10,6 +10,8 @@ import re
 import tempfile
 import sys
 import shlex
+import unicodedata
+from difflib import SequenceMatcher
 from pathlib import Path
 from datetime import datetime
 from urllib.parse import urljoin
@@ -32,10 +34,10 @@ LOGS_DIR = SCRIPT_DIR / "logs"
 METHOD_ASSESSMENTS_PATH = ROOT_DIR / "_data" / "method_assessments_clean.tsv"
 DEFAULT_LLM_PROVIDER = "ollama"
 DEFAULT_LLM_BASE_URL = "http://localhost:11434/v1"
-DEFAULT_LLM_MODEL = os.environ.get("NAVIDAM_LLM_MODEL", "qwen2.5:7b")
+DEFAULT_LLM_MODEL = os.environ.get("NAVIDAM_LLM_MODEL", "deepseek-r1:7b")
 CURRENT_LLM_MODEL = DEFAULT_LLM_MODEL
 RETRYABLE_STATUSES = {"ASSESSMENT_SYSTEM_ERROR", "LLM_CONFIGURATION_ERROR"}
-DOWNLOAD_LIST_STATUSES = {"ONLINE_PDF_FAILED", "ASSESSMENT_SYSTEM_ERROR"}
+DOWNLOAD_LIST_STATUSES = {"ONLINE_PDF_FAILED"}
 DEFAULT_PDF_BROWSER = "chromium"
 GBIF_MANIFEST_COLUMNS = [
     "Publication ID",
@@ -268,16 +270,31 @@ def build_run_log_path(argv, assessment_model_label):
     return LOGS_DIR / filename
 
 
-def resolve_results_csv_path(input_csv_path, explicit_output_csv=None):
+def resolve_results_csv_path(input_csv_path=None, explicit_output_csv=None, model_name=None):
     if explicit_output_csv:
         return Path(explicit_output_csv).expanduser().resolve()
 
+    effective_model = model_name or CURRENT_LLM_MODEL
+    model_part = sanitize_filename_part(effective_model, fallback="model") if effective_model else ""
+
+    if input_csv_path is None:
+        output_name = f"NaviDAM_Triage_Results_{model_part}.csv" if model_part else "NaviDAM_Triage_Results.csv"
+        RESULTS_DIR.mkdir(parents=True, exist_ok=True)
+        return (RESULTS_DIR / output_name).resolve()
+
     input_csv = Path(input_csv_path)
     special_names = {
-        "Dimensions-Publication-2026-09-23_10-34-58.csv": "detection_parsed_articles.csv",
-        "Dimensions-Publication-2026-09-23_10-30-05.csv": "attribution_parsed_articles.csv",
+        "Dimensions-Publication-2026-09-23_10-34-58.csv": "detection_parsed_articles",
+        "Dimensions-Publication-2026-09-23_10-30-05.csv": "attribution_parsed_articles",
     }
-    output_name = special_names.get(input_csv.name, f"{input_csv.stem}_parsed_articles.csv")
+    raw_name = special_names.get(input_csv.name, f"{input_csv.stem}_parsed_articles")
+    base_name = raw_name[:-4] if raw_name.endswith(".csv") else raw_name
+
+    if model_part:
+        output_name = f"{base_name}_{model_part}.csv"
+    else:
+        output_name = f"{base_name}.csv"
+
     RESULTS_DIR.mkdir(parents=True, exist_ok=True)
     return (RESULTS_DIR / output_name).resolve()
 
@@ -452,13 +469,16 @@ def load_filter_vocabulary():
 FILTER_VOCABULARY = load_filter_vocabulary()
 
 METHOD_EXTRACTION_SCHEMA = {
-    "Method_Reported_By_Authors": (
-        "The exact method name used by the authors, matching the paper wording as closely as possible. "
-        "Return the most specific named algorithm, estimator, statistical design, or causal model explicitly implemented in the study. "
-        "Do not return a broad family such as 'causal discovery approach', 'quasi-experimental design', or 'Bayesian network structure learning' when a more specific named method appears in the paper."
-    ),
-    "Method_Evidence": (
-        "A short quote or very close paraphrase from the paper that directly names the applied method."
+    "Methods": (
+        "An array of objects, one for each distinct method the authors used to detect changes or attribute those changes to drivers. "
+        "Each object must contain Method_Reported_By_Authors (the exact, most specific method name) and "
+        "Method_Evidence (a short quote or close paraphrase directly supporting that method). "
+        "The evidence must identify whether the method supports change detection, driver attribution, or both. "
+        "Include multiple in-scope methods when the study uses them together or for distinct analyses. "
+        "Exclude methods that serve other analytical purposes. "
+        "Do not list methods mentioned only as background, alternatives, or future work. "
+        "Prefer named algorithms, estimators, statistical designs, and causal models over broad families. "
+        "Return an empty array if the paper does not identify an implemented method for either target purpose."
     ),
 }
 
@@ -497,6 +517,54 @@ def normalize_option_value(criterion, option):
     return normalized
 
 
+def normalize_option_for_matching(option):
+    normalized = str(option or "").casefold()
+    normalized = normalized.replace("≤", " less than or equal ").replace("≥", " greater than or equal ")
+    normalized = unicodedata.normalize("NFKD", normalized)
+    normalized = "".join(char for char in normalized if not unicodedata.combining(char))
+    normalized = re.sub(r"[^a-z0-9]+", " ", normalized)
+    return " ".join(normalized.split())
+
+
+def align_option_to_vocabulary(criterion, option, allowed_values):
+    """Return a canonical vocabulary option only for a clear exact or close match."""
+    normalized_option = normalize_option_value(criterion, option)
+    normalized_key = normalize_option_for_matching(normalized_option)
+    if not normalized_key:
+        return normalized_option
+
+    normalized_options = {
+        normalize_option_for_matching(allowed_option): allowed_option
+        for allowed_option in allowed_values
+    }
+    if normalized_key in normalized_options:
+        return normalized_options[normalized_key]
+
+    for acronym in re.findall(r"\(([^()]*)\)", str(option)):
+        acronym_key = normalize_option_for_matching(acronym)
+        if acronym_key in normalized_options:
+            return normalized_options[acronym_key]
+
+    ranked_matches = sorted(
+        [
+            (
+            SequenceMatcher(None, normalized_key, allowed_key).ratio(),
+            allowed_option,
+            )
+            for allowed_key, allowed_option in normalized_options.items()
+        ],
+        reverse=True,
+    )
+    if not ranked_matches:
+        return normalized_option
+
+    best_score, best_option = ranked_matches[0]
+    runner_up_score = ranked_matches[1][0] if len(ranked_matches) > 1 else 0.0
+    if best_score >= 0.86 and best_score - runner_up_score >= 0.04:
+        return best_option
+    return normalized_option
+
+
 def normalize_assessment_results(raw_results):
     normalized = {column: "" for column in ["Method_Reported_By_Authors", "Method_Evidence", *FILTER_CRITERIA]}
     issues = []
@@ -518,7 +586,7 @@ def normalize_assessment_results(raw_results):
         allowed_values = set(FILTER_VOCABULARY[normalized_key])
         parsed_values = []
         for option in split_criterion_values(raw_value):
-            value = normalize_option_value(normalized_key, option)
+            value = align_option_to_vocabulary(normalized_key, option, allowed_values)
             if value in allowed_values:
                 if value not in parsed_values:
                     parsed_values.append(value)
@@ -544,6 +612,46 @@ def normalize_assessment_results(raw_results):
             normalized[criterion] = "Don't know"
 
     return normalized, issues
+
+
+def normalize_method_extraction(method_results):
+    """Convert structured method results into the existing CSV method fields."""
+    if not isinstance(method_results, dict):
+        return "", ""
+
+    methods = method_results.get("Methods")
+    if not isinstance(methods, list):
+        method_name = method_results.get("Method_Reported_By_Authors", "")
+        method_evidence = method_results.get("Method_Evidence", "")
+        if isinstance(method_name, list):
+            method_name = "; ".join(str(value).strip() for value in method_name if str(value).strip())
+        if isinstance(method_evidence, list):
+            method_evidence = " | ".join(str(value).strip() for value in method_evidence if str(value).strip())
+        return str(method_name or "").strip(), str(method_evidence or "").strip()
+
+    method_names = []
+    evidence_entries = []
+    seen_evidence = set()
+    seen_names = set()
+    for method in methods:
+        if isinstance(method, dict):
+            name = str(method.get("Method_Reported_By_Authors", "") or "").strip()
+            evidence = str(method.get("Method_Evidence", "") or "").strip()
+        else:
+            name = str(method or "").strip()
+            evidence = ""
+        if not name:
+            continue
+        normalized_name = name.casefold()
+        if normalized_name not in seen_names:
+            seen_names.add(normalized_name)
+            method_names.append(name)
+        normalized_evidence = (normalized_name, evidence.casefold())
+        if evidence and normalized_evidence not in seen_evidence:
+            seen_evidence.add(normalized_evidence)
+            evidence_entries.append(f"{name}: {evidence}")
+
+    return "; ".join(method_names), " | ".join(evidence_entries)
 
 
 def classify_study_screening(row):
@@ -954,6 +1062,8 @@ def coerce_json_text(content):
     if not text:
         raise json.JSONDecodeError("Empty response content", text, 0)
 
+    text = re.sub(r"<think>.*?</think>", "", text, flags=re.DOTALL).strip()
+
     fenced_match = re.search(r"```(?:json)?\s*(.*?)\s*```", text, flags=re.DOTALL | re.IGNORECASE)
     if fenced_match:
         fenced_text = fenced_match.group(1).strip()
@@ -982,9 +1092,14 @@ def get_model_text_excerpt(full_text, model, base_url):
     model_name = str(model or "").lower()
     base = str(base_url or "").lower()
     if base.startswith("http://localhost") or base.startswith("http://127.0.0.1"):
+        # Local Ollama models can have small context windows; keep excerpts conservative.
         limit = 22000
-        if ":3b" in model_name or "3b" in model_name:
+        if "deepseek-r1" in model_name and (":7b" in model_name or ":8b" in model_name):
+            limit = 6000
+        elif "deepseek-r1" in model_name and ":14b" in model_name:
             limit = 12000
+        elif ":3b" in model_name or "3b" in model_name:
+            limit = 7000
     return full_text[:limit]
 
 
@@ -1052,15 +1167,19 @@ def extract_method_from_paper(full_text, row_metadata, context_status, settings)
     ---
 
     Task:
-    1. Return 'Method_Reported_By_Authors' as the most specific named method explicitly used by the authors.
-    2. Return 'Method_Evidence' as a direct quote or very close paraphrase that supports that method choice.
+    1. Identify methods used to detect or measure changes in the study's outcomes.
+    2. Identify methods used to attribute those detected changes to drivers or causes.
+    3. Return every distinct method used for either of those two purposes, with evidence that states which purpose it serves.
 
     Rules:
-    - Prefer the exact named algorithm, estimator, or design implemented by the authors.
-    - Do not answer with a broad family if a narrower named method is available.
-    - If the paper says PC algorithm, return PC algorithm.
-    - If the paper says difference-in-differences, return difference-in-differences.
-    - If the method is genuinely unclear, return "Don't know".
+    - Include only methods directly used for change detection or attribution of changes to drivers; do not extract other methods.
+    - A method may support detection, attribution, or both. Do not assume that a detected change was causally attributed.
+    - Match each name to the paper's wording, using the narrowest supported algorithm, estimator, statistical design, or causal model.
+    - Do not collapse distinct in-scope methods into one broad label, and do not list software, data sources, or generic analysis steps as methods.
+    - Exclude methods mentioned only as background, alternatives, citations, or future work.
+    - Evidence must show that the authors used the method for detecting change or attributing change to a driver, not merely define or cite it.
+    - If the paper only supports a broad method description, report that description rather than guessing a named method.
+    - Return an empty Methods array when no method for either target purpose is identified.
 
     Required JSON schema:
     {json.dumps(METHOD_EXTRACTION_SCHEMA, indent=2)}
@@ -1076,7 +1195,7 @@ def refine_method_from_paper(full_text, row_metadata, previous_method, previous_
     metadata_block = json.dumps(row_metadata or {}, indent=2, ensure_ascii=True)
     excerpt = get_model_text_excerpt(full_text, settings["model"], settings["base_url"])
     prompt = f"""
-    You are correcting a method extraction that is too broad.
+    You are independently auditing and correcting a method extraction for completeness and specificity.
     You are parsing a {context_status}.
 
     Paper metadata:
@@ -1087,12 +1206,13 @@ def refine_method_from_paper(full_text, row_metadata, previous_method, previous_
     {excerpt}
     ---
 
-    Previous answer:
-    - Method_Reported_By_Authors: {previous_method}
-    - Method_Evidence: {previous_evidence}
+    Previous method names:
+    {previous_method}
 
-    The previous method label is too broad. Replace it with the most specific named algorithm, estimator, statistical design, or causal model explicitly implemented by the authors.
-    If no narrower named method appears in the text, return the same method label.
+    Previous evidence:
+    {previous_evidence}
+
+    Recheck the article's methods, statistical analysis, and results. Include only methods directly used for change detection or attribution of changes to drivers. Return the complete set of in-scope methods; exclude methods serving other purposes. Keep supported specific methods, refine broad labels only when the article supports a narrower method, and remove entries that were only background or alternatives. State whether each retained method supports detection, attribution, or both, and provide direct evidence.
 
     Required JSON schema:
     {json.dumps(METHOD_EXTRACTION_SCHEMA, indent=2)}
@@ -1119,14 +1239,19 @@ def extract_criteria_from_paper(full_text, row_metadata, method_name, method_evi
     - Method_Reported_By_Authors: {method_name}
     - Method_Evidence: {method_evidence}
 
+    Give special attention to Objective and Estimand before assessing the remaining criteria:
+    - Objective is the analytical task the method is used for (for example effect estimation, causal relationships, detection, or prediction), not the study's broad motivation or application area. Select exactly one supported Objective option from the supplied vocabulary.
+    - Estimand is the target quantity or contrast the analysis seeks to estimate, such as a treatment effect for a defined population. It is not the method, model parameter by itself, or the paper's substantive objective. Select every supported Estimand option only when the paper identifies multiple targets.
+    - Read the research question together with the methods and results to identify the analysis task and target quantity. Do not infer a causal estimand from association language alone, and do not invent precision absent from the article.
+    - Use exact vocabulary options. If the evidence does not support an option, return "Don't know" or "Inapplicable" as appropriate.
+
     Extracted text:
     ---
     {excerpt}
     ---
 
     Task:
-    Populate only the NaviDAM criteria fields below. Do not return Method_Reported_By_Authors or Method_Evidence here.
-    Use the exact option spellings from the schema. If a criterion is ambiguous, return "Don't know".
+    Populate only the NaviDAM criteria fields below. Do not return method fields here. Determine Objective and Estimand carefully using the instructions above, then assess the other criteria. Use the exact option spellings from the schema. If a criterion is ambiguous, return "Don't know".
 
     Required JSON schema:
     {json.dumps(criteria_schema, indent=2)}
@@ -1145,8 +1270,7 @@ def analyze_paper_with_navidam(full_text, row_metadata=None, is_full_text=True):
     context_status = "FULL-TEXT RESEARCH PAPER PDF" if is_full_text else "METADATA RECOVERY RECORD"
     try:
         method_results = extract_method_from_paper(full_text, row_metadata, context_status, settings)
-        method_name = str(method_results.get("Method_Reported_By_Authors", "")).strip()
-        method_evidence = str(method_results.get("Method_Evidence", "")).strip()
+        method_name, method_evidence = normalize_method_extraction(method_results)
 
         if method_label_is_broad(method_name):
             refined_method_results = refine_method_from_paper(
@@ -1157,8 +1281,7 @@ def analyze_paper_with_navidam(full_text, row_metadata=None, is_full_text=True):
                 context_status,
                 settings,
             )
-            refined_name = str(refined_method_results.get("Method_Reported_By_Authors", "")).strip()
-            refined_evidence = str(refined_method_results.get("Method_Evidence", "")).strip()
+            refined_name, refined_evidence = normalize_method_extraction(refined_method_results)
             if refined_name:
                 method_name = refined_name
             if refined_evidence:
@@ -1308,11 +1431,31 @@ def load_uploaded_pdf_pub_ids(manifest_path=DEFAULT_PDF_MANIFEST_CSV):
         if str(pub_id).strip()
     }
 
+
+def load_unsuited_pub_ids(manifest_path=DEFAULT_PDF_MANIFEST_CSV):
+    manifest_path = Path(manifest_path)
+    if not manifest_path.exists():
+        return set()
+
+    manifest_df = pd.read_csv(manifest_path)
+    if "Publication ID" not in manifest_df.columns or "Uploaded" not in manifest_df.columns:
+        return set()
+
+    unsuited_rows = manifest_df[
+        manifest_df["Uploaded"].fillna("").astype(str).str.strip().str.casefold() == "unsuited"
+    ]
+    return {
+        str(pub_id).strip()
+        for pub_id in unsuited_rows["Publication ID"].fillna("").astype(str)
+        if str(pub_id).strip()
+    }
+
+
 # Mode 1: Initial Online Web Assessment Check
 def run_online_triage_pass(
     csv_path,
     max_rows=3,
-    output_csv_path=DEFAULT_RESULTS_CSV,
+    output_csv_path=None,
     pdf_dir=DEFAULT_PDF_DIR,
     error_retry=False,
     auto_pdf_download=True,
@@ -1322,11 +1465,16 @@ def run_online_triage_pass(
     pdf_browser_profile=None,
     pdf_browser_headless=True,
 ):
+    if output_csv_path is None:
+        output_csv_path = resolve_results_csv_path(csv_path)
+    else:
+        output_csv_path = Path(output_csv_path).expanduser().resolve()
     df = pd.read_csv(csv_path, skiprows=1)
     if max_rows is not None:
         df = df.head(max_rows)
     existing_df = load_existing_results(output_csv_path)
     existing_statuses = existing_result_statuses(existing_df)
+    unsuited_pub_ids = load_unsuited_pub_ids()
     current_model = get_assessment_model_label()
     retry_pub_ids = error_retry_pub_ids(existing_df, current_model) if error_retry else set()
     
@@ -1363,6 +1511,20 @@ def run_online_triage_pass(
         pub_id = str(row.get('Publication ID')).strip()
         row_key = result_row_key(pub_id, current_model)
         previous_status = existing_statuses.get(row_key, "")
+        if pub_id in unsuited_pub_ids:
+            if previous_status == "SCREENED_OUT_UNSUITED":
+                print(f" - Paper {pub_id}: skipped because the download manifest marks it Unsuited.")
+                continue
+            record = blank_result_record(row)
+            record["Screening_Decision"] = "UNSUITED_FROM_DOWNLOAD"
+            record["Screening_Reason"] = "Marked Unsuited in the download manifest Uploaded column."
+            record["NaviDAM_Status"] = "SCREENED_OUT_UNSUITED"
+            print(f" - Paper {pub_id}: skipped because the download manifest marks it Unsuited.")
+            if previous_status:
+                replaced_keys.add(row_key)
+            evaluated_records.append(record)
+            continue
+
         if error_retry and retry_pub_ids:
             if pub_id not in retry_pub_ids:
                 continue
@@ -1371,11 +1533,8 @@ def run_online_triage_pass(
                 replaced_keys.add(row_key)
             else:
                 continue
-        elif previous_status and previous_status not in RETRYABLE_STATUSES:
-            print(f" - Paper {pub_id}: skipped because it was already processed with model '{current_model}'.")
-            continue
-        if previous_status in RETRYABLE_STATUSES and not error_retry:
-            print(f" - Paper {pub_id}: retrying same-model row because previous status was '{previous_status}'.")
+        elif previous_status:
+            print(f" - Paper {pub_id}: reassessing prior row for model '{current_model}' (previous status: '{previous_status}').")
             replaced_keys.add(row_key)
 
         pdf_url = row.get('Source Linkout', None)
@@ -1696,7 +1855,7 @@ def main():
             )
             return
 
-        output_csv_path = resolve_results_csv_path(csv_path, args.output_csv)
+        output_csv_path = resolve_results_csv_path(csv_path, args.output_csv, model_name=CURRENT_LLM_MODEL)
 
         if args.catchup:
             triage_csv_path = Path(args.triage_csv).expanduser().resolve() if args.triage_csv else output_csv_path
