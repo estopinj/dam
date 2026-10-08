@@ -7,11 +7,12 @@ author: Mrs. Young
 ---
 <!-- This file was auto-generated from _data/DetectionAttribution methods - Method Assessment.tsv -->
 
-{% if page.category_note != '' %}
+<!-- category-note:start -->
+
 {: .note }
 This method also belongs to [Independent detection]({{ site.baseurl }}/detection), [Versatile tools]({{ site.baseurl }}/tools), and [Ecology-guided Modelling]({{ site.baseurl }}/ecology-guided).
-{% endif %}
 
+<!-- category-note:end -->
 
 ## Table of Contents
 {: .no_toc .text-delta }

@@ -1,17 +1,18 @@
 ---
 layout: method
 title: "SHAP"
-parent: "Predictive models +  interpretability metrics"
+parent: "Predictive models + interpretability metrics"
 date: 2025-07-17
 author: Mrs. Young
 ---
 <!-- This file was auto-generated from _data/Attribution methods - Method Assessment.tsv -->
 
-{% if page.category_note != '' %}
+<!-- category-note:start -->
+
 {: .note }
 This method also belongs to [Causal ML]({{ site.baseurl }}/causal_ML).
-{% endif %}
 
+<!-- category-note:end -->
 
 ## Table of Contents
 {: .no_toc .text-delta }

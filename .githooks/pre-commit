@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# Regenerate method pages when the assessment TSV is part of the commit.
+if git diff --cached --name-only | grep -q "Method Assessment.tsv"; then
+  python3 scripts/generate_method_pages.py >/dev/null || exit 1
+  git add contents _data/cat_dicts.json
+  echo "pre-commit: method pages regenerated and staged"
+fi

@@ -7,11 +7,12 @@ author: Mrs. Young
 ---
 <!-- This file was auto-generated from _data/Attribution methods - Method Assessment.tsv -->
 
-{% if page.category_note != '' %}
-{: .note }
-This method also belongs to [Ecology-guided Modelling]({{ site.baseurl }}/ecology-guided).
-{% endif %}
+<!-- category-note:start -->
 
+{: .note }
+This method also belongs to [Ecology-guided Modelling]({{ site.baseurl }}/ecology-guided), [Adjusted methods (Backdoor C.)]({{ site.baseurl }}/adjusted), and [Versatile tools]({{ site.baseurl }}/tools).
+
+<!-- category-note:end -->
 
 ## Table of Contents
 {: .no_toc .text-delta }

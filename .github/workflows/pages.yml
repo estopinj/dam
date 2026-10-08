@@ -44,8 +44,8 @@ jobs:
         uses: actions/setup-python@v7
         with:
           python-version: "3.x"
-      - name: Regenerate cleaned assessment data
-        run: python scripts/clean_method_assessments.py
+      - name: Regenerate method pages and cleaned assessment data
+        run: python scripts/generate_method_pages.py
       - name: Build with Jekyll
         # Outputs to the './_site' directory by default
         run: bundle exec jekyll build --baseurl "${{ steps.pages.outputs.base_path }}"

@@ -7,12 +7,6 @@ author: Mrs. Young
 ---
 <!-- This file was auto-generated from /home/estopinj/POSTDOC/src/dam/_data/DetectionAttribution methods - Method Assessment.tsv -->
 
-{% if page.category_note != '' %}
-{: .note }
-
-{% endif %}
-
-
 ## Table of Contents
 {: .no_toc .text-delta }
 

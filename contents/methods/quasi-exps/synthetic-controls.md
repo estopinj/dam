@@ -1,12 +1,18 @@
 ---
 layout: method
 title: Synthetic controls
-parent: Quasi-experiments
+parent: "Quasi-experiments"
 nav_order: 1
 date: 2025-06-23
 author: Joaquim Estopinan
 # assessor: Mr. Smith
 ---
+<!-- category-note:start -->
+
+{: .note }
+This method also belongs to [Adjusted methods (Backdoor C.)]({{ site.baseurl }}/adjusted).
+
+<!-- category-note:end -->
 
 {: .note }
 This method also belongs to [Adjusted methods (Backdoor C.)](/adjusted/).
@@ -104,4 +110,3 @@ Example R/Python code or GitHub Gist links.
 
 <!-- For referencement in toc before automatic table -->
 ## Assessment table
-

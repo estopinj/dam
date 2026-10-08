@@ -3,6 +3,14 @@
         "/^python3 - <<'PY'\npath=\"_data/DetectionAttribution methods - Method Assessment\\.tsv\"\nwith open\\(path, encoding='utf-8'\\) as f:\n    lines=f\\.readlines\\(\\)\nhdr=\\[h\\.strip\\(\\) for h in lines\\[3\\]\\.rstrip\\(\"\\\\n\"\\)\\.split\\(\"\\\\t\"\\)\\]\nfor line in lines\\[4:\\]:\n    parts=line\\.rstrip\\(\"\\\\n\"\\)\\.split\\(\"\\\\t\"\\)\n    while len\\(parts\\)<len\\(hdr\\):\n        parts\\.append\\(\"\"\\)\n    m=parts\\[4\\]\\.strip\\(\\)\n    if m in \\(\"Synthetic controls\",\"Panel designs\",\"TWFE\",\"Interrupted time series\",\"Causal forests\",\"Double Machine learning\"\\):\n        print\\(\"=\"\\*100\\)\n        print\\(f\"METHOD=\\{m\\}\"\\)\n        for j,h in enumerate\\(hdr\\):\n            print\\(f\"  \\[\\{j\\}\\] \\{h\\}=\\{parts\\[j\\]\\.strip\\(\\)\\}\"\\)\nPY$/": {
             "approve": true,
             "matchCommandLine": true
+        },
+        "/^cat _data/cat_dicts\\.json; cat scripts/tsv_clean\\.py \\| head -60; ls scripts; grep -rn \"cat_dicts\\\\\\|category_note\" --include=\\* -l \\. 2>/dev/null \\| grep -v \"\\^\\./contents/methods\" \\| head; cat contents/methods/discovery/index\\.md \\| head -20; ls contents/methods/discovery contents/methods/discovery/prediction_based; python3 - <<'E'\nimport csv\nl=open\\(\"_data/DetectionAttribution methods - Method Assessment\\.tsv\"\\)\\.readlines\\(\\)\\[3:\\]\nr=csv\\.DictReader\\(l,delimiter=\"\\\\t\"\\)\ns=set\\(\\)\nfor x in r: s\\.add\\(\\(x\\['Category'\\],x\\['Sub-category'\\]\\)\\)\nfor a in sorted\\(s\\):print\\(a\\)\nE$/": {
+            "approve": true,
+            "matchCommandLine": true
+        },
+        "/^cat _data/cat_dicts\\.json \\| sed -n 1,200p \\| tr -s ' ' \\| head -120; head -40 scripts/tsv_clean\\.py; ls scripts; grep -rln \"cat_dicts\\\\\\|category_note\" \\. 2>/dev/null \\| grep -v \"\\^\\./contents/methods\" \\| head; python3 - <<'E'\nimport csv\nl=open\\(\"_data/DetectionAttribution methods - Method Assessment\\.tsv\"\\)\\.readlines\\(\\)\\[3:\\]\nr=csv\\.DictReader\\(l,delimiter=\"\\\\t\"\\)\ns=set\\(\\)\nfor x in r: s\\.add\\(\\(x\\['Category'\\],x\\['Sub-category'\\]\\)\\)\nfor a in sorted\\(s\\):print\\(a\\)\nE$/": {
+            "approve": true,
+            "matchCommandLine": true
         }
     }
 }

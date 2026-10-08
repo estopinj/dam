@@ -7,11 +7,12 @@ author: Mrs. Young
 ---
 <!-- This file was auto-generated from _data/Attribution methods - Method Assessment.tsv -->
 
-{% if page.category_note != '' %}
-{: .note }
-This method also belongs to [Causal discovery]({{ site.baseurl }}/discovery).
-{% endif %}
+<!-- category-note:start -->
 
+{: .note }
+This method also belongs to [Alternative paradigms]({{ site.baseurl }}/alternative).
+
+<!-- category-note:end -->
 
 ## Table of Contents
 {: .no_toc .text-delta }
