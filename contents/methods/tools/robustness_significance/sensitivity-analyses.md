@@ -2,8 +2,8 @@
 layout: method
 title: "Sensitivity analyses"
 parent: "Robustness & significance tests"
-date: 2025-07-17
-author: Mrs. Young
+date: 2025-11-19
+author: Tamara Münkemüller, CNRS
 ---
 <!-- This file was auto-generated from _data/Attribution methods - Method Assessment.tsv -->
 
@@ -20,58 +20,77 @@ This method also belongs to [Ecology-guided Modelling]({{ site.baseurl }}/ecolog
 1. TOC
 {:toc}
 
+## Description & principle
 
-## Description & principle 
-A clear, technical yet accessible explanation of the method, its core principle(s).
+Sensitivity analysis is used for model parametrization and calibration
+in mechanistic simulation modelling and is an important method for
+identifying the most important drivers of simulated ecological
+processes. The idea is to explore how changes of values of model input
+parameters change the output parameters of a model. In principle, the
+input parameters that influence the output parameters most are the most
+“sensitive” or most important parameters. Thus, calibrating them
+correctly is also more important for the simulations than calibrating
+less sensitive parameters correctly.
 
+## Major variants
 
-### Major variants
 {: .no_toc }
 {: .d-inline-block }
 optional
 {: .label}
+One can differentiate between local sensitivity analysis and global
+sensitivity analysis. In local sensitivity analysis, input parameters
+are varied over a small range of values around specific reference values
+independently one by one. In global sensitivity analysis, multiple input
+parameters are varied over larger regions of the parameter space at the
+same time. One challenge is that it is often too time consuming to run
+all combinations of all parameter values of interest. Here, methods from
+experimental design can be used for a stratified subsampling of the
+complete parameter space (e.g. Latin Hypercube). Another challenge is to
+analyse the results of the different simulations. Here, statistical
+regression methods from observational data analyses can be used to
+identify parameter importance.
 
-If the method has variants that seem important, either already widespread or promising and well documented. 
+## Further online resources
 
-### Further online resources
 {: .no_toc }
-
-References to useful online resources to get started, e.g. [explanation blogs](https://matheusfacure.github.io/python-causality-handbook/15-Synthetic-Control.html){:target="_blank"}
-
 
 ## Reference articles
+
 ### Method
 {: .no_toc }
-- One or a few key academic references that introduce or formalize the method. 
+
+- {% cite doi1010020470870958 --style _bibliography/narrative_full %}
+
+- {% cite doi101016jecolmodel200510045 --style _bibliography/narrative_full %}
+
+- {% cite doi101016jenvsoft2024105977 --style _bibliography/narrative_full %}
+
+- {% cite doi1010022015wr017559 --style _bibliography/narrative_full %}
 
 ### Research applications
 {: .no_toc }
+
 #### With RS data in Ecology / Biodiversity
 {: .no_toc }
-- A
 
 #### Without RS data (Ecology domain)
 {: .no_toc }
-{: .d-inline-block }
-optional
-{: .label}
+- {% cite doi1011111365266413044 --style _bibliography/narrative_full %}
 
-- B
+- {% cite doi101051mmnp201611405 --style _bibliography/narrative_full %}
 
-## Implementation 
+## Implementation
 
 #### Python
 {: .no_toc }
+- SALib
 
 #### R
 {: .no_toc }
+- ‘sensitivity’
 
 ### Code Cells
 {: .no_toc }
-{: .d-inline-block }
-optional
-{: .label}
 
-
-<!-- For referencement in toc before automatic table -->
 ## Assessment table

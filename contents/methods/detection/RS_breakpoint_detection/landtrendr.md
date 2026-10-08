@@ -2,8 +2,8 @@
 layout: method
 title: "LandTrendr"
 parent: "RS breakpoint detection"
-date: 2025-07-17
-author: Mrs. Young
+date: 2026-04-28
+author: Lori Giagnacovo, VITO
 ---
 <!-- This file was auto-generated from _data/Attribution methods - Method Assessment.tsv -->
 
@@ -13,58 +13,97 @@ author: Mrs. Young
 1. TOC
 {:toc}
 
+## Description & principle
 
-## Description & principle 
-A clear, technical yet accessible explanation of the method, its core principle(s).
+The strategy of the LandTrendr algorithm is to distill a multi-year
+spectral trajectory into sequential straight-line segments that
+adequately capture the character of spectral progressive changes, and
+then to leverage that simplified rendition of the time-series to extract
+useful information. The LandTrendr algorithm attempts to isolate the
+underlying shape of the trajectory while removing the noise (i.e.,
+temporal segmentation). This achieved in two broad steps: a breakpoint
+identification step, and a model-fitting step (fitting parameters can be
+decided by the user). A single disturbance requires three segments: a
+pre-disturbance segment, the change segment, and a post-disturbance
+segment.
 
+The LandTrendr algorithm was built to use imagery from the Landsat
+family of sensors, however, it can be presented time-series of any
+numeric sequence, whether from Landsat sensors, other satellite sensors,
+or an entirely different source. The algorithm assumes that there is one
+entry per year; if you use a different time step, you will need to
+"trick" the algorithm into thinking it is looking at yearly data. If
+there are not enough observations over time from a given sensor, it will
+not be appropriate for LandTrendr. As a rule of thumb, there should be
+roughly three to four times as many observations as the maximum number
+of periods you wish the algorithm to discriminate.
 
-### Major variants
+## Major variants
+
 {: .no_toc }
 {: .d-inline-block }
 optional
 {: .label}
 
-If the method has variants that seem important, either already widespread or promising and well documented. 
+## Further online resources
 
-### Further online resources
 {: .no_toc }
-
-References to useful online resources to get started, e.g. [explanation blogs](https://matheusfacure.github.io/python-causality-handbook/15-Synthetic-Control.html){:target="_blank"}
-
+<https://openmrv.org/web/guest/w/modules/mrv/modules_2/landtrendr>
 
 ## Reference articles
+
 ### Method
 {: .no_toc }
-- One or a few key academic references that introduce or formalize the method. 
+
+- {% cite kennedy2010 --style _bibliography/narrative_full %}
+
+- {% cite kennedy2018 --style _bibliography/narrative_full %}
+
+- {% cite kennedy2023 --style _bibliography/narrative_full %}
 
 ### Research applications
 {: .no_toc }
+
 #### With RS data in Ecology / Biodiversity
 {: .no_toc }
-- A
+- {% cite yang2018 --style _bibliography/narrative_full %}
+
+- {% cite cohen2018 --style _bibliography/narrative_full %}
+
+- {% cite zhu2019 --style _bibliography/narrative_full %}
+
+- {% cite parracciani2024 --style _bibliography/narrative_full %}
 
 #### Without RS data (Ecology domain)
 {: .no_toc }
-{: .d-inline-block }
-optional
-{: .label}
 
-- B
-
-## Implementation 
+## Implementation
 
 #### Python
 {: .no_toc }
+- lt-gee-py (Python interface to the Google Earth Engine implementation
+  of the LandTrendr spectral-temporal segmentation algorithm),
+  <https://pypi.org/project/lt-gee-py/>
+
+- The LandTrendr class from lt-gee-py is a light wrapper around the
+  Google Earth Engine API that includes convenience methods to generate
+  images and collections in the format required for LandTrendr on GEE
+  (be aware this package is in alpha and may change).
 
 #### R
 {: .no_toc }
+- LandTrendR-Package,
+  <https://github.com/IFGI-Project/LandTendR-Package>
+
+- The package help users to run Landtrendr Algorithm in R, this package
+  use GEE python API and requires the user to have a GEE account. The
+  package creates a Collection with all the preprocessing and
+  Harmonizing required to run Landtrendr, also allows the user to have
+  control on the main parameters for the algorithm and the
+  ImageCollection creation.
 
 ### Code Cells
 {: .no_toc }
-{: .d-inline-block }
-optional
-{: .label}
+<https://github.com/eMapR/LT-GEE>
 
-
-<!-- For referencement in toc before automatic table -->
 ## Assessment table
