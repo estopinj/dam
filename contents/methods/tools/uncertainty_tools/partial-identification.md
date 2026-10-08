@@ -7,11 +7,12 @@ author: Mrs. Young
 ---
 <!-- This file was auto-generated from _data/Attribution methods - Method Assessment.tsv -->
 
-{% if page.category_note != '' %}
+<!-- category-note:start -->
+
 {: .note }
+It also belongs to the sub-category [Robustness & significance tests]({{ site.baseurl }}/tools/robustness_significance).
 
-{% endif %}
-
+<!-- category-note:end -->
 
 ## Table of Contents
 {: .no_toc .text-delta }

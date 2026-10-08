@@ -1,17 +1,11 @@
 ---
 layout: method
 title: "S-Map"
-parent: "Prediction-based approaches"
+parent: "Alternative paradigms"
 date: 2025-07-17
 author: Mrs. Young
 ---
-<!-- This file was auto-generated from _data/Attribution methods - Method Assessment.tsv -->
-
-{% if page.category_note != '' %}
-{: .note }
-
-{% endif %}
-
+<!-- This file was auto-generated from DetectionAttribution methods - Method Assessment.tsv -->
 
 ## Table of Contents
 {: .no_toc .text-delta }

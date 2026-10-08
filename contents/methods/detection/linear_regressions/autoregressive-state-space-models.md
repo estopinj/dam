@@ -7,11 +7,12 @@ author: Mrs. Young
 ---
 <!-- This file was auto-generated from _data/Attribution methods - Method Assessment.tsv -->
 
-{% if page.category_note != '' %}
-{: .note }
-This method also belongs to [Alternative paradigms]({{ site.baseurl }}/alternative).
-{% endif %}
+<!-- category-note:start -->
 
+{: .note }
+This method also belongs to [Alternative paradigms]({{ site.baseurl }}/alternative). It also belongs to the sub-category [Prediction-based approaches]({{ site.baseurl }}/discovery/prediction_based).
+
+<!-- category-note:end -->
 
 ## Table of Contents
 {: .no_toc .text-delta }

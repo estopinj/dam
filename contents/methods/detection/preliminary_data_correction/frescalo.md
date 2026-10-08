@@ -11,12 +11,6 @@ categories:
 ---
 <!-- This file was auto-generated from _data/method_assessments.tsv -->
 
-{% if page.category_note != '' %}
-{: .note }
-
-{% endif %}
-
-
 ## Table of Contents
 {: .no_toc .text-delta }
 

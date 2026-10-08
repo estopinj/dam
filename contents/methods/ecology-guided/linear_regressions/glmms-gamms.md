@@ -7,12 +7,6 @@ author: Andrea Zampetti, Sapienza University of Rome
 ---
 <!-- This file was auto-generated from _data/Attribution methods - Method Assessment.tsv -->
 
-{% if page.category_note != '' %}
-{: .note }
-
-{% endif %}
-
-
 ## Table of Contents
 {: .no_toc .text-delta }
 

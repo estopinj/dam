@@ -7,11 +7,12 @@ author: Diana Bowler, UK Centre for Ecology & Hydrology, 27th Feb 2026
 ---
 <!-- This file was auto-generated from _data/Attribution methods - Method Assessment.tsv -->
 
-{% if page.category_note != '' %}
+<!-- category-note:start -->
+
 {: .note }
 This method also belongs to [Adjusted methods (Backdoor C.)]({{ site.baseurl }}/adjusted).
-{% endif %}
 
+<!-- category-note:end -->
 
 ## Table of Contents
 {: .no_toc .text-delta }

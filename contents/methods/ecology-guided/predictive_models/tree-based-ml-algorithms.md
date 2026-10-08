@@ -1,17 +1,11 @@
 ---
 layout: method
 title: "Tree-based ML algorithms"
-parent: "Predictive models +  interpretability metrics"
+parent: "Predictive models + interpretability metrics"
 date: 2025-09-23
 author: Luca Santini (Sapienza University of Rome), reviewed by Franziska Schrodt (University of Nottingham)
 ---
 <!-- This file was auto-generated from _data/Attribution methods - Method Assessment.tsv -->
-
-{% if page.category_note != '' %}
-{: .note }
-
-{% endif %}
-
 
 ## Table of Contents
 {: .no_toc .text-delta }
