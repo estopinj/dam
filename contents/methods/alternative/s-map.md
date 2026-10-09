@@ -43,8 +43,8 @@ optional
 **Bayesian versions of EDM** rely on Gaussian process (GP)
 regressions, combining short time series in a hierarchical model
 structure to increase forecast precision, addressing cases of short time
-series or noisy data ({% cite munch2017 --style _bibliography/narrative %}). This extension includes S-Map
-({% cite yukihira2025 --style _bibliography/narrative %}).\
+series or noisy data, as described by {% cite munch2017circumventing --style _bibliography/narrative %}. This extension includes S-Map, as described by
+{% cite yukihira2025 --style _bibliography/narrative %}.\
 **Variable step size EDM** (VS-EDM; {% cite johnsonmunch2022 --style _bibliography/narrative %}) incorporates
 the actual temporal spacing between observations into delay-coordinate
 vectors rather than assuming a fixed lag. Under irregular sampling or

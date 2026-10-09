@@ -30,7 +30,7 @@ values. The central idea is that the biological dissimilarity between
 two locations is a function of both the geographical distance between
 them and the environmental differences.
 
-Figure from [({% cite mokany2022 --style _bibliography/narrative %}](https://paperpile.com/c/HziGHr/hgxv). Conceptual depiction of
+Figure from [{% cite mokany2022 --style _bibliography/narrative %}](https://paperpile.com/c/HziGHr/hgxv). Conceptual depiction of
 the model fitting procedure of generalized dissimilarity modelling
 (GDM). To best represent the observed dissimilarity (*dij*) between
 sites *i* and *j*, GDM uses I-spline basis functions to transform each

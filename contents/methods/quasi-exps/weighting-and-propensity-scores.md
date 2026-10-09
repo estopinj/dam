@@ -52,9 +52,9 @@ included in the PS (treatment probability) model. To reduce bias, the
 key variables are those affecting both the treatment and the outcome,
 since they create confounding effects leading to bias. Additionally,
 variables related only to the outcome are often included – to reduce
-variance rather than bias ({% cite ramsey2019using --style _bibliography/narrative %}). Variables only related to the
+variance rather than bias {% cite ramsey2019using --style _bibliography/narrative %}. Variables only related to the
 treatment are less helpful to include since they have no effect on bias
-and can increase variance ({% cite ramsey2019using --style _bibliography/narrative %}), which can be explained by
+and can increase variance {% cite ramsey2019using --style _bibliography/narrative %}, which can be explained by
 leading to more accurately modelling treatment assignment probability
 and pushing them towards zero or one. DAGs help identify which variables
 have confounding potential, and which should be included in the PS model
@@ -69,7 +69,7 @@ integrated and adjusted for by a single set of PS. Since covariate
 balancing is done prior to estimating the causal effect of interest, PS
 methods are also less sensitive to correct model specification e.g.,
 whether confounder effects are linear, non-linear or interactive than
-traditional regression ({% cite ho2007 --style _bibliography/narrative %}).
+traditional regression {% cite ho2007 --style _bibliography/narrative %}.
 
 Another set of advantages is related to the transparency of the
 generalizability of estimated effects. PS methods require specification
@@ -83,7 +83,7 @@ placement bias of the treatment, some treated units may not have any
 similar untreated units, meaning no data are available to inform on
 treatment effects in some parts of the covariate space. The region where
 there is overlap in the covariate distributions is the ‘region of common
-support’ ({% cite schafer2008average --style _bibliography/narrative %}). Through typical workflows for PS
+support’ {% cite schafer2008average --style _bibliography/narrative %}. Through typical workflows for PS
 methods, the region of common support is clearly assessed, which helps
 report clear statements on limits of inference. By contrast, traditional
 regression can lead to extrapolation of results into regions with no

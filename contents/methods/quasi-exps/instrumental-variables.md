@@ -64,7 +64,7 @@ independence (meaning that conditioned on the other variables in the
 model, *Z* and *Y* are independent).
 
 Important considerations: weak instruments can
-actually make bias worse in finite samples ({% cite staiger1997 --style _bibliography/narrative %}).
+actually make bias worse in finite samples {% cite staiger1997 --style _bibliography/narrative %}.
 The guidance for how strongly an instrument needs to predict *X*, often
 assessed using the first-stage F-statistic, depends on the setting and
 the estimator.

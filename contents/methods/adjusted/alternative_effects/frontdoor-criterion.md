@@ -49,7 +49,7 @@ lie on the causal pathway.
 
 Practical considerations:
 
-Although the front-door criterion was formalized by Judea Pearl ({% cite pearl2009 --style _bibliography/narrative %})
+Although the front-door criterion was formalized by {% cite pearl2009 --style _bibliography/narrative %}
 and is well established in causal inference theory, its practical
 application across disciplines remains limited. This is mainly because
 the required assumptions are often difficult to satisfy in real-world
@@ -64,7 +64,7 @@ affect the mediator-outcome relationship.
 optional
 {: .label}
 - Generalized front-door criterion, which relaxes the assumption of no
-  direct effect between exposure and outcome ({% cite fulcher2020 --style _bibliography/narrative %}).
+  direct effect between exposure and outcome, as described by {% cite fulcher2020 --style _bibliography/narrative %}.
 
 ## Further online resources
 

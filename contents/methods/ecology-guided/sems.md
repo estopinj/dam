@@ -82,8 +82,7 @@ Many variants exist, but the most important in ecology are:
 ## Further online resources
 
 {: .no_toc }
-- Book: *Structural equation modeling and natural systems* ({% cite grace2006 --style _bibliography/narrative %}.
-  Comprehensive methodological and ecological introduction, with many
+- Book: *Structural equation modeling and natural systems* {% cite grace2006 --style _bibliography/narrative %}. Comprehensive methodological and ecological introduction, with many
   worked examples.[\
   ](https://www.cambridge.org/core/books/structural-equation-modeling-and-natural-systems/D05B2328107F91AF772182F3AF88EB12?utm_source=chatgpt.com)
 
@@ -92,7 +91,7 @@ Many variants exist, but the most important in ecology are:
   Guidance on specifying and evaluating SEMs in ecology
 
 - R package piecewiseSEM vignette: “Piecewise Structural Equation
-  Modeling in R” ({% cite lefcheck2016 --style _bibliography/narrative %} and updates).[\
+  Modeling in R,” with updates described by {% cite lefcheck2016 --style _bibliography/narrative %}.[\
   ](https://cran.r-project.org/web/packages/piecewiseSEM/vignettes/piecewiseSEM.html?utm_source=chatgpt.com)
 
 - R package lavaan website and reference manual.[\

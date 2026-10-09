@@ -23,9 +23,9 @@ This method also belongs to [Adjusted methods (Backdoor C.)]({{ site.baseurl }}/
 ## Description & principle
 
 Two-Way Fixed Effects (TWFE) models are a generalisation of
-difference-in-difference (DID) models ({% cite angrist2009 --style _bibliography/narrative %}) that
-use added ‘fixed effects’ to control for several dimensions of
-confounding. Generally, it is used to account for multiple groups and
+difference-in-difference (DID) models, such as those described by {% cite angrist2009 --style _bibliography/narrative %}.
+They use added ‘fixed effects’ to control for several dimensions of
+confounding. Generally, they are used to account for multiple groups and
 time periods by including unit and time fixed effects (although these
 fixed effects may consider other variables). The "unit" fixed effect
 controls for all confounding variables that are time-invariant and only
@@ -53,7 +53,7 @@ be relevant with strong climatic gradients across study areas.
 
 - **Linear additive effects:** TWFE assumes that the underlying
   data-generating process is captured by additive fixed effects plus a
-  constant treatment effect ({% cite imaikim2021 --style _bibliography/narrative %}).
+  constant treatment effect {% cite imaikim2021 --style _bibliography/narrative %}.
 
 What happens to our data when we apply OWFE/TWFE models?
 
