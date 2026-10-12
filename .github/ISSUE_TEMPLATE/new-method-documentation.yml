@@ -20,10 +20,18 @@ body:
   - type: input
     id: author
     attributes:
-      label: Page’s Author & Date
+      label: Page’s Author
+      description: Leave empty and tick the box below if you prefer to stay anonymous.
       placeholder: ex. Jean Dupont
     validations:
-      required: true
+      required: false
+  - type: checkboxes
+    id: anonymous
+    attributes:
+      label: "\u200B"
+      options:
+        - label: Anonymous contribution
+          required: false
 
 
   - type: dropdown

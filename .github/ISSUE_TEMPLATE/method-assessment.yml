@@ -22,10 +22,18 @@ body:
   - type: input
     id: author
     attributes:
-      label: Page’s Author & Date
+      label: Page’s Author
+      description: Leave empty and tick the box below if you prefer to stay anonymous.
       placeholder: ex. Jean Dupont
     validations:
-      required: true
+      required: false
+  - type: checkboxes
+    id: anonymous
+    attributes:
+      label: "\u200B"
+      options:
+        - label: Anonymous contribution
+          required: false
 
   - type: dropdown
     id: documented_method
@@ -490,7 +498,7 @@ body:
     id: confidence
     attributes:
       label: Confidence in assessment
-      description: How confident are you in your method assessment?
+      description: How confident are you in your method assessment? Ordinal from least (1) to most (5) confident.
       options:
         - "1"
         - "2"
