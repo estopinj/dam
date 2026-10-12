@@ -49,7 +49,7 @@ lie on the causal pathway.
 
 Practical considerations:
 
-Although the front-door criterion was formalized by {% cite pearl2009 --style _bibliography/narrative %}
+Although the front-door criterion was formalized by {% cite pearl2009causality --style _bibliography/narrative %}
 and is well established in causal inference theory, its practical
 application across disciplines remains limited. This is mainly because
 the required assumptions are often difficult to satisfy in real-world
@@ -58,19 +58,14 @@ scenarios. For example, it is rare to be confident that there is no
 affect the mediator-outcome relationship.
 
 ## Major variants
-
 {: .no_toc }
-{: .d-inline-block }
-optional
-{: .label}
 - Generalized front-door criterion, which relaxes the assumption of no
-  direct effect between exposure and outcome, as described by {% cite fulcher2020 --style _bibliography/narrative %}.
+  direct effect between exposure and outcome, as described by {% cite fulcher2020robust --style _bibliography/narrative %}.
 
 ## Further online resources
-
 {: .no_toc }
 - Nice walk-through example, visualisation with DAG and toy example:
-  https://www.kenkoonwong.com/blog/frontdoor/
+  [https://www.kenkoonwong.com/blog/frontdoor/](https://www.kenkoonwong.com/blog/frontdoor/)
 
 ## Reference articles
 
@@ -78,12 +73,8 @@ optional
 {: .no_toc }
 
 - {% cite arif2023applying --style _bibliography/narrative_full %}
+- {% cite bellemare2024paper --style _bibliography/narrative_full %}
 
-- {% cite bellemare2024 --style _bibliography/narrative_full %}
-
-- {% cite pearl2009 --style _bibliography/narrative_full %}
-
-- {% cite fulcher2020 --style _bibliography/narrative_full %}
 
 ### Research applications
 {: .no_toc }
@@ -102,7 +93,5 @@ optional
 #### R
 {: .no_toc }
 
-### Code Cells
-{: .no_toc }
 
 ## Assessment table
