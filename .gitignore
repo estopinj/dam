@@ -25,6 +25,9 @@ vendor/
 # Generated assessment data: rebuilt from the raw TSV at build time
 _data/method_assessments_clean.tsv
 
+# Generated from _data/assessment_votes/ at build time (consensus / debated status)
+_data/assessment_status.json
+
 # Ignores downloaded pdfs and logs
 scripts/validation/downloaded_pdfs/
 scripts/validation/logs/

@@ -7,7 +7,10 @@ Run them from the repository root with Python 3:
 python3 scripts/add_categories.py
 python3 scripts/clean_method_assessments.py
 python3 scripts/generate_method_pages.py
+python3 scripts/assessment_consensus.py
 ```
+
+`assessment_consensus.py` rebuilds the gitignored `_data/assessment_status.json` (Consensus / Debated / single-assessment status and per-criterion agreement shown on method pages) from the votes stored in `_data/assessment_votes/`. Votes are written by `process_method_assessment_issue.py`; `ci.yml`, `pages.yml` and `build_local.sh` run the script before `jekyll build`. The method is documented in the Contributing page ("How assessments are combined").
 
 `generate_method_pages.py` creates missing method pages from the TSV assessment data. Review its output before committing generated pages.
 

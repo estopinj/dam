@@ -17,10 +17,15 @@ Behavior:
   the issue. Any already non-empty cell (e.g. an existing Category) is left
   untouched rather than overwritten.
 - If a matching row exists and already has assessment content, the issue is
-  treated as a *review* of that existing assessment: differing criteria are
-  applied to the row (Category/Sub-category are never touched), and the PR
-  body lists each suggested change (old -> new) for a maintainer to accept or
-  reject via normal review. If nothing actually differs, no PR is opened.
+  treated as a *review* of that existing assessment: the criteria of the row
+  become the confidence-weighted majority over all recorded votes
+  (Category/Sub-category are never touched), and the PR body lists each
+  suggested change (old -> new) for a maintainer to accept or reject via
+  normal review. If neither the row nor the votes change, no PR is opened.
+- Every issue is also stored as a vote in _data/assessment_votes/ (see
+  assessment_consensus.py), from which the Consensus / Debated / confidence
+  status badge of the method page is computed. The first revision of a
+  pre-existing assessment seeds a baseline vote from that assessment.
 - generate_method_pages.py is only ever called to fill in *missing* pages
   (it already skips a method's file if it exists), so an existing
   documentation page is never overwritten by this script.
@@ -33,7 +38,8 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from process_method_issue import find_existing_file  # noqa: E402
+from process_method_issue import contributor_name, find_existing_file  # noqa: E402
+import assessment_consensus as consensus  # noqa: E402
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 RAW_TSV = PROJECT_ROOT / "_data/DetectionAttribution methods - Method Assessment.tsv"
@@ -168,22 +174,72 @@ def fill_empty_row(row, fields):
     if not (row.get("Sub-category") or "").strip():
         row["Sub-category"] = ", ".join(fields.get("sub_category") or [])
     if not (row.get("Assessor") or "").strip():
-        row["Assessor"] = fields.get("author", "")
+        row["Assessor"] = contributor_name(fields)
     for column in ASSESSMENT_COLUMNS:
         if not (row.get(column) or "").strip():
             row[column] = field_value_for_column(column, fields)
 
 
-def compute_changes(row, fields):
-    """List of (column, old_value, new_value) for criteria the issue answers
-    differently from the existing row. Category/Sub-category are excluded:
-    they're never revised by an assessment issue."""
+def issue_answers(fields):
+    """Criterion column -> list of selected values, as submitted in the issue."""
+    answers = {}
+    for column in consensus.CRITERIA:
+        value = fields.get(FIELD_MAP[column])
+        values = value if isinstance(value, list) else ([value] if value else [])
+        values = [v for v in values if v]
+        if values:
+            answers[column] = values
+    return answers
+
+
+def build_vote(fields):
+    return {
+        "issue": int(os.environ.get("ISSUE_NUMBER") or 0) or None,
+        "assessor": contributor_name(fields),
+        "date": (os.environ.get("ISSUE_DATE") or "")[:10],
+        "confidence": consensus.parse_confidence(fields.get("confidence")),
+        "answers": issue_answers(fields),
+    }
+
+
+def baseline_vote(row):
+    """Vote standing for an assessment that predates the vote store."""
+    answers = {c: consensus.split_values(row.get(c)) for c in consensus.CRITERIA}
+    return {
+        "issue": None,
+        "baseline": True,
+        "assessor": (row.get("Assessor") or "").strip() or "Unknown",
+        "date": "",
+        "confidence": consensus.parse_confidence(row.get(consensus.CONFIDENCE_COLUMN)),
+        "answers": {c: v for c, v in answers.items() if v},
+    }
+
+
+def upsert_vote(votes, vote):
+    """Replace the vote coming from the same issue (issue edits), else append."""
+    if vote["issue"] is not None:
+        for i, existing in enumerate(votes):
+            if existing.get("issue") == vote["issue"]:
+                votes[i] = vote
+                return votes
+    votes.append(vote)
+    return votes
+
+
+def compute_changes(row, published):
+    """List of (column, old_value, new_value) for criteria whose published
+    (confidence-weighted majority) value differs from the existing row.
+    Category/Sub-category are excluded: they're never revised by an assessment
+    issue. Same options in another order are not a change."""
     changes = []
     for column in ASSESSMENT_COLUMNS:
+        new_value = published.get(column, "").strip()
         old_value = (row.get(column) or "").strip()
-        new_value = field_value_for_column(column, fields).strip()
-        if new_value and new_value != old_value:
-            changes.append((column, old_value, new_value))
+        if not new_value or new_value == old_value:
+            continue
+        if column != consensus.CONFIDENCE_COLUMN and set(consensus.split_values(old_value)) == set(consensus.split_values(new_value)):
+            continue
+        changes.append((column, old_value, new_value))
     return changes
 
 
@@ -224,6 +280,15 @@ def main():
     header_lines, rows = read_raw_tsv()
     row = find_row(rows, method_name)
 
+    old_votes_text = consensus.votes_path(method_name).read_text(encoding="utf-8") \
+        if consensus.votes_path(method_name).exists() else ""
+    votes = consensus.load_votes(method_name)
+    if not votes and row is not None and not is_assessment_empty(row):
+        votes.append(baseline_vote(row))
+    votes = upsert_vote(votes, build_vote(fields))
+    votes_changed = consensus.votes_text(method_name, votes) != old_votes_text
+
+    changes = []
     if row is None:
         rows.append(build_new_row(method_name, fields))
         status = "row-created"
@@ -231,15 +296,20 @@ def main():
         fill_empty_row(row, fields)
         status = "row-filled"
     else:
-        changes = compute_changes(row, fields)
-        if not changes:
+        changes = compute_changes(row, consensus.compute_published(votes, row))
+        if changes:
+            print(f"'{method_name}' already assessed; applying {len(changes)} suggested change(s) for review.")
+            apply_changes(row, changes)
+            status = "assessment-revised"
+        elif votes_changed:
+            print(f"'{method_name}' already assessed; vote recorded, published assessment unchanged.")
+            status = "vote-recorded"
+        else:
             print(f"'{method_name}' already assessed and issue suggests no changes; nothing to do.")
             write_github_output("already-assessed-no-changes", "unchanged", method_name)
             return
-        print(f"'{method_name}' already assessed; applying {len(changes)} suggested change(s) for review.")
-        apply_changes(row, changes)
-        status = "assessment-revised"
 
+    consensus.save_votes(method_name, votes)
     write_raw_tsv(header_lines, rows)
     # The cleaned data file is a build artifact regenerated from the raw TSV
     # by clean_method_assessments.py during the site build, so it is never

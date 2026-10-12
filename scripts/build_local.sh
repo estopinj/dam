@@ -17,6 +17,7 @@ while [ $# -gt 0 ]; do
 done
 
 python3 scripts/generate_method_pages.py
+python3 scripts/assessment_consensus.py
 
 rm -rf _site .jekyll-cache
 export JEKYLL_ENV=production

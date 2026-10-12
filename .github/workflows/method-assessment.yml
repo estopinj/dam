@@ -51,7 +51,7 @@ jobs:
           body: |
             Automatically generated from #${{ github.event.issue.number }}.
 
-            ${{ steps.process.outputs.status == 'row-created' && format('New assessment row added for "{0}".', steps.process.outputs.method_name) || steps.process.outputs.status == 'row-filled' && format('Existing assessment row for "{0}" filled in.', steps.process.outputs.method_name) || format('"{0}" already has an assessment: this is a suggested revision to review, not an automatic replacement.', steps.process.outputs.method_name) }}
+            ${{ steps.process.outputs.status == 'row-created' && format('New assessment row added for "{0}".', steps.process.outputs.method_name) || steps.process.outputs.status == 'row-filled' && format('Existing assessment row for "{0}" filled in.', steps.process.outputs.method_name) || steps.process.outputs.status == 'vote-recorded' && format('"{0}" already has an assessment: this assessment was recorded as an additional vote (it updates the Consensus / Debated status) and the published assessment is unchanged.', steps.process.outputs.method_name) || format('"{0}" already has an assessment: this is a suggested revision to review, not an automatic replacement. The published values are the confidence-weighted majority of all recorded assessments.', steps.process.outputs.method_name) }}
             ${{ steps.process.outputs.page_status == 'generated' && 'A new documentation page was also generated (pending Category selection review).' || (steps.process.outputs.page_status == 'existing-elsewhere' && 'A documentation page already exists for this method; it was left untouched.' || '') }}
 
             ${{ steps.process.outputs.status == 'assessment-revised' && '**Suggested changes:**' || '' }}
