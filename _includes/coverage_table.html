@@ -16,26 +16,25 @@
     <tr><td>Method categories</td><td>{{ cov.method_categories | size }}</td><td></td></tr>
     <tr><td>Method subcategories</td><td>{{ cov.method_subcategories | size }}</td><td></td></tr>
     <tr><td colspan="3" style="text-align:center"><strong>Method assessments</strong></td></tr>
-    <tr><td>Complete</td><td>{{ cov.assess.complete }}</td><td>{% if assess_total > 0 %}{{ cov.assess.complete | times: 100.0 | divided_by: assess_total | round: 2 }}%{% endif %}</td></tr>
-    <tr><td>Drafted (To review)</td><td>{{ cov.assess.toreview }}</td><td>{% if assess_total > 0 %}{{ cov.assess.toreview | times: 100.0 | divided_by: assess_total | round: 2 }}%{% endif %}</td></tr>
+    <tr><td><span class="label assess-status-complete">Complete</span></td><td>{{ cov.assess.complete }}</td><td>{% if assess_total > 0 %}{{ cov.assess.complete | times: 100.0 | divided_by: assess_total | round: 2 }}%{% endif %}</td></tr>
+    <tr><td><span class="label assess-status-to-review">To review</span></td><td>{{ cov.assess.toreview }}</td><td>{% if assess_total > 0 %}{{ cov.assess.toreview | times: 100.0 | divided_by: assess_total | round: 2 }}%{% endif %}</td></tr>
     <tr><td><em>Total</em></td><td><em>{{ assess_total }}</em></td><td><em>{% if assess_total > 0 %}100.00%{% endif %}</em></td></tr>
     <tr><td colspan="3" style="text-align:center"><strong>Method documentation pages</strong></td></tr>
-    <tr><td>Online</td><td>{{ cov.doc.online }}</td><td>{% if doc_total > 0 %}{{ cov.doc.online | times: 100.0 | divided_by: doc_total | round: 2 }}%{% endif %}</td></tr>
-    <tr><td>Drafted (To review)</td><td>{{ cov.doc.toreview }}</td><td>{% if doc_total > 0 %}{{ cov.doc.toreview | times: 100.0 | divided_by: doc_total | round: 2 }}%{% endif %}</td></tr>
-    <tr><td>Planned</td><td>{{ cov.doc.planned }}</td><td>{% if doc_total > 0 %}{{ cov.doc.planned | times: 100.0 | divided_by: doc_total | round: 2 }}%{% endif %}</td></tr>
-    <tr><td>To do</td><td>{{ cov.doc.todo }}</td><td>{% if doc_total > 0 %}{{ cov.doc.todo | times: 100.0 | divided_by: doc_total | round: 2 }}%{% endif %}</td></tr>
+    <tr><td><span class="label doc-status-reviewed">Reviewed</span></td><td>{{ cov.doc.online }}</td><td>{% if doc_total > 0 %}{{ cov.doc.online | times: 100.0 | divided_by: doc_total | round: 2 }}%{% endif %}</td></tr>
+    <tr><td><span class="label doc-status-to-review">To review</span></td><td>{{ cov.doc.toreview }}</td><td>{% if doc_total > 0 %}{{ cov.doc.toreview | times: 100.0 | divided_by: doc_total | round: 2 }}%{% endif %}</td></tr>
+    <tr><td><span class="label doc-status-assigned">Planned</span></td><td>{{ cov.doc.planned }}</td><td>{% if doc_total > 0 %}{{ cov.doc.planned | times: 100.0 | divided_by: doc_total | round: 2 }}%{% endif %}</td></tr>
+    <tr><td><span class="label doc-status-to-do">To do</span></td><td>{{ cov.doc.todo }}</td><td>{% if doc_total > 0 %}{{ cov.doc.todo | times: 100.0 | divided_by: doc_total | round: 2 }}%{% endif %}</td></tr>
     <tr><td><em>Total</em></td><td><em>{{ doc_total }}</em></td><td><em>{% if doc_total > 0 %}100.00%{% endif %}</em></td></tr>
     <tr><td colspan="3" style="text-align:center"><strong>Good practices pages</strong></td></tr>
-    <tr><td>Online</td><td>{{ cov.gp.online }}</td><td>{% if gp_total > 0 %}{{ cov.gp.online | times: 100.0 | divided_by: gp_total | round: 2 }}%{% endif %}</td></tr>
-    <tr><td>Drafted (To review)</td><td>{{ cov.gp.toreview }}</td><td>{% if gp_total > 0 %}{{ cov.gp.toreview | times: 100.0 | divided_by: gp_total | round: 2 }}%{% endif %}</td></tr>
-    <tr><td>Planned</td><td>{{ cov.gp.planned }}</td><td>{% if gp_total > 0 %}{{ cov.gp.planned | times: 100.0 | divided_by: gp_total | round: 2 }}%{% endif %}</td></tr>
-    <tr><td>To do</td><td>{{ cov.gp.todo }}</td><td>{% if gp_total > 0 %}{{ cov.gp.todo | times: 100.0 | divided_by: gp_total | round: 2 }}%{% endif %}</td></tr>
+    <tr><td><span class="label gp-status-reviewed">Reviewed</span></td><td>{{ cov.gp.reviewed }}</td><td>{% if gp_total > 0 %}{{ cov.gp.reviewed | times: 100.0 | divided_by: gp_total | round: 2 }}%{% endif %}</td></tr>
+    <tr><td><span class="label doc-status-to-review">To review</span></td><td>{{ cov.gp.toreview }}</td><td>{% if gp_total > 0 %}{{ cov.gp.toreview | times: 100.0 | divided_by: gp_total | round: 2 }}%{% endif %}</td></tr>
+    <tr><td><span class="label doc-status-assigned">Planned</span></td><td>{{ cov.gp.planned }}</td><td>{% if gp_total > 0 %}{{ cov.gp.planned | times: 100.0 | divided_by: gp_total | round: 2 }}%{% endif %}</td></tr>
+    <tr><td><span class="label doc-status-to-do">To do</span></td><td>{{ cov.gp.todo }}</td><td>{% if gp_total > 0 %}{{ cov.gp.todo | times: 100.0 | divided_by: gp_total | round: 2 }}%{% endif %}</td></tr>
     <tr><td><em>Total</em></td><td><em>{{ gp_total }}</em></td><td><em>{% if gp_total > 0 %}100.00%{% endif %}</em></td></tr>
     <tr><td colspan="3" style="text-align:center"><strong>Example pages</strong></td></tr>
-    <tr><td>Online</td><td>{{ cov.ex.online }}</td><td>{% if ex_total > 0 %}{{ cov.ex.online | times: 100.0 | divided_by: ex_total | round: 2 }}%{% endif %}</td></tr>
-    <tr><td>Drafted (To review)</td><td>{{ cov.ex.toreview }}</td><td>{% if ex_total > 0 %}{{ cov.ex.toreview | times: 100.0 | divided_by: ex_total | round: 2 }}%{% endif %}</td></tr>
-    <tr><td>Planned</td><td>{{ cov.ex.planned }}</td><td>{% if ex_total > 0 %}{{ cov.ex.planned | times: 100.0 | divided_by: ex_total | round: 2 }}%{% endif %}</td></tr>
-    <tr><td>To do</td><td>{{ cov.ex.todo }}</td><td>{% if ex_total > 0 %}{{ cov.ex.todo | times: 100.0 | divided_by: ex_total | round: 2 }}%{% endif %}</td></tr>
+    <tr><td><span class="label coverage-status-online">Online</span></td><td>{{ cov.ex.online }}</td><td>{% if ex_total > 0 %}{{ cov.ex.online | times: 100.0 | divided_by: ex_total | round: 2 }}%{% endif %}</td></tr>
+    <tr><td><span class="label doc-status-assigned">Planned</span></td><td>{{ cov.ex.planned }}</td><td>{% if ex_total > 0 %}{{ cov.ex.planned | times: 100.0 | divided_by: ex_total | round: 2 }}%{% endif %}</td></tr>
+    <tr><td><span class="label doc-status-to-do">To do</span></td><td>{{ cov.ex.todo }}</td><td>{% if ex_total > 0 %}{{ cov.ex.todo | times: 100.0 | divided_by: ex_total | round: 2 }}%{% endif %}</td></tr>
     <tr><td><em>Total</em></td><td><em>{{ ex_total }}</em></td><td><em>{% if ex_total > 0 %}100.00%{% endif %}</em></td></tr>
   </tbody>
 </table>

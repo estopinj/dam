@@ -79,7 +79,7 @@ module NaviDAM
               end
 
               case doc_status
-              when "Online"
+              when "Online", "Reviewed"
                 doc_online += 1
               when "To review"
                 doc_toreview += 1
@@ -159,7 +159,7 @@ module NaviDAM
             end
           end
           coverage["gp"] = {
-            "online" => gp_counts["Online"] || 0,
+            "reviewed" => gp_counts["Reviewed"] || 0,
             "toreview" => gp_counts["To review"] || 0,
             "assigned" => gp_counts["Assigned"] || 0,
             "invited" => gp_counts["Invited"] || 0,
