@@ -534,6 +534,28 @@
   background-color: #d4edda;
   color: #155724;
 }
+/* Consensus / debated status of multi-assessor methods */
+.label.consensus-status-consensus {
+  background-color: #d4edda;
+  color: #155724;
+}
+.label.consensus-status-debated {
+  background-color: #ffe0b2;
+  color: #7a4a00;
+}
+a.label {
+  text-decoration: none;
+}
+.debated-flag {
+  text-decoration: none;
+}
+.assessment-breakdown {
+  margin: 1em 0;
+}
+.assessment-breakdown summary {
+  cursor: pointer;
+  font-weight: 600;
+}
 .used-resources-section {
   margin: 1.5em 0;
 }

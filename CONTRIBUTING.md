@@ -38,14 +38,54 @@ Please follow the [Code of Conduct](https://github.com/estopinj/dam/blob/main/CO
 Use the **Method assessment** issue template for both cases. Assessments position [methods](https://estopinj.github.io/dam/methods) against the [criteria](https://estopinj.github.io/dam/criteria).
 
 - **New assessment:** choose `Is the method already assessed in NaviDAM? > No`, give the method name, and fill in the criteria.
-- **Revision:** choose `Is the method already assessed in NaviDAM? > Yes`, give the exact existing method name, and fill in the full form with suggested values. Only differing criteria are proposed as changes for maintainer review.
+- **Revision / second opinion:** choose `Is the method already assessed in NaviDAM? > Yes`, give the exact existing method name, and fill in the full form with **your own** values. Your assessment is recorded next to the existing one(s), and the method page shows whether assessors agree (see [how the status is computed](#assessment-status)). Only criteria whose published value would change are proposed as changes for maintainer review.
+- **Author:** give your name, or tick `Anonymous contribution` (or leave the name empty) to appear as *Anonymous* on the website.
+- **Confidence:** rate how confident you are from 1 to 5. It weights your assessment when several assessors disagree, so please be honest rather than generous.
 
 💡 **Tips for a good assessment:**
 - Base family-level assessments on the most common or original variant, and add options matching major, widespread variants.
 - Use the [criteria pages](https://estopinj.github.io/dam/criteria) to check definitions before answering.
 - Add rationale or comments at the end of the form to justify choices — this greatly helps review.
 
-What happens next: a pull request is opened automatically. New rows are added directly; revisions are listed as old → new suggestions to accept or reject. A maintainer reviews and may ask for clarification in the issue thread.
+What happens next: a pull request is opened automatically. New rows are added directly; revisions are listed as old → new suggestions to accept or reject. A maintainer reviews and may ask for clarification in the issue thread. Nothing is published before the pull request is merged. If you edit your issue, your assessment is updated rather than counted twice.
+
+<details markdown="1">
+<summary><strong>How assessments are combined: Consensus / Debated status</strong></summary>
+<a id="assessment-status"></a>
+
+Several people can assess the same method. Each method page then shows a status badge next to the assessor line, a ⚠️ next to debated criteria in the assessment table, and a collapsible breakdown listing every assessor's answer per criterion.
+
+#### Status badge
+
+| Badge | Meaning |
+|-------|---------|
+| **Single assessment** · confidence *n*/5 | Only one assessment exists. The badge shows the confidence score given by the assessor (1 = least, 5 = most confident). |
+| **Consensus** (*k* assessors) | At least **2/3 of the compared criteria** reach an agreement of at least 2/3 between assessors. |
+| **Debated** (*k* assessors) | Fewer than 2/3 of the compared criteria reach that agreement: assessors give contrasting assessments. |
+
+Two assessors are enough to get a Consensus or Debated status. There is no intermediate status. Methods assessed before this system existed show the confidence score of their initial assessment (2/5 for AI-assisted assessments, 3/5 for assessments made by contributors).
+
+#### How agreement is computed
+
+1. **One vote per assessor.** Every submitted assessment issue is one vote, anonymous ones included. Votes are stored in `_data/assessment_votes/`.
+2. **Confidence is the weight.** A vote has weight *confidence ÷ 5* (so 5/5 counts fully and 1/5 counts 20%).
+3. **Similarity of two answers on a criterion** is a number between 0 and 1:
+   - *Ordinal criteria* (e.g. IID, Handles lag effects, Minimal TS length) use a **distance-based score**: `1 − distance ÷ (number of levels − 1)`. Neighbouring options such as `Required` vs `Recommended` still count as 0.5, while the extremes `Required` vs `Relaxes assumption` count as 0. `Inapplicable` only matches itself.
+   - *Multiple-choice criteria* (e.g. Objective, Language) use the **overlap of the selected options** (shared options ÷ all selected options).
+4. **Agreement of a criterion.** Each given answer is tested as the "reference": every assessor supports it in proportion to the similarity of their own answer to it (fully if identical, partly if close, not at all if opposite), multiplied by their weight. The reference with the highest support, divided by the total weight of all assessors, gives the agreement. When answers are identical or totally different, this is simply the weighted share of assessors giving the most common answer, so *"at least 2/3 of the assessors agree"* is read literally. A criterion is **agreed** when this is **≥ 2/3**, and **debated** otherwise. Only criteria answered by at least two assessors are compared.
+5. **Method status** is the share of compared criteria that are agreed: **≥ 2/3 → Consensus**, **< 2/3 → Debated**.
+
+*Examples.* Three assessors answer IID with `Required` (confidence 5), `Required` (4) and `Relaxes assumption` (2): the weights are 1, 0.8 and 0.4, so agreement is (1 + 0.8) ÷ 2.2 ≈ 82% → agreed. Two equally confident assessors answering `Required` and `Relaxes assumption` reach 50% → debated, whereas `Required` and `Recommended` reach 75% → agreed.
+
+#### Published assessment
+
+The values displayed in the assessment table are, for each criterion, the **confidence-weighted majority** across assessors (ties keep the currently published value), and the displayed confidence score is the average of the assessors' scores. A submission that changes the published values is turned into a pull request listing every old → new value, which a maintainer reviews before anything changes on the website. A submission that only adds an agreeing or disagreeing opinion is still recorded (it updates the status) through a pull request.
+
+#### Anonymity
+
+Anonymous assessors appear as *Anonymous* on the website, and no issue numbers are shown. The issue and pull request themselves are still created from your GitHub account and are visible to anyone on GitHub.
+
+</details>
 
 <a id="document-method"></a>
 ## 2. Document a method (new or completion) 📝

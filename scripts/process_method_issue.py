@@ -90,6 +90,15 @@ def load_issue_fields():
     return fields
 
 
+def contributor_name(fields):
+    """Author name for page front matter / assessor cells: 'Anonymous' when the
+    'Anonymous contribution' box is ticked or no name was given."""
+    name = (fields.get("author") or "").strip()
+    if fields.get("anonymous") or not name:
+        return "Anonymous"
+    return name
+
+
 def determine_destination(fields):
     """Return (destination_dir, parent_name) for a new method page, based on
     the issue's Category/Sub-category fields, mirroring generate_method_pages.py."""
@@ -201,7 +210,7 @@ def update_existing_file(path, fields):
 
 
 def render_new_file(method_name, fields, parent):
-    author = fields.get("author") or "Unknown"
+    author = contributor_name(fields)
     issue_number = os.environ.get("ISSUE_NUMBER", "")
     issue_url = os.environ.get("ISSUE_URL", "")
     date = (os.environ.get("ISSUE_DATE") or "")[:10]

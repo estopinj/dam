@@ -11,6 +11,10 @@
         "/^cat _data/cat_dicts\\.json \\| sed -n 1,200p \\| tr -s ' ' \\| head -120; head -40 scripts/tsv_clean\\.py; ls scripts; grep -rln \"cat_dicts\\\\\\|category_note\" \\. 2>/dev/null \\| grep -v \"\\^\\./contents/methods\" \\| head; python3 - <<'E'\nimport csv\nl=open\\(\"_data/DetectionAttribution methods - Method Assessment\\.tsv\"\\)\\.readlines\\(\\)\\[3:\\]\nr=csv\\.DictReader\\(l,delimiter=\"\\\\t\"\\)\ns=set\\(\\)\nfor x in r: s\\.add\\(\\(x\\['Category'\\],x\\['Sub-category'\\]\\)\\)\nfor a in sorted\\(s\\):print\\(a\\)\nE$/": {
             "approve": true,
             "matchCommandLine": true
+        },
+        "/^grep -n \"clean\\\\\\|def main\\\\\\|__main__\\\\\\|\\^import\\\\\\|\\^from\" scripts/generate_method_pages\\.py \\| head -30; sed -n 1,60p scripts/clean_method_assessments\\.py; sed -n 55,75p index\\.md; ls -la _data/method_assessments_clean\\.tsv; python3 --version; ruby -v \\| head -1$/": {
+            "approve": true,
+            "matchCommandLine": true
         }
     }
 }
