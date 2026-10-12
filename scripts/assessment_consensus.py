@@ -23,14 +23,14 @@ answer. A similarity s(a, b) in [0, 1] compares two answers:
 
 The agreement is the weighted similarity-share supported by the best-supported
 answer: max_i  sum_j w_j * s(a_i, a_j) / sum_j w_j. With exact-match answers
-it is the weighted share of assessors giving the modal answer, so ">= 2/3 of
+it is the weighted share of assessors giving the modal answer, so ">= 85% of
 the assessors agree" reads literally.
 
 Method status
 -------------
 One vote: ``single`` (the confidence score is displayed). Two or more votes:
-``consensus`` when at least 2/3 of the criteria answered by >= 2 assessors reach
-an agreement of >= 2/3, ``debated`` otherwise.
+``consensus`` when at least 85% of the criteria answered by >= 2 assessors reach
+an agreement of >= 85%, ``debated`` otherwise.
 """
 import json
 import re
@@ -41,7 +41,10 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent
 VOTES_DIR = PROJECT_ROOT / "_data/assessment_votes"
 STATUS_FILE = PROJECT_ROOT / "_data/assessment_status.json"
 
-AGREEMENT_THRESHOLD = 2 / 3
+# A criterion is agreed from this agreement; a method is Consensus from this
+# share of agreed criteria.
+CRITERION_THRESHOLD = 0.85
+METHOD_THRESHOLD = 0.85
 EPSILON = 1e-9
 DEFAULT_CONFIDENCE = 3
 MAX_CONFIDENCE = 5
@@ -89,6 +92,7 @@ CRITERIA = {
 CONFIDENCE_COLUMN = "Confidence in assessment"
 
 
+
 def slugify(name):
     return re.sub(r"[^a-z0-9]+", "-", name.casefold()).strip("-") or "method"
 
@@ -116,12 +120,15 @@ def similarity(column, a, b):
     if set(a) == set(b):
         return 1.0
     if kind == "ordinal":
+        # Legacy multi-select answers: several levels count as the most
+        # permissive one (the last level); non-level values (e.g.
+        # "Inapplicable") next to a level are ignored.
         positions = []
         for answer in (a, b):
-            idx = [levels.index(v) for v in answer if v in levels]
-            if len(idx) != len(answer):  # "Inapplicable", "Don't know", ...
+            idx = [levels.index(v) for v in dict.fromkeys(answer) if v in levels]
+            if not idx:  # only "Inapplicable", "Don't know", ...
                 return 0.0
-            positions.append(sum(idx) / len(idx))
+            positions.append(max(idx))
         return max(0.0, 1 - abs(positions[0] - positions[1]) / (len(levels) - 1))
     union = set(a) | set(b)
     return len(set(a) & set(b)) / len(union)
@@ -186,6 +193,7 @@ def method_status(votes):
         "agreeing": 0,
         "evaluated": 0,
         "agreement_share": None,
+        "assessor_names": list(dict.fromkeys(v.get("assessor") or "Anonymous" for v in votes)),
         "criteria": [],
     }
     if confidences:
@@ -198,7 +206,7 @@ def method_status(votes):
         if len(answered) < 2:
             continue
         agreement, _idx = best_supported(column, answered)
-        agrees = agreement >= AGREEMENT_THRESHOLD - EPSILON
+        agrees = agreement >= CRITERION_THRESHOLD - EPSILON
         result["evaluated"] += 1
         result["agreeing"] += int(agrees)
         result["criteria"].append({
@@ -217,7 +225,7 @@ def method_status(votes):
     if result["evaluated"]:
         share = result["agreeing"] / result["evaluated"]
         result["agreement_share"] = round(share, 3)
-        result["status"] = "consensus" if share >= AGREEMENT_THRESHOLD - EPSILON else "debated"
+        result["status"] = "consensus" if share >= METHOD_THRESHOLD - EPSILON else "debated"
     return result
 
 

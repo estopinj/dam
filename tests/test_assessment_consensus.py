@@ -40,23 +40,25 @@ def test_two_opposite_ordinal_answers_are_debated():
     assert result["criteria"][0]["debated"] is True
 
 
-def test_adjacent_ordinal_answers_get_partial_credit():
+def test_adjacent_ordinal_answers_are_below_the_bar():
     # Adjacent levels have similarity 0.5, so best-supported agreement is (1 + 0.5) / 2 = 0.75.
     votes = [vote(3, IID="Required"), vote(3, IID="Recommended")]
-    assert status_of(votes)["status"] == "consensus"
+    assert status_of(votes)["status"] == "debated"
 
 
-def test_two_thirds_of_assessors_agreeing_is_consensus():
+def test_criterion_agreement_bar_is_85_percent():
     votes = [vote(3, IID="Required"), vote(3, IID="Required"), vote(3, IID="Relaxes assumption")]
     crit = status_of(votes)["criteria"][0]
     assert crit["agreement"] == pytest.approx(2 / 3, abs=1e-3)
-    assert crit["debated"] is False
+    assert crit["debated"] is True
+    votes = [vote(5, IID="Required"), vote(5, IID="Required"), vote(1, IID="Relaxes assumption")]
+    assert status_of(votes)["criteria"][0]["debated"] is False
 
 
 def test_confidence_weights_the_agreement():
-    # 1 confident vote vs 1 unsure vote on opposite answers: 5/(5+1) = 0.83 -> agreement
+    # 1 confident vote vs 1 unsure vote on opposite answers: 5/(5+1) = 0.83, still below the bar
     votes = [vote(5, Language="R"), vote(1, Language="Python")]
-    assert status_of(votes)["status"] == "consensus"
+    assert status_of(votes)["status"] == "debated"
     assert ac.consensus_value(votes, "Language") == ["R"]
 
 
@@ -70,12 +72,25 @@ def test_non_level_ordinal_answers_only_match_themselves():
     assert ac.similarity("IID", ["Inapplicable"], ["Inapplicable"]) == 1.0
 
 
+def test_legacy_multiple_values_on_ordinal_criteria():
+    # Several levels count as the most permissive one; duplicates and non-level values are ignored.
+    assert ac.similarity("IID", ["Required", "Recommended"], ["Recommended"]) == 1.0
+    assert ac.similarity("IID", ["Required", "Recommended"], ["Required"]) == 0.5
+    assert ac.similarity("IID", ["Required", "Recommended"], ["Required", "Recommended"]) == 1.0
+    assert ac.similarity("IID", ["Recommended", "Recommended"], ["Recommended"]) == 1.0
+    assert ac.similarity("IID", ["Recommended", "Inapplicable"], ["Recommended"]) == 1.0
+    assert ac.similarity("IID", ["Required", "Recommended"], ["Relaxes assumption"]) == 0.5
+
+
 def test_share_of_criteria_decides_method_status():
     agree = dict(Objective="Detection", Language="R", Usage="a")
     votes = [vote(3, IID="Required", **agree), vote(3, IID="Relaxes assumption", **agree)]
     result = status_of(votes)
     assert (result["agreeing"], result["evaluated"]) == (3, 4)
-    assert result["status"] == "consensus"  # 3/4 >= 2/3
+    assert result["status"] == "debated"  # 3/4 < 85%
+    more = dict(agree, Faithfulness="Required", Type="x", Estimand="y", Usage="a", **{"Number of variables": "z"}, **{"Exposure type": "w"})
+    votes = [vote(3, IID="Required", **more), vote(3, IID="Relaxes assumption", **more)]
+    assert status_of(votes)["status"] == "consensus"  # 8/9 >= 85%
 
 
 def test_published_value_prefers_current_value_on_tie():
@@ -112,3 +127,20 @@ def test_ordinal_levels_match_issue_template():
         assert entry is not None, f"{label} missing from CRITERIA"
         assert entry[1] == "ordinal"
         assert entry[2] == [o for o in block["attributes"]["options"] if o != "Inapplicable"]
+
+
+def test_minimal_ts_length_legacy_multiple_values_use_most_permissive_level():
+    legacy = ["Handles ≤ 10", "≥ 10", "≥ 100"]
+    assert ac.similarity("Minimal TS length", legacy, ["Handles ≤ 10"]) == 1.0
+    assert ac.similarity("Minimal TS length", legacy, ["≥ 100"]) == 0.0
+    assert ac.similarity("Minimal TS length", ["≥ 10", "≥ 100"], ["≥ 10"]) == 1.0
+
+
+def test_diverging_assessors_published_value():
+    # Higher confidence wins.
+    votes = [vote(2, Language="R"), vote(4, Language="Python")]
+    assert ac.compute_published(votes, {"Language": "R"})["Language"] == "Python"
+    # Same confidence: the currently published value is kept, else the earliest vote.
+    votes = [vote(3, Language="R"), vote(3, Language="Python")]
+    assert ac.compute_published(votes, {"Language": "Python"})["Language"] == "Python"
+    assert ac.compute_published(votes)["Language"] == "R"
