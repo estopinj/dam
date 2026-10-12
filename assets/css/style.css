@@ -493,7 +493,9 @@
   color: #555;
 }
 .label.assess-status-complete,
-.label.doc-status-online {
+.label.doc-status-reviewed,
+.label.gp-status-reviewed,
+.label.coverage-status-online {
   background-color: #d4edda;
   color: #155724;
 }
