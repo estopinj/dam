@@ -112,21 +112,23 @@ layout: default
 
 {% if consensus and consensus.criteria.size > 0 %}
 <details class="assessment-breakdown" id="assessment-breakdown">
-  <summary>Assessment agreement: {{ consensus.agreeing }} of {{ consensus.evaluated }} criteria with &ge; 80% agreement; Consensus requires 20 of 25 criteria when all are compared</summary>
-  <p><small>Agreement is confidence-weighted; similarity scores are squared so partial matches count less. ⚠️ marks debated criteria (agreement &lt; 80%). See <a href="{{ site.baseurl }}/contributing/#assessment-status">how the status is computed</a>.</small></p>
+  <summary>Method assessment agreement: {{ consensus.agreeing }}/{{ consensus.evaluated }} criteria; Consensus requires {{ consensus.required_criteria }}/{{ consensus.evaluated }} (method agreement threshold: {{ consensus.method_threshold }}%)</summary>
+  <p>
+    {% if consensus.status != "single" %}<a class="label consensus-status-{{ consensus.status }}" href="#assessment-breakdown">{{ consensus.status | capitalize }} ({{ consensus.assessors }} assessors)</a>{% endif %}
+  </p>
+  <p><small>Per-criterion agreement score is confidence-weighted (criterion agreement threshold: {{ consensus.criterion_threshold }}%). See <a href="{{ site.baseurl }}/contributing/#assessment-status">how the status is computed</a>.</small></p>
   {% if consensus.assessor_names.size > 0 %}<p><small>Assessors: {{ consensus.assessor_names | join: ", " | escape }}</small></p>{% endif %}
   <table>
-    <thead><tr><th>Criterion</th><th>Agreement</th><th>Answers (assessor, confidence)</th></tr></thead>
+    <thead>
+      <tr><th rowspan="2">Criterion</th><th rowspan="2">Agreement</th><th colspan="{{ consensus.voters.size }}">Answers</th></tr>
+      <tr>{% for voter in consensus.voters %}<th>{{ voter.name | escape }}{% if voter.confidence %} ({{ voter.confidence }}/5){% endif %}</th>{% endfor %}</tr>
+    </thead>
     <tbody>
     {% for criterion in consensus.criteria %}
       <tr>
         <td>{{ criterion.label }}</td>
         <td>{% if criterion.debated %}⚠️ Debated{% else %}✅ Agreed{% endif %} ({{ criterion.agreement | times: 100 | round }}%)</td>
-        <td>
-          {% for answer in criterion.answers %}
-            <code>{{ answer.value | escape }}</code> &mdash; {{ answer.assessor | escape }}{% if answer.confidence %}, {{ answer.confidence }}/5{% endif %}{% unless forloop.last %}<br>{% endunless %}
-          {% endfor %}
-        </td>
+        {% for value in criterion.values %}<td>{% if value != "" %}<code>{{ value | escape }}</code>{% endif %}</td>{% endfor %}
       </tr>
     {% endfor %}
     </tbody>

@@ -33,6 +33,7 @@ Behavior:
   documentation page is never overwritten by this script.
 """
 import csv
+import hashlib
 import json
 import os
 import subprocess
@@ -194,8 +195,19 @@ def issue_answers(fields):
     return answers
 
 
+def author_key(name):
+    """Stable key of an author name (case/space-insensitive), so an anonymous
+    contribution can still replace the same author's earlier assessment
+    without storing the name."""
+    normalized = " ".join((name or "").casefold().split())
+    if normalized in ANONYMOUS_NAMES:
+        return None
+    return hashlib.sha256(normalized.encode("utf-8")).hexdigest()[:16]
+
+
 def build_vote(fields):
     return {
+        "author_key": author_key(fields.get("author")),
         "issue": int(os.environ.get("ISSUE_NUMBER") or 0) or None,
         "assessor": contributor_name(fields),
         "date": (os.environ.get("ISSUE_DATE") or "")[:10],
@@ -217,13 +229,23 @@ def baseline_vote(row):
     }
 
 
+ANONYMOUS_NAMES = {"", "anonymous", "unknown"}
+
+
+def vote_key(vote):
+    return vote.get("author_key") or author_key(vote.get("assessor"))
+
+
 def upsert_vote(votes, vote):
-    """Replace the vote coming from the same issue (issue edits), else append."""
-    if vote["issue"] is not None:
-        for i, existing in enumerate(votes):
-            if existing.get("issue") == vote["issue"]:
-                votes[i] = vote
-                return votes
+    """One vote per assessor and method: a new submission replaces the vote from
+    the same issue (issue edits) or from the same author (matched on the author
+    key, which also works for anonymous contributions and legacy named votes)."""
+    key = vote_key(vote)
+    for i, existing in enumerate(votes):
+        same_issue = vote["issue"] is not None and existing.get("issue") == vote["issue"]
+        if same_issue or (key is not None and vote_key(existing) == key):
+            votes[i] = vote
+            return votes
     votes.append(vote)
     return votes
 

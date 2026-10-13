@@ -162,3 +162,27 @@ def test_exposure_all_is_union_of_types():
     assert similarity("Exposure type", ["All"], five) == 1.0
     assert similarity("Exposure type", ["All"], ["Binary"]) == (1 / 5) ** 2
     assert similarity("Exposure type", ["All"], ["Inapplicable"]) == 0.0
+
+
+def test_same_author_replaces_previous_vote_even_if_anonymous():
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
+    from process_method_assessment_issue import upsert_vote, author_key
+    def v(shown, real, issue, conf):
+        return {"issue": issue, "assessor": shown, "author_key": author_key(real), "confidence": conf, "answers": {}}
+    legacy = {"issue": None, "baseline": True, "assessor": "Jean Dupont", "confidence": 2, "answers": {}}
+    votes = [legacy, v("Anonymous", "Marie Curie", 2, 3)]
+    votes = upsert_vote(votes, v("Jean Dupont", " jean  dupont ", 5, 4))
+    assert [(x["issue"], x["confidence"]) for x in votes] == [(5, 4), (2, 3)]
+    votes = upsert_vote(votes, v("Anonymous", "marie curie", 6, 5))
+    assert [(x["issue"], x["confidence"]) for x in votes] == [(5, 4), (6, 5)]
+    assert "Marie" not in str(votes)
+    votes = upsert_vote(votes, v("Anonymous", "", 7, 3))
+    assert len(votes) == 3
+
+
+def test_status_exposes_per_assessor_values():
+    votes = [vote(3, IID="Required"), vote(5, IID="Recommended")]
+    status = ac.method_status(votes)
+    assert len(status["voters"]) == 2
+    crit = next(c for c in status["criteria"] if c["column"] == "IID")
+    assert crit["values"] == ["Required", "Recommended"]

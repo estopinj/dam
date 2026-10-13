@@ -21,18 +21,10 @@ body:
     id: author
     attributes:
       label: Page’s Author
-      description: Leave empty and tick the box below if you prefer to stay anonymous.
+      description: "Your name. If left empty, the contribution is considered anonymous (credited as Anonymous)."
       placeholder: ex. Jean Dupont
     validations:
       required: false
-  - type: checkboxes
-    id: anonymous
-    attributes:
-      label: "\u200B"
-      options:
-        - label: Anonymous contribution
-          required: false
-
 
   - type: dropdown
     id: already_in_navidam

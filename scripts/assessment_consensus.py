@@ -36,6 +36,7 @@ an agreement of >= 80%; ``debated`` otherwise. There are 25 criteria, so when
 all are compared, 20 agreed criteria meet the threshold.
 """
 import json
+import math
 import re
 import sys
 from pathlib import Path
@@ -215,6 +216,10 @@ def method_status(votes):
         "evaluated": 0,
         "agreement_share": None,
         "assessor_names": list(dict.fromkeys(v.get("assessor") or "Anonymous" for v in votes)),
+        "voters": [{"name": v.get("assessor") or "Anonymous", "confidence": v.get("confidence")} for v in votes],
+        "required_criteria": 0,
+        "method_threshold": round(METHOD_THRESHOLD * 100),
+        "criterion_threshold": round(CRITERION_THRESHOLD * 100),
         "criteria": [],
     }
     if confidences:
@@ -235,6 +240,7 @@ def method_status(votes):
             "label": label,
             "agreement": round(agreement, 3),
             "debated": not agrees,
+            "values": [", ".join(v.get("answers", {}).get(column) or []) for v in votes],
             "answers": [
                 {"assessor": v.get("assessor") or "Anonymous",
                  "confidence": v.get("confidence"),
@@ -244,6 +250,7 @@ def method_status(votes):
         })
 
     if result["evaluated"]:
+        result["required_criteria"] = math.ceil(METHOD_THRESHOLD * result["evaluated"] - EPSILON)
         share = result["agreeing"] / result["evaluated"]
         result["agreement_share"] = round(share, 3)
         result["status"] = "consensus" if share >= METHOD_THRESHOLD - EPSILON else "debated"

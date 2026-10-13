@@ -23,10 +23,10 @@ body:
     id: author
     attributes:
       label: Page’s Author
-      description: Leave empty and tick the box below if you prefer to stay anonymous.
+      description: "Your name (or a consistent pseudonym). Tick the box below to keep it off the website. Only one assessment per method and author is kept: submitting again under the same name replaces your previous assessment of that method. Note that this issue itself is public on GitHub."
       placeholder: ex. Jean Dupont
     validations:
-      required: false
+      required: true
   - type: checkboxes
     id: anonymous
     attributes:

@@ -47,7 +47,7 @@ Use the **Method assessment** issue template for both cases. Assessments positio
 - Use the [criteria pages](https://estopinj.github.io/dam/criteria) to check definitions before answering.
 - Add rationale or comments at the end of the form to justify choices — this greatly helps review.
 
-What happens next: a pull request is opened automatically. New rows are added directly; revisions are listed as old → new suggestions to accept or reject. A maintainer reviews and may ask for clarification in the issue thread. Nothing is published before the pull request is merged. If you edit your issue, your assessment is updated rather than counted twice.
+What happens next: a pull request is opened automatically. New rows are added directly; revisions are listed as old → new suggestions to accept or reject. A maintainer reviews and may ask for clarification in the issue thread. Nothing is published before the pull request is merged. If you edit your issue, your assessment is updated rather than counted twice. Likewise, only **one assessment per method and author name** is kept: submitting again under the same name (case-insensitive) replaces your previous assessment of that method. The author field is required: tick *Anonymous contribution* to keep your name off the website (it then appears as *Anonymous*). Only a short non-reversible key of the name is stored, so an anonymous re-submission under the same name still replaces your earlier assessment. The GitHub issue itself is public and keeps what you typed, so use a consistent pseudonym if you want to stay unidentifiable.
 
 <details markdown="1">
 <summary><strong>How assessments are combined: Consensus / Debated status</strong></summary>
@@ -96,6 +96,7 @@ Use the **Method documentation** issue template for both cases. Documentation fi
 
 - **New page:** choose `Is the method already included in NaviDAM? > No`. A page is created from the submission.
 - **Completion:** choose `Yes`, give the exact page title, and fill in only the sections to add. Placeholders are replaced on first contribution; later contributions are appended.
+- **Author:** the name is optional. If you leave it empty, the contribution is considered anonymous and credited as *Anonymous*.
 
 💡 **Tips for good documentation:**
 - Follow the standard page structure: *Description & principle*, *Major variants*, *Reference articles* (method + research applications), *Implementation* (Python / R), and the *Assessment table*.
