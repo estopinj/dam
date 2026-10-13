@@ -199,6 +199,98 @@
           "Technical but well documented"
         ]
       }
+    },
+    {
+      "issue": 80,
+      "assessor": "3rd assessor",
+      "date": "2026-10-13",
+      "confidence": 4,
+      "answers": {
+        "Objective": [
+          "Effect estimation",
+          "Significance and robustness tests"
+        ],
+        "Estimand": [
+          "CATE",
+          "Mediation effects"
+        ],
+        "Type": [
+          "Spatial only (cross-sectional)",
+          "Time-series (one sample)",
+          "Panel data (many samples)"
+        ],
+        "Minimal TS length": [
+          "Handles ≤ 10"
+        ],
+        "Handles few samples": [
+          "Yes ≤ 10"
+        ],
+        "Handles huge datasets (n)": [
+          "Most do"
+        ],
+        "Handles missing data": [
+          "Partially"
+        ],
+        "RS-data proven": [
+          "Few applications"
+        ],
+        "Fonctional form": [
+          "Inapplicable"
+        ],
+        "No unobserved confounders": [
+          "Required"
+        ],
+        "No interference": [
+          "Recommended"
+        ],
+        "Well-defined treatments": [
+          "Required"
+        ],
+        "Common support (positivity)": [
+          "Recommended"
+        ],
+        "Causal Markov Condition": [
+          "Inapplicable"
+        ],
+        "Faithfulness": [
+          "Inapplicable"
+        ],
+        "IID": [
+          "Required"
+        ],
+        "Model specific": [
+          "No M-O confounding"
+        ],
+        "Requires explicit processes": [
+          "Optional"
+        ],
+        "Exposure type": [
+          "All"
+        ],
+        "Number of variables": [
+          "Multivariate",
+          "High-dimensional (p≫n)"
+        ],
+        "Propaguates uncertainty": [
+          "Model-specific tools"
+        ],
+        "Handles lag effects": [
+          "Possible"
+        ],
+        "Parametric nature": [
+          "Parametric",
+          "Semi-parametric",
+          "Non-parametric",
+          "Rule-based"
+        ],
+        "Language": [
+          "R",
+          "Python"
+        ],
+        "Usage": [
+          "Technical but well documented"
+        ]
+      }
     }
   ]
 }
