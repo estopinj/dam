@@ -30,7 +30,8 @@ Method status
 -------------
 One vote: ``single`` (the confidence score is displayed). Two or more votes:
 ``consensus`` when at least 85% of the criteria answered by >= 2 assessors reach
-an agreement of >= 85%, ``debated`` otherwise.
+an agreement of >= 85%; ``debated`` otherwise. The method-level threshold is
+75% of the compared criteria.
 """
 import json
 import re
@@ -44,7 +45,7 @@ STATUS_FILE = PROJECT_ROOT / "_data/assessment_status.json"
 # A criterion is agreed from this agreement; a method is Consensus from this
 # share of agreed criteria.
 CRITERION_THRESHOLD = 0.85
-METHOD_THRESHOLD = 0.85
+METHOD_THRESHOLD = 0.75
 EPSILON = 1e-9
 DEFAULT_CONFIDENCE = 3
 MAX_CONFIDENCE = 5

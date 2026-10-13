@@ -87,7 +87,7 @@ def test_share_of_criteria_decides_method_status():
     votes = [vote(3, IID="Required", **agree), vote(3, IID="Relaxes assumption", **agree)]
     result = status_of(votes)
     assert (result["agreeing"], result["evaluated"]) == (3, 4)
-    assert result["status"] == "debated"  # 3/4 < 85%
+    assert result["status"] == "consensus"  # 3/4 >= 75%
     more = dict(agree, Faithfulness="Required", Type="x", Estimand="y", Usage="a", **{"Number of variables": "z"}, **{"Exposure type": "w"})
     votes = [vote(3, IID="Required", **more), vote(3, IID="Relaxes assumption", **more)]
     assert status_of(votes)["status"] == "consensus"  # 8/9 >= 85%
