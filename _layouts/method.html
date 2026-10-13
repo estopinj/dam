@@ -52,7 +52,7 @@ layout: default
       {% if consensus.status == "single" %}
         <a class="label confidence-score-{{ consensus.confidence | default: 3 }}" href="#assessment-breakdown" title="Single assessment: confidence score given by the assessor">Single assessment{% if consensus.confidence %} · confidence {{ consensus.confidence }}/5{% endif %}</a>
       {% else %}
-        <a class="label consensus-status-{{ consensus.status }}" href="#assessment-breakdown" title="{{ consensus.agreeing }} of {{ consensus.evaluated }} criteria reach &ge; 85% agreement; Consensus requires at least 75% of criteria">{{ consensus.status | capitalize }} ({{ consensus.assessors }} assessors)</a>
+        <a class="label consensus-status-{{ consensus.status }}" href="#assessment-breakdown" title="{{ consensus.agreeing }} of {{ consensus.evaluated }} criteria reach &ge; 80% agreement; Consensus requires at least 80% of compared criteria">{{ consensus.status | capitalize }} ({{ consensus.assessors }} assessors)</a>
       {% endif %}
     {% elsif meta.confidence != "" %}
       <span class="label confidence-score-{{ meta.confidence | slugify }}">Confidence score: {{ meta.confidence }}</span>
@@ -112,8 +112,8 @@ layout: default
 
 {% if consensus and consensus.criteria.size > 0 %}
 <details class="assessment-breakdown" id="assessment-breakdown">
-  <summary>Assessment agreement: {{ consensus.agreeing }} of {{ consensus.evaluated }} criteria with &ge; 85% agreement; Consensus requires at least 75%</summary>
-  <p><small>Agreement is confidence-weighted and, for ordinal criteria, distance-based. ⚠️ marks debated criteria (agreement &lt; 85%). See <a href="{{ site.baseurl }}/contributing/#assessment-status">how the status is computed</a>.</small></p>
+  <summary>Assessment agreement: {{ consensus.agreeing }} of {{ consensus.evaluated }} criteria with &ge; 80% agreement; Consensus requires 20 of 25 criteria when all are compared</summary>
+  <p><small>Agreement is confidence-weighted; similarity scores are squared so partial matches count less. ⚠️ marks debated criteria (agreement &lt; 80%). See <a href="{{ site.baseurl }}/contributing/#assessment-status">how the status is computed</a>.</small></p>
   {% if consensus.assessor_names.size > 0 %}<p><small>Assessors: {{ consensus.assessor_names | join: ", " | escape }}</small></p>{% endif %}
   <table>
     <thead><tr><th>Criterion</th><th>Agreement</th><th>Answers (assessor, confidence)</th></tr></thead>
