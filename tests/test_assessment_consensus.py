@@ -41,12 +41,14 @@ def test_two_opposite_ordinal_answers_are_debated():
 
 
 def test_adjacent_ordinal_answers_are_below_the_bar():
-    # Adjacent levels have similarity 0.5, so best-supported agreement is (1 + 0.5) / 2 = 0.75.
+    # Squared similarity makes adjacent levels score 0.25, giving agreement 62.5%.
     votes = [vote(3, IID="Required"), vote(3, IID="Recommended")]
+    assert ac.similarity("IID", ["Required"], ["Recommended"]) == 0.25
+    assert status_of(votes)["criteria"][0]["agreement"] == pytest.approx(0.625)
     assert status_of(votes)["status"] == "debated"
 
 
-def test_criterion_agreement_bar_is_85_percent():
+def test_criterion_agreement_bar_is_80_percent():
     votes = [vote(3, IID="Required"), vote(3, IID="Required"), vote(3, IID="Relaxes assumption")]
     crit = status_of(votes)["criteria"][0]
     assert crit["agreement"] == pytest.approx(2 / 3, abs=1e-3)
@@ -56,14 +58,14 @@ def test_criterion_agreement_bar_is_85_percent():
 
 
 def test_confidence_weights_the_agreement():
-    # 1 confident vote vs 1 unsure vote on opposite answers: 5/(5+1) = 0.83, still below the bar
+    # 1 confident vote vs 1 unsure vote on opposite answers: 5/(5+1) = 0.83, above the 80% bar
     votes = [vote(5, Language="R"), vote(1, Language="Python")]
-    assert status_of(votes)["status"] == "debated"
+    assert status_of(votes)["status"] == "consensus"
     assert ac.consensus_value(votes, "Language") == ["R"]
 
 
 def test_multiple_choice_uses_jaccard():
-    assert ac.similarity("Language", ["R", "Python"], ["R"]) == 0.5
+    assert ac.similarity("Language", ["R", "Python"], ["R"]) == 0.25
     assert ac.similarity("Language", ["R"], ["Python"]) == 0.0
 
 
@@ -75,11 +77,11 @@ def test_non_level_ordinal_answers_only_match_themselves():
 def test_legacy_multiple_values_on_ordinal_criteria():
     # Several levels count as the most permissive one; duplicates and non-level values are ignored.
     assert ac.similarity("IID", ["Required", "Recommended"], ["Recommended"]) == 1.0
-    assert ac.similarity("IID", ["Required", "Recommended"], ["Required"]) == 0.5
+    assert ac.similarity("IID", ["Required", "Recommended"], ["Required"]) == 0.25
     assert ac.similarity("IID", ["Required", "Recommended"], ["Required", "Recommended"]) == 1.0
     assert ac.similarity("IID", ["Recommended", "Recommended"], ["Recommended"]) == 1.0
     assert ac.similarity("IID", ["Recommended", "Inapplicable"], ["Recommended"]) == 1.0
-    assert ac.similarity("IID", ["Required", "Recommended"], ["Relaxes assumption"]) == 0.5
+    assert ac.similarity("IID", ["Required", "Recommended"], ["Relaxes assumption"]) == 0.25
 
 
 def test_share_of_criteria_decides_method_status():
@@ -87,10 +89,16 @@ def test_share_of_criteria_decides_method_status():
     votes = [vote(3, IID="Required", **agree), vote(3, IID="Relaxes assumption", **agree)]
     result = status_of(votes)
     assert (result["agreeing"], result["evaluated"]) == (3, 4)
-    assert result["status"] == "consensus"  # 3/4 >= 75%
+    assert result["status"] == "debated"  # 3/4 < 80%
+    exactly_at_threshold = dict(agree, Type="Spatial only")
+    votes = [
+        vote(3, IID="Required", **exactly_at_threshold),
+        vote(3, IID="Relaxes assumption", **exactly_at_threshold),
+    ]
+    assert status_of(votes)["status"] == "consensus"  # 4/5 == 80%
     more = dict(agree, Faithfulness="Required", Type="x", Estimand="y", Usage="a", **{"Number of variables": "z"}, **{"Exposure type": "w"})
     votes = [vote(3, IID="Required", **more), vote(3, IID="Relaxes assumption", **more)]
-    assert status_of(votes)["status"] == "consensus"  # 8/9 >= 85%
+    assert status_of(votes)["status"] == "consensus"  # 8/9 >= 80%
 
 
 def test_published_value_prefers_current_value_on_tie():
