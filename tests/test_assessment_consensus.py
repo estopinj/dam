@@ -58,9 +58,11 @@ def test_criterion_agreement_bar_is_80_percent():
 
 
 def test_confidence_weights_the_agreement():
-    # 1 confident vote vs 1 unsure vote on opposite answers: 5/(5+1) = 0.83, above the 80% bar
+    # Softened weights: 5/5 -> 1; 1/5 -> sqrt(0.2), so support remains below 80%.
     votes = [vote(5, Language="R"), vote(1, Language="Python")]
-    assert status_of(votes)["status"] == "consensus"
+    assert ac.weight(votes[0]) == 1
+    assert ac.weight(votes[1]) == pytest.approx(0.2 ** 0.5)
+    assert status_of(votes)["status"] == "debated"
     assert ac.consensus_value(votes, "Language") == ["R"]
 
 

@@ -13,9 +13,9 @@ generated, gitignored build artifact read by ``_layouts/method.html``).
 
 Agreement of one criterion
 --------------------------
-Each vote i has a weight w_i = confidence / 5 (3 / 5 when no confidence is
-known, e.g. a baseline vote seeded from a pre-existing assessment) and an
-answer. A similarity s(a, b) in [0, 1] compares two answers:
+Each vote i has a softened weight w_i = sqrt(confidence / 5) (sqrt(3 / 5)
+when no confidence is known, e.g. a baseline vote seeded from a pre-existing
+assessment) and an answer. A similarity s(a, b) in [0, 1] compares two answers:
 
 - ordinal criteria: the square of 1 - |level(a) - level(b)| / (n_levels - 1)
   (distance-based); non-level options such as "Inapplicable" only match
@@ -23,7 +23,7 @@ answer. A similarity s(a, b) in [0, 1] compares two answers:
 - multiple-choice criteria: the square of Jaccard similarity of selected
   options.
 
-The agreement is the weighted similarity-share supported by the best-supported
+The agreement is the softened-confidence-weighted similarity share supported by the best-supported
 answer: max_i  sum_j w_j * s(a_i, a_j) / sum_j w_j. With exact-match answers
 it is the weighted share of assessors giving the modal answer, so ">= 80% of
 the assessors agree" reads literally.
@@ -114,7 +114,8 @@ def parse_confidence(value):
 
 
 def weight(vote):
-    return (vote.get("confidence") or DEFAULT_CONFIDENCE) / MAX_CONFIDENCE
+    confidence = (vote.get("confidence") or DEFAULT_CONFIDENCE) / MAX_CONFIDENCE
+    return confidence ** 0.5
 
 
 def similarity(column, a, b):
