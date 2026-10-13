@@ -60,8 +60,8 @@ Several people can assess the same method. Each method page then shows a status 
 | Badge | Meaning |
 |-------|---------|
 | **Single assessment** · confidence *n*/5 | Only one assessment exists. The badge shows the confidence score given by the assessor (1 = least, 5 = most confident). |
-| **Consensus** (*k* assessors) | At least **2/3 of the compared criteria** reach an agreement of at least 2/3 between assessors. |
-| **Debated** (*k* assessors) | Fewer than 2/3 of the compared criteria reach that agreement: assessors give contrasting assessments. |
+| **Consensus** (*k* assessors) | At least **75% of the compared criteria** reach an agreement of at least 85% between assessors. |
+| **Debated** (*k* assessors) | Fewer than 75% of the compared criteria reach that agreement: assessors give contrasting assessments. |
 
 Two assessors are enough to get a Consensus or Debated status. There is no intermediate status. Methods assessed before this system existed show the confidence score of their initial assessment (2/5 for AI-assisted assessments, 3/5 for assessments made by contributors).
 
@@ -70,16 +70,18 @@ Two assessors are enough to get a Consensus or Debated status. There is no inter
 1. **One vote per assessor.** Every submitted assessment issue is one vote, anonymous ones included. Votes are stored in `_data/assessment_votes/`.
 2. **Confidence is the weight.** A vote has weight *confidence ÷ 5* (so 5/5 counts fully and 1/5 counts 20%).
 3. **Similarity of two answers on a criterion** is a number between 0 and 1:
-   - *Ordinal criteria* (e.g. IID, Handles lag effects, Minimal TS length) use a **distance-based score**: `1 − distance ÷ (number of levels − 1)`. Neighbouring options such as `Required` vs `Recommended` still count as 0.5, while the extremes `Required` vs `Relaxes assumption` count as 0. `Inapplicable` only matches itself.
+   - *Ordinal criteria* (e.g. IID, Handles lag effects, Minimal TS length) use a **distance-based score**: `1 − distance ÷ (number of levels − 1)`. Neighbouring options such as `Required` vs `Recommended` still count as 0.5, while the extremes `Required` vs `Relaxes assumption` count as 0. `Inapplicable` only matches itself. Older assessments that ticked several options on an ordinal criterion count as the most permissive one.
    - *Multiple-choice criteria* (e.g. Objective, Language) use the **overlap of the selected options** (shared options ÷ all selected options).
-4. **Agreement of a criterion.** Each given answer is tested as the "reference": every assessor supports it in proportion to the similarity of their own answer to it (fully if identical, partly if close, not at all if opposite), multiplied by their weight. The reference with the highest support, divided by the total weight of all assessors, gives the agreement. When answers are identical or totally different, this is simply the weighted share of assessors giving the most common answer, so *"at least 2/3 of the assessors agree"* is read literally. A criterion is **agreed** when this is **≥ 2/3**, and **debated** otherwise. Only criteria answered by at least two assessors are compared.
-5. **Method status** is the share of compared criteria that are agreed: **≥ 2/3 → Consensus**, **< 2/3 → Debated**.
+4. **Agreement of a criterion.** Each given answer is tested as the "reference": every assessor supports it in proportion to the similarity of their own answer to it (fully if identical, partly if close, not at all if opposite), multiplied by their weight. The reference with the highest support, divided by the total weight of all assessors, gives the agreement. When answers are identical or totally different, this is simply the weighted share of assessors giving the most common answer, so *"at least 85% of the assessors agree"* is read literally. A criterion is **agreed** when this is **≥ 85%**, and **debated** otherwise. Only criteria answered by at least two assessors are compared.
+5. **Method status** is the share of compared criteria that are agreed: **≥ 75% → Consensus**, **< 75% → Debated**. Each criterion still needs at least **85% agreement** to count as agreed.
 
-*Examples.* Three assessors answer IID with `Required` (confidence 5), `Required` (4) and `Relaxes assumption` (2): the weights are 1, 0.8 and 0.4, so agreement is (1 + 0.8) ÷ 2.2 ≈ 82% → agreed. Two equally confident assessors answering `Required` and `Relaxes assumption` reach 50% → debated, whereas `Required` and `Recommended` reach 75% → agreed.
+*Examples.* Three assessors answer IID with `Required` (confidence 5), `Required` (4) and `Relaxes assumption` (2): the weights are 1, 0.8 and 0.4, so agreement is (1 + 0.8) ÷ 2.2 ≈ 82% → debated (below 85%). Two equally confident assessors answering `Required` and `Relaxes assumption` reach 50%, and `Required` and `Recommended` 75% → both debated. With confidences 5, 5 and 1 for `Required`, `Required` and `Relaxes assumption`, agreement is 10 ÷ 11 ≈ 91% → agreed.
 
 #### Published assessment
 
-The values displayed in the assessment table are, for each criterion, the **confidence-weighted majority** across assessors (ties keep the currently published value), and the displayed confidence score is the average of the assessors' scores. A submission that changes the published values is turned into a pull request listing every old → new value, which a maintainer reviews before anything changes on the website. A submission that only adds an agreeing or disagreeing opinion is still recorded (it updates the status) through a pull request.
+The values displayed in the assessment table are, for each criterion, the **confidence-weighted majority** across assessors (on an exact tie, e.g. two equally confident but diverging assessors, the currently published value is kept), and the displayed confidence score is the average of the assessors' scores. In practice, when two assessors diverge, the answer of the **more confident** one is retained; with **equal confidence** the answer already published stays (the new assessment is still recorded and the status becomes Debated), and if neither is the published one the earliest assessment wins. For criteria where several options can be ticked, one of the actual answers is retained, never a merge of both.
+
+The method page header lists **all assessors** (legacy ones included), and the *Assessment agreement* panel shows each assessor's answer per criterion. Contributing a revision therefore never removes an earlier assessor. A submission that changes the published values is turned into a pull request listing every old → new value, which a maintainer reviews before anything changes on the website. A submission that only adds an agreeing or disagreeing opinion is still recorded (it updates the status) through a pull request.
 
 #### Anonymity
 

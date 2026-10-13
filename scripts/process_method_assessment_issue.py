@@ -22,6 +22,8 @@ Behavior:
   (Category/Sub-category are never touched), and the PR body lists each
   suggested change (old -> new) for a maintainer to accept or reject via
   normal review. If neither the row nor the votes change, no PR is opened.
+- The Assessor cell of the row is never replaced: the method page lists every
+  assessor found in the votes.
 - Every issue is also stored as a vote in _data/assessment_votes/ (see
   assessment_consensus.py), from which the Consensus / Debated / confidence
   status badge of the method page is computed. The first revision of a
