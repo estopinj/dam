@@ -118,9 +118,24 @@ def weight(vote):
     return confidence ** 0.5
 
 
+# "All" stands for the union of the listed options of that criterion.
+ALL_EXPANSION = {
+    "Exposure type": ["Binary", "Categorical", "Continuous / Time-varying",
+                      "Compositional", "Multivariate"],
+}
+
+
+def expand_all(column, answer):
+    if "All" in answer and column in ALL_EXPANSION:
+        return list(dict.fromkeys([v for v in answer if v != "All"] + ALL_EXPANSION[column]))
+    return answer
+
+
 def similarity(column, a, b):
     """Similarity in [0, 1] between two answers (lists of strings)."""
     _label, kind, levels = CRITERIA[column]
+    if kind == "multiple":
+        a, b = expand_all(column, a), expand_all(column, b)
     if set(a) == set(b):
         return 1.0
     if kind == "ordinal":

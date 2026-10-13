@@ -154,3 +154,11 @@ def test_diverging_assessors_published_value():
     votes = [vote(3, Language="R"), vote(3, Language="Python")]
     assert ac.compute_published(votes, {"Language": "Python"})["Language"] == "Python"
     assert ac.compute_published(votes)["Language"] == "R"
+
+
+def test_exposure_all_is_union_of_types():
+    from assessment_consensus import similarity
+    five = ["Binary", "Categorical", "Continuous / Time-varying", "Compositional", "Multivariate"]
+    assert similarity("Exposure type", ["All"], five) == 1.0
+    assert similarity("Exposure type", ["All"], ["Binary"]) == (1 / 5) ** 2
+    assert similarity("Exposure type", ["All"], ["Inapplicable"]) == 0.0

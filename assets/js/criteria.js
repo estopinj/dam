@@ -73,6 +73,16 @@ export const compositeOptions = {
 };
 
 
+// A method value that stands for the union of other options of the same criterion.
+// Methods tagged with it are matched as if they had all constituents; selecting it
+// in the filter requires all constituents.
+export const impliedOptions = {
+  "Exposure type": {
+    "All": ["Binary", "Categorical", "Continuous / Time-varying", "Compositional", "Multivariate"]
+  }
+};
+
+
 export const hideCompositeConstituents = {
   "Handles huge datasets (n)": {
     "Necessary": true

@@ -1,4 +1,12 @@
-import { criteria, criteriaOptionLabelMap, compositeOptions, ordinalCriteriaOrder, hideCompositeConstituents, multipleAllowedCriteria } from './criteria.js';
+import { criteria, criteriaOptionLabelMap, compositeOptions, impliedOptions, ordinalCriteriaOrder, hideCompositeConstituents, multipleAllowedCriteria } from './criteria.js';
+
+function expandImplied(key, vals) {
+  const implied = impliedOptions[key];
+  if (!implied) return vals;
+  const out = new Set(vals);
+  vals.forEach(v => (implied[v] || []).forEach(c => out.add(c)));
+  return [...out];
+}
 console.log("Filter.js loaded!");
 
 const siteBaseurl = JSON.parse(document.getElementById('site-baseurl').textContent);
@@ -586,7 +594,7 @@ document.addEventListener('DOMContentLoaded', function() {
               });
               filtered = filtered.filter(m => {
                 if (!m[criterion.key]) return false;
-                const methodVals = m[criterion.key].split(",").map(x => x.trim());
+                const methodVals = expandImplied(criterion.key, m[criterion.key].split(",").map(x => x.trim()));
                 // accept if method has any included option or unknown/inapplicable
                 return methodVals.some(opt => included.has(opt) || opt === "Don't know" || opt === "Inapplicable");
               });
@@ -611,10 +619,14 @@ document.addEventListener('DOMContentLoaded', function() {
           }
 
           // 3. Default logic (non-composite, non-ordinal): union — accept methods that have ANY selected value
+          const implied = impliedOptions[criterion.key] || {};
           filtered = filtered.filter(m => {
             if (!m[criterion.key]) return false;
-            const methodVals = m[criterion.key].split(",").map(x => x.trim());
-            return methodVals.some(opt => selectedVals.includes(opt) || opt === "Don't know" || opt === "Inapplicable");
+            const methodVals = expandImplied(criterion.key, m[criterion.key].split(",").map(x => x.trim()));
+            return methodVals.some(opt => opt === "Don't know" || opt === "Inapplicable")
+              || selectedVals.some(sv => implied[sv]
+                ? implied[sv].every(c => methodVals.includes(c))
+                : methodVals.includes(sv));
           });
         }
     });
