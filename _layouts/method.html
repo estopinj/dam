@@ -120,12 +120,15 @@ layout: default
   {% if consensus.assessor_names.size > 0 %}<p><small>Assessors: {{ consensus.assessor_names | join: ", " | escape }}</small></p>{% endif %}
   <table>
     <thead>
-      <tr><th rowspan="2">Criterion</th><th rowspan="2">Agreement</th><th colspan="{{ consensus.voters.size }}">Answers</th></tr>
+      <tr><th rowspan="2">Category</th><th rowspan="2">Criterion</th><th rowspan="2">Agreement</th><th colspan="{{ consensus.voters.size }}">Answers</th></tr>
       <tr>{% for voter in consensus.voters %}<th>{{ voter.name | escape }}{% if voter.confidence %} ({{ voter.confidence }}/5){% endif %}</th>{% endfor %}</tr>
     </thead>
     <tbody>
+    {% assign last_category = "" %}
     {% for criterion in consensus.criteria %}
       <tr>
+        <td>{% if criterion.category != last_category %}<strong>{{ criterion.category }}</strong>{% endif %}</td>
+        {% assign last_category = criterion.category %}
         <td>{{ criterion.label }}</td>
         <td>{% if criterion.debated %}⚠️ Debated{% else %}✅ Agreed{% endif %} ({{ criterion.agreement | times: 100 | round }}%)</td>
         {% for value in criterion.values %}<td>{% if value != "" %}<code>{{ value | escape }}</code>{% endif %}</td>{% endfor %}
