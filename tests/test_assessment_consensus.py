@@ -87,11 +87,15 @@ def test_legacy_multiple_values_on_ordinal_criteria():
 
 
 def test_share_of_criteria_decides_method_status():
-    agree = dict(Objective="Detection", Language="R", Usage="a")
+    # Model specific is unticked in both votes: an agreed "None" answer.
+    agree = dict(Objective="Detection", Language="R", Usage="a", **{"Model specific": "None"})
     votes = [vote(3, IID="Required", **agree), vote(3, IID="Relaxes assumption", **agree)]
     result = status_of(votes)
-    assert (result["agreeing"], result["evaluated"]) == (3, 4)
-    assert result["status"] == "debated"  # 3/4 < 80%
+    assert (result["agreeing"], result["evaluated"]) == (4, 5)
+    assert result["status"] == "consensus"  # 4/5 == 80%
+    agree.update(Language="R")
+    votes = [vote(3, IID="Required", **agree), vote(3, IID="Relaxes assumption", Objective="Detection", Language="Python", Usage="b")]
+    assert status_of(votes)["status"] == "debated"
     exactly_at_threshold = dict(agree, Type="Spatial only")
     votes = [
         vote(3, IID="Required", **exactly_at_threshold),

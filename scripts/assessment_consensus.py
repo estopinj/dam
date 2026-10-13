@@ -95,6 +95,19 @@ CRITERIA = {
 }
 CONFIDENCE_COLUMN = "Confidence in assessment"
 
+CATEGORIES = {
+    **dict.fromkeys(["Objective"], "Outcome"),
+    **dict.fromkeys(["Estimand"], "Outcome"),
+    **dict.fromkeys(["Type", "Minimal TS length", "Handles few samples",
+                     "Handles huge datasets (n)", "Handles missing data", "RS-data proven"], "Data compatibility"),
+    **dict.fromkeys(["Requires explicit processes", "Exposure type", "Number of variables",
+                     "Propaguates uncertainty", "Handles lag effects", "Parametric nature"], "Model properties"),
+    **dict.fromkeys(["Language", "Usage"], "Implementation"),
+    **dict.fromkeys(["Fonctional form", "No unobserved confounders", "No interference",
+                     "Well-defined treatments", "Common support (positivity)", "Causal Markov Condition",
+                     "Faithfulness", "IID", "Model specific"], "Assumptions"),
+}
+
 # Criteria where ticking nothing is a valid answer ("no specific assumption").
 # It is stored in votes as the explicit value NONE and published as an empty cell.
 NONE_ALLOWED = {"Model specific"}
@@ -161,8 +174,17 @@ def similarity(column, a, b):
     return raw_similarity ** 2
 
 
+def vote_answer(vote, column):
+    """Answer of a vote for a criterion. An unticked "none allowed" criterion
+    counts as the explicit answer None, also in votes stored before that rule."""
+    answer = vote.get("answers", {}).get(column)
+    if not answer and column in NONE_ALLOWED:
+        return [NONE]
+    return answer or []
+
+
 def criterion_answers(votes, column):
-    return [(v, v["answers"][column]) for v in votes if v.get("answers", {}).get(column)]
+    return [(v, vote_answer(v, column)) for v in votes if vote_answer(v, column)]
 
 
 def best_supported(column, answered, prefer=None):
@@ -247,7 +269,8 @@ def method_status(votes):
             "label": label,
             "agreement": round(agreement, 3),
             "debated": not agrees,
-            "values": [", ".join(v.get("answers", {}).get(column) or []) for v in votes],
+            "category": CATEGORIES.get(column, ""),
+            "values": [", ".join(vote_answer(v, column)) for v in votes],
             "answers": [
                 {"assessor": v.get("assessor") or "Anonymous",
                  "confidence": v.get("confidence"),
