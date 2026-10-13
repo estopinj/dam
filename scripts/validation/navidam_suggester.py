@@ -115,6 +115,13 @@ COMPOSITE_OPTIONS = {
     },
 }
 
+# Method values standing for the union of other options (mirrors impliedOptions in criteria.js).
+IMPLIED_OPTIONS = {
+    "Exposure type": {
+        "All": ["Binary", "Categorical", "Continuous / Time-varying", "Compositional", "Multivariate"],
+    },
+}
+
 SKIP_SELECTED_VALUES = {"", "Don't know", "Inapplicable", "__unsure__"}
 METHOD_FALLBACK_VALUES = {"Don't know", "Inapplicable"}
 
@@ -255,7 +262,12 @@ def _normalize_selected_values(criterion, raw_value):
 
 
 def _method_values(row, criterion):
-    return [normalize_option_value(criterion, value) for value in split_criterion_values(row.get(criterion, ""))]
+    values = [normalize_option_value(criterion, value) for value in split_criterion_values(row.get(criterion, ""))]
+    implied = IMPLIED_OPTIONS.get(criterion, {})
+    expanded = list(values)
+    for value in values:
+        expanded.extend(c for c in implied.get(value, []) if c not in expanded)
+    return expanded
 
 
 class NaviDAMSuggestionEngine:
@@ -312,14 +324,17 @@ class NaviDAMSuggestionEngine:
                 ]
                 continue
 
-            filtered = [
-                row
-                for row in filtered
-                if any(
-                    method_value in selected_values or method_value in METHOD_FALLBACK_VALUES
-                    for method_value in _method_values(row, criterion)
+            implied = IMPLIED_OPTIONS.get(criterion, {})
+
+            def matches(method_values):
+                if any(value in METHOD_FALLBACK_VALUES for value in method_values):
+                    return True
+                return any(
+                    all(c in method_values for c in implied[sel]) if sel in implied else sel in method_values
+                    for sel in selected_values
                 )
-            ]
+
+            filtered = [row for row in filtered if matches(_method_values(row, criterion))]
 
         suggestions = []
         seen_methods = set()

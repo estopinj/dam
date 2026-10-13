@@ -76,3 +76,9 @@ def test_method_concept_alignment_examples():
 
     for reported, suggested in negative_pairs:
         assert not methods_match(reported, suggested)
+
+def test_exposure_all_is_union_of_types():
+    from scripts.validation import navidam_suggester as ns
+    row_all = {"Method": "A", "Exposure type": "All"}
+    assert "Binary" in ns._method_values(row_all, "Exposure type")
+    assert "Multivariate" in ns._method_values(row_all, "Exposure type")

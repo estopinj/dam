@@ -21,34 +21,16 @@ body:
     id: author
     attributes:
       label: Page’s Author
-      description: Leave empty and tick the box below if you prefer to stay anonymous.
+      description: "Your name. If left empty, the contribution is considered anonymous (credited as Anonymous)."
       placeholder: ex. Jean Dupont
     validations:
       required: false
-  - type: checkboxes
-    id: anonymous
-    attributes:
-      label: "\u200B"
-      options:
-        - label: Anonymous contribution
-          required: false
-
 
   - type: dropdown
-    id: documented_method
+    id: already_in_navidam
     attributes:
-      label: Is the method already documented in NaviDAM?
-      description: Look if the method is already documented in NaviDAM. If it is, please provide the exact same name below.
-      options:
-        - "Yes"
-        - "No"
-    validations:
-      required: true
-  - type: dropdown
-    id: assessed_method
-    attributes:
-      label: Is the method already assessed in NaviDAM?
-      description: Look if the method is already assessed in NaviDAM. If it is, please provide the exact same name below.
+      label: Is the method already included in NaviDAM?
+      description: Search NaviDAM first. If the method is already there (documented and/or assessed), please provide the exact same name below.
       options:
         - "Yes"
         - "No"

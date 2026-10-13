@@ -36,6 +36,7 @@ an agreement of >= 80%; ``debated`` otherwise. There are 25 criteria, so when
 all are compared, 20 agreed criteria meet the threshold.
 """
 import json
+import math
 import re
 import sys
 from pathlib import Path
@@ -72,15 +73,6 @@ CRITERIA = {
         "Handles missing data", "ordinal", ["No: requires prelim. correction", "Partially", "Yes"]),
     "RS-data proven": (
         "RS-data proven", "ordinal", ["No", "Few applications", "Yes"]),
-    "Fonctional form": ("Functional form", "multiple", None),
-    "No unobserved confounders": ("No unobserved confounders", "ordinal", REQUIRED_PERMISSIVE),
-    "No interference": ("No interference", "ordinal", REQUIRED_PERMISSIVE),
-    "Well-defined treatments": ("Well-defined treatments", "ordinal", REQUIRED_PERMISSIVE),
-    "Common support (positivity)": ("Common support (positivity)", "ordinal", REQUIRED_PERMISSIVE),
-    "Causal Markov Condition": ("Causal Markov Condition", "ordinal", REQUIRED_PERMISSIVE),
-    "Faithfulness": ("Faithfulness", "ordinal", REQUIRED_PERMISSIVE),
-    "IID": ("IID", "ordinal", REQUIRED_PERMISSIVE),
-    "Model specific": ("Model specific assumption", "multiple", None),
     "Requires explicit processes": ("Requires explicit processes", "multiple", None),
     "Exposure type": ("Exposure type", "multiple", None),
     "Number of variables": ("Number of variables", "multiple", None),
@@ -91,8 +83,22 @@ CRITERIA = {
     "Parametric nature": ("Parametric nature", "multiple", None),
     "Language": ("Language", "multiple", None),
     "Usage": ("Usage", "multiple", None),
+    "Fonctional form": ("Functional form", "multiple", None),
+    "No unobserved confounders": ("No unobserved confounders", "ordinal", REQUIRED_PERMISSIVE),
+    "No interference": ("No interference", "ordinal", REQUIRED_PERMISSIVE),
+    "Well-defined treatments": ("Well-defined treatments", "ordinal", REQUIRED_PERMISSIVE),
+    "Common support (positivity)": ("Common support (positivity)", "ordinal", REQUIRED_PERMISSIVE),
+    "Causal Markov Condition": ("Causal Markov Condition", "ordinal", REQUIRED_PERMISSIVE),
+    "Faithfulness": ("Faithfulness", "ordinal", REQUIRED_PERMISSIVE),
+    "IID": ("IID", "ordinal", REQUIRED_PERMISSIVE),
+    "Model specific": ("Model specific assumption", "multiple", None),
 }
 CONFIDENCE_COLUMN = "Confidence in assessment"
+
+# Criteria where ticking nothing is a valid answer ("no specific assumption").
+# It is stored in votes as the explicit value NONE and published as an empty cell.
+NONE_ALLOWED = {"Model specific"}
+NONE = "None"
 
 
 
@@ -118,9 +124,24 @@ def weight(vote):
     return confidence ** 0.5
 
 
+# "All" stands for the union of the listed options of that criterion.
+ALL_EXPANSION = {
+    "Exposure type": ["Binary", "Categorical", "Continuous / Time-varying",
+                      "Compositional", "Multivariate"],
+}
+
+
+def expand_all(column, answer):
+    if "All" in answer and column in ALL_EXPANSION:
+        return list(dict.fromkeys([v for v in answer if v != "All"] + ALL_EXPANSION[column]))
+    return answer
+
+
 def similarity(column, a, b):
     """Similarity in [0, 1] between two answers (lists of strings)."""
     _label, kind, levels = CRITERIA[column]
+    if kind == "multiple":
+        a, b = expand_all(column, a), expand_all(column, b)
     if set(a) == set(b):
         return 1.0
     if kind == "ordinal":
@@ -179,9 +200,11 @@ def compute_published(votes, current_row=None):
     published = {}
     for column in CRITERIA:
         prefer = split_values((current_row or {}).get(column))
+        if not prefer and current_row is not None and column in NONE_ALLOWED:
+            prefer = [NONE]
         value = consensus_value(votes, column, prefer or None)
         if value:
-            published[column] = ", ".join(value)
+            published[column] = "" if value == [NONE] else ", ".join(value)
     confidence = published_confidence(votes)
     if confidence:
         published[CONFIDENCE_COLUMN] = str(confidence)
@@ -200,6 +223,10 @@ def method_status(votes):
         "evaluated": 0,
         "agreement_share": None,
         "assessor_names": list(dict.fromkeys(v.get("assessor") or "Anonymous" for v in votes)),
+        "voters": [{"name": v.get("assessor") or "Anonymous", "confidence": v.get("confidence")} for v in votes],
+        "required_criteria": 0,
+        "method_threshold": round(METHOD_THRESHOLD * 100),
+        "criterion_threshold": round(CRITERION_THRESHOLD * 100),
         "criteria": [],
     }
     if confidences:
@@ -220,6 +247,7 @@ def method_status(votes):
             "label": label,
             "agreement": round(agreement, 3),
             "debated": not agrees,
+            "values": [", ".join(v.get("answers", {}).get(column) or []) for v in votes],
             "answers": [
                 {"assessor": v.get("assessor") or "Anonymous",
                  "confidence": v.get("confidence"),
@@ -229,6 +257,7 @@ def method_status(votes):
         })
 
     if result["evaluated"]:
+        result["required_criteria"] = math.ceil(METHOD_THRESHOLD * result["evaluated"] - EPSILON)
         share = result["agreeing"] / result["evaluated"]
         result["agreement_share"] = round(share, 3)
         result["status"] = "consensus" if share >= METHOD_THRESHOLD - EPSILON else "debated"

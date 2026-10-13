@@ -37,8 +37,8 @@ Please follow the [Code of Conduct](https://github.com/estopinj/dam/blob/main/CO
 
 Use the **Method assessment** issue template for both cases. Assessments position [methods](https://estopinj.github.io/dam/methods) against the [criteria](https://estopinj.github.io/dam/criteria).
 
-- **New assessment:** choose `Is the method already assessed in NaviDAM? > No`, give the method name, and fill in the criteria.
-- **Revision / second opinion:** choose `Is the method already assessed in NaviDAM? > Yes`, give the exact existing method name, and fill in the full form with **your own** values. Your assessment is recorded next to the existing one(s), and the method page shows whether assessors agree (see [how the status is computed](#assessment-status)). Only criteria whose published value would change are proposed as changes for maintainer review.
+- **New assessment:** choose `Is the method already included in NaviDAM? > No`, give the method name, and fill in the criteria.
+- **Revision / second opinion:** choose `Is the method already included in NaviDAM? > Yes`, give the exact existing method name, and fill in the full form with **your own** values. Your assessment is recorded next to the existing one(s), and the method page shows whether assessors agree (see [how the status is computed](#assessment-status)). Only criteria whose published value would change are proposed as changes for maintainer review.
 - **Author:** give your name, or tick `Anonymous contribution` (or leave the name empty) to appear as *Anonymous* on the website.
 - **Confidence:** rate how confident you are from 1 to 5. It weights your assessment when several assessors disagree, so please be honest rather than generous.
 
@@ -47,7 +47,7 @@ Use the **Method assessment** issue template for both cases. Assessments positio
 - Use the [criteria pages](https://estopinj.github.io/dam/criteria) to check definitions before answering.
 - Add rationale or comments at the end of the form to justify choices — this greatly helps review.
 
-What happens next: a pull request is opened automatically. New rows are added directly; revisions are listed as old → new suggestions to accept or reject. A maintainer reviews and may ask for clarification in the issue thread. Nothing is published before the pull request is merged. If you edit your issue, your assessment is updated rather than counted twice.
+What happens next: a pull request is opened automatically. New rows are added directly; revisions are listed as old → new suggestions to accept or reject. A maintainer reviews and may ask for clarification in the issue thread. Nothing is published before the pull request is merged. If you edit your issue, your assessment is updated rather than counted twice. Likewise, only **one assessment per method and author name** is kept: submitting again under the same name (case-insensitive) replaces your previous assessment of that method. The author field is required: tick *Anonymous contribution* to keep your name off the website (it then appears as *Anonymous*). Only a short non-reversible key of the name is stored, so an anonymous re-submission under the same name still replaces your earlier assessment. The GitHub issue itself is public and keeps what you typed, so use a consistent pseudonym if you want to stay unidentifiable.
 
 <details markdown="1">
 <summary><strong>How assessments are combined: Consensus / Debated status</strong></summary>
@@ -71,7 +71,8 @@ Two assessors are enough to get a Consensus or Debated status. There is no inter
 2. **Confidence affects the weight, but its influence is softened.** A vote's weight is `√(confidence ÷ 5)`: a 5/5 score has weight 1, while a 1/5 score has weight about 0.45 (rather than 0.2). This lets higher confidence count more without letting it dominate as strongly.
 3. **Similarity of two answers on a criterion** is a number between 0 and 1. The raw score is **squared**, so partial matches count less while exact matches (1) and complete disagreements (0) stay unchanged:
    - *Ordinal criteria* (e.g. IID, Handles lag effects, Minimal TS length) use a **distance-based score**: `(1 − distance ÷ (number of levels − 1))²`. Neighbouring options such as `Required` vs `Recommended` score 0.25 (not 0.5); the extremes `Required` vs `Relaxes assumption` score 0. `Inapplicable` only matches itself. Older assessments that ticked several options on an ordinal criterion count as the most permissive one.
-   - *Multiple-choice criteria* (e.g. Objective, Language) use the **squared overlap** of the selected options: `(shared options ÷ all selected options)²`.
+   - *Multiple-choice criteria* (e.g. Objective, Language) use the **squared overlap** of the selected options: `(shared options ÷ all selected options)²`. For *Exposure type*, **All** is read as the union of Binary, Categorical, Continuous / Time-varying, Compositional and Multivariate.
+   - *Model-specific assumptions*: ticking nothing is a valid answer ("no specific assumption"). It is compared as the answer **None**: two assessors ticking nothing agree fully, while *None* versus any ticked assumption has no overlap (0%). If *None* is retained, the published cell is left empty.
 4. **Agreement of a criterion.** Each given answer is tested as the "reference": every assessor supports it in proportion to the similarity of their own answer to it (fully if identical, partly if close, not at all if opposite), multiplied by their weight. The reference with the highest support, divided by the total weight of all assessors, gives the agreement. When answers are identical or totally different, this is simply the weighted share of assessors giving the most common answer, so *"at least 80% of the assessors agree"* is read literally. A criterion is **agreed** when this is **≥ 80%**, and **debated** otherwise. Only criteria answered by at least two assessors are compared.
 5. **Method status** is the share of compared criteria that are agreed: **≥ 80% → Consensus**, **< 80% → Debated**. Each criterion still needs at least **80% agreement** to count as agreed. There are 25 criteria in total, so if all are compared, at least **20 must be agreed** for Consensus.
 
@@ -94,8 +95,9 @@ Anonymous assessors appear as *Anonymous* on the website, and no issue numbers a
 
 Use the **Method documentation** issue template for both cases. Documentation fills the [methods](https://estopinj.github.io/dam/methods) pages (description, references, implementation).
 
-- **New page:** choose `Is the method already documented in NaviDAM? > No`. A page is created from the submission.
+- **New page:** choose `Is the method already included in NaviDAM? > No`. A page is created from the submission.
 - **Completion:** choose `Yes`, give the exact page title, and fill in only the sections to add. Placeholders are replaced on first contribution; later contributions are appended.
+- **Author:** the name is optional. If you leave it empty, the contribution is considered anonymous and credited as *Anonymous*.
 
 💡 **Tips for good documentation:**
 - Follow the standard page structure: *Description & principle*, *Major variants*, *Reference articles* (method + research applications), *Implementation* (Python / R), and the *Assessment table*.
