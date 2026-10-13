@@ -469,7 +469,7 @@ body:
     id: model_specific_assumptions
     attributes:
       label: Model-specific assumptions
-      description: "Multiple: Tick all that apply & at least one"
+      description: "Multiple: Tick all that apply"
       options:
         - label: Parallel trends
         - label: Stationarity

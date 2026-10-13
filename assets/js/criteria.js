@@ -10,16 +10,6 @@ export const criteria = [
   { key: "Handles huge datasets (n)", label: "Scalable to big data", category: "Data compatibility" },
   { key: "Handles missing data", label: "Handles missing data", category: "Data compatibility" },
   { key: "RS-data proven", label: "RS-data proven", category: "Data compatibility" },
-  // Assumptions
-  { key: "Fonctional form", label: "Functional form", category: "Assumptions" },
-  { key: "No unobserved confounders", label: "No unobserved confounders", category: "Assumptions" },
-  { key: "No interference", label: "No interference", category: "Assumptions" },
-  { key: "Well-defined treatments", label: "Well-defined treatments", category: "Assumptions" },
-  { key: "Common support (positivity)", label: "Common support (positivity)", category: "Assumptions" },
-  { key: "Causal Markov Condition", label: "Causal Markov Condition", category: "Assumptions" },
-  { key: "Faithfulness", label: "Faithfulness", category: "Assumptions" },
-  { key: "IID", label: "IID", category: "Assumptions" },
-  { key: "Model specific", label: "Model specific", category: "Assumptions" },
   // Model properties
   { key: "Requires explicit processes", label: "Requires explicit processes", category: "Model properties" },
   { key: "Exposure type", label: "Exposure type", category: "Model properties" },
@@ -29,7 +19,18 @@ export const criteria = [
   { key: "Parametric nature", label: "Parametric nature", category: "Model properties" },
   // Implementation
   { key: "Language", label: "Language", category: "Implementation" },
-  { key: "Usage", label: "Usage", category: "Implementation" }
+  { key: "Usage", label: "Usage", category: "Implementation" },
+  // Assumptions
+  { key: "Fonctional form", label: "Functional form", category: "Assumptions" },
+  { key: "No unobserved confounders", label: "No unobserved confounders", category: "Assumptions" },
+  { key: "No interference", label: "No interference", category: "Assumptions" },
+  { key: "Well-defined treatments", label: "Well-defined treatments", category: "Assumptions" },
+  { key: "Common support (positivity)", label: "Common support (positivity)", category: "Assumptions" },
+  { key: "Causal Markov Condition", label: "Causal Markov Condition", category: "Assumptions" },
+  { key: "Faithfulness", label: "Faithfulness", category: "Assumptions" },
+  { key: "IID", label: "IID", category: "Assumptions" },
+  { key: "Model specific", label: "Model specific", category: "Assumptions" }
+
 ];
 
 

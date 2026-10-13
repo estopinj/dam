@@ -73,15 +73,6 @@ CRITERIA = {
         "Handles missing data", "ordinal", ["No: requires prelim. correction", "Partially", "Yes"]),
     "RS-data proven": (
         "RS-data proven", "ordinal", ["No", "Few applications", "Yes"]),
-    "Fonctional form": ("Functional form", "multiple", None),
-    "No unobserved confounders": ("No unobserved confounders", "ordinal", REQUIRED_PERMISSIVE),
-    "No interference": ("No interference", "ordinal", REQUIRED_PERMISSIVE),
-    "Well-defined treatments": ("Well-defined treatments", "ordinal", REQUIRED_PERMISSIVE),
-    "Common support (positivity)": ("Common support (positivity)", "ordinal", REQUIRED_PERMISSIVE),
-    "Causal Markov Condition": ("Causal Markov Condition", "ordinal", REQUIRED_PERMISSIVE),
-    "Faithfulness": ("Faithfulness", "ordinal", REQUIRED_PERMISSIVE),
-    "IID": ("IID", "ordinal", REQUIRED_PERMISSIVE),
-    "Model specific": ("Model specific assumption", "multiple", None),
     "Requires explicit processes": ("Requires explicit processes", "multiple", None),
     "Exposure type": ("Exposure type", "multiple", None),
     "Number of variables": ("Number of variables", "multiple", None),
@@ -92,8 +83,22 @@ CRITERIA = {
     "Parametric nature": ("Parametric nature", "multiple", None),
     "Language": ("Language", "multiple", None),
     "Usage": ("Usage", "multiple", None),
+    "Fonctional form": ("Functional form", "multiple", None),
+    "No unobserved confounders": ("No unobserved confounders", "ordinal", REQUIRED_PERMISSIVE),
+    "No interference": ("No interference", "ordinal", REQUIRED_PERMISSIVE),
+    "Well-defined treatments": ("Well-defined treatments", "ordinal", REQUIRED_PERMISSIVE),
+    "Common support (positivity)": ("Common support (positivity)", "ordinal", REQUIRED_PERMISSIVE),
+    "Causal Markov Condition": ("Causal Markov Condition", "ordinal", REQUIRED_PERMISSIVE),
+    "Faithfulness": ("Faithfulness", "ordinal", REQUIRED_PERMISSIVE),
+    "IID": ("IID", "ordinal", REQUIRED_PERMISSIVE),
+    "Model specific": ("Model specific assumption", "multiple", None),
 }
 CONFIDENCE_COLUMN = "Confidence in assessment"
+
+# Criteria where ticking nothing is a valid answer ("no specific assumption").
+# It is stored in votes as the explicit value NONE and published as an empty cell.
+NONE_ALLOWED = {"Model specific"}
+NONE = "None"
 
 
 
@@ -195,9 +200,11 @@ def compute_published(votes, current_row=None):
     published = {}
     for column in CRITERIA:
         prefer = split_values((current_row or {}).get(column))
+        if not prefer and current_row is not None and column in NONE_ALLOWED:
+            prefer = [NONE]
         value = consensus_value(votes, column, prefer or None)
         if value:
-            published[column] = ", ".join(value)
+            published[column] = "" if value == [NONE] else ", ".join(value)
     confidence = published_confidence(votes)
     if confidence:
         published[CONFIDENCE_COLUMN] = str(confidence)

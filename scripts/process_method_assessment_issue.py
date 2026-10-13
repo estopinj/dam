@@ -192,6 +192,8 @@ def issue_answers(fields):
         values = [v for v in values if v]
         if values:
             answers[column] = values
+        elif column in consensus.NONE_ALLOWED:
+            answers[column] = [consensus.NONE]
     return answers
 
 
@@ -219,6 +221,8 @@ def build_vote(fields):
 def baseline_vote(row):
     """Vote standing for an assessment that predates the vote store."""
     answers = {c: consensus.split_values(row.get(c)) for c in consensus.CRITERIA}
+    for column in consensus.NONE_ALLOWED:
+        answers[column] = answers[column] or [consensus.NONE]
     return {
         "issue": None,
         "baseline": True,
@@ -257,9 +261,11 @@ def compute_changes(row, published):
     issue. Same options in another order are not a change."""
     changes = []
     for column in ASSESSMENT_COLUMNS:
-        new_value = published.get(column, "").strip()
+        if column not in published:
+            continue
+        new_value = published[column].strip()
         old_value = (row.get(column) or "").strip()
-        if not new_value or new_value == old_value:
+        if (not new_value and column not in consensus.NONE_ALLOWED) or new_value == old_value:
             continue
         if column != consensus.CONFIDENCE_COLUMN and set(consensus.split_values(old_value)) == set(consensus.split_values(new_value)):
             continue

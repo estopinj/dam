@@ -186,3 +186,26 @@ def test_status_exposes_per_assessor_values():
     assert len(status["voters"]) == 2
     crit = next(c for c in status["criteria"] if c["column"] == "IID")
     assert crit["values"] == ["Required", "Recommended"]
+
+
+def test_no_model_specific_assumption_is_a_valid_agreeing_answer():
+    sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
+    import process_method_assessment_issue as pm
+    fields = {"model_specific_assumptions": []}
+    assert pm.issue_answers(fields)["Model specific"] == ["None"]
+    votes = [vote(3, **{"Model specific": "None"}), vote(4, **{"Model specific": "None"})]
+    crit = next(c for c in ac.method_status(votes)["criteria"] if c["column"] == "Model specific")
+    assert not crit["debated"]
+    assert ac.compute_published(votes, {"Model specific": ""})["Model specific"] == ""
+    row = {"Model specific": "", "Confidence in assessment": "4"}
+    assert pm.compute_changes(row, ac.compute_published(votes, row)) == []
+
+
+def test_none_versus_one_assumption_is_debated_and_can_publish_empty():
+    import process_method_assessment_issue as pm
+    votes = [vote(2, **{"Model specific": "Stationarity"}), vote(5, **{"Model specific": "None"})]
+    crit = next(c for c in ac.method_status(votes)["criteria"] if c["column"] == "Model specific")
+    assert crit["debated"]
+    row = {"Model specific": "Stationarity", "Confidence in assessment": "4"}
+    changes = pm.compute_changes(row, ac.compute_published(votes, row))
+    assert ("Model specific", "Stationarity", "") in changes
