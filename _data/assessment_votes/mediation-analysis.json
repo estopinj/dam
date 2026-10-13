@@ -100,10 +100,10 @@
       }
     },
     {
-      "issue": 75,
-      "assessor": "Anonymous",
-      "date": "2026-10-12",
-      "confidence": 5,
+      "issue": 84,
+      "assessor": "Joaquim Estopinan",
+      "date": "2026-10-13",
+      "confidence": 4,
       "answers": {
         "Objective": [
           "Effect estimation",
@@ -122,7 +122,7 @@
           "Handles ≤ 10"
         ],
         "Handles few samples": [
-          "10 to 100"
+          "Yes ≤ 10"
         ],
         "Handles huge datasets (n)": [
           "Most do"
@@ -131,7 +131,7 @@
           "Partially"
         ],
         "RS-data proven": [
-          "No"
+          "Few applications"
         ],
         "Fonctional form": [
           "Linear",
@@ -151,16 +151,16 @@
           "Required"
         ],
         "Common support (positivity)": [
-          "Required"
+          "Recommended"
         ],
         "Causal Markov Condition": [
-          "Required"
+          "Inapplicable"
         ],
         "Faithfulness": [
-          "Required"
+          "Inapplicable"
         ],
         "IID": [
-          "Required"
+          "Recommended"
         ],
         "Model specific": [
           "No M-O confounding"
@@ -176,20 +176,17 @@
           "Multivariate"
         ],
         "Number of variables": [
-          "Multivariate",
-          "High-dimensional (p≫n)"
+          "Multivariate"
         ],
         "Propaguates uncertainty": [
           "Model-specific tools"
         ],
         "Handles lag effects": [
-          "Possible"
+          "No"
         ],
         "Parametric nature": [
           "Parametric",
-          "Semi-parametric",
-          "Non-parametric",
-          "Rule-based"
+          "Semi-parametric"
         ],
         "Language": [
           "R",

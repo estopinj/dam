@@ -1,0 +1,185 @@
+{
+  "method": "Doubly robust estimation",
+  "votes": [
+    {
+      "issue": null,
+      "baseline": true,
+      "assessor": "Joaquim Estopinan",
+      "date": "",
+      "confidence": 3,
+      "answers": {
+        "Objective": [
+          "Effect estimation"
+        ],
+        "Estimand": [
+          "ATE",
+          "ATT",
+          "CATE"
+        ],
+        "Type": [
+          "Spatial only (cross-sectional)",
+          "Panel data (many samples)"
+        ],
+        "Minimal TS length": [
+          "Handles ≤ 10",
+          "≥ 10",
+          "≥ 100"
+        ],
+        "Handles few samples": [
+          "10 to 100"
+        ],
+        "Handles huge datasets (n)": [
+          "Yes"
+        ],
+        "Handles missing data": [
+          "Partially"
+        ],
+        "RS-data proven": [
+          "Few applications"
+        ],
+        "Fonctional form": [
+          "Linear",
+          "Non-linear",
+          "Assumption-free"
+        ],
+        "No unobserved confounders": [
+          "Recommended"
+        ],
+        "No interference": [
+          "Recommended"
+        ],
+        "Well-defined treatments": [
+          "Required"
+        ],
+        "Common support (positivity)": [
+          "Required"
+        ],
+        "Causal Markov Condition": [
+          "Recommended"
+        ],
+        "Faithfulness": [
+          "Recommended"
+        ],
+        "IID": [
+          "Recommended"
+        ],
+        "Requires explicit processes": [
+          "Agnostic"
+        ],
+        "Exposure type": [
+          "Binary",
+          "Continuous / Time-varying"
+        ],
+        "Number of variables": [
+          "Multivariate"
+        ],
+        "Propaguates uncertainty": [
+          "Model-specific tools"
+        ],
+        "Handles lag effects": [
+          "No"
+        ],
+        "Parametric nature": [
+          "Semi-parametric"
+        ],
+        "Language": [
+          "R",
+          "Python"
+        ],
+        "Usage": [
+          "Technical but well documented"
+        ]
+      }
+    },
+    {
+      "issue": 86,
+      "assessor": "Anonymous",
+      "date": "2026-10-13",
+      "confidence": 3,
+      "answers": {
+        "Objective": [
+          "Effect estimation"
+        ],
+        "Estimand": [
+          "ATT",
+          "ATE",
+          "LATE",
+          "CATE"
+        ],
+        "Type": [
+          "Spatial only (cross-sectional)",
+          "Panel data (many samples)"
+        ],
+        "Minimal TS length": [
+          "Handles ≤ 10"
+        ],
+        "Handles few samples": [
+          "10 to 100"
+        ],
+        "Handles huge datasets (n)": [
+          "Yes"
+        ],
+        "Handles missing data": [
+          "Partially"
+        ],
+        "RS-data proven": [
+          "Few applications"
+        ],
+        "Fonctional form": [
+          "Linear",
+          "Non-linear",
+          "Assumption-free"
+        ],
+        "No unobserved confounders": [
+          "Recommended"
+        ],
+        "No interference": [
+          "Recommended"
+        ],
+        "Well-defined treatments": [
+          "Required"
+        ],
+        "Common support (positivity)": [
+          "Required"
+        ],
+        "Causal Markov Condition": [
+          "Recommended"
+        ],
+        "Faithfulness": [
+          "Recommended"
+        ],
+        "IID": [
+          "Recommended"
+        ],
+        "Requires explicit processes": [
+          "Agnostic"
+        ],
+        "Exposure type": [
+          "Binary",
+          "Categorical",
+          "Continuous / Time-varying"
+        ],
+        "Number of variables": [
+          "Multivariate",
+          "High-dimensional (p≫n)"
+        ],
+        "Propaguates uncertainty": [
+          "Model-specific tools"
+        ],
+        "Handles lag effects": [
+          "No"
+        ],
+        "Parametric nature": [
+          "Semi-parametric"
+        ],
+        "Language": [
+          "R",
+          "Python"
+        ],
+        "Usage": [
+          "Technical but well documented"
+        ]
+      }
+    }
+  ]
+}
