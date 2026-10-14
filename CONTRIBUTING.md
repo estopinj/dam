@@ -160,16 +160,15 @@ NaviDAM is community-built, and regular contributors are invited to take on more
 | Role | GitHub permission | Typical responsibilities | Usual path to it |
 | --- | --- | --- | --- |
 | **Contributor** | None needed | Submit assessments, documentation, and pull requests | Anyone |
-| **Reviewer** | Triage | Label, de-duplicate and close issues; comment on and review assessments and pull requests. Cannot merge or push | About 2 accepted contributions |
-| **Maintainer** | Write | Approve and merge pull requests, including assessment updates | About 5 accepted contributions, including reviews of others' work, over at least 1 month |
-| **Owner** | Admin | Settings, releases, security, access and governance | Appointed by existing owners |
+| **Reviewer** | Write | Revise, accept or reject the PRs generated from assessment and documentation issues; label and close issues | About 5 accepted contributions, including reviews of others' work, over at least 1 month |
+| **Maintainer** | Admin | Settings, rulesets, releases, security, access and governance | Invited by existing maintainers after sustained, high-quality review activity |
 
 **What counts as an accepted contribution:** an assessment, documentation page or revision that was merged, or a substantial review of someone else's contribution. Counts are a guideline. Quality, reliability and communication matter more than quantity.
 
 **Principles**
-- Promotions are proposed by any maintainer or owner, or self-nominated through a blank issue, and are agreed by the owners. The invitation is announced in the project's issues or pull requests.
-- Maintainers don't merge their own pull requests. Changes to `.github/`, `scripts/` and `_config.yml` are reviewed by an owner (see [`CODEOWNERS`](https://github.com/damhq/navidam/blob/main/.github/CODEOWNERS)).
-- Releases (version tags and GitHub releases, which also mint Zenodo DOIs) are made by owners only.
+- Promotions are proposed by any reviewer or maintainer, or self-nominated through a blank issue, and are agreed by the maintainers. The invitation is announced in the project's issues or pull requests.
+- Reviewers don't merge their own pull requests. Changes to `.github/`, `scripts/` and `_config.yml` are reviewed by a maintainer (see [`CODEOWNERS`](https://github.com/damhq/navidam/blob/main/.github/CODEOWNERS)).
+- Releases (version tags and GitHub releases, which also mint Zenodo DOIs) are made by maintainers only.
 - Roles can be paused or stepped down after about 12 months of inactivity, or on request. Past contributions stay credited.
 - Everyone, whatever the role, follows the [Code of Conduct](https://github.com/damhq/navidam/blob/main/CODE_OF_CONDUCT.md).
 
