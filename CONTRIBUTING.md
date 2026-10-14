@@ -1,9 +1,9 @@
 <!-- Logos (absolute URLs so they render both on GitHub and on the Jekyll site) -->
 <div class="logo-row">
-  <img src="https://estopinj.github.io/dam/assets/images/logos/Obsgession_text_logo.png" alt="Obsgession" style="width:250px; margin:0 18px; vertical-align:middle;">
-  <img src="https://estopinj.github.io/dam/assets/images/logos/logo-FRB-Cesab-anglais_cropped.png" alt="FRB Cesab" style="width:175px; margin:0 18px; vertical-align:middle;">
-  <img src="https://estopinj.github.io/dam/assets/images/logos/Logo_cnrs.png" alt="CNRS" style="width:60px; margin:0 18px; vertical-align:middle;">
-  <img src="https://estopinj.github.io/dam/assets/images/logos/logo-leca.png" alt="LECA" style="width:150px; margin:0 18px; vertical-align:middle;">
+  <img src="https://damhq.github.io/navidam/assets/images/logos/Obsgession_text_logo.png" alt="Obsgession" style="width:250px; margin:0 18px; vertical-align:middle;">
+  <img src="https://damhq.github.io/navidam/assets/images/logos/logo-FRB-Cesab-anglais_cropped.png" alt="FRB Cesab" style="width:175px; margin:0 18px; vertical-align:middle;">
+  <img src="https://damhq.github.io/navidam/assets/images/logos/Logo_cnrs.png" alt="CNRS" style="width:60px; margin:0 18px; vertical-align:middle;">
+  <img src="https://damhq.github.io/navidam/assets/images/logos/logo-leca.png" alt="LECA" style="width:150px; margin:0 18px; vertical-align:middle;">
 </div>
 --------------------------------
 
@@ -15,7 +15,7 @@ NaviDAM is a collaborative effort. Method suggestions depend directly on the qua
 
 All contributions are welcome, and your ideas matter more than perfect formatting. No coding skills are required for most contributions — fixing a typo, adding a reference, or sharing domain expertise is already valuable.
 
-Please follow the [Code of Conduct](https://github.com/estopinj/dam/blob/main/CODE_OF_CONDUCT.md) in all interactions. Be kind, use inclusive language, and assume good intent, especially when discussing methods or assessments where opinions may differ.
+Please follow the [Code of Conduct](https://github.com/damhq/navidam/blob/main/CODE_OF_CONDUCT.md) in all interactions. Be kind, use inclusive language, and assume good intent, especially when discussing methods or assessments where opinions may differ.
 
 ## At a glance 💡
 
@@ -23,19 +23,19 @@ Please follow the [Code of Conduct](https://github.com/estopinj/dam/blob/main/CO
 |------|-----|
 | New assessment or revision of an existing assessment | 📝 [Method assessment issue](#assess-method) |
 | New documentation page or completion of an existing one | 📝 [Method documentation issue](#document-method) |
-| Revision of an existing [documentation page](https://estopinj.github.io/dam/methods) | 🔍 [Pull request](#revise-doc) |
+| Revision of an existing [documentation page](https://damhq.github.io/navidam/methods) | 🔍 [Pull request](#revise-doc) |
 | Brand-new method from scratch (assess + document) | ✨ [Both issues, in order](#new-method) |
-| Revise or add a [Good practices](https://estopinj.github.io/dam/practices) or [Examples](https://estopinj.github.io/dam/examples) page | 🔍 [Pull request](#practices-examples) |
-| Question, site bug, or infrastructure suggestion | 💬 [Blank issue](https://github.com/estopinj/dam/issues/new/choose) |
+| Revise or add a [Good practices](https://damhq.github.io/navidam/practices) or [Examples](https://damhq.github.io/navidam/examples) page | 🔍 [Pull request](#practices-examples) |
+| Question, site bug, or infrastructure suggestion | 💬 [Blank issue](https://github.com/damhq/navidam/issues/new/choose) |
 
-> Go to **Issues > New issue** and choose the matching template: <https://github.com/estopinj/dam/issues/new/choose>.
+> Go to **Issues > New issue** and choose the matching template: <https://github.com/damhq/navidam/issues/new/choose>.
 
-- Before opening a new issue, please search [existing issues](https://github.com/estopinj/dam/issues) to avoid duplicates and consider joining an ongoing discussion.
+- Before opening a new issue, please search [existing issues](https://github.com/damhq/navidam/issues) to avoid duplicates and consider joining an ongoing discussion.
 
 <a id="assess-method"></a>
 ## 1. Assess a method (new or revision) 📝
 
-Use the **Method assessment** issue template for both cases. Assessments position [methods](https://estopinj.github.io/dam/methods) against the [criteria](https://estopinj.github.io/dam/criteria).
+Use the **Method assessment** issue template for both cases. Assessments position [methods](https://damhq.github.io/navidam/methods) against the [criteria](https://damhq.github.io/navidam/criteria).
 
 - **New assessment:** choose `Is the method already included in NaviDAM? > No`, give the method name, and fill in the criteria.
 - **Revision / second opinion:** choose `Is the method already included in NaviDAM? > Yes`, give the exact existing method name, and fill in the full form with **your own** values. Your assessment is recorded next to the existing one(s), and the method page shows whether assessors agree (see [how the status is computed](#assessment-status)). Only criteria whose published value would change are proposed as changes for maintainer review.
@@ -44,7 +44,7 @@ Use the **Method assessment** issue template for both cases. Assessments positio
 
 💡 **Tips for a good assessment:**
 - Base family-level assessments on the most common or original variant, and add options matching major, widespread variants.
-- Use the [criteria pages](https://estopinj.github.io/dam/criteria) to check definitions before answering.
+- Use the [criteria pages](https://damhq.github.io/navidam/criteria) to check definitions before answering.
 - Add rationale or comments at the end of the form to justify choices — this greatly helps review.
 
 What happens next: a pull request is opened automatically. New rows are added directly; revisions are listed as old → new suggestions to accept or reject. A maintainer reviews and may ask for clarification in the issue thread. Nothing is published before the pull request is merged. If you edit your issue, your assessment is updated rather than counted twice. Likewise, only **one assessment per method and author name** is kept: submitting again under the same name (case-insensitive) replaces your previous assessment of that method. The author field is required: tick *Anonymous contribution* to keep your name off the website (it then appears as *Anonymous*). Only a short non-reversible key of the name is stored, so an anonymous re-submission under the same name still replaces your earlier assessment. The GitHub issue itself is public and keeps what you typed, so use a consistent pseudonym if you want to stay unidentifiable.
@@ -93,7 +93,7 @@ Anonymous assessors appear as *Anonymous* on the website, and no issue numbers a
 <a id="document-method"></a>
 ## 2. Document a method (new or completion) 📝
 
-Use the **Method documentation** issue template for both cases. Documentation fills the [methods](https://estopinj.github.io/dam/methods) pages (description, references, implementation).
+Use the **Method documentation** issue template for both cases. Documentation fills the [methods](https://damhq.github.io/navidam/methods) pages (description, references, implementation).
 
 - **New page:** choose `Is the method already included in NaviDAM? > No`. A page is created from the submission.
 - **Completion:** choose `Yes`, give the exact page title, and fill in only the sections to add. Placeholders are replaced on first contribution; later contributions are appended.
@@ -107,14 +107,14 @@ Use the **Method documentation** issue template for both cases. Documentation fi
 
 ### What methods need help? 🌱
 
-Good first contributions include completing thin pages, adding references, or documenting a method you know well. If unsure where to start, browse the [methods panel](https://estopinj.github.io/dam/methods) for pages with placeholders and follow sections 1–2 above.
+Good first contributions include completing thin pages, adding references, or documenting a method you know well. If unsure where to start, browse the [methods panel](https://damhq.github.io/navidam/methods) for pages with placeholders and follow sections 1–2 above.
 
-> 📊 The live [Website coverage](https://estopinj.github.io/dam/contributing/#website-coverage) section on the website shows automatically updated coverage numbers and the lists of methods needing assessment review, documentation, or review.
+> 📊 The live [Website coverage](https://damhq.github.io/navidam/contributing/#website-coverage) section on the website shows automatically updated coverage numbers and the lists of methods needing assessment review, documentation, or review.
 
 <a id="revise-doc"></a>
 ## 3. Revise an existing documentation page 🔍
 
-Revisions of existing [documentation pages](https://estopinj.github.io/dam/methods) are made via pull requests, not issues. Even small fixes (typos, broken links, clearer wording) are welcome — there is no minimum size for a useful contribution. ✨
+Revisions of existing [documentation pages](https://damhq.github.io/navidam/methods) are made via pull requests, not issues. Even small fixes (typos, broken links, clearer wording) are welcome — there is no minimum size for a useful contribution. ✨
 
 From the website:
 
@@ -143,7 +143,7 @@ Assessment first ensures the method becomes filterable; documentation then provi
 <a id="practices-examples"></a>
 ## 5. Good practices and Examples pages 🔍
 
-Revisions of [Good practices](https://estopinj.github.io/dam/practices) and [Examples](https://estopinj.github.io/dam/examples) pages follow the same process as [method documentation pages](#revise-doc):
+Revisions of [Good practices](https://damhq.github.io/navidam/practices) and [Examples](https://damhq.github.io/navidam/examples) pages follow the same process as [method documentation pages](#revise-doc):
 
 1. Scroll to the bottom of the page and click **Edit this page on GitHub**.
 2. Click the pencil icon ✏️ to edit the `.md` file.
@@ -151,7 +151,7 @@ Revisions of [Good practices](https://estopinj.github.io/dam/practices) and [Exa
 
 New pages are added the same way: create a `.md` file under `contents/practices/` or `contents/examples/` on a `doc/<short-topic>` branch and open a pull request against `main`.
 
-💡 For new pages, look at an existing page in the same panel as a template (front-matter + section structure), keep filenames in lower-case with hyphens, and link to related [criteria](https://estopinj.github.io/dam/criteria) or [methods](https://estopinj.github.io/dam/methods) where relevant.
+💡 For new pages, look at an existing page in the same panel as a template (front-matter + section structure), keep filenames in lower-case with hyphens, and link to related [criteria](https://damhq.github.io/navidam/criteria) or [methods](https://damhq.github.io/navidam/methods) where relevant.
 
 ## Recognition 🙌
 
@@ -159,11 +159,11 @@ Contributors are credited as page authors on the pages they create or substantia
 
 ## Licensing 📄
 
-By contributing, you agree that your contributions will be shared under the repository's licenses: code under GPLv3+, documentation and scientific text under CC BY 4.0. See [`LICENSE`](https://github.com/estopinj/dam/blob/main/LICENSE) for details.
+By contributing, you agree that your contributions will be shared under the repository's licenses: code under GPLv3+, documentation and scientific text under CC BY 4.0. See [`LICENSE`](https://github.com/damhq/navidam/blob/main/LICENSE) for details.
 
 ## Questions? 💬
 
-- Open a [blank issue](https://github.com/estopinj/dam/issues/new/choose) for questions, bug reports, or suggestions about the site itself.
-- For direct contact, see the [About page](https://estopinj.github.io/dam/about).
+- Open a [blank issue](https://github.com/damhq/navidam/issues/new/choose) for questions, bug reports, or suggestions about the site itself.
+- For direct contact, see the [About page](https://damhq.github.io/navidam/about).
 
 Thanks for improving NaviDAM! 🎉
