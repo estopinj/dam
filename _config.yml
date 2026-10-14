@@ -3,7 +3,7 @@ subtitle: Guiding your path through Detection and Attribution Modelling
 description: The DAM Navigator is an interactive decision-support tool designed to help researchers explore, compare, and select appropriate detection and attribution modelling methods based on their data, assumptions, and goals.
 author: Joaquim Estopinan (CNRS), Sara Si-Moussi (CNRS), Jussi Mäkinen (SYKE), Miriam Beck (CESAB), Risto Heikkinen (SYKE), Wilfried Thuiller (CNRS)
 theme: just-the-docs
-url: https://estopinj.github.io/dam/
+url: https://damhq.github.io/navidam/
 baseurl: ""
 permalink: /:categories/:title/
 
@@ -11,7 +11,7 @@ exclude:
   - archive/
 
 aux_links:
-  NaviDAM on GitHub: https://github.com/estopinj/dam
+  NaviDAM on GitHub: https://github.com/damhq/navidam
 aux_links_new_tab: true
 
 defaults:
@@ -132,7 +132,7 @@ compress_html:
   #   envs: all
 
 
-footer_content: 'Copyright &copy; 2024-2028 NaviDAM authors. Code under <a href="https://github.com/estopinj/dam/blob/main/LICENSE">GPLv3+</a>; documentation under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.'
+footer_content: 'Copyright &copy; 2024-2028 NaviDAM authors. Code under <a href="https://github.com/damhq/navidam/blob/main/LICENSE">GPLv3+</a>; documentation under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.'
 
 # Footer last edited timestamp
 last_edit_timestamp: true # show or hide edit time - page must have `last_modified_date` defined in the frontmatter
@@ -141,7 +141,7 @@ last_edit_time_format: "%b %e %Y" # uses ruby's time format: https://ruby-doc.or
 # Footer "Edit this page on GitHub" link text
 gh_edit_link: true # show or hide edit this page link
 gh_edit_link_text: "Edit this page on GitHub"
-gh_edit_repository: "https://github.com/estopinj/dam" # the github URL for your repo
+gh_edit_repository: "https://github.com/damhq/navidam" # the github URL for your repo
 gh_edit_branch: "main" # the branch that your docs is served from
 # gh_edit_source: docs # the source that your files originate from
 gh_edit_view_mode: "tree" # "tree" or "edit" if you want the user to jump into the editor immediately

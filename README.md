@@ -2,14 +2,14 @@
 
 <p align="center">
     <a href="https://doi.org/10.5281/zenodo.22675343"><img src="https://img.shields.io/badge/DOI-10.5281%2Fzenodo.22675343-blue?logo=doi&logoColor=white" alt="DOI: 10.5281/zenodo.22675343" width="205" height="20"></a>
-   <!-- <a href="https://github.com/estopinj/dam/graphs/contributors"><img src="https://img.shields.io/github/contributors/estopinj/dam" alt="GitHub contributors"></a>
-   <a href="https://github.com/estopinj/dam/network/members"><img src="https://img.shields.io/github/forks/estopinj/dam" alt="GitHub forks"></a>
-   <a href="https://github.com/estopinj/dam/issues"><img src="https://img.shields.io/github/issues/estopinj/dam" alt="GitHub issues"></a> -->
+   <!-- <a href="https://github.com/damhq/navidam/graphs/contributors"><img src="https://img.shields.io/github/contributors/damhq/navidam" alt="GitHub contributors"></a>
+   <a href="https://github.com/damhq/navidam/network/members"><img src="https://img.shields.io/github/forks/damhq/navidam" alt="GitHub forks"></a>
+   <a href="https://github.com/damhq/navidam/issues"><img src="https://img.shields.io/github/issues/damhq/navidam" alt="GitHub issues"></a> -->
 </p>
 
 
 ## Objective
-[NaviDAM](https://estopinj.github.io/dam/) helps ecologists navigate the landscape of
+[NaviDAM](https://damhq.github.io/navidam/) helps ecologists navigate the landscape of
 **detection and attribution methods** for studying biodiversity change.
 
 It brings together established ecological approaches with methods from causal
@@ -24,7 +24,7 @@ method landscape, then consult the supporting documentation.
 
 **Typical journey**
 
-1. Start on the [Home page](https://estopinj.github.io/dam/) and describe the
+1. Start on the [Home page](https://damhq.github.io/navidam/) and describe the
    project's objective, data, assumptions, and modelling needs.
 2. Explore the documentation panels to compare methods, understand trade-offs,
    and find relevant guidance or examples.
@@ -33,10 +33,10 @@ method landscape, then consult the supporting documentation.
 
 | Panel | Purpose |
 | --- | --- |
-| [Criteria](https://estopinj.github.io/dam/criteria) | Definitions, options, rationale, and examples for every filtering criterion. |
-| [Methods](https://estopinj.github.io/dam/methods) | Method principles, references, implementation details, and assessment tables. |
-| [Good practices](https://estopinj.github.io/dam/practices) | Guidance on causal graphs, attribution workflows, and robust study design. |
-| [Examples](https://estopinj.github.io/dam/examples) | Worked examples showing how to move from a research question to candidate methods. |
+| [Criteria](https://damhq.github.io/navidam/criteria) | Definitions, options, rationale, and examples for every filtering criterion. |
+| [Methods](https://damhq.github.io/navidam/methods) | Method principles, references, implementation details, and assessment tables. |
+| [Good practices](https://damhq.github.io/navidam/practices) | Guidance on causal graphs, attribution workflows, and robust study design. |
+| [Examples](https://damhq.github.io/navidam/examples) | Worked examples showing how to move from a research question to candidate methods. |
 
 
 ## Licensing and Attribution
@@ -68,11 +68,11 @@ The views and opinions expressed are those of the authors only and do not necess
 [GitHub Pages]: https://docs.github.com/en/pages
 [GPLv3]: https://www.gnu.org/licenses/gpl-3.0.html
 [CC BY 4.0]: https://creativecommons.org/licenses/by/4.0/
-[DAM]: https://estopinj.github.io/dam/
-[criteria]: https://estopinj.github.io/dam/criteria
-[methods]: https://estopinj.github.io/dam/methods
-[Landing page]: https://estopinj.github.io/dam/
-[Good practices]: https://estopinj.github.io/dam/practices
-[Examples]: https://estopinj.github.io/dam/examples
+[DAM]: https://damhq.github.io/navidam/
+[criteria]: https://damhq.github.io/navidam/criteria
+[methods]: https://damhq.github.io/navidam/methods
+[Landing page]: https://damhq.github.io/navidam/
+[Good practices]: https://damhq.github.io/navidam/practices
+[Examples]: https://damhq.github.io/navidam/examples
 
 

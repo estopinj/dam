@@ -2,5 +2,5 @@ blank_issues_enabled: true
 
 contact_links:
   - name: Documentation
-    url: https://estopinj.github.io/dam/contributing/
+    url: https://damhq.github.io/navidam/contributing/
     about: Check the documentation to contribute before opening an issue.
