@@ -1,0 +1,10 @@
+# Default reviewers for everything
+*                    @estopinj
+
+# Infrastructure, build logic and site configuration: owners only
+/.github/            @estopinj
+/scripts/            @estopinj
+/_config.yml         @estopinj
+/_plugins/           @estopinj
+/CONTRIBUTING.md     @estopinj
+/LICENSE             @estopinj

@@ -153,6 +153,26 @@ New pages are added the same way: create a `.md` file under `contents/practices/
 
 💡 For new pages, look at an existing page in the same panel as a template (front-matter + section structure), keep filenames in lower-case with hyphens, and link to related [criteria](https://damhq.github.io/navidam/criteria) or [methods](https://damhq.github.io/navidam/methods) where relevant.
 
+## Roles and promotions
+
+NaviDAM is community-built, and regular contributors are invited to take on more responsibility. Roles are granted **by invitation**, never automatically, so that scientific quality and repository security stay under control.
+
+| Role | GitHub permission | Typical responsibilities | Usual path to it |
+| --- | --- | --- | --- |
+| **Contributor** | None needed | Submit assessments, documentation, and pull requests | Anyone |
+| **Reviewer** | Triage | Label, de-duplicate and close issues; comment on and review assessments and pull requests. Cannot merge or push | About 2 accepted contributions |
+| **Maintainer** | Write | Approve and merge pull requests, including assessment updates | About 5 accepted contributions, including reviews of others' work, over at least 1 month |
+| **Owner** | Admin | Settings, releases, security, access and governance | Appointed by existing owners |
+
+**What counts as an accepted contribution:** an assessment, documentation page or revision that was merged, or a substantial review of someone else's contribution. Counts are a guideline. Quality, reliability and communication matter more than quantity.
+
+**Principles**
+- Promotions are proposed by any maintainer or owner, or self-nominated through a blank issue, and are agreed by the owners. The invitation is announced in the project's issues or pull requests.
+- Maintainers don't merge their own pull requests. Changes to `.github/`, `scripts/` and `_config.yml` are reviewed by an owner (see [`CODEOWNERS`](https://github.com/damhq/navidam/blob/main/.github/CODEOWNERS)).
+- Releases (version tags and GitHub releases, which also mint Zenodo DOIs) are made by owners only.
+- Roles can be paused or stepped down after about 12 months of inactivity, or on request. Past contributions stay credited.
+- Everyone, whatever the role, follows the [Code of Conduct](https://github.com/damhq/navidam/blob/main/CODE_OF_CONDUCT.md).
+
 ## Recognition 🙌
 
 Contributors are credited as page authors on the pages they create or substantially complete, and every issue and pull request is part of the public record. If you contributed and are not credited, please let us know in the relevant thread.
