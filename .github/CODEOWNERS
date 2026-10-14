@@ -1,7 +1,7 @@
 # Default reviewers for everything
 *                    @estopinj
 
-# Infrastructure, build logic and site configuration: owners only
+# Infrastructure, build logic and site configuration: maintainers only
 /.github/            @estopinj
 /scripts/            @estopinj
 /_config.yml         @estopinj
