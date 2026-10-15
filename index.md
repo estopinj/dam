@@ -26,25 +26,19 @@ permalink: /
 
 ## Welcome !
 
-NaviDAM is an interactive decision-support platform designed to help users explore, compare, and select appropriate detection and attribution methods based on the nature of their project.
+NaviDAM is a collaborative decision-support platform designed to help users explore, compare, and select appropriate detection and attribution methods based on the nature of their project.
 {: .fs-6 .fw-300 }
 
 
 - **Users are invited [below](#user-input) to qualify their _objective_, _data at hands_ and affordable _assumptions_ between others by assessing different <a href="{{ site.baseurl }}/criteria" target="_blank" rel="noopener noreferrer">criteria</a>**
 - ***<u>A set of</u>* [suited methods](#candidate-methods) is provided and methods are described in more detail on <a href="{{ site.baseurl }}/methods" target="_blank" rel="noopener noreferrer">documentation pages</a>, allowing users to get started on their project using relevant resources**
-- The <a href="{{ site.baseurl }}/practices" target="_blank" rel="noopener noreferrer">Good practices</a> and <a href="{{ site.baseurl }}/examples" target="_blank" rel="noopener noreferrer">Examples</a> panels respectively provide conceptual and general resources on attribution, causal inference & detection, and NaviDAM application examples.
 
-*Check the [About]({{ site.baseurl }}/about) page for further information*
+*Learn more about NaviDAM on the [About page]({{ site.baseurl }}/about).*
 
-
-{: .highlight-title}
-> Status
-> 
-> This website is under active development.
-> <p style="text-align: right;"><em>Latest release:</em> <a href="https://doi.org/10.5281/zenodo.22675343"><img src="https://img.shields.io/badge/DOI-10.5281%2Fzenodo.22675343-blue?logo=doi&logoColor=white" alt="DOI: 10.5281/zenodo.22675343" width="205" height="20" style="vertical-align: middle;"></a></p>
+<p style="text-align: right;"><em>Latest release: v2.1</em><br><a href="https://doi.org/10.5281/zenodo.23396723"><img src="https://img.shields.io/badge/DOI-10.5281%2Fzenodo.23396723-blue?logo=doi&logoColor=white" alt="DOI: 10.5281/zenodo.23396723" width="205" height="20" style="vertical-align: middle;"></a></p>
 
 {: .important }
-Consult the [Good practices]({{ site.baseurl }}/practices) panel and especially the <a href="{{ site.baseurl }}/contents/practices/box1/" target="_blank" rel="noopener noreferrer">Beyond method selection page</a> for guidance on how to design a robust study and reach credible results.
+Consult the [Good practices]({{ site.baseurl }}/practices) panel and **especially** the <a href="{{ site.baseurl }}/contents/practices/box1/" target="_blank" rel="noopener noreferrer">Beyond method selection page</a> for guidance on how to design a robust study and reach credible results.
 
 --------------------------------
 
