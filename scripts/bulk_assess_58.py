@@ -1,19 +1,14 @@
 """Bulk assess 58 incomplete methods. Uses only predefined options from TSV distinct values + criteria.js."""
 import csv
-import json
 from pathlib import Path
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 IN = PROJECT_ROOT / "_data" / "DetectionAttribution methods - Method Assessment.tsv"
 RES = PROJECT_ROOT / "_data" / "DA_usedressources.tsv"
-MANUAL_RES = PROJECT_ROOT / "_data" / "manual_resources.json"
 
 HDR = ['Author','Doc status','Reviewer','Assessor','Method','Assessment status','AI-assisted','AI flag','Category','Sub-category','Objective','Estimand','Type','Minimal TS length','Handles few samples','Handles huge datasets (n)','Handles missing data','RS-data proven','Fonctional form','No unobserved confounders','No interference','Well-defined treatments','Common support (positivity)','Causal Markov Condition','Faithfulness','IID','Model specific','Requires explicit processes','Exposure type','Number of variables','Propaguates uncertainty','Handles lag effects','Parametric nature','Language','Usage','Confidence in assessment']
 
 # Each entry: method -> dict of columns to set (Status->To review, AI-assisted->Yes).
 AI_TAG = "AI initial completion"
-CORRECTED_AI_TAG = "AI corrected completion"
-with open(MANUAL_RES, encoding="utf-8") as _manual_file:
-    CORRECTED_METHODS = set(json.load(_manual_file).keys())
 
 A = {}
 def put(method, **kw):
@@ -924,9 +919,7 @@ def main():
                 else:
                     j = HDR.index(k)
                 parts[j] = v
-            # Mark manual-resource methods as corrected AI completions, keep the
-            # original AI label for the remaining bulk-assessed rows.
-            parts[3] = CORRECTED_AI_TAG if method in CORRECTED_METHODS else AI_TAG
+            parts[3] = AI_TAG
             # ensure length
             lines[i] = "\t".join(parts[:len(HDR)])
             updated += 1
