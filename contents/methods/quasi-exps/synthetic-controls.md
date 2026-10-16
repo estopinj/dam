@@ -14,9 +14,6 @@ This method also belongs to [Adjusted methods (Backdoor C.)]({{ site.baseurl }}/
 
 <!-- category-note:end -->
 
-{: .note }
-This method also belongs to [Adjusted methods (Backdoor C.)](/adjusted/).
-
 ## Table of Contents
 {: .no_toc .text-delta }
 
